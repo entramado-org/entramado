@@ -8,6 +8,6 @@ export const SITE_NAME = "El Entramado";
 
 export const REPO_URL = "https://github.com/entramado-org/entramado";
 
-/* Mientras el repositorio esté en privado (se reconstruye su historial antes de volver a
- * publicarlo), la web no enlaza a GitHub: los enlaces darían 404. Volver a `true` al republicar. */
-export const REPO_PUBLIC = false;
+/* Interruptor de los enlaces a GitHub: con `false` la web no enlaza al repositorio (los enlaces
+ * darían 404 si el repositorio estuviera en privado). */
+export const REPO_PUBLIC = true;
