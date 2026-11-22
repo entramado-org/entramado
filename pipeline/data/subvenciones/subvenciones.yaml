@@ -1,0 +1,342 @@
+# Overlay SUBVENCIONES (BDNS/SNPSAP) — data file CURADO (spec 042, Fase 2).
+# Cargado por `make subvenciones` (subvenciones_loader.py). NO confundir con
+# matches.candidate.yaml (semilla del recon 041, no se carga).
+#
+# Reglas (spec/plan 042 + decisiones dueño 2026-07-11):
+#   * Una arista RECEIVED_GRANT por concesión curada: (beneficiaria)-[:RECEIVED_GRANT]->(convocante),
+#     clave de MERGE {source_kind:'subvencion', bdns_key} — el NIF es ATRIBUTO, nunca clave.
+#   * `en_flujos: true` SOLO en los 4 rescates SEPI → llevan `amount` y entran en /flujos.
+#     El resto lleva `importe` y NO aparece en la vista dinero.
+#   * `beneficiario` SIEMPRE debe existir (MATCH = gate ≤1 salto); los stubs de `convocantes:`
+#     solo se crean si faltan Y los referencia una concesión con beneficiaria viva.
+#   * Recibir una subvención o aval es LEGAL: la señal editorial es el cruce con la trama
+#     (y la consecuencia: avales públicos → concurso), nunca la ayuda en sí. Presunción de inocencia.
+#   * Gate 3 dudosos (Anfersa/Aquaterra/OPR) RESUELTO 2026-07-11: aprobados por el dueño con
+#     anclaje documental verificado (ver specs/042-overlay-subvenciones/tasks.md Log).
+# Fuente: API pública SNPSAP (infosubvenciones.es); crudos completos en _raw_sweep.jsonl.
+
+convocantes:   # stubs — creados solo si no existen. SEPI / ICO / M. Industria / Junta de
+               # Andalucía / Generalitat Valenciana YA son nodos → NO van aquí.
+  - id: "Organization:miteco"
+    name: "Ministerio para la Transición Ecológica"
+    role: "Ministerio para la Transición Ecológica y el Reto Demográfico (MITECO); órgano concedente de ayudas registradas en la BDNS"
+  - id: "Organization:red-es"
+    name: "Red.es"
+    role: "Entidad Pública Empresarial Red.es (Mº para la Transformación Digital); concedente del programa Kit Digital y otras ayudas BDNS"
+  - id: "Organization:cersa"
+    name: "CERSA"
+    role: "Compañía Española de Reafianzamiento SME SA (CERSA, Mº de Industria); reafianza avales a pymes, concedente en BDNS"
+  - id: "Organization:ministerio-de-cultura"
+    name: "Ministerio de Cultura"
+    role: "Ministerio de Cultura del Gobierno de España; órgano concedente de ayudas registradas en la BDNS"
+  - id: "Organization:comunidad-de-madrid-administracion"
+    name: "Comunidad de Madrid (administración autonómica)"
+    role: "Administración de la Comunidad de Madrid (consejerías concedentes de ayudas registradas en la BDNS)"
+
+subvenciones:
+  # ============ Rescates SEPI (los 4 únicos en_flujos) ============
+  - beneficiario: "Company:plus-ultra-lineas-aereas"
+    nif: "A86283041"
+    tercero_id: 11293630
+    denominacion_bdns: "PLUS ULTRA LINEAS AEREAS SA"
+    concesiones:
+      - fecha: "2021-03-09"
+        importe: 19000000
+        instrumento: "préstamo"
+        convocante: "Organization:sepi"
+        convocante_detalle: "Fondo de Apoyo a la Solvencia de Empresas Estratégicas"
+        bdns_endpoint: "ayudasestado"
+        en_flujos: true
+        note: "Tramo de préstamo ordinario del rescate SEPI de 53 M€ narrado en el corpus (auto Zapatero/Plus Ultra); ayuda equivalente oficial 4.745.302,46 €."
+      - fecha: "2021-03-09"
+        importe: 34000000
+        instrumento: "préstamo participativo"
+        convocante: "Organization:sepi"
+        convocante_detalle: "Fondo de Apoyo a la Solvencia de Empresas Estratégicas"
+        bdns_endpoint: "ayudasestado"
+        en_flujos: true
+        note: "Tramo participativo del rescate SEPI de 53 M€; desglose oficial BDNS que el corpus no detalla."
+
+  - beneficiario: "Company:air-europa"
+    nif: "B16652430"
+    denominacion_bdns: "AIR EUROPA HOLDING SL"
+    nota: "El beneficiario formal es el HOLDING (B16652430), no la operadora (A07129430, cuyos ~5.900 registros BDNS son descuentos de residente, irrelevantes). La arista cuelga del nodo Air Europa del corpus (órbita Aldama/Globalia)."
+    concesiones:
+      - fecha: "2020-11-03"
+        importe: 235000000
+        instrumento: "préstamo participativo"
+        convocante: "Organization:sepi"
+        convocante_detalle: "Fondo de Apoyo a la Solvencia de Empresas Estratégicas"
+        bdns_endpoint: "ayudasestado"
+        en_flujos: true
+        note: "Tramo del rescate SEPI de 475 M€ (nov-2020) a Air Europa Holding SL."
+      - fecha: "2020-11-03"
+        importe: 240000000
+        instrumento: "préstamo"
+        convocante: "Organization:sepi"
+        convocante_detalle: "Fondo de Apoyo a la Solvencia de Empresas Estratégicas"
+        bdns_endpoint: "ayudasestado"
+        en_flujos: true
+        note: "Tramo del rescate SEPI de 475 M€ (nov-2020) a Air Europa Holding SL."
+
+  # ============ Adjudicatarias del caso con avales públicos ============
+  - beneficiario: "Company:levantina-ingenieria-y-construccion"
+    nif: "B97016125"
+    denominacion_bdns: "LEVANTINA INGENIERIA Y CONSTRUCCION S.L."
+    nota: "51 registros BDNS en total; además de la destacada, avales COVID y minimis en 2020. SEÑAL DE CONSECUENCIA: aval oct-2023 → concurso voluntario 613/2024 solicitado jun-2024 (~4 meses tras estallar el caso Koldo) → disuelta 2025."
+    concesiones:
+      - fecha: "2023-10-04"
+        importe: 600000
+        instrumento: "aval"
+        convocante: "Organization:instituto-de-credito-oficial"
+        convocante_detalle: "Línea de avales por cuenta del Estado"
+        bdns_endpoint: "concesiones"
+        note: "Aval público 4 meses antes de que la adjudicataria del caso Koldo (Pepe Ruz) solicitara concurso (jun-2024)."
+
+  - beneficiario: "Company:innova-next-slu"
+    nif: "B86413689"
+    denominacion_bdns: "INNOVA NEXT SL."
+    nota: "Empresa de Juan Carlos Barrabés (caso Begoña Gómez): 1,48 M€ en avales públicos 2020-2023 mientras era adjudicataria investigada. 6 registros BDNS. T1 061 (16-sep-2026): innova-next fundido en innova-next-slu (merges.yaml); esta fila apunta al canónico."
+    concesiones:
+      - fecha: "2020-06-26"
+        importe: 880000
+        instrumento: "aval (garantía)"
+        convocante: "Organization:instituto-de-credito-oficial"
+        convocante_detalle: "Línea de Avales COVID del Estado (RDL 8/2020)"
+        bdns_endpoint: "ayudasestado"
+      - fecha: "2020-11-30"
+        importe: 360000
+        instrumento: "aval (garantía)"
+        convocante: "Organization:instituto-de-credito-oficial"
+        convocante_detalle: "Línea de Avales COVID del Estado (RDL 8/2020)"
+        bdns_endpoint: "ayudasestado"
+      - fecha: "2023-09-29"
+        importe: 240000
+        instrumento: "aval (garantía)"
+        convocante: "Organization:instituto-de-credito-oficial"
+        convocante_detalle: "Línea de avales por cuenta del Estado"
+        bdns_endpoint: "ayudasestado"
+      - fecha: "2022-11-28"
+        importe: 47357.17
+        instrumento: "subvención"
+        convocante: "Organization:miteco"
+        convocante_detalle: "Ayudas a proyectos empresariales"
+        bdns_endpoint: "concesiones"
+
+  - beneficiario: "Company:avintia"
+    nif: "B85084135"
+    denominacion_bdns: "AVINTIA PROYECTOS Y CONSTRUCCIONES, S.L."
+    nota: "Grupo del overlay mercantil (spec 030); 44 registros BDNS en tres sociedades del grupo (también A48169270 Avintia Infraestructuras y B85984235 Grupo Avintia). Ayudas CAM de contratación 2025-2026 (6-10 k€) no cargadas (menores)."
+    concesiones:
+      - fecha: "2022-02-25"
+        importe: 1750000
+        instrumento: "aval COVID (garantía)"
+        convocante: "Organization:instituto-de-credito-oficial"
+        convocante_detalle: "Línea de Avales COVID del Estado (RDL 8/2020)"
+        bdns_endpoint: "ayudasestado"
+
+  - beneficiario: "Company:making-science-group"
+    nif: "A82861428"
+    denominacion_bdns: "MAKING SCIENCE GROUP S.A."
+    nota: "Caso Begoña Gómez (deg 32). Además 3 minimis-garantía ICO en 2020 (~118 k€ de ayuda equivalente) no cargados (menores)."
+    concesiones:
+      - fecha: "2021-09-30"
+        importe: 700000
+        instrumento: "aval (garantía)"
+        convocante: "Organization:instituto-de-credito-oficial"
+        convocante_detalle: "Línea de avales a financiación de empresas y autónomos"
+        bdns_endpoint: "ayudasestado"
+
+  # ============ Empresas de la trama con ayudas directas ============
+  - beneficiario: "Company:idella-consulenza-strategica"
+    nif: "B42585042"
+    denominacion_bdns: "IDELLA CONSULENZA STRATEGICA SL"
+    concesiones:
+      - fecha: "2024-11-27"
+        importe: 11113
+        instrumento: "subvención"
+        convocante: "Organization:generalitat-valenciana"
+        convocante_detalle: "Labora — D.G. de Empleo y Formación (GVA)"
+        bdns_endpoint: "concesiones"
+        note: "Empresa del caso Zapatero/Plus Ultra (deg 68). También consta en minimis."
+
+  - beneficiario: "Company:whathefav-sl"
+    nif: "B88466966"
+    denominacion_bdns: "WHATHEFAV SL"
+    concesiones:
+      - fecha: "2021-12-10"
+        importe: 3000
+        instrumento: "subvención (minimis)"
+        convocante: "Organization:comunidad-de-madrid-administracion"
+        convocante_detalle: "Consejería de Economía, Hacienda y Empleo"
+        bdns_endpoint: "minimis"
+        note: "Caso Zapatero (deg 77). Importe = ayuda equivalente oficial del registro minimis."
+
+  - beneficiario: "Company:softgestor"
+    nif: "B87118246"
+    denominacion_bdns: "SOFTGESTOR S.L"
+    nota: "Caso Koldo (deg 67). Los dos registros minimis son garantías ICO; importe = ayuda equivalente oficial."
+    concesiones:
+      - fecha: "2021-07-14"
+        importe: 1067.29
+        instrumento: "garantía (minimis)"
+        convocante: "Organization:instituto-de-credito-oficial"
+        convocante_detalle: "Línea de avales del Estado"
+        bdns_endpoint: "minimis"
+      - fecha: "2020-04-24"
+        importe: 1067.29
+        instrumento: "garantía (minimis)"
+        convocante: "Organization:instituto-de-credito-oficial"
+        convocante_detalle: "Línea de Avales COVID del Estado (RDL 8/2020)"
+        bdns_endpoint: "minimis"
+
+  - beneficiario: "Company:summer-wind"
+    nif: "B92088202"
+    denominacion_bdns: "SUMMER WIND SL"
+    nota: "Empresa de la trama (deg 36, órbita Aldama). 12 registros BDNS; se cargan los 5 relevantes (COVID directa + avales + kit digital + CAM contratación)."
+    concesiones:
+      - fecha: "2021-07-20"
+        importe: 107935.71
+        instrumento: "subvención"
+        convocante: "Organization:comunidad-de-madrid-administracion"
+        convocante_detalle: "Consejería de Economía, Hacienda y Empleo — Medidas extraordinarias COVID-19 (RDL 5/2021)"
+        bdns_endpoint: "ayudasestado"
+      - fecha: "2020-04-08"
+        importe: 320000
+        instrumento: "aval COVID (garantía)"
+        convocante: "Organization:instituto-de-credito-oficial"
+        convocante_detalle: "Línea de Avales COVID del Estado (RDL 8/2020)"
+        bdns_endpoint: "ayudasestado"
+      - fecha: "2020-04-24"
+        importe: 20000
+        instrumento: "aval COVID (garantía)"
+        convocante: "Organization:instituto-de-credito-oficial"
+        convocante_detalle: "Línea de Avales COVID del Estado (RDL 8/2020)"
+        bdns_endpoint: "ayudasestado"
+      - fecha: "2022-04-26"
+        importe: 12000
+        instrumento: "subvención"
+        convocante: "Organization:red-es"
+        convocante_detalle: "Programa Kit Digital"
+        bdns_endpoint: "concesiones"
+      - fecha: "2023-04-17"
+        importe: 10000
+        instrumento: "subvención"
+        convocante: "Organization:comunidad-de-madrid-administracion"
+        convocante_detalle: "Consejería de Economía, Hacienda y Empleo — ayudas a la contratación"
+        bdns_endpoint: "concesiones"
+
+  - beneficiario: "Company:geoalcali"
+    nif: "B37508900"
+    denominacion_bdns: "GEOALCALI, S.L."
+    nota: "Mina Muga / órbita Cerdán-Navarra (deg 54)."
+    concesiones:
+      - fecha: "2023-04-20"
+        importe: 38322
+        instrumento: "subvención"
+        convocante: "Organization:miteco"
+        convocante_detalle: "D.G. de Política Energética y Minas"
+        bdns_endpoint: "concesiones"
+      - fecha: "2022-09-22"
+        importe: 3500
+        instrumento: "subvención"
+        convocante: "Organization:red-es"
+        convocante_detalle: "Programa Kit Digital"
+        bdns_endpoint: "concesiones"
+
+  - beneficiario: "Company:thinking-heads"
+    nif: "B83220475"
+    denominacion_bdns: "THINKING HEADS"
+    nota: "Órbita Begoña/Moncloa (deg 13). 15 registros BDNS; se cargan los 2 avales COVID grandes y la ayuda estatal de Cultura. Mismo NIF que el nodo thinking-heads-group-sl → merge en context/merges.yaml (este PR)."
+    concesiones:
+      - fecha: "2020-04-14"
+        importe: 160000
+        instrumento: "aval COVID (garantía)"
+        convocante: "Organization:instituto-de-credito-oficial"
+        convocante_detalle: "Línea de Avales COVID del Estado (RDL 8/2020)"
+        bdns_endpoint: "ayudasestado"
+      - fecha: "2020-04-16"
+        importe: 260000
+        instrumento: "aval COVID (garantía)"
+        convocante: "Organization:instituto-de-credito-oficial"
+        convocante_detalle: "Línea de Avales COVID del Estado (RDL 8/2020)"
+        bdns_endpoint: "ayudasestado"
+      - fecha: "2025-11-28"
+        importe: 9000
+        instrumento: "subvención"
+        convocante: "Organization:ministerio-de-cultura"
+        convocante_detalle: "D.G. del Libro, del Cómic y de la Lectura"
+        bdns_endpoint: "concesiones"
+
+  # ============ Aprobados en el gate 2026-07-11 (anclaje documental verificado) ============
+  - beneficiario: "Company:aridos-anfersa-sl"
+    nif: "B18487421"
+    denominacion_bdns: "ARIDOS ANFERSA SL"
+    nota: "Anclaje caso Koldo: alta laboral y nóminas de Patricia Uriz (expareja de Koldo García) investigadas como posible contraprestación [informe-uco pp.233-235]. 64 registros BDNS; se cargan los 3 mayores."
+    concesiones:
+      - fecha: "2023-12-18"
+        importe: 375372
+        instrumento: "subvención"
+        convocante: "Organization:ministerio-de-industria"
+        convocante_detalle: "D.G. de Estrategia Industrial"
+        bdns_endpoint: "concesiones"
+      - fecha: "2023-12-18"
+        importe: 125124
+        instrumento: "subvención"
+        convocante: "Organization:ministerio-de-industria"
+        convocante_detalle: "D.G. de Estrategia Industrial"
+        bdns_endpoint: "concesiones"
+      - fecha: "2024-11-25"
+        importe: 40822.38
+        instrumento: "subvención"
+        convocante: "Organization:junta-de-andalucia"
+        convocante_detalle: "Consejería de Empleo"
+        bdns_endpoint: "concesiones"
+
+  - beneficiario: "Company:aquaterra-servicios-infraestructuras-sl"
+    nif: "B04783338"
+    denominacion_bdns: "AQUATERRA SERVICIOS INFRAESTRUCTURAS SL"
+    nota: "Socia de la UTE con Acciona en la Variante de Logroño (92,4 M€) investigada [informe-uco pp.26/75; el doc cita el NIF B04783338]. 62 registros BDNS; volumen alto de avales/reafianzamientos recientes (MRR). La UTE U04908737 tiene NIF propio ≠ socias (regla NIF-como-atributo) y no se carga."
+    concesiones:
+      - fecha: "2025-03-25"
+        importe: 467313.75
+        instrumento: "reafianzamiento de avales (garantía)"
+        convocante: "Organization:cersa"
+        convocante_detalle: "Reafianzamiento de avales a pymes (MRR)"
+        bdns_endpoint: "concesiones"
+      - fecha: "2024-05-20"
+        importe: 400000
+        instrumento: "aval (garantía)"
+        convocante: "Organization:instituto-de-credito-oficial"
+        convocante_detalle: "Línea de avales por cuenta del Estado"
+        bdns_endpoint: "concesiones"
+      - fecha: "2025-12-17"
+        importe: 375000
+        instrumento: "reafianzamiento de avales (garantía)"
+        convocante: "Organization:cersa"
+        convocante_detalle: "Reafianzamiento de avales a pymes (MRR)"
+        bdns_endpoint: "concesiones"
+
+  - beneficiario: "Company:obras-publicas-y-regadios"
+    nif: "A13395264"
+    denominacion_bdns: "OBRAS PUBLICAS Y REGADIOS SA"
+    nota: "Entre las mercantiles del presunto reparto de obra pública (UCO) [informe-uco pp.5/106]. SEÑAL DE CONSECUENCIA: avales ICO/CERSA 2022-jun-2024 y concurso de acreedores en 2025 (firme dic-2025, ya en su ficha vía overlay mercantil). 27 registros BDNS; UTE con Sedinfra (U01667757, NIF propio) no cargada."
+    concesiones:
+      - fecha: "2022-05-26"
+        importe: 600000
+        instrumento: "aval (garantía)"
+        convocante: "Organization:instituto-de-credito-oficial"
+        convocante_detalle: "Línea de avales por cuenta del Estado"
+        bdns_endpoint: "concesiones"
+      - fecha: "2024-03-08"
+        importe: 160000
+        instrumento: "aval (garantía)"
+        convocante: "Organization:instituto-de-credito-oficial"
+        convocante_detalle: "Línea de avales por cuenta del Estado"
+        bdns_endpoint: "concesiones"
+      - fecha: "2024-06-21"
+        importe: 225000
+        instrumento: "reafianzamiento de avales (garantía)"
+        convocante: "Organization:cersa"
+        convocante_detalle: "Reafianzamiento de avales a pymes"
+        bdns_endpoint: "concesiones"

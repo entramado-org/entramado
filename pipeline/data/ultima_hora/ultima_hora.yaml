@@ -1,0 +1,1300 @@
+# Última hora — desarrollos de los casos que hoy solo constan en prensa.
+# Cada relación lleva outlet+url (+ date + quote). status = etapa procesal (presunto).
+# Las entidades enlazan a nodos ya existentes por nombre canónico (slug → entity_id).
+#
+# ⚠️ CADUCIDAD DE LAS ACUSACIONES (spec 061): una relación ACCUSED_OF /
+# INVESTIGATED_BY / CONVICTED_OF con `date` de hace MÁS DE 90 DÍAS solo se carga si
+# la persona tiene fila de estado en `pipeline/data/accusations/accusations.yaml`
+# (bloque `estado:` o `status:` con `doc:`). Si no, el loader la salta y la cuenta
+# (`ultima_hora_skip_stale_accusation`): una imputación que solo dijo un medio y que
+# nadie ha refrescado en tres meses deja de ser «última hora». Para que siga
+# publicándose hay que ASCENDERLA — documentarla en el registro de acusaciones — no
+# tocarle la fecha. Las filas se quedan aquí (histórico del feed); las relaciones no
+# acusatorias (MET_WITH, PAID, WORKS_FOR…) no caducan.
+# La fecha de referencia es hoy; `--as-of YYYY-MM-DD` la fija para reproducir un Path A.
+
+entities:
+  - {name: "José Luis Ábalos", type: Person}
+  - {name: "Koldo García", type: Person}
+  - {name: "Víctor de Aldama", type: Person}
+  - {name: "Santos Cerdán", type: Person}
+  - {name: "Isabel Pardo de Vera", type: Person}
+  # Acciona se declara más abajo como Company (Company:acciona, el nodo real); NO como
+  # Organization aquí — eso creaba el dup Organization:acciona (fusionado en merges.yaml).
+  - {name: "OPR", type: Organization}
+  - {name: "David Sánchez", type: Person}
+  - {name: "Javier Herrero", type: Person}
+  - {name: "Antxón", type: Person}
+  # OJO: usar el nombre completo — Person:leticia-de-la-hoz-calvo YA existe en el grafo
+  # (deg 1, del auto de entrada en Ferraz); "Leticia de la Hoz" crearía un duplicado.
+  - {name: "Leticia de la Hoz Calvo", type: Person}
+  # (T1 061, 16-sep-2026) El Crime «obstrucción a la justicia» ya no se declara: la única arista que lo
+  # sostenía era una calificación propia sin fuente (ver la retirada más abajo). web/lib/glosario.ts
+  # conserva el término como entrada de glosario, sin nodo.
+  - {name: "González Fernández", type: Person}   # entity_id: Person:gonzalez-fernandez
+  - {name: "Leire Díez", type: Person}            # entity_id: Person:leire-diez
+  - {name: "María Jesús Montero", type: Person}            # entity_id: Person:maria-jesus-montero
+  - {name: "Gaspar Carlos Zarrías Arévalo", type: Person} # entity_id: Person:gaspar-carlos-zarrias-arevalo
+  - {name: "Vicente Fernández", type: Person}             # entity_id: Person:vicente-fernandez
+  - {name: "Juan Carlos Barrabés", type: Person}          # entity_id: Person:juan-carlos-barrabes (YA existe)
+  - {name: "Bartolomé Lora Toro", type: Person}           # entity_id: Person:bartolome-lora-toro (YA existe — vicepresidente SEPI; querella Air Europa)
+  # Delitos de la nueva pieza UE (jun-2026). prevaricación reutiliza Crime:prevaricacion;
+  # el fraude se modela con su tipificación precisa (NO el genérico Crime:fraude).
+  - {name: "prevaricación", type: Crime}                  # entity_id: Crime:prevaricacion (YA existe)
+  - {name: "fraude a los intereses financieros de la Unión Europea", type: Crime}
+  # Trama PNV / rescate de Tubos Reunidos (informe UCO, jun-2026). Todos los nodos
+  # judiciales ya existen (MERGE); los públicos los aporta el context layer.
+  - {name: "SEPI", type: Organization}                    # entity_id: Organization:sepi (YA existe)
+  - {name: "Tubos Reunidos", type: Company}               # entity_id: Company:tubos-reunidos (YA existe)
+  - {name: "PNV", type: Organization}                     # entity_id: Organization:pnv (context)
+  - {name: "Andoni Ortuzar", type: Person}                # entity_id: Person:andoni-ortuzar (context)
+  - {name: "Joseba Aurrekoetxea", type: Person}           # entity_id: Person:joseba-aurrekoetxea (context)
+  - {name: "Carlos López de las Heras", type: Person}     # entity_id: Person:carlos-lopez-de-las-heras (context)
+  - {name: "Mediaciones Martínez SL", type: Company}      # vehículo del caso (nodo última-hora)
+
+  # ---------------------------------------------------------------------------
+  # ---------------------------------------------------------------------------
+  # Caso Leire — el 'topo' de la SEPI (informe UCO, 24-jun-2026, juez Pedraz, AN).
+  # Extiende la trama PNV/Tubos Reunidos ya presente abajo. SEPI, Vicente Fernández
+  # y Tubos Reunidos YA existen; Miguel Ángel Figueroa es nodo nuevo de esta capa.
+  - {name: "Miguel Ángel Figueroa", type: Person,
+     role: "Exdirector de Participadas III de la SEPI (2018-2021). Según elDiario.es (29-06-2026), el juez Santiago Pedraz, a petición de la Fiscalía Anticorrupción, lo incluyó entre las 25 personas investigadas en el caso Leire por presuntos amaños en la contratación pública, en relación con el rescate de Tubos Reunidos; según El Independiente (24-06-2026), un informe de la UCO le atribuye haber hecho llegar a Vicente Fernández «al menos nueve archivos informáticos» del expediente de ese rescate. Imputación = citación a declarar, no condena; presunción de inocencia."}
+
+  # Pieza de amaños de la contratación pública (providencia de Pedraz, 29-jun-2026):
+  # imputación de la presidenta de la SEPI + 24. Gualda y los tres nodos Crime YA
+  # existen en el grafo (MERGE por nombre canónico).
+  - {name: "María Belén Gualda González", type: Person}   # entity_id: Person:maria-belen-gualda-gonzalez (YA existe)
+  - {name: "tráfico de influencias", type: Crime}          # entity_id: Crime:trafico-de-influencias (YA existe)
+  - {name: "malversación", type: Crime}                    # entity_id: Crime:malversacion (YA existe)
+
+  # --- Los otros 24 imputados de la misma providencia (29-jun-2026). Cargos según
+  # elDiario.es (contrastado con El Español para el bloque Forestalia). Cada persona
+  # se engancha a SU empresa con WORKS_FOR (direccional → sin colapso simétrico),
+  # status=imputado. Julián Mateos y Carlos López de las Heras YA existen (MERGE por
+  # nombre canónico); Miguel Ángel Figueroa ya está arriba (no se re-engancha).
+  # Empresas nuevas de la trama: Forestalia, SEPIDES, TACRC, SDP Carrillo y Montes,
+  # Erri Berri, Beyol Gestión. SEPI/Mercasa/ENUSA/Acciona/Tubos Reunidos/Servinabar/
+  # Mediaciones Martínez YA existen. (Acciona = Company:acciona, el nodo real con
+  # 255 aristas, NO el Organization:acciona casi vacío.)
+  - {name: "Miguel Ángel Santiago Mesa", type: Person, role: "Exdirector corporativo de la SEPI. Citado como investigado en la pieza de amaños del caso Leire según elDiario.es (29-06-2026)."}
+  - {name: "Rosario Martín Manzanedo", type: Person, role: "Directora de Participadas de la SEPI. Citada como investigada, según elDiario.es (29-06-2026), en la pieza de amaños del caso Leire (29-jun-2026)."}
+  - {name: "Julián Mateos", type: Person}   # entity_id: Person:julian-mateos (YA existe — director del FASEE)
+  - {name: "Fernando Albert Aragón", type: Person, role: "Secretario general y director de la asesoría jurídica de SEPIDES; presidente de la mesa de contratación del Parque Empresarial Principado de Asturias. Citado como investigado en la pieza de amaños del caso Leire según elDiario.es (29-06-2026)."}
+  - {name: "María de la Concepción Ortiz Fuerte", type: Person, role: "Presidenta del Tribunal Administrativo Central de Recursos Contractuales (TACRC) y antigua alto cargo de la SEPI. Citada como investigada, según elDiario.es (29-06-2026), en la pieza de amaños del caso Leire (29-jun-2026)."}
+  - {name: "José Ramón Sempere Vera", type: Person, role: "Expresidente del Consejo de Administración de MERCASA (2018-2024). Citado como investigado en la pieza de amaños del caso Leire según elDiario.es (29-06-2026)."}
+  - {name: "María Teresa Castillo Pasalodos", type: Person, role: "Directora de Desarrollo Corporativo y Relaciones Institucionales de MERCASA. Citada como investigada, según elDiario.es (29-06-2026), en la pieza de amaños del caso Leire (29-jun-2026)."}
+  - {name: "José Vicente Berlanga Arona", type: Person, role: "Expresidente del Consejo de Administración de ENUSA (2018-2021). Citado como investigado en la pieza de amaños del caso Leire según elDiario.es (29-06-2026)."}
+  - {name: "Rosario Arévalo Sández", type: Person, role: "Directora Corporativa de ENUSA. Citada como investigada, según elDiario.es (29-06-2026), en la pieza de amaños del caso Leire (29-jun-2026)."}
+  - {name: "Francisco Javier López Buciega", type: Person, role: "Director de Servicios Urbanos y Medio Ambiente de ACCIONA. Citado como investigado en la pieza de amaños del caso Leire según elDiario.es (29-06-2026)."}
+  - {name: "Juan Antonio Carrillo Donaire", type: Person, role: "Catedrático de Derecho Administrativo y socio del despacho SDP Carrillo y Montes S.L.P. Citado como investigado en la pieza de amaños del caso Leire según elDiario.es (29-06-2026)."}
+  - {name: "Francisco Irazusta Rodríguez", type: Person, role: "Expresidente de Tubos Reunidos. Citado como investigado en la pieza de amaños del caso Leire según elDiario.es (29-06-2026)."}
+  - {name: "Carlos López de las Heras", type: Person}   # entity_id: Person:carlos-lopez-de-las-heras (YA existe — CEO de Tubos Reunidos)
+  - {name: "Jesús Pérez Rodríguez Urrutia", type: Person, role: "Consejero de Tubos Reunidos. Citado como investigado en la pieza de amaños del caso Leire según elDiario.es (29-06-2026)."}
+  - {name: "Félix Azcona Lacarra", type: Person, role: "Representante y administrador de Beyol Gestión (administradora de la constructora Erri Berri). Citado como investigado en la pieza de amaños del caso Leire según elDiario.es (29-06-2026)."}
+  - {name: "Juan Ignacio Fernández-Micheltorena", type: Person, role: "Director financiero de la constructora Erri Berri. Citado como investigado en la pieza de amaños del caso Leire según elDiario.es (29-06-2026)."}
+  - {name: "Fernando Samper Rivas", type: Person, role: "Director/propietario del Grupo Forestalia. Citado como investigado en la pieza de amaños del caso Leire según elDiario.es (29-06-2026)."}
+  - {name: "Roberto Pérez Águeda", type: Person, role: "Vinculado a Forestalia. Citado como investigado en la pieza de amaños del caso Leire según elDiario.es (29-06-2026)."}
+  - {name: "Eduardo Pérez Águeda", type: Person, role: "Vinculado a Forestalia. Citado como investigado en la pieza de amaños del caso Leire según elDiario.es (29-06-2026)."}
+  - {name: "Carmelo Aznárez Pellicer", type: Person, role: "Administrador de Mediaciones Martínez SL. Citado como investigado en la pieza de amaños del caso Leire según elDiario.es (29-06-2026)."}
+  - {name: "Mikel Arrarás Abejón", type: Person, role: "Arquitecto técnico de Servinabar. Citado como investigado en la pieza de amaños del caso Leire según elDiario.es (29-06-2026)."}
+  # Empresas/organismos de la trama (los 4 primeros nuevos; el resto MERGE sobre existentes).
+  - {name: "Forestalia", type: Company, role: "Grupo aragonés de energías renovables; varias personas vinculadas figuran entre los citados como investigados en la pieza de amaños del caso Leire, según elDiario.es (29-06-2026)."}
+  - {name: "SEPIDES", type: Organization, role: "SEPI Desarrollo Empresarial: sociedad de desarrollo del grupo SEPI."}
+  - {name: "Tribunal Administrativo Central de Recursos Contractuales", type: Organization, role: "TACRC: órgano que resuelve los recursos en materia de contratación pública."}
+  - {name: "SDP Carrillo y Montes", type: Company, role: "Despacho de abogados (SDP Carrillo y Montes S.L.P.)."}
+  - {name: "Erri Berri", type: Company, role: "Empresa constructora vinculada a la pieza de amaños del caso Leire."}
+  - {name: "Beyol Gestión", type: Company, role: "Sociedad administradora de la constructora Erri Berri."}
+  - {name: "Mercasa", type: Company}                 # entity_id: Company:mercasa (YA existe)
+  - {name: "ENUSA", type: Company}                   # entity_id: Company:enusa (YA existe)
+  - {name: "Acciona", type: Company}                 # entity_id: Company:acciona (YA existe — nodo real, 255 aristas)
+  - {name: "Servinabar", type: Company}              # entity_id: Company:servinabar (YA existe)
+  - {name: "Mediaciones Martínez SL", type: Company} # entity_id: Company:mediaciones-martinez-sl (YA existe)
+
+  # Caso Leire — testigo Joaquín Parra (declaración ante Pedraz, 8-jul-2026). Nombre
+  # canónico igual al del auto de entrada en Ferraz (autoentradaferraz.pdf: "Joaquín
+  # PARRA PÁEZ", imputado 2021-actualidad) para que un futuro extractado judicial haga
+  # MERGE limpio; hoy NO tiene nodo en el grafo, así que esta capa lo crea (última-hora).
+  - {name: "Joaquín Parra Páez", type: Person,
+     role: "Empresario y expresidente del CD Badajoz; investigado desde 2021 en una causa por presunto fraude de IVA. Figura como persona de interés en el auto de entrada y registro de la sede del PSOE en Ferraz. El 8-jul-2026 declaró como testigo ante el juez Santiago Pedraz (AN, DP 150/2025) en el caso Leire. Presunción de inocencia."}
+
+  - {name: "Agencia Tributaria", type: Organization}     # entity_id: Organization:agencia-tributaria (YA existe)
+
+  # Caso TEAC / Hacienda (jul-2026). Su causa (JI nº 35 de Madrid) NO tiene documentos
+  # en el corpus: nodo íntegramente de esta capa. Gancho con el grafo: recolocado en el
+  # área de la AEAT que investiga el entramado societario de la trama Zapatero
+  # (informe-udef-1907) según El Debate 8-jul-2026.
+  - {name: "José Antonio Marco Sanjuán", type: Person,
+     role: "Inspector de Hacienda; expresidente del Tribunal Económico-Administrativo Central (TEAC, 2018-2025) y considerado 'número 3' de María Jesús Montero en Hacienda. Dimitió en jun-2025; imputado (presunto) por cohecho en el Juzgado de Instrucción nº 35 de Madrid tras la querella de la Fiscalía Anticorrupción (mar-2026), que le atribuye además prevaricación, tráfico de influencias y malversación por presuntos cobros a cambio de archivar pleitos fiscales. Tras dimitir fue destinado a la Dependencia Regional de Inspección de la AEAT en la Comunidad Valenciana, el área que investiga el entramado societario de la trama Zapatero (El Debate, 8-jul-2026). Presunción de inocencia."}
+
+  # Caso Leire — informe UCO 8-jul-2026 sobre Juanma Serrano. El nodo YA existe en el
+  # grafo (juicial: aldama-movil + autoentradaferraz); nombre canónico post-merge
+  # (merges.yaml 2026-07-09) = el del auto de Ferraz. Rol en figures.yaml.
+  # 10-jul-2026: Pedraz acordó su imputación (condición de investigado) a petición de
+  # Anticorrupción, con volcado del móvil autorizado. Su cargo (ACCUSED_OF, abajo) es
+  # lo que da el badge de estado procesal en la ficha y en /investigados.
+  - {name: "Juan Manuel Serrano Quintana", type: Person}   # entity_id: Person:juan-manuel-serrano-quintana (YA existe)
+  - {name: "organización criminal", type: Crime}           # entity_id: Crime:organizacion-criminal (YA existe, deg 263)
+
+  # Caso Koldo — citación como investigados del 3-jul-2026 (juez Ismael Moreno, AN)
+  # por la contratación de Jésica en Ineco/Tragsatec. Los tres nodos YA existen en el
+  # grafo (Jésica = canónico post-merge barrido 2026-07-10, ver merges.yaml; Joseba y
+  # Zaldívar salen de la sentencia TS 22-jun y la exposición razonada). Sus cargos
+  # (ACCUSED_OF, abajo) dan el badge de estado procesal y la entrada en /investigados.
+  - {name: "Jesica Rodríguez García", type: Person}         # entity_id: Person:jesica-rodriguez-garcia (canónico post-merge)
+  - {name: "Joseba García Izaguirre", type: Person}         # entity_id: Person:joseba-garcia-izaguirre (YA existe)
+  - {name: "Ignacio Zaldívar de la Rica", type: Person}     # entity_id: Person:ignacio-zaldivar-de-la-rica (YA existe; rol en figures.yaml)
+
+  # ── Barrido de badges 2026-07-10: stubs de nodos YA existentes (el loader solo
+  # resuelve nombre→entity_id; roles/síntesis viven en la capa de contexto) ──
+  - {name: "Roberto Roselli", type: Person}                 # Person:roberto-roselli
+  - {name: "Santiago Fernández Lena", type: Person}         # Person:santiago-fernandez-lena
+  - {name: "Julio Martínez Sola", type: Person}             # Person:julio-martinez-sola
+  - {name: "Felipe Baca", type: Person}                     # Person:felipe-baca
+  - {name: "Aurora López López", type: Person}              # Person:aurora-lopez-lopez (canónico post-merge 2026-07-10)
+  - {name: "Laura Rodríguez Espinosa", type: Person}        # Person:laura-rodriguez-espinosa
+  - {name: "Alba Rodríguez Espinosa", type: Person}         # Person:alba-rodriguez-espinosa
+  - {name: "Patricia Úriz", type: Person}                   # Person:patricia-uriz
+  - {name: "Jesús Manuel Gómez García", type: Person}       # Person:jesus-manuel-gomez-garcia
+  - {name: "Fernando Merino", type: Person}                 # Person:fernando-merino
+  - {name: "Antonio Fernández Menéndez", type: Person}      # Person:antonio-fernandez-menendez
+  - {name: "Daniel Fernández Menéndez", type: Person}       # Person:daniel-fernandez-menendez
+  - {name: "Antxón", type: Person}                          # Person:antxon (Joseba Antxon Alonso Egurrola)
+  - {name: "Claudio Rivas Ruiz Capillas", type: Person}     # Person:claudio-rivas-ruiz-capillas (canónico desde T1 061; antes Person:claudio)
+  - {name: "Luis Prieto Cuerdo", type: Person}              # Person:luis-prieto-cuerdo
+  - {name: "Ana María Fuentes Pacheco", type: Person}       # Person:ana-maria-fuentes-pacheco
+  - {name: "Rodolfo Reyes", type: Person}                   # Person:rodolfo-reyes
+  - {name: "cohecho", type: Crime}                          # Crime:cohecho (YA existe, deg 609)
+  - {name: "blanqueo de capitales", type: Crime}            # Crime:blanqueo-de-capitales (YA existe, deg 387)
+  - {name: "apropiación indebida", type: Crime}             # Crime:apropiacion-indebida (YA existe, deg 48)
+  - {name: "fraude", type: Crime}                           # Crime:fraude (YA existe, deg 140)
+  # s88: «delito contra la Hacienda Pública» fusionado en Crime:defraudacion-tributaria (merges.yaml)
+  - {name: "defraudación tributaria", type: Crime}                # Crime:defraudacion-tributaria (YA existe)
+  - {name: "falsedad documental", type: Crime}              # Crime:falsedad-documental (YA existe)
+
+relations:
+  # Juicio del caso mascarillas en el Supremo — visto para sentencia (may-2026).
+  - source: "Víctor de Aldama"
+    target: "José Luis Ábalos"
+    type: ASSOCIATED_WITH
+    status: "acusado"
+    outlet: "El Español"
+    url: "https://www.elespanol.com/espana/politica/20260506/juicio-caso-abalos-directo-causa-entra-recta-final-quedara-vista-sentencia/1003744234995_10.html"
+    date: "2026-05-06"
+    quote: "El Tribunal Supremo deja visto para sentencia el juicio del caso mascarillas tras 14 jornadas."
+    note: "Juicio del Supremo (caso mascarillas) visto para sentencia; la Fiscalía Anticorrupción pide 24 años para Ábalos, 19 y medio para Koldo y 7 para Aldama."
+
+  # Informe de la UCO sobre la red de obra pública de Cerdán (jun-2025).
+  - source: "Isabel Pardo de Vera"
+    target: "Santos Cerdán"
+    type: ASSOCIATED_WITH
+    status: "investigado"
+    outlet: "elDiario.es"
+    url: "https://www.eldiario.es/economia/13-obras-recoge-informe-uco-tumbado-cerdan-suman-637-millones-e-incluyen-fondos-europeos_1_12380100.html"
+    date: "2025-06-12"
+    quote: "El informe de la UCO documenta trece adjudicaciones de obra pública por 637 millones de euros vinculadas a la presunta trama."
+    note: "Un nuevo informe de la UCO vincula a la expresidenta de Adif con la presunta adjudicación dirigida de obra pública en el entorno de Cerdán."
+
+  - source: "Acciona"
+    target: "Santos Cerdán"
+    type: ASSOCIATED_WITH
+    status: "investigado"
+    outlet: "elDiario.es"
+    url: "https://www.eldiario.es/economia/13-obras-recoge-informe-uco-tumbado-cerdan-suman-637-millones-e-incluyen-fondos-europeos_1_12380100.html"
+    date: "2025-06-12"
+    quote: "Las empresas beneficiarias de esos contratos son Acciona, Levantina y OPR."
+    note: "La UCO señala a la constructora entre las beneficiarias de las adjudicaciones presuntamente amañadas."
+
+  - source: "OPR"
+    target: "Santos Cerdán"
+    type: ASSOCIATED_WITH
+    status: "investigado"
+    outlet: "elDiario.es"
+    url: "https://www.eldiario.es/economia/13-obras-recoge-informe-uco-tumbado-cerdan-suman-637-millones-e-incluyen-fondos-europeos_1_12380100.html"
+    date: "2025-06-12"
+    quote: "Las empresas beneficiarias de esos contratos son Acciona, Levantina y OPR."
+    note: "La UCO señala a Obras Públicas y Regadíos (OPR) entre las beneficiarias de las adjudicaciones presuntamente amañadas."
+
+  # Unificación de la pieza de obra pública del caso Koldo: 14 imputados (mar-2026).
+  - source: "Javier Herrero"
+    target: "Santos Cerdán"
+    type: ASSOCIATED_WITH
+    status: "imputado"
+    outlet: "Infobae"
+    url: "https://www.infobae.com/espana/agencias/2026/03/09/el-juez-del-caso-koldo-unifica-la-causa-de-las-mordidas-de-obra-publica-con-14-imputados/"
+    date: "2026-03-09"
+    quote: "El juez del caso Koldo unifica la causa de las mordidas de obra pública con 14 imputados."
+    note: "El juez Ismael Moreno reúne en una sola pieza las investigaciones por presuntos amaños de obra pública; entre los 14 imputados figura Francisco Javier Herrero, exdirector general de Carreteras."
+
+  - source: "Antxón"
+    target: "Santos Cerdán"
+    type: ASSOCIATED_WITH
+    status: "imputado"
+    outlet: "Infobae"
+    url: "https://www.infobae.com/espana/agencias/2026/03/09/el-juez-del-caso-koldo-unifica-la-causa-de-las-mordidas-de-obra-publica-con-14-imputados/"
+    date: "2026-03-09"
+    quote: "El juez del caso Koldo unifica la causa de las mordidas de obra pública con 14 imputados."
+    note: "Antxon Alonso, socio de Servinabar (sociedad vinculada a Cerdán), figura entre los 14 imputados de la pieza unificada de obra pública."
+
+  # González Fernández citada en el Senado por reuniones con Leire Díez (jun-2026).
+  - source: "González Fernández"
+    target: "Leire Díez"
+    type: ASSOCIATED_WITH
+    outlet: "Libertad Digital"
+    url: "https://www.libertaddigital.com/espana/politica/2026-06-09/la-directora-de-la-guardia-civil-aplaza-su-comparecencia-en-el-senado-usando-de-excusa-el-dispositivo-del-papa-7418137/"
+    date: "2026-06-09"
+    note: "La directora general de la Guardia Civil es citada en el Senado (PP) para explicar tres reuniones mantenidas con la investigada Leire Díez entre sep-2024 y abr-2025. González no está investigada."
+
+  # Caso Leire Díez: Pedraz imputa a la abogada de Koldo García (jun-2026).
+  - source: "Leticia de la Hoz Calvo"
+    target: "Koldo García"
+    type: ASSOCIATED_WITH
+    status: "imputado"
+    outlet: "Libertad Digital"
+    url: "https://www.libertaddigital.com/espana/2026-06-08/caso-cloacas-pedraz-cita-a-la-presidenta-del-psoe-como-testigo-y-a-la-abogada-de-koldo-como-investigada-7417363/"
+    date: "2026-06-08"
+    quote: "Imputa a Leticia de la Hoz por participar en un presunto intento de soborno a Carmen Pano."
+    note: "El juez Pedraz imputa a Leticia de la Hoz, abogada de Koldo García, por un presunto intento de soborno a la testigo Carmen Pano en el caso Leire Díez (Diligencias Previas 150/2025)."
+
+  # T1 061 (16-sep-2026, revisión Codex): la ACCUSED_OF De la Hoz → «obstrucción a la justicia» se RETIRA.
+  # elDiario.es (08-06-2026) acredita la citación como investigada por el presunto ofrecimiento a la
+  # testigo, pero NO nombra el delito; «art. 464» era una calificación propia. Sin fuente que atribuya el
+  # tipo penal no hay arista de acusación (queda la ASSOCIATED_WITH de arriba + fila de registro en
+  # accusations.yaml). El Crime «obstrucción a la justicia» deja de declararse (era un nodo aislado).
+
+  # Encuadre de prensa (El Español): Montero, Zarrías y la rehabilitación tras los ERE.
+  # NO son hechos probados: relación de mentoría/afinidad política reportada por el medio.
+  - source: "María Jesús Montero"
+    target: "Gaspar Carlos Zarrías Arévalo"
+    type: ASSOCIATED_WITH
+    outlet: "El Español"
+    url: "https://www.elespanol.com/espana/andalucia/20250614/susana-diaz-da-paso-pidiendo-elecciones-montero-achicharra-manos-cerdan-maestro-zarrias/1003743801234_0.html"
+    date: "2025-06-14"
+    quote: "Gaspar Zarrías, al que consideró recientemente Montero en un acto en Jaén como 'un maestro en los gobiernos socialistas', contrató a Leire Díez."
+    note: "Según El Español, Montero se refirió a Zarrías como 'un maestro en los gobiernos socialistas'; el medio la sitúa entre los dirigentes socialistas que rehabilitan políticamente a Zarrías tras la anulación de su condena de los ERE por el TC. Encuadre periodístico, no hecho probado."
+
+  - source: "María Jesús Montero"
+    target: "Vicente Fernández"
+    type: ASSOCIATED_WITH
+    outlet: "El Español"
+    url: "https://www.elespanol.com/espana/20250602/constructor-protegido-cerdan-logro-ficho-exjefe-sepi-montero-leire/1003743782611_0.html"
+    date: "2025-06-02"
+    quote: "La fontanera de Cerdán colaboró en el plan de Montero para rehabilitar al expresidente de Sepi tras ser imputado."
+    note: "Según El Español, Leire Díez colaboró en un 'plan de Montero' para rehabilitar a Vicente Fernández Guerrero (expresidente de la SEPI) mientras estaba contratada por la consultora Zaño de Zarrías. Encuadre periodístico atribuido al medio; ninguno de los citados está condenado por estos hechos."
+
+  # Nueva pieza separada del 'caso Begoña Gómez': Peinado investiga a Barrabés por el
+  # contrato de Red.es (≈4 M€, fondos FEDER) a la UTE Innova Next–KPMG (jun-2026).
+  # CLAVE: una providencia del MISMO día aclaró que la pieza concierne SOLO a Barrabés,
+  # NO a Begoña Gómez ni a Cristina Álvarez (ellas no quedan imputadas por estos delitos).
+  # Aristas ACCUSED_OF de esta pieza RETIRADAS por la auditoría 063 (24-09-2026): sin acto judicial en el corpus;
+  # la sola noticia no sostiene la etiqueta pública «Acusado de». Traza en rectificaciones/registro.yaml.
+  # ============================================================================
+  # TRAMA PNV / rescate de Tubos Reunidos (informe UCO revelado por El Confidencial,
+  # 22-23 jun 2026; instrucción del juez Santiago Pedraz, Audiencia Nacional, dentro
+  # del caso Leire Díez). El "Grupo Hirurok" — Leire Díez, Vicente Fernández
+  # (expresidente de la SEPI) y el empresario Antxon Alonso — habría mediado con el
+  # PNV para impulsar el rescate de 112,8 M€ de la SEPI a la alavesa Tubos Reunidos.
+  # Todo según prensa / informe UCO: indicios, no hechos probados. Presunción de inocencia.
+  # ============================================================================
+
+  # (Arista SEPI→Tubos Reunidos PARTY_TO retirada por la auditoría 063, 24-09-2026: nota no verificable en la fuente.)
+  # Vicente Fernández, ideólogo de la operación, recompensado con un contrato.
+  - source: "Vicente Fernández"
+    target: "Tubos Reunidos"
+    type: ASSOCIATED_WITH
+    status: "acusado"
+    outlet: "El Español"
+    url: "https://www.elespanol.com/espana/tribunales/20260622/trama-leire-gestiono-reunion-tubos-reunidos-ortuzar-presidia-pnv-evitar-pago-sepi/1003744296231_0.html"
+    date: "2026-06-22"
+    quote: "fue recompensado…con contrato por el cual ingresó 40.000 euros"
+    note: "La UCO sitúa a Vicente Fernández (expresidente de la SEPI) como ideólogo de la operación en favor de Tubos Reunidos; tras lograrla habría sido recompensado con un contrato de 40.000 €. Según El Español/The Objective; indicio, no hecho probado."
+
+  # Intermediación de la trama con el PNV.
+  - source: "Vicente Fernández"
+    target: "PNV"
+    type: ASSOCIATED_WITH
+    status: "acusado"
+    outlet: "El Español"
+    url: "https://www.elespanol.com/espana/tribunales/20260622/trama-leire-gestiono-reunion-tubos-reunidos-ortuzar-presidia-pnv-evitar-pago-sepi/1003744296231_0.html"
+    date: "2026-06-22"
+    quote: "labores de intermediación con algún miembro del Partido Nacionalista Vasco"
+    note: "La UCO atribuye a la trama labores de intermediación con el PNV que «podrían haber contribuido a propiciar el otorgamiento» del rescate a Tubos Reunidos. Según El Confidencial/El Español; indicio, no hecho probado."
+
+  - source: "Leire Díez"
+    target: "PNV"
+    type: ASSOCIATED_WITH
+    status: "investigado"
+    outlet: "The Objective"
+    url: "https://theobjective.com/espana/tribunales/2026-06-23/uco-leire-rescate-tubos-reunidos-pnv/"
+    date: "2026-06-23"
+    quote: "la trama Leire concertó una reunión entre el CEO de la empresa Tubos Reunidos y Andoni Ortuzar, celebrada en enero de 2025"
+    note: "La UCO sostiene que la red de Leire Díez usó su capacidad de acceso a miembros del PNV para impulsar el rescate de Tubos Reunidos. Según The Objective/El Confidencial; indicio, no hecho probado."
+
+  - source: "Antxón"
+    target: "PNV"
+    type: ASSOCIATED_WITH
+    status: "imputado"
+    outlet: "The Objective"
+    url: "https://theobjective.com/espana/tribunales/2026-06-23/uco-leire-rescate-tubos-reunidos-pnv/"
+    date: "2026-06-23"
+    quote: "Antxon, puedes enterarte que opina el PNV del rescate de Tubos Reunidos?"
+    note: "Mensaje del chat «Hirurok» (Leire Díez, Vicente Fernández y Antxon Alonso) recogido por la UCO sobre sus contactos con el PNV. Según The Objective; indicio, no hecho probado."
+
+  # Reunión documentada por la UCO (28-ene-2025).
+  - source: "Carlos López de las Heras"
+    target: "Andoni Ortuzar"
+    type: MET_WITH
+    outlet: "El Debate"
+    url: "https://www.eldebate.com/espana/20260623/uco-implica-pnv-trama-psoe-destapa-reuniones-ortuzar-facilitar-rescate-tubos-reunidos_431495.html"
+    date: "2025-01-28"
+    quote: "Uno de los encuentros documentados por la UCO tuvo lugar el 28 de enero del 2025"
+    note: "Reunión concertada por la trama Leire entre el CEO de Tubos Reunidos, Carlos López de las Heras, y Andoni Ortuzar (entonces presidente del PNV); también estuvo presente el responsable de Organización y senador Joseba Aurrekoetxea. Según El Debate/El Español."
+
+  - source: "Carlos López de las Heras"
+    target: "Joseba Aurrekoetxea"
+    type: MET_WITH
+    outlet: "El Debate"
+    url: "https://www.eldebate.com/espana/20260623/uco-implica-pnv-trama-psoe-destapa-reuniones-ortuzar-facilitar-rescate-tubos-reunidos_431495.html"
+    date: "2025-01-28"
+    quote: "Uno de los encuentros documentados por la UCO tuvo lugar el 28 de enero del 2025"
+    note: "Joseba Aurrekoetxea (responsable de Organización del PNV y senador) asistió a la reunión del 28-ene-2025 entre el CEO de Tubos Reunidos y Andoni Ortuzar. Según El Debate/El Español."
+
+  # Canal de las comisiones presuntamente ilegales.
+  - source: "Mediaciones Martínez SL"
+    target: "Leire Díez"
+    type: ASSOCIATED_WITH
+    status: "investigado"
+    outlet: "El Debate"
+    url: "https://www.eldebate.com/espana/20260623/uco-implica-pnv-trama-psoe-destapa-reuniones-ortuzar-facilitar-rescate-tubos-reunidos_431495.html"
+    date: "2026-06-23"
+    quote: "percibieron una presunta comisión ilegal de al menos 114.950 euros. El pago…fue canalizado a través de la sociedad zaragozana Mediaciones Martínez SL"
+    note: "Sociedad zaragozana que la UCO sitúa como vía para canalizar las comisiones de la trama (al menos 114.950 € repartidos entre Leire Díez, Vicente Fernández y Antxon Alonso). Tubos Reunidos habría abonado 247.459 € en comisiones; el chat «Hirurok» habría cobrado más de 750.000 € en total. Según El Debate/The Objective; indicio, no hecho probado."
+
+  # 'Topo' de la SEPI (informe UCO, 24-jun-2026): un alto cargo del organismo habría
+  # filtrado el expediente del rescate de Tubos Reunidos al socio de la trama.
+  - source: "Miguel Ángel Figueroa"
+    target: "Vicente Fernández"
+    type: ASSOCIATED_WITH
+    status: "investigado"
+    outlet: "El Independiente"
+    url: "https://www.elindependiente.com/espana/2026/06/24/la-uco-senala-que-el-topo-de-las-cloacas-en-la-sepi-filtro-al-socio-de-leire-nueve-archivos-sobre-tubos-reunidos/"
+    date: "2026-06-24"
+    quote: "Va a ser nuestros ojos en la SEPI"
+    note: "La UCO señala a Miguel Ángel Figueroa, exdirector de Participadas III de la SEPI, como el presunto 'topo' que habría filtrado nueve archivos confidenciales del expediente de rescate de Tubos Reunidos a Vicente Fernández (expresidente de la SEPI, socio de la 'trama Leire'). La cita procede de una libreta incautada a Leire Díez, fechada el 3-abr-2021. Según El Independiente; indicio, no hecho probado."
+
+  - source: "Miguel Ángel Figueroa"
+    target: "SEPI"
+    type: WORKS_FOR
+    status: "imputado"
+    outlet: "elDiario.es"
+    url: "https://www.eldiario.es/politica/juez-caso-leire-imputa-presidenta-sepi-24-personas-supuestos-amanos-contratacion-publica_1_13342324.html"
+    date: "2026-06-29"
+    quote: "El juez del caso Leire imputa a la presidenta de la SEPI y a otras 24 personas por los supuestos amaños en la contratación pública."
+    note: "Exdirector de Participadas III de la SEPI (2018-2021); citado como investigado en la pieza del caso Leire según elDiario.es (29-06-2026)."
+
+  # ============================================================================
+  # Imputación de la presidenta de la SEPI (providencia del juez Pedraz, 29-jun-2026,
+  # Audiencia Nacional, a petición de la Fiscalía Anticorrupción): 25 personas citadas
+  # como investigadas en la pieza de presuntos amaños de la contratación pública del
+  # caso Leire. Entre ellas, María Belén Gualda. Imputación = citación a declarar, NO
+  # condena. Delitos de la pieza: tráfico de influencias, malversación, prevaricación
+  # e intermediación ilícita en la contratación pública. Según prensa; presunción de
+  # inocencia. (Gualda ya consta en el grafo como presidenta de la SEPI — capa contexto;
+  # estas aristas la vinculan, en la capa de prensa, a los delitos investigados.)
+  # ============================================================================
+  # 063 tramo 2 (01-oct, revisión Codex): retirada ACCUSED_OF María Belén Gualda González→tráfico de influencias — elDiario.es (29-06-2026) da los delitos de la pieza en bloque, no persona a persona; la citación como investigado queda en el rol, atribuida.
+  # 063 tramo 2 (01-oct, revisión Codex): retirada ACCUSED_OF María Belén Gualda González→malversación — elDiario.es (29-06-2026) da los delitos de la pieza en bloque, no persona a persona; la citación como investigado queda en el rol, atribuida.
+  # 063 tramo 2 (01-oct, revisión Codex): retirada ACCUSED_OF María Belén Gualda González→prevaricación — elDiario.es (29-06-2026) da los delitos de la pieza en bloque, no persona a persona; la citación como investigado queda en el rol, atribuida.
+
+  # ============================================================================
+  # Los otros 24 imputados de la providencia de Pedraz (29-jun-2026): cada uno
+  # enganchado a SU empresa con WORKS_FOR (direccional), status=imputado. Cargos
+  # según elDiario.es. Imputación = citación a declarar, no condena. P. de inocencia.
+  # ============================================================================
+  - source: "Miguel Ángel Santiago Mesa"
+    target: "SEPI"
+    type: WORKS_FOR
+    status: "imputado"
+    outlet: "elDiario.es"
+    url: "https://www.eldiario.es/politica/juez-caso-leire-imputa-presidenta-sepi-24-personas-supuestos-amanos-contratacion-publica_1_13342324.html"
+    date: "2026-06-29"
+    quote: "El juez del caso Leire imputa a la presidenta de la SEPI y a otras 24 personas por los supuestos amaños en la contratación pública."
+    note: "Exdirector corporativo de la SEPI, según elDiario.es (29-06-2026); citado como investigado en la pieza del caso Leire según elDiario.es (29-06-2026)."
+  - source: "Rosario Martín Manzanedo"
+    target: "SEPI"
+    type: WORKS_FOR
+    status: "imputado"
+    outlet: "elDiario.es"
+    url: "https://www.eldiario.es/politica/juez-caso-leire-imputa-presidenta-sepi-24-personas-supuestos-amanos-contratacion-publica_1_13342324.html"
+    date: "2026-06-29"
+    quote: "El juez del caso Leire imputa a la presidenta de la SEPI y a otras 24 personas por los supuestos amaños en la contratación pública."
+    note: "Directora de Participadas de la SEPI, según elDiario.es (29-06-2026); citada como investigada en la pieza del caso Leire según elDiario.es (29-06-2026)."
+  - source: "Julián Mateos"
+    target: "SEPI"
+    type: WORKS_FOR
+    status: "imputado"
+    outlet: "elDiario.es"
+    url: "https://www.eldiario.es/politica/juez-caso-leire-imputa-presidenta-sepi-24-personas-supuestos-amanos-contratacion-publica_1_13342324.html"
+    date: "2026-06-29"
+    quote: "El juez del caso Leire imputa a la presidenta de la SEPI y a otras 24 personas por los supuestos amaños en la contratación pública."
+    note: "Responsable del seguimiento del expediente de rescate de Tubos Reunidos en la SEPI, según elDiario.es (29-06-2026); citado como investigado en la pieza del caso Leire según elDiario.es (29-06-2026)."
+  - source: "Fernando Albert Aragón"
+    target: "SEPIDES"
+    type: WORKS_FOR
+    status: "imputado"
+    outlet: "elDiario.es"
+    url: "https://www.eldiario.es/politica/juez-caso-leire-imputa-presidenta-sepi-24-personas-supuestos-amanos-contratacion-publica_1_13342324.html"
+    date: "2026-06-29"
+    quote: "El juez del caso Leire imputa a la presidenta de la SEPI y a otras 24 personas por los supuestos amaños en la contratación pública."
+    note: "Secretario general y director de la asesoría jurídica de SEPIDES, según elDiario.es (29-06-2026); citado como investigado en la pieza del caso Leire según elDiario.es (29-06-2026)."
+  - source: "María de la Concepción Ortiz Fuerte"
+    target: "Tribunal Administrativo Central de Recursos Contractuales"
+    type: WORKS_FOR
+    status: "imputado"
+    outlet: "elDiario.es"
+    url: "https://www.eldiario.es/politica/juez-caso-leire-imputa-presidenta-sepi-24-personas-supuestos-amanos-contratacion-publica_1_13342324.html"
+    date: "2026-06-29"
+    quote: "El juez del caso Leire imputa a la presidenta de la SEPI y a otras 24 personas por los supuestos amaños en la contratación pública."
+    note: "Presidenta del Tribunal Administrativo Central de Recursos Contractuales (TACRC), según elDiario.es (29-06-2026); citada como investigada en la pieza del caso Leire según elDiario.es (29-06-2026)."
+  - source: "José Ramón Sempere Vera"
+    target: "Mercasa"
+    type: WORKS_FOR
+    status: "imputado"
+    outlet: "elDiario.es"
+    url: "https://www.eldiario.es/politica/juez-caso-leire-imputa-presidenta-sepi-24-personas-supuestos-amanos-contratacion-publica_1_13342324.html"
+    date: "2026-06-29"
+    quote: "El juez del caso Leire imputa a la presidenta de la SEPI y a otras 24 personas por los supuestos amaños en la contratación pública."
+    note: "Presidente del Consejo de Administración de MERCASA (2018-2024), según elDiario.es (29-06-2026); citado como investigado en la pieza del caso Leire según elDiario.es (29-06-2026)."
+  - source: "María Teresa Castillo Pasalodos"
+    target: "Mercasa"
+    type: WORKS_FOR
+    status: "imputado"
+    outlet: "elDiario.es"
+    url: "https://www.eldiario.es/politica/juez-caso-leire-imputa-presidenta-sepi-24-personas-supuestos-amanos-contratacion-publica_1_13342324.html"
+    date: "2026-06-29"
+    quote: "El juez del caso Leire imputa a la presidenta de la SEPI y a otras 24 personas por los supuestos amaños en la contratación pública."
+    note: "Directora de Desarrollo Corporativo de MERCASA, según elDiario.es (29-06-2026); citada como investigada en la pieza del caso Leire según elDiario.es (29-06-2026)."
+  - source: "José Vicente Berlanga Arona"
+    target: "ENUSA"
+    type: WORKS_FOR
+    status: "imputado"
+    outlet: "elDiario.es"
+    url: "https://www.eldiario.es/politica/juez-caso-leire-imputa-presidenta-sepi-24-personas-supuestos-amanos-contratacion-publica_1_13342324.html"
+    date: "2026-06-29"
+    quote: "El juez del caso Leire imputa a la presidenta de la SEPI y a otras 24 personas por los supuestos amaños en la contratación pública."
+    note: "Presidente del Consejo de Administración de ENUSA (2018-2021), según elDiario.es (29-06-2026); citado como investigado en la pieza del caso Leire según elDiario.es (29-06-2026)."
+  - source: "Rosario Arévalo Sández"
+    target: "ENUSA"
+    type: WORKS_FOR
+    status: "imputado"
+    outlet: "elDiario.es"
+    url: "https://www.eldiario.es/politica/juez-caso-leire-imputa-presidenta-sepi-24-personas-supuestos-amanos-contratacion-publica_1_13342324.html"
+    date: "2026-06-29"
+    quote: "El juez del caso Leire imputa a la presidenta de la SEPI y a otras 24 personas por los supuestos amaños en la contratación pública."
+    note: "Directora Corporativa de ENUSA, según elDiario.es (29-06-2026); citada como investigada en la pieza del caso Leire según elDiario.es (29-06-2026)."
+  - source: "Francisco Javier López Buciega"
+    target: "Acciona"
+    type: WORKS_FOR
+    status: "imputado"
+    outlet: "elDiario.es"
+    url: "https://www.eldiario.es/politica/juez-caso-leire-imputa-presidenta-sepi-24-personas-supuestos-amanos-contratacion-publica_1_13342324.html"
+    date: "2026-06-29"
+    quote: "El juez del caso Leire imputa a la presidenta de la SEPI y a otras 24 personas por los supuestos amaños en la contratación pública."
+    note: "Director de Servicios Urbanos de ACCIONA, según elDiario.es (29-06-2026); citado como investigado en la pieza del caso Leire según elDiario.es (29-06-2026)."
+  - source: "Juan Antonio Carrillo Donaire"
+    target: "SDP Carrillo y Montes"
+    type: WORKS_FOR
+    status: "imputado"
+    outlet: "elDiario.es"
+    url: "https://www.eldiario.es/politica/juez-caso-leire-imputa-presidenta-sepi-24-personas-supuestos-amanos-contratacion-publica_1_13342324.html"
+    date: "2026-06-29"
+    quote: "El juez del caso Leire imputa a la presidenta de la SEPI y a otras 24 personas por los supuestos amaños en la contratación pública."
+    note: "Catedrático de Derecho Administrativo y socio de un despacho de abogados, según elDiario.es (29-06-2026); citado como investigado en la pieza del caso Leire según elDiario.es (29-06-2026)."
+  - source: "Francisco Irazusta Rodríguez"
+    target: "Tubos Reunidos"
+    type: WORKS_FOR
+    status: "imputado"
+    outlet: "elDiario.es"
+    url: "https://www.eldiario.es/politica/juez-caso-leire-imputa-presidenta-sepi-24-personas-supuestos-amanos-contratacion-publica_1_13342324.html"
+    date: "2026-06-29"
+    quote: "El juez del caso Leire imputa a la presidenta de la SEPI y a otras 24 personas por los supuestos amaños en la contratación pública."
+    note: "Expresidente de Tubos Reunidos, según elDiario.es (29-06-2026); citado como investigado en la pieza del caso Leire según elDiario.es (29-06-2026)."
+  - source: "Carlos López de las Heras"
+    target: "Tubos Reunidos"
+    type: WORKS_FOR
+    status: "imputado"
+    outlet: "elDiario.es"
+    url: "https://www.eldiario.es/politica/juez-caso-leire-imputa-presidenta-sepi-24-personas-supuestos-amanos-contratacion-publica_1_13342324.html"
+    date: "2026-06-29"
+    quote: "El juez del caso Leire imputa a la presidenta de la SEPI y a otras 24 personas por los supuestos amaños en la contratación pública."
+    note: "Entonces director ejecutivo de Tubos Reunidos, según elDiario.es (29-06-2026); citado como investigado en la pieza del caso Leire según elDiario.es (29-06-2026)."
+  - source: "Jesús Pérez Rodríguez Urrutia"
+    target: "Tubos Reunidos"
+    type: WORKS_FOR
+    status: "imputado"
+    outlet: "elDiario.es"
+    url: "https://www.eldiario.es/politica/juez-caso-leire-imputa-presidenta-sepi-24-personas-supuestos-amanos-contratacion-publica_1_13342324.html"
+    date: "2026-06-29"
+    quote: "El juez del caso Leire imputa a la presidenta de la SEPI y a otras 24 personas por los supuestos amaños en la contratación pública."
+    note: "Consejero de Tubos Reunidos, según elDiario.es (29-06-2026); citado como investigado en la pieza del caso Leire según elDiario.es (29-06-2026)."
+  - source: "Félix Azcona Lacarra"
+    target: "Beyol Gestión"
+    type: WORKS_FOR
+    status: "imputado"
+    outlet: "elDiario.es"
+    url: "https://www.eldiario.es/politica/juez-caso-leire-imputa-presidenta-sepi-24-personas-supuestos-amanos-contratacion-publica_1_13342324.html"
+    date: "2026-06-29"
+    quote: "El juez del caso Leire imputa a la presidenta de la SEPI y a otras 24 personas por los supuestos amaños en la contratación pública."
+    note: "Representante de Beyol Gestión, según elDiario.es (29-06-2026); citado como investigado en la pieza del caso Leire según elDiario.es (29-06-2026)."
+  - source: "Juan Ignacio Fernández-Micheltorena"
+    target: "Erri Berri"
+    type: WORKS_FOR
+    status: "imputado"
+    outlet: "elDiario.es"
+    url: "https://www.eldiario.es/politica/juez-caso-leire-imputa-presidenta-sepi-24-personas-supuestos-amanos-contratacion-publica_1_13342324.html"
+    date: "2026-06-29"
+    quote: "El juez del caso Leire imputa a la presidenta de la SEPI y a otras 24 personas por los supuestos amaños en la contratación pública."
+    note: "Director financiero de Erri Berri, según elDiario.es (29-06-2026); citado como investigado en la pieza del caso Leire según elDiario.es (29-06-2026)."
+  - source: "Fernando Samper Rivas"
+    target: "Forestalia"
+    type: WORKS_FOR
+    status: "imputado"
+    outlet: "elDiario.es"
+    url: "https://www.eldiario.es/politica/juez-caso-leire-imputa-presidenta-sepi-24-personas-supuestos-amanos-contratacion-publica_1_13342324.html"
+    date: "2026-06-29"
+    quote: "El juez del caso Leire imputa a la presidenta de la SEPI y a otras 24 personas por los supuestos amaños en la contratación pública."
+    note: "Director del Grupo Forestalia, según elDiario.es (29-06-2026); citado como investigado en la pieza del caso Leire según elDiario.es (29-06-2026)."
+  # 063 tramo 2 (01-oct) revisión Codex: la fuente dice «Vinculados a Forestalia», no acredita empleo → ASSOCIATED_WITH.
+  - source: "Roberto Pérez Águeda"
+    target: "Forestalia"
+    type: ASSOCIATED_WITH
+    outlet: "elDiario.es"
+    url: "https://www.eldiario.es/politica/juez-caso-leire-imputa-presidenta-sepi-24-personas-supuestos-amanos-contratacion-publica_1_13342324.html"
+    date: "2026-06-29"
+    quote: "El juez del caso Leire imputa a la presidenta de la SEPI y a otras 24 personas por los supuestos amaños en la contratación pública."
+    note: "Vinculado al Grupo Forestalia, según elDiario.es (29-06-2026); citado como investigado en la pieza del caso Leire según elDiario.es (29-06-2026)."
+  # 063 tramo 2 (01-oct) revisión Codex: la fuente dice «Vinculados a Forestalia», no acredita empleo → ASSOCIATED_WITH.
+  - source: "Eduardo Pérez Águeda"
+    target: "Forestalia"
+    type: ASSOCIATED_WITH
+    outlet: "elDiario.es"
+    url: "https://www.eldiario.es/politica/juez-caso-leire-imputa-presidenta-sepi-24-personas-supuestos-amanos-contratacion-publica_1_13342324.html"
+    date: "2026-06-29"
+    quote: "El juez del caso Leire imputa a la presidenta de la SEPI y a otras 24 personas por los supuestos amaños en la contratación pública."
+    note: "Vinculado al Grupo Forestalia, según elDiario.es (29-06-2026); citado como investigado en la pieza del caso Leire según elDiario.es (29-06-2026)."
+  - source: "Carmelo Aznárez Pellicer"
+    target: "Mediaciones Martínez SL"
+    type: WORKS_FOR
+    status: "imputado"
+    outlet: "elDiario.es"
+    url: "https://www.eldiario.es/politica/juez-caso-leire-imputa-presidenta-sepi-24-personas-supuestos-amanos-contratacion-publica_1_13342324.html"
+    date: "2026-06-29"
+    quote: "El juez del caso Leire imputa a la presidenta de la SEPI y a otras 24 personas por los supuestos amaños en la contratación pública."
+    note: "Administrador de Mediaciones Martínez SL, según elDiario.es (29-06-2026); citado como investigado en la pieza del caso Leire según elDiario.es (29-06-2026)."
+  - source: "Mikel Arrarás Abejón"
+    target: "Servinabar"
+    type: WORKS_FOR
+    status: "imputado"
+    outlet: "elDiario.es"
+    url: "https://www.eldiario.es/politica/juez-caso-leire-imputa-presidenta-sepi-24-personas-supuestos-amanos-contratacion-publica_1_13342324.html"
+    date: "2026-06-29"
+    quote: "El juez del caso Leire imputa a la presidenta de la SEPI y a otras 24 personas por los supuestos amaños en la contratación pública."
+    note: "Arquitecto técnico de Servinabar, según elDiario.es (29-06-2026); citado como investigado en la pieza del caso Leire según elDiario.es (29-06-2026)."
+  - source: "Beyol Gestión"
+    target: "Erri Berri"
+    type: ADMINISTRA  # 063 tramo 6 [acb15ac5]: administrar no es controlar
+    outlet: "elDiario.es"
+    url: "https://www.eldiario.es/politica/juez-caso-leire-imputa-presidenta-sepi-24-personas-supuestos-amanos-contratacion-publica_1_13342324.html"
+    date: "2026-06-29"
+    quote: "Beyol Gestión, administradora de la empresa constructora Erri Berri."
+    note: "Beyol Gestión figura como sociedad administradora de la constructora Erri Berri en la pieza de amaños del caso Leire. Según elDiario.es."
+
+  # Caso Leire — testimonio de Joaquín Parra ante Pedraz (8-jul-2026): dice que Leire
+  # Díez intentó 'comprarle' y la describe como 'el tonto útil' del Gobierno.
+  - source: "Joaquín Parra Páez"
+    target: "Leire Díez"
+    type: ASSOCIATED_WITH
+    outlet: "Libertad Digital"
+    url: "https://www.libertaddigital.com/espana/2026-07-08/el-empresario-joaquin-parra-asegura-a-pedraz-que-leire-diez-era-el-tonto-util-del-gobierno-7432734/"
+    date: "2026-07-08"
+    quote: "Leire Díez era 'el tonto útil' del Gobierno"
+    note: "El empresario Joaquín Parra declaró como testigo ante el juez Pedraz (AN, 8-jul-2026) que la investigada Leire Díez se le presentó 'de parte de Pedro Sánchez' y de Santos Cerdán, le trasladó mensajes sobre represalias y le pidió cambiar de abogado por uno afín al PSOE. Manifestaciones de un testigo, no hechos probados. Según Libertad Digital; presunción de inocencia."
+
+  # Caso TEAC / Hacienda — Marco Sanjuán (jul-2026). Dos aristas: la relación con
+  # Montero (fue su 'número 3'; encuadre de prensa, NO cargo formal probado) y el
+  # destino actual en la AEAT (el gancho con la trama Zapatero). No se crea arista
+  # directa con Zapatero: la conexión es institucional (el área que investiga), no
+  # personal — una arista persona↔persona sería engañosa.
+  - source: "José Antonio Marco Sanjuán"
+    target: "María Jesús Montero"
+    type: ASSOCIATED_WITH
+    status: "imputado"
+    outlet: "El Debate"
+    url: "https://www.eldebate.com/espana/20250621/caida-jose-antonio-marco-sanjuan-tres-montero-anticorrupcion-investiga-cohecho-trafico-influencias_309151.html"
+    date: "2025-06-21"
+    quote: "La caída de José Antonio Marco Sanjuán, el 'tres' de Montero al que Anticorrupción investiga por cohecho y tráfico de influencias."
+    note: "Según El Debate, Marco Sanjuán —presidente del TEAC (2018-2025), órgano dependiente del Ministerio de Hacienda— era considerado el 'número 3' de la vicepresidenta María Jesús Montero. Dimitió en jun-2025; Anticorrupción se querelló por cohecho, prevaricación, tráfico de influencias y malversación (mar-2026, admitida en el JI nº 35 de Madrid). Montero no está investigada. Encuadre periodístico; presunción de inocencia."
+
+  - source: "José Antonio Marco Sanjuán"
+    target: "Agencia Tributaria"
+    type: WORKS_FOR
+    status: "imputado"
+    outlet: "El Debate"
+    url: "https://www.eldebate.com/espana/20260708/area-hacienda-investiga-zapatero-donde-esta-colocado-ex-tres-montero-imputado-cobrar-mordidas_436988.html"
+    date: "2026-07-08"
+    quote: "El área de Hacienda que investiga la trama de Zapatero es donde está colocado el ex 'tres' de Montero imputado por cobrar mordidas."
+    note: "Según El Debate, tras dimitir del TEAC Marco Sanjuán fue destinado como inspector a la Dependencia Regional de Inspección de la AEAT en la Comunidad Valenciana — el área que investiga el entramado societario de la trama Zapatero (informe-udef-1907) — sin expediente interno ni suspensión cautelar pese a estar imputado por cohecho. Según prensa; presunción de inocencia."
+
+  # Caso Leire — informe UCO de 8-jul-2026 (~50 págs) remitido a Pedraz: atribuye a
+  # Juanma Serrano (expresidente de Correos, exjefe de gabinete de Sánchez en el PSOE)
+  # un papel destacado en la presunta trama y el 'enchufe' de Leire Díez en Correos.
+  # 10-jul-2026: Pedraz acordó su imputación a petición de Anticorrupción y autorizó el
+  # volcado de su móvil → las aristas llevan ya status "investigado".
+  - source: "Juan Manuel Serrano Quintana"
+    target: "Leire Díez"
+    type: ASSOCIATED_WITH
+    status: "investigado"
+    outlet: "El Español"
+    url: "https://www.elespanol.com/espana/tribunales/20260709/uco-implica-exjefe-gabinete-sanchez-juanma-serrano-enchufe-leire-correos-sale/1003744315488_0.html"
+    date: "2026-07-09"
+    quote: "La UCO implica al exjefe de gabinete de Sánchez, Juanma Serrano, en el enchufe de Leire en Correos: 'Lo tuyo sale'."
+    note: "Un informe de la UCO fechado el 8-jul-2026 y remitido al juez Pedraz (AN, DP 150/2025) atribuye a Juan Manuel Serrano —presidente de Correos 2018-2023 y antes jefe de gabinete de Pedro Sánchez en el PSOE— haber facilitado la contratación de la investigada Leire Díez en Correos con requisitos hechos a medida (accedió a puestos de relevancia entre 2021 y 2024) y un papel «preeminente» en la presunta trama para desestabilizar causas judiciales que afectan al PSOE y al Gobierno. El 10-jul-2026 Pedraz acordó su imputación (condición de investigado) a petición de la Fiscalía Anticorrupción y autorizó el volcado de su móvil. Según El Español y Vozpópuli; presunción de inocencia."
+
+  - source: "Juan Manuel Serrano Quintana"
+    target: "Vicente Fernández"
+    type: ASSOCIATED_WITH
+    status: "investigado"
+    outlet: "Vozpópuli"
+    url: "https://www.vozpopuli.com/tribunales/la-uco-senala-al-exjefe-de-gabinete-de-sanchez-por-el-enchufe-de-leire-diez-en-correos.html"
+    date: "2026-07-09"
+    quote: "el expresidente de la SEPI Vicente Fernández aseguraba a Leire Díez que \"no te preocupes, lo tuyo sale\" tras mantener una conversación con Juanma Serrano previa al fichaje de la exmilitante socialista como alto cargo de Correos"
+    note: "Según el informe de la UCO remitido al juez Pedraz, recogido por Vozpópuli y El Español (09-07-2026), el expresidente de la SEPI Vicente Fernández —también investigado en el caso Leire (EFE vía Infobae, 10-07-2026)— habló con Serrano, entonces presidente de Correos, sobre la colocación de Leire Díez en la empresa pública y después escribió a Díez: «Me ha dicho 'Ok, vamos hablando'. No te preocupes, lo tuyo sale» (mayo de 2021, según El Español). Según El Español (19-08-2026), el 17 de mayo de 2021 Fernández habló con Serrano sobre «lo que hablamos de Leire» y le planteó si podían «ponerlo ya en marcha». Son indicios policiales en una instrucción en curso; presunción de inocencia."
+
+  # 063 (2026-09-28, [34bbe6a6]): ACCUSED_OF organización criminal de Serrano RETIRADO — el delito solo
+  # consta por «fuentes fiscales» y el propio medio dice que «Pedraz no aclara el delito». La imputación
+  # del 10-jul se sigue contando en las notas de sus relaciones.
+
+  # ── Caso Koldo: citación como investigados de Jésica Rodríguez, Joseba García y
+  # Ignacio Zaldívar (3-jul-2026, juez Ismael Moreno, AN). Barrido badges 2026-07-10.
+  # El ítem del feed (web/lib/ultimaHora.ts, 3-jul) ya existía; estas aristas ACCUSED_OF
+  # son las que dan el badge de estado procesal y la entrada en /investigados.
+  # 063 (2026-09-28, [b0352a1b]): ACCUSED_OF tráfico de influencias de Jésica RETIRADO — las fuentes le
+  # atribuyen los delitos solo en bloque y la cita guardada no era literal. Queda la malversación.
+
+  - source: "Jesica Rodríguez García"
+    target: "malversación"
+    type: ACCUSED_OF
+    status: "investigado"
+    outlet: "Libertad Digital"
+    url: "https://www.libertaddigital.com/espana/2026-07-03/ismael-moreno-imputa-a-jessica-rodriguez-por-su-contratacion-ineco-y-tragsatec-7430660/"
+    date: "2026-07-03"
+    quote: "Se declara que los hechos relativos a la contratación de Jessica Rodríguez por INECO y TRAGSATEC son constitutivos de un delito de malversación de patrimonio público."
+    note: "Citada como investigada el 3-jul-2026 por Ismael Moreno (AN, caso Koldo) por presunta malversación de patrimonio público por su contratación en Ineco y Tragsatec sin trabajo efectivo. Según Libertad Digital y The Objective; presunción de inocencia."
+
+  - source: "Joseba García Izaguirre"
+    target: "tráfico de influencias"
+    type: ACCUSED_OF
+    status: "investigado"
+    outlet: "The Objective"
+    url: "https://theobjective.com/espana/tribunales/2026-07-03/koldo-jesica-enchufes-ineco-tragsatec/"
+    date: "2026-07-03"
+    quote: "El juez cita también al hermano de Koldo, que 'firmaba los partes de la joven y se encargaba de camuflar su puesto de trabajo fantasma'."
+    note: El 3-jul-2026 el juez Ismael Moreno (AN, caso Koldo) citó como investigado a Joseba García Izaguirre, hermano de Koldo García, por presuntos delitos de tráfico de influencias y malversación en relación con la contratación de Jésica Rodríguez en Ineco (según The Objective y Libertad Digital, 03-07-2026). Según The Objective, «los investigadores sostienen» que «firmaba los partes de la joven y se encargaba de camuflar su puesto de trabajo fantasma». El 20-jul-2026 se acogió a su derecho a no declarar (según elDiario.es). Instrucción en curso; presunción de inocencia.
+
+  - source: "Joseba García Izaguirre"
+    target: "malversación"
+    type: ACCUSED_OF
+    status: "investigado"
+    outlet: "Libertad Digital"
+    url: "https://www.libertaddigital.com/espana/2026-07-03/ismael-moreno-imputa-a-jessica-rodriguez-por-su-contratacion-ineco-y-tragsatec-7430660/"
+    date: "2026-07-03"
+    quote: "Ismael Moreno imputa a Jessica Rodríguez por su contratación en Ineco y Tragsatec y al hermano de Koldo García."
+    note: "Citado como investigado el 3-jul-2026 por presunta malversación de patrimonio público (además de tráfico de influencias) en la contratación de Jésica Rodríguez. Según Libertad Digital y The Objective; presunción de inocencia."
+
+  - source: "Ignacio Zaldívar de la Rica"
+    target: "tráfico de influencias"
+    type: ACCUSED_OF
+    status: "investigado"
+    outlet: "The Objective"
+    url: "https://theobjective.com/espana/tribunales/2026-07-03/koldo-jesica-enchufes-ineco-tragsatec/"
+    date: "2026-07-03"
+    quote: "Ignacio Zaldívar, director de Gestión Administrativa de ADIF, ordenó las contrataciones y propuso que continuara seis meses en Tragsatec tras finalizar contrato en Ineco."
+    note: "Según The Objective (03-07-2026), el juez Ismael Moreno (AN, caso Koldo) citó como investigado a Ignacio Zaldívar de la Rica, que fue director de Gestión Administrativa de ADIF, por presuntos tráfico de influencias y malversación en relación con la contratación de Jésica Rodríguez en Ineco y Tragsatec; el mismo medio afirma que ordenó esas contrataciones. Según Europa Press (vía Telemadrid, 03-07-2026), la Fiscalía Anticorrupción sostiene que gestionó que fuera contratada «sin entrevista previa» por Tragsatec. Según elDiario.es (20-07-2026), ese día se acogió a su derecho a no declarar. Rige la presunción de inocencia."
+
+  # 063 tramo 4 (02-oct): retirada ACCUSED_OF Zaldívar→malversación [c7bee937] — la cita de Libertad Digital se refiere a Jésica Rodríguez, no a él.
+
+  # ── Querella Air Europa (rescate SEPI de 475 M€, nov-2020): el magistrado José María
+  # Escribano (Juzgado de Instrucción nº 49 de Madrid) admitió a trámite una querella de PP
+  # y Vox y citó a Bartolomé Lora Toro —vicepresidente de la SEPI y presidente en funciones
+  # en nov-2020— a declarar como INVESTIGADO el 3-jul-2026 por presunta prevaricación
+  # administrativa. Causa DISTINTA de la pieza de amaños SEPI de Pedraz (abajo). Esta arista
+  # ACCUSED_OF es la que da el badge de estado procesal y la entrada en /investigados; sin
+  # ella el nodo salía sin marcar pese a narrarlo el resumen curado. El auto no es público.
+  # 063 tramo 3 (01-oct): retirada ACCUSED_OF Bartolomé Lora Toro→prevaricación [b557aba6] — la única fuente es la previa matinal de The Objective («interroga hoy como imputado»), no la crónica del acto; >90 días y sin fila de registro.
+
+  # ── Pieza de amaños SEPI (caso Leire, DP 150/2025): providencia de Pedraz del
+  # 29-jun-2026 citando como investigadas a 25 personas por presuntos amaños en la
+  # contratación de empresas públicas de la SEPI (MERCASA, ENUSA, PEPA/SEPIDES,
+  # rescate de Tubos Reunidos ~112,8 M€, Forestalia). Barrido badges 2026-07-10:
+  # estas personas ya existían en esta capa con aristas WORKS_FOR status=imputado,
+  # que NO pintan el badge de estado procesal — los cargos van en ACCUSED_OF.
+  # Delitos según la lista nominal de elDiario.es (confirmada 1:1 por Libertad
+  # Digital): tráfico de influencias, malversación y prevaricación (LD y OKDiario
+  # añaden organización criminal — discrepancia; el auto no es público, no se carga).
+  # Belén Gualda (presidenta actual de la SEPI), Julián Mateos-Aparicio y Carlos
+  # López de las Heras también están entre los 25 — sus aristas van aparte/abajo.
+
+  # 063 tramo 2 (01-oct, revisión Codex): retirada ACCUSED_OF Miguel Ángel Figueroa→tráfico de influencias — elDiario.es (29-06-2026) da los delitos de la pieza en bloque, no persona a persona; la citación como investigado queda en el rol, atribuida.
+
+  # 063 tramo 2 (01-oct, revisión Codex): retirada ACCUSED_OF Miguel Ángel Figueroa→malversación — elDiario.es (29-06-2026) da los delitos de la pieza en bloque, no persona a persona; la citación como investigado queda en el rol, atribuida.
+
+  # 063 tramo 2 (01-oct, revisión Codex): retirada ACCUSED_OF Miguel Ángel Figueroa→prevaricación — elDiario.es (29-06-2026) da los delitos de la pieza en bloque, no persona a persona; la citación como investigado queda en el rol, atribuida.
+
+  # 063 tramo 2 (01-oct): retirada ACCUSED_OF Miguel Ángel Santiago Mesa→tráfico de influencias [b615e6a9] — elDiario.es (29-06-2026) atribuye los delitos a la causa en bloque, no persona a persona (decisión del dueño).
+  # 063 tramo 2 (01-oct): retirada ACCUSED_OF Miguel Ángel Santiago Mesa→malversación [690c1d29] — elDiario.es (29-06-2026) atribuye los delitos a la causa en bloque, no persona a persona (decisión del dueño).
+  # 063 tramo 2 (01-oct): retirada ACCUSED_OF Miguel Ángel Santiago Mesa→prevaricación [8eb5f46b] — elDiario.es (29-06-2026) atribuye los delitos a la causa en bloque, no persona a persona (decisión del dueño).
+
+  # 063 tramo 2 (01-oct, revisión Codex): retirada ACCUSED_OF Rosario Martín Manzanedo→tráfico de influencias — elDiario.es (29-06-2026) da los delitos de la pieza en bloque, no persona a persona; la citación como investigado queda en el rol, atribuida.
+
+  # 063 tramo 2 (01-oct, revisión Codex): retirada ACCUSED_OF Rosario Martín Manzanedo→malversación — elDiario.es (29-06-2026) da los delitos de la pieza en bloque, no persona a persona; la citación como investigado queda en el rol, atribuida.
+
+  # 063 tramo 2 (01-oct, revisión Codex): retirada ACCUSED_OF Rosario Martín Manzanedo→prevaricación — elDiario.es (29-06-2026) da los delitos de la pieza en bloque, no persona a persona; la citación como investigado queda en el rol, atribuida.
+
+  # 063 tramo 2 (01-oct): retirada ACCUSED_OF Fernando Albert Aragón→tráfico de influencias [82e560f3] — elDiario.es (29-06-2026) atribuye los delitos a la causa en bloque, no persona a persona (decisión del dueño).
+  # 063 tramo 2 (01-oct): retirada ACCUSED_OF Fernando Albert Aragón→malversación [4489482f] — elDiario.es (29-06-2026) atribuye los delitos a la causa en bloque, no persona a persona (decisión del dueño).
+  # 063 tramo 2 (01-oct): retirada ACCUSED_OF Fernando Albert Aragón→prevaricación [baccd57e] — elDiario.es (29-06-2026) atribuye los delitos a la causa en bloque, no persona a persona (decisión del dueño).
+
+  # 063 tramo 2 (01-oct, revisión Codex): retirada ACCUSED_OF María de la Concepción Ortiz Fuerte→tráfico de influencias — elDiario.es (29-06-2026) da los delitos de la pieza en bloque, no persona a persona; la citación como investigado queda en el rol, atribuida.
+
+  # 063 tramo 2 (01-oct, revisión Codex): retirada ACCUSED_OF María de la Concepción Ortiz Fuerte→malversación — elDiario.es (29-06-2026) da los delitos de la pieza en bloque, no persona a persona; la citación como investigado queda en el rol, atribuida.
+
+  # 063 tramo 2 (01-oct, revisión Codex): retirada ACCUSED_OF María de la Concepción Ortiz Fuerte→prevaricación — elDiario.es (29-06-2026) da los delitos de la pieza en bloque, no persona a persona; la citación como investigado queda en el rol, atribuida.
+
+  # 063 tramo 2 (01-oct): retirada ACCUSED_OF José Ramón Sempere Vera→tráfico de influencias [527f2be3] — elDiario.es (29-06-2026) atribuye los delitos a la causa en bloque, no persona a persona (decisión del dueño).
+  # 063 tramo 2 (01-oct): retirada ACCUSED_OF José Ramón Sempere Vera→malversación [4e2da8fc] — elDiario.es (29-06-2026) atribuye los delitos a la causa en bloque, no persona a persona (decisión del dueño).
+  # 063 tramo 2 (01-oct): retirada ACCUSED_OF José Ramón Sempere Vera→prevaricación [b38930d6] — elDiario.es (29-06-2026) atribuye los delitos a la causa en bloque, no persona a persona (decisión del dueño).
+  # 063 tramo 2 (01-oct): retirada ACCUSED_OF María Teresa Castillo Pasalodos→tráfico de influencias [b2319844] — elDiario.es (29-06-2026) atribuye los delitos a la causa en bloque, no persona a persona (decisión del dueño).
+  # 063 tramo 2 (01-oct): retirada ACCUSED_OF María Teresa Castillo Pasalodos→malversación [edca927a] — elDiario.es (29-06-2026) atribuye los delitos a la causa en bloque, no persona a persona (decisión del dueño).
+  # 063 tramo 2 (01-oct): retirada ACCUSED_OF María Teresa Castillo Pasalodos→prevaricación [4900d0d5] — elDiario.es (29-06-2026) atribuye los delitos a la causa en bloque, no persona a persona (decisión del dueño).
+  # 063 tramo 2 (01-oct): retirada ACCUSED_OF José Vicente Berlanga Arona→tráfico de influencias [deae4844] — elDiario.es (29-06-2026) atribuye los delitos a la causa en bloque, no persona a persona (decisión del dueño).
+  # 063 tramo 2 (01-oct): retirada ACCUSED_OF José Vicente Berlanga Arona→malversación [0108bc77] — elDiario.es (29-06-2026) atribuye los delitos a la causa en bloque, no persona a persona (decisión del dueño).
+  # 063 tramo 2 (01-oct): retirada ACCUSED_OF José Vicente Berlanga Arona→prevaricación [9b3b15d4] — elDiario.es (29-06-2026) atribuye los delitos a la causa en bloque, no persona a persona (decisión del dueño).
+
+  # 063 tramo 2 (01-oct, revisión Codex): retirada ACCUSED_OF Rosario Arévalo Sández→tráfico de influencias — elDiario.es (29-06-2026) da los delitos de la pieza en bloque, no persona a persona; la citación como investigado queda en el rol, atribuida.
+
+  # 063 tramo 2 (01-oct, revisión Codex): retirada ACCUSED_OF Rosario Arévalo Sández→malversación — elDiario.es (29-06-2026) da los delitos de la pieza en bloque, no persona a persona; la citación como investigado queda en el rol, atribuida.
+
+  # 063 tramo 2 (01-oct): retirada ACCUSED_OF Rosario Arévalo Sández→prevaricación [022baa36] — elDiario.es (29-06-2026) atribuye los delitos a la causa en bloque, no persona a persona (decisión del dueño).
+
+  # 063 tramo 2 (01-oct, revisión Codex): retirada ACCUSED_OF Francisco Javier López Buciega→tráfico de influencias — elDiario.es (29-06-2026) da los delitos de la pieza en bloque, no persona a persona; la citación como investigado queda en el rol, atribuida.
+
+  # 063 tramo 2 (01-oct, revisión Codex): retirada ACCUSED_OF Francisco Javier López Buciega→malversación — elDiario.es (29-06-2026) da los delitos de la pieza en bloque, no persona a persona; la citación como investigado queda en el rol, atribuida.
+
+  # 063 tramo 2 (01-oct, revisión Codex): retirada ACCUSED_OF Francisco Javier López Buciega→prevaricación — elDiario.es (29-06-2026) da los delitos de la pieza en bloque, no persona a persona; la citación como investigado queda en el rol, atribuida.
+
+  # 063 tramo 2 (01-oct): retirada ACCUSED_OF Juan Antonio Carrillo Donaire→tráfico de influencias [8441474a] — elDiario.es (29-06-2026) atribuye los delitos a la causa en bloque, no persona a persona (decisión del dueño).
+  # 063 tramo 2 (01-oct): retirada ACCUSED_OF Juan Antonio Carrillo Donaire→malversación [43b29a9d] — elDiario.es (29-06-2026) atribuye los delitos a la causa en bloque, no persona a persona (decisión del dueño).
+  # 063 tramo 2 (01-oct): retirada ACCUSED_OF Juan Antonio Carrillo Donaire→prevaricación [78d38228] — elDiario.es (29-06-2026) atribuye los delitos a la causa en bloque, no persona a persona (decisión del dueño).
+  # 063 tramo 2 (01-oct): retirada ACCUSED_OF Francisco Irazusta Rodríguez→tráfico de influencias [ca1cb571] — elDiario.es (29-06-2026) atribuye los delitos a la causa en bloque, no persona a persona (decisión del dueño).
+  # 063 tramo 2 (01-oct): retirada ACCUSED_OF Francisco Irazusta Rodríguez→malversación [5e69816b] — elDiario.es (29-06-2026) atribuye los delitos a la causa en bloque, no persona a persona (decisión del dueño).
+  # 063 tramo 2 (01-oct): retirada ACCUSED_OF Francisco Irazusta Rodríguez→prevaricación [f77ae51d] — elDiario.es (29-06-2026) atribuye los delitos a la causa en bloque, no persona a persona (decisión del dueño).
+
+  # 063 tramo 2 (01-oct, revisión Codex): retirada ACCUSED_OF Jesús Pérez Rodríguez Urrutia→tráfico de influencias — elDiario.es (29-06-2026) da los delitos de la pieza en bloque, no persona a persona; la citación como investigado queda en el rol, atribuida.
+
+  # 063 tramo 2 (01-oct, revisión Codex): retirada ACCUSED_OF Jesús Pérez Rodríguez Urrutia→malversación — elDiario.es (29-06-2026) da los delitos de la pieza en bloque, no persona a persona; la citación como investigado queda en el rol, atribuida.
+
+  # 063 tramo 2 (01-oct, revisión Codex): retirada ACCUSED_OF Jesús Pérez Rodríguez Urrutia→prevaricación — elDiario.es (29-06-2026) da los delitos de la pieza en bloque, no persona a persona; la citación como investigado queda en el rol, atribuida.
+
+  # 063 tramo 2 (01-oct): retirada ACCUSED_OF Félix Azcona Lacarra→tráfico de influencias [85d198cb] — elDiario.es (29-06-2026) atribuye los delitos a la causa en bloque, no persona a persona (decisión del dueño).
+  # 063 tramo 2 (01-oct): retirada ACCUSED_OF Félix Azcona Lacarra→malversación [662353bd] — elDiario.es (29-06-2026) atribuye los delitos a la causa en bloque, no persona a persona (decisión del dueño).
+  # 063 tramo 2 (01-oct): retirada ACCUSED_OF Félix Azcona Lacarra→prevaricación [832336ea] — elDiario.es (29-06-2026) atribuye los delitos a la causa en bloque, no persona a persona (decisión del dueño).
+  # 063 tramo 2 (01-oct): retirada ACCUSED_OF Juan Ignacio Fernández-Micheltorena→tráfico de influencias [4f1cabe8] — elDiario.es (29-06-2026) atribuye los delitos a la causa en bloque, no persona a persona (decisión del dueño).
+
+  # 063 tramo 2 (01-oct, revisión Codex): retirada ACCUSED_OF Juan Ignacio Fernández-Micheltorena→malversación — elDiario.es (29-06-2026) da los delitos de la pieza en bloque, no persona a persona; la citación como investigado queda en el rol, atribuida.
+
+  # 063 tramo 2 (01-oct, revisión Codex): retirada ACCUSED_OF Juan Ignacio Fernández-Micheltorena→prevaricación — elDiario.es (29-06-2026) da los delitos de la pieza en bloque, no persona a persona; la citación como investigado queda en el rol, atribuida.
+
+
+  # 063 tramo 2 (01-oct, revisión Codex): retirada ACCUSED_OF Fernando Samper Rivas→tráfico de influencias — elDiario.es (29-06-2026) da los delitos de la pieza en bloque, no persona a persona; la citación como investigado queda en el rol, atribuida.
+
+  # 063 tramo 2 (01-oct, revisión Codex): retirada ACCUSED_OF Fernando Samper Rivas→malversación — elDiario.es (29-06-2026) da los delitos de la pieza en bloque, no persona a persona; la citación como investigado queda en el rol, atribuida.
+
+  # 063 tramo 2 (01-oct, revisión Codex): retirada ACCUSED_OF Fernando Samper Rivas→prevaricación — elDiario.es (29-06-2026) da los delitos de la pieza en bloque, no persona a persona; la citación como investigado queda en el rol, atribuida.
+
+  # 063 tramo 2 (01-oct): retirada ACCUSED_OF Roberto Pérez Águeda→tráfico de influencias [7a2f228a] — elDiario.es (29-06-2026) atribuye los delitos a la causa en bloque, no persona a persona (decisión del dueño).
+  # 063 tramo 2 (01-oct): retirada ACCUSED_OF Roberto Pérez Águeda→malversación [e6371811] — elDiario.es (29-06-2026) atribuye los delitos a la causa en bloque, no persona a persona (decisión del dueño).
+  # 063 tramo 2 (01-oct): retirada ACCUSED_OF Roberto Pérez Águeda→prevaricación [cc08704f] — elDiario.es (29-06-2026) atribuye los delitos a la causa en bloque, no persona a persona (decisión del dueño).
+
+  # 063 tramo 2 (01-oct, revisión Codex): retirada ACCUSED_OF Eduardo Pérez Águeda→tráfico de influencias — elDiario.es (29-06-2026) da los delitos de la pieza en bloque, no persona a persona; la citación como investigado queda en el rol, atribuida.
+
+  # 063 tramo 2 (01-oct, revisión Codex): retirada ACCUSED_OF Eduardo Pérez Águeda→malversación — elDiario.es (29-06-2026) da los delitos de la pieza en bloque, no persona a persona; la citación como investigado queda en el rol, atribuida.
+
+  # 063 tramo 2 (01-oct, revisión Codex): retirada ACCUSED_OF Eduardo Pérez Águeda→prevaricación — elDiario.es (29-06-2026) da los delitos de la pieza en bloque, no persona a persona; la citación como investigado queda en el rol, atribuida.
+
+  # 063 tramo 2 (01-oct, revisión Codex): retirada ACCUSED_OF Carmelo Aznárez Pellicer→tráfico de influencias — elDiario.es (29-06-2026) da los delitos de la pieza en bloque, no persona a persona; la citación como investigado queda en el rol, atribuida.
+
+  # 063 tramo 2 (01-oct, revisión Codex): retirada ACCUSED_OF Carmelo Aznárez Pellicer→malversación — elDiario.es (29-06-2026) da los delitos de la pieza en bloque, no persona a persona; la citación como investigado queda en el rol, atribuida.
+
+  # 063 tramo 2 (01-oct): retirada ACCUSED_OF Carmelo Aznárez Pellicer→prevaricación [5ac133cb] — elDiario.es (29-06-2026) atribuye los delitos a la causa en bloque, no persona a persona (decisión del dueño).
+  # 063 tramo 2 (01-oct): retirada ACCUSED_OF Mikel Arrarás Abejón→tráfico de influencias [15b2be7f] — elDiario.es (29-06-2026) atribuye los delitos a la causa en bloque, no persona a persona (decisión del dueño).
+  # 063 tramo 2 (01-oct): retirada ACCUSED_OF Mikel Arrarás Abejón→malversación [40b19182] — elDiario.es (29-06-2026) atribuye los delitos a la causa en bloque, no persona a persona (decisión del dueño).
+  # 063 tramo 2 (01-oct): retirada ACCUSED_OF Mikel Arrarás Abejón→prevaricación [98c7395a] — elDiario.es (29-06-2026) atribuye los delitos a la causa en bloque, no persona a persona (decisión del dueño).
+
+  # ── Barrido de badges 2026-07-10 (bloques individuales verificados con prensa) ──
+  # Cada persona de abajo estaba marcada como investigada/imputada en su rol/síntesis
+  # o en aristas con status, pero SIN arista ACCUSED_OF→Crime (que es la única que
+  # pinta el badge de estado procesal y alimenta /investigados). Verificación 1:1
+  # corpus+prensa en scratchpad verif_*.yaml de la sesión 2026-07-10 (resumen en
+  # notas privadas: barrido-badges-2026-07-10).
+
+  - source: "Roberto Roselli"
+    target: "blanqueo de capitales"
+    type: ACCUSED_OF
+    status: "investigado"
+    outlet: "Infobae"
+    url: "https://www.infobae.com/espana/2025/12/13/el-juez-deja-en-libertad-provisional-con-medidas-cautelares-a-los-tres-detenidos-en-el-caso-de-blanqueo-de-capitales-de-plus-ultra/"
+    date: "2025-12-13"
+    quote: "El juez deja en libertad provisional con medidas cautelares a los tres detenidos en el caso de blanqueo de capitales de Plus Ultra."
+    note: "Roberto Roselli, CEO de Plus Ultra, fue detenido el 11-dic-2025 (junto a Julio Martínez Sola y Julio Martínez Martínez) en la operación por presunto blanqueo de capitales de la causa Plus Ultra/Zapatero (DP 77/2024, juez Calama); quedó en libertad provisional con retirada de pasaporte y comparecencias. El registro de su domicilio consta en el auto-zapatero (p.4); el delito de la detención es atribución de prensa (Infobae, El Nacional, Libertad Digital). Presunción de inocencia."
+
+  - source: "Santiago Fernández Lena"
+    target: "blanqueo de capitales"
+    type: ACCUSED_OF
+    status: "investigado"
+    outlet: "The Objective"
+    url: "https://theobjective.com/espana/tribunales/2026-05-23/andersen-cese-abogados-caso-zapatero/"
+    date: "2026-05-23"
+    quote: "El informe ético de Andersen vincula a Fernández Lena a la investigación de Anticorrupción por presuntos delitos de organización criminal y blanqueo."
+    note: "Santiago Fernández Lena, abogado y secretario del consejo de Plus Ultra, es investigado en la causa Plus Ultra/Zapatero: su domicilio fue registrado el 11-dic-2025 (auto-zapatero p.4) y el auto le atribuye el control de facto de la instrumental Caletón Consultores (p.10). Los delitos son atribución de prensa (The Objective, citando el informe ético de Andersen; Vozpópuli lo llama 'el abogado de Plus Ultra imputado'). Presunción de inocencia."
+
+  - source: "Santiago Fernández Lena"
+    target: "organización criminal"
+    type: ACCUSED_OF
+    status: "investigado"
+    outlet: "The Objective"
+    url: "https://theobjective.com/espana/tribunales/2026-05-23/andersen-cese-abogados-caso-zapatero/"
+    date: "2026-05-23"
+    quote: "El informe ético de Andersen vincula a Fernández Lena a la investigación de Anticorrupción por presuntos delitos de organización criminal y blanqueo."
+    note: "Santiago Fernández Lena, abogado y secretario del consejo de Plus Ultra, es investigado en la causa Plus Ultra/Zapatero: su domicilio fue registrado el 11-dic-2025 (auto-zapatero p.4) y el auto le atribuye el control de facto de la instrumental Caletón Consultores (p.10). Los delitos son atribución de prensa (The Objective, citando el informe ético de Andersen; Vozpópuli lo llama 'el abogado de Plus Ultra imputado'). Presunción de inocencia."
+
+  - source: "Julio Martínez Sola"
+    target: "blanqueo de capitales"
+    type: ACCUSED_OF
+    status: "investigado"
+    outlet: "Infobae"
+    url: "https://www.infobae.com/espana/2025/12/13/el-juez-deja-en-libertad-provisional-con-medidas-cautelares-a-los-tres-detenidos-en-el-caso-de-blanqueo-de-capitales-de-plus-ultra/"
+    date: "2025-12-13"
+    quote: "El juez deja en libertad provisional con medidas cautelares a los tres detenidos en el caso de blanqueo de capitales de Plus Ultra."
+    note: "Julio Martínez Sola, fundador y presidente de Plus Ultra (NO confundir con Julio Martínez Martínez 'Julito', el interlocutor de la 'vía Zapatero'), fue detenido el 11-dic-2025 por presunto blanqueo; en el registro de su casa se incautaron 107.000 € y 75.000 $ (eldiario.es). Libertad provisional con cautelares. Delito de la detención = atribución de prensa (Infobae/Libertad Digital). Presunción de inocencia."
+
+  - source: "Felipe Baca"
+    target: "blanqueo de capitales"
+    type: ACCUSED_OF
+    status: "investigado"
+    outlet: "The Objective"
+    url: "https://theobjective.com/espana/tribunales/2026-05-25/juez-orden-internacional-detencion-dueno-plus-ultra/"
+    date: "2026-05-25"
+    quote: "Junto a Simon Verhoeven, gestionaban una organización criminal dedicada al blanqueo de capitales."
+    note: "Luis Felipe Baca Arbulu, empresario peruano afincado en Suiza, presunto 'facilitador' de entregas de efectivo de la trama Plus Ultra: detenido en Aruba por orden de la AN (mar-2026), entregado a España y en libertad con prohibición de salir de Schengen. Según The Objective e Infobae, Anticorrupción le atribuye la gestión de una organización criminal dedicada al blanqueo. Presunción de inocencia."
+
+  - source: "Felipe Baca"
+    target: "organización criminal"
+    type: ACCUSED_OF
+    status: "investigado"
+    outlet: "The Objective"
+    url: "https://theobjective.com/espana/tribunales/2026-05-25/juez-orden-internacional-detencion-dueno-plus-ultra/"
+    date: "2026-05-25"
+    quote: "Junto a Simon Verhoeven, gestionaban una organización criminal dedicada al blanqueo de capitales."
+    note: "Luis Felipe Baca Arbulu, empresario peruano afincado en Suiza, presunto 'facilitador' de entregas de efectivo de la trama Plus Ultra: detenido en Aruba por orden de la AN (mar-2026), entregado a España y en libertad con prohibición de salir de Schengen. Según The Objective e Infobae, Anticorrupción le atribuye la gestión de una organización criminal dedicada al blanqueo. Presunción de inocencia."
+
+  - source: "Aurora López López"
+    target: "apropiación indebida"
+    type: ACCUSED_OF
+    status: "investigado"
+    outlet: "ElNacional.cat"
+    url: "https://www.elnacional.cat/es/politica/juez-calama-emite-orden-detencion-contra-principal-accionista-plus-ultra-rodolfo-reyes_1645222_102.html"
+    date: "2026-05-25"
+    quote: "El juez Calama emite orden internacional de detención por delitos de apropiación indebida, tráfico de influencias, pertenencia a organización criminal y blanqueo de capitales."
+    note: "María Aurora López López, copropietaria real de Plus Ultra según la UDEF (junto a su pareja Rodolfo Reyes, vía Snip Aviation), tiene orden internacional de detención del juez Calama (25-may-2026) por los mismos cuatro delitos que Reyes, con cita textual en ElNacional.cat e Infobae. Presunción de inocencia."
+
+  - source: "Aurora López López"
+    target: "tráfico de influencias"
+    type: ACCUSED_OF
+    status: "investigado"
+    outlet: "ElNacional.cat"
+    url: "https://www.elnacional.cat/es/politica/juez-calama-emite-orden-detencion-contra-principal-accionista-plus-ultra-rodolfo-reyes_1645222_102.html"
+    date: "2026-05-25"
+    quote: "El juez Calama emite orden internacional de detención por delitos de apropiación indebida, tráfico de influencias, pertenencia a organización criminal y blanqueo de capitales."
+    note: "María Aurora López López, copropietaria real de Plus Ultra según la UDEF (junto a su pareja Rodolfo Reyes, vía Snip Aviation), tiene orden internacional de detención del juez Calama (25-may-2026) por los mismos cuatro delitos que Reyes, con cita textual en ElNacional.cat e Infobae. Presunción de inocencia."
+
+  - source: "Aurora López López"
+    target: "organización criminal"
+    type: ACCUSED_OF
+    status: "investigado"
+    outlet: "ElNacional.cat"
+    url: "https://www.elnacional.cat/es/politica/juez-calama-emite-orden-detencion-contra-principal-accionista-plus-ultra-rodolfo-reyes_1645222_102.html"
+    date: "2026-05-25"
+    quote: "El juez Calama emite orden internacional de detención por delitos de apropiación indebida, tráfico de influencias, pertenencia a organización criminal y blanqueo de capitales."
+    note: "María Aurora López López, copropietaria real de Plus Ultra según la UDEF (junto a su pareja Rodolfo Reyes, vía Snip Aviation), tiene orden internacional de detención del juez Calama (25-may-2026) por los mismos cuatro delitos que Reyes, con cita textual en ElNacional.cat e Infobae. Presunción de inocencia."
+
+  - source: "Aurora López López"
+    target: "blanqueo de capitales"
+    type: ACCUSED_OF
+    status: "investigado"
+    outlet: "ElNacional.cat"
+    url: "https://www.elnacional.cat/es/politica/juez-calama-emite-orden-detencion-contra-principal-accionista-plus-ultra-rodolfo-reyes_1645222_102.html"
+    date: "2026-05-25"
+    quote: "El juez Calama emite orden internacional de detención por delitos de apropiación indebida, tráfico de influencias, pertenencia a organización criminal y blanqueo de capitales."
+    note: "María Aurora López López, copropietaria real de Plus Ultra según la UDEF (junto a su pareja Rodolfo Reyes, vía Snip Aviation), tiene orden internacional de detención del juez Calama (25-may-2026) por los mismos cuatro delitos que Reyes, con cita textual en ElNacional.cat e Infobae. Presunción de inocencia."
+
+  # 063 tramo 2 (01-oct): retirada ACCUSED_OF Laura Rodríguez Espinosa→blanqueo de capitales [ce3c7c1d] — ningún medio individualiza el delito para ella; el blanqueo solo consta en titulares sin artículo localizado (decisión del dueño).
+  # 063 tramo 2 (01-oct): retirada ACCUSED_OF Alba Rodríguez Espinosa→blanqueo de capitales [d0d167cf] — la fuente citada no sostiene el delito concreto; el estado «investigado» va a la fila de registro.
+
+  - source: "Javier Herrero"
+    target: "organización criminal"
+    type: ACCUSED_OF
+    status: "investigado"
+    outlet: "Libertad Digital"
+    url: "https://www.libertaddigital.com/espana/2025-07-21/ex-director-carreteras-reconoce-juez-psoe-exigio-donacion-alto-cargo-7278703/"
+    date: "2025-07-21"
+    quote: "Declaró ante el juez con medidas cautelares bajo la acusación de pertenencia a organización criminal, cohecho y tráfico de influencias."
+    note: "Francisco Javier Herrero Lizano, exdirector general de Carreteras, está investigado en la pieza de obra pública del caso Koldo/Cerdán (AN): declaró en jul-2025 con retirada de pasaporte por presunta pertenencia a organización criminal, cohecho y tráfico de influencias (Libertad Digital); The Objective (mar-2026) documenta 25.440 € cobrados de la adjudicataria Aquaterra. Entre los 14 investigados de la pieza a mar-2026. Presunción de inocencia."
+
+  - source: "Javier Herrero"
+    target: "cohecho"
+    type: ACCUSED_OF
+    status: "investigado"
+    outlet: "Libertad Digital"
+    url: "https://www.libertaddigital.com/espana/2025-07-21/ex-director-carreteras-reconoce-juez-psoe-exigio-donacion-alto-cargo-7278703/"
+    date: "2025-07-21"
+    quote: "Declaró ante el juez con medidas cautelares bajo la acusación de pertenencia a organización criminal, cohecho y tráfico de influencias."
+    note: "Francisco Javier Herrero Lizano, exdirector general de Carreteras, está investigado en la pieza de obra pública del caso Koldo/Cerdán (AN): declaró en jul-2025 con retirada de pasaporte por presunta pertenencia a organización criminal, cohecho y tráfico de influencias (Libertad Digital); The Objective (mar-2026) documenta 25.440 € cobrados de la adjudicataria Aquaterra. Entre los 14 investigados de la pieza a mar-2026. Presunción de inocencia."
+
+  - source: "Javier Herrero"
+    target: "tráfico de influencias"
+    type: ACCUSED_OF
+    status: "investigado"
+    outlet: "Libertad Digital"
+    url: "https://www.libertaddigital.com/espana/2025-07-21/ex-director-carreteras-reconoce-juez-psoe-exigio-donacion-alto-cargo-7278703/"
+    date: "2025-07-21"
+    quote: "Declaró ante el juez con medidas cautelares bajo la acusación de pertenencia a organización criminal, cohecho y tráfico de influencias."
+    note: "Francisco Javier Herrero Lizano, exdirector general de Carreteras, está investigado en la pieza de obra pública del caso Koldo/Cerdán (AN): declaró en jul-2025 con retirada de pasaporte por presunta pertenencia a organización criminal, cohecho y tráfico de influencias (Libertad Digital); The Objective (mar-2026) documenta 25.440 € cobrados de la adjudicataria Aquaterra. Entre los 14 investigados de la pieza a mar-2026. Presunción de inocencia."
+
+  - source: "Isabel Pardo de Vera"
+    target: "malversación"
+    type: ACCUSED_OF
+    status: "investigado"
+    outlet: "Libertad Digital"
+    url: "https://www.libertaddigital.com/espana/politica/2026-01-24/la-politizacion-en-adif-pone-en-tela-de-juicio-toda-la-red-se-triplico-el-numero-de-directivos-y-cinco-estan-imputados-7348421/"
+    date: "2026-01-24"
+    quote: "Investigada por malversación, cohecho, tráfico de influencias, prevaricación y pertenencia a organización criminal."
+    note: "Isabel Pardo de Vera, expresidenta de ADIF y exsecretaria de Estado de Transportes, está investigada en la pieza de obra pública del caso Koldo (AN, JCI nº 2, juez Ismael Moreno); declaró de nuevo el 16-jun-2026 negando irregularidades (El Independiente). En la causa del TS declaró solo como testigo ('no juzgada en esta causa', sentencia 22-jun-2026). Los cinco delitos son atribución de un único medio (Libertad Digital, 24-ene-2026) — confianza media. Presunción de inocencia."
+
+  - source: "Isabel Pardo de Vera"
+    target: "cohecho"
+    type: ACCUSED_OF
+    status: "investigado"
+    outlet: "Libertad Digital"
+    url: "https://www.libertaddigital.com/espana/politica/2026-01-24/la-politizacion-en-adif-pone-en-tela-de-juicio-toda-la-red-se-triplico-el-numero-de-directivos-y-cinco-estan-imputados-7348421/"
+    date: "2026-01-24"
+    quote: "Investigada por malversación, cohecho, tráfico de influencias, prevaricación y pertenencia a organización criminal."
+    note: "Isabel Pardo de Vera, expresidenta de ADIF y exsecretaria de Estado de Transportes, está investigada en la pieza de obra pública del caso Koldo (AN, JCI nº 2, juez Ismael Moreno); declaró de nuevo el 16-jun-2026 negando irregularidades (El Independiente). En la causa del TS declaró solo como testigo ('no juzgada en esta causa', sentencia 22-jun-2026). Los cinco delitos son atribución de un único medio (Libertad Digital, 24-ene-2026) — confianza media. Presunción de inocencia."
+
+  - source: "Isabel Pardo de Vera"
+    target: "tráfico de influencias"
+    type: ACCUSED_OF
+    status: "investigado"
+    outlet: "Libertad Digital"
+    url: "https://www.libertaddigital.com/espana/politica/2026-01-24/la-politizacion-en-adif-pone-en-tela-de-juicio-toda-la-red-se-triplico-el-numero-de-directivos-y-cinco-estan-imputados-7348421/"
+    date: "2026-01-24"
+    quote: "Investigada por malversación, cohecho, tráfico de influencias, prevaricación y pertenencia a organización criminal."
+    note: "Isabel Pardo de Vera, expresidenta de ADIF y exsecretaria de Estado de Transportes, está investigada en la pieza de obra pública del caso Koldo (AN, JCI nº 2, juez Ismael Moreno); declaró de nuevo el 16-jun-2026 negando irregularidades (El Independiente). En la causa del TS declaró solo como testigo ('no juzgada en esta causa', sentencia 22-jun-2026). Los cinco delitos son atribución de un único medio (Libertad Digital, 24-ene-2026) — confianza media. Presunción de inocencia."
+
+  - source: "Isabel Pardo de Vera"
+    target: "prevaricación"
+    type: ACCUSED_OF
+    status: "investigado"
+    outlet: "Libertad Digital"
+    url: "https://www.libertaddigital.com/espana/politica/2026-01-24/la-politizacion-en-adif-pone-en-tela-de-juicio-toda-la-red-se-triplico-el-numero-de-directivos-y-cinco-estan-imputados-7348421/"
+    date: "2026-01-24"
+    quote: "Investigada por malversación, cohecho, tráfico de influencias, prevaricación y pertenencia a organización criminal."
+    note: "Isabel Pardo de Vera, expresidenta de ADIF y exsecretaria de Estado de Transportes, está investigada en la pieza de obra pública del caso Koldo (AN, JCI nº 2, juez Ismael Moreno); declaró de nuevo el 16-jun-2026 negando irregularidades (El Independiente). En la causa del TS declaró solo como testigo ('no juzgada en esta causa', sentencia 22-jun-2026). Los cinco delitos son atribución de un único medio (Libertad Digital, 24-ene-2026) — confianza media. Presunción de inocencia."
+
+  - source: "Isabel Pardo de Vera"
+    target: "organización criminal"
+    type: ACCUSED_OF
+    status: "investigado"
+    outlet: "Libertad Digital"
+    url: "https://www.libertaddigital.com/espana/politica/2026-01-24/la-politizacion-en-adif-pone-en-tela-de-juicio-toda-la-red-se-triplico-el-numero-de-directivos-y-cinco-estan-imputados-7348421/"
+    date: "2026-01-24"
+    quote: "Investigada por malversación, cohecho, tráfico de influencias, prevaricación y pertenencia a organización criminal."
+    note: "Isabel Pardo de Vera, expresidenta de ADIF y exsecretaria de Estado de Transportes, está investigada en la pieza de obra pública del caso Koldo (AN, JCI nº 2, juez Ismael Moreno); declaró de nuevo el 16-jun-2026 negando irregularidades (El Independiente). En la causa del TS declaró solo como testigo ('no juzgada en esta causa', sentencia 22-jun-2026). Los cinco delitos son atribución de un único medio (Libertad Digital, 24-ene-2026) — confianza media. Presunción de inocencia."
+
+  - source: "Patricia Úriz"
+    target: "blanqueo de capitales"
+    type: ACCUSED_OF
+    status: "investigado"
+    outlet: "Euronews"
+    url: "https://es.euronews.com/2025/12/26/juez-cita-como-investigada-exmujer-koldo-garcia"
+    date: "2025-12-26"
+    quote: "El juez cita como investigada a la exmujer de Koldo García; la Fiscalía ve indicios compatibles con blanqueo de capitales."
+    note: "Patricia Úriz Iriarte, pareja/exmujer de Koldo García, fue citada como investigada por el juez Ismael Moreno (dic-2025) con indicios de blanqueo según el atestado de la UCO; declaró como investigada el 20-ene-2026 afirmando que el efectivo que gestionaba 'era del PSOE' (El Debate). Ya había sido detenida en la Operación Delorme (feb-2024). Presunción de inocencia."
+
+  - source: "Jesús Manuel Gómez García"
+    target: "tráfico de influencias"
+    type: ACCUSED_OF
+    status: "investigado"
+    outlet: "Libertad Digital"
+    url: "https://www.libertaddigital.com/espana/politica/2026-01-24/la-politizacion-en-adif-pone-en-tela-de-juicio-toda-la-red-se-triplico-el-numero-de-directivos-y-cinco-estan-imputados-7348421/"
+    date: "2026-01-24"
+    quote: "Imputado por tráfico de influencias, malversación y cohecho."
+    note: "Jesús Manuel Gómez García, exsubsecretario de Transportes con Ábalos ('el Subse', 'correa de transmisión' según la UCO), declaró como investigado ante la AN en sep-2024 (pieza de mascarillas) y fue testigo relevante en el juicio del TS. Los delitos son atribución de un único medio (Libertad Digital, 24-ene-2026) — confianza media. Presunción de inocencia."
+
+  - source: "Jesús Manuel Gómez García"
+    target: "malversación"
+    type: ACCUSED_OF
+    status: "investigado"
+    outlet: "Libertad Digital"
+    url: "https://www.libertaddigital.com/espana/politica/2026-01-24/la-politizacion-en-adif-pone-en-tela-de-juicio-toda-la-red-se-triplico-el-numero-de-directivos-y-cinco-estan-imputados-7348421/"
+    date: "2026-01-24"
+    quote: "Imputado por tráfico de influencias, malversación y cohecho."
+    note: "Jesús Manuel Gómez García, exsubsecretario de Transportes con Ábalos ('el Subse', 'correa de transmisión' según la UCO), declaró como investigado ante la AN en sep-2024 (pieza de mascarillas) y fue testigo relevante en el juicio del TS. Los delitos son atribución de un único medio (Libertad Digital, 24-ene-2026) — confianza media. Presunción de inocencia."
+
+  - source: "Jesús Manuel Gómez García"
+    target: "cohecho"
+    type: ACCUSED_OF
+    status: "investigado"
+    outlet: "Libertad Digital"
+    url: "https://www.libertaddigital.com/espana/politica/2026-01-24/la-politizacion-en-adif-pone-en-tela-de-juicio-toda-la-red-se-triplico-el-numero-de-directivos-y-cinco-estan-imputados-7348421/"
+    date: "2026-01-24"
+    quote: "Imputado por tráfico de influencias, malversación y cohecho."
+    note: "Jesús Manuel Gómez García, exsubsecretario de Transportes con Ábalos ('el Subse', 'correa de transmisión' según la UCO), declaró como investigado ante la AN en sep-2024 (pieza de mascarillas) y fue testigo relevante en el juicio del TS. Los delitos son atribución de un único medio (Libertad Digital, 24-ene-2026) — confianza media. Presunción de inocencia."
+
+  - source: "Fernando Merino"
+    target: "cohecho"
+    type: ACCUSED_OF
+    status: "investigado"
+    outlet: "El Español"
+    url: "https://www.elespanol.com/espana/tribunales/20251118/juez-caso-cerdan-cita-directivos-acciona-investigados/1003744018531_0.html"
+    date: "2025-11-18"
+    quote: "El juez del caso Cerdán cita a los directivos de Acciona investigados por presuntas mordidas a cambio de adjudicaciones de obra pública."
+    note: "Fernando Agustín Merino Vera, exdirectivo de Acciona en Navarra y La Rioja, está investigado en la pieza de obra pública del caso Cerdán/Koldo (declaró con comparecencias quincenales y retirada de pasaporte; entre los 14 investigados a mar-2026). La conducta consta en el corpus (informe-uco pp.28-33); 'mordidas a cambio de obra' se mapea editorialmente a cohecho — ninguna fuente consultada nomina el tipo penal. Presunción de inocencia."
+
+  - source: "Antonio Fernández Menéndez"
+    target: "cohecho"
+    type: ACCUSED_OF
+    status: "investigado"
+    outlet: "elDiario.es"
+    url: "https://www.eldiario.es/andalucia/empresarios-granada-punto-mira-juez-caso-koldo-supuestas-mordidas-cambio-obras_1_12626081.html"
+    date: "2025-07-04"
+    quote: "Empresarios de Granada en el punto de mira del juez del caso Koldo por supuestas mordidas a cambio de obras."
+    note: "Antonio Fernández Menéndez, apoderado de Obras Públicas y Regadíos (OPR), está investigado en la pieza de obra pública del caso Koldo por presuntas comisiones a cambio de adjudicaciones (declaró en jul-2025 negándolas; entre los 14 investigados a mar-2026). Conducta en corpus (informe-uco pp.106-116); 'mordidas' se mapea editorialmente a cohecho. Presunción de inocencia."
+
+  - source: "Daniel Fernández Menéndez"
+    target: "cohecho"
+    type: ACCUSED_OF
+    status: "investigado"
+    outlet: "Infobae"
+    url: "https://www.infobae.com/espana/2025/07/04/los-tres-empresarios-investigados-en-la-trama-cerdan-niegan-haber-pagado-comisiones-a-abalos-y-koldo-garcia-cambio-de-la-adjudicacion-de-obras-publicas/"
+    date: "2025-07-04"
+    quote: "Los tres empresarios investigados en la trama Cerdán niegan haber pagado comisiones a Ábalos y Koldo García a cambio de la adjudicación de obras públicas."
+    note: "Daniel Fernández Menéndez, administrador mancomunado de OPR y hermano de Antonio, está investigado en la pieza de obra pública del caso Koldo (registros ordenados por el TS; declaró en jul-2025; entre los 14 investigados a mar-2026). Conducta en corpus (informe-uco pp.107-188: mensajes con Koldo pidiendo adjudicaciones para OPR); 'comisiones/mordidas' se mapea editorialmente a cohecho. Presunción de inocencia."
+
+  - source: "Antxón"
+    target: "malversación"
+    type: ACCUSED_OF
+    status: "investigado"
+    outlet: "Infobae"
+    url: "https://www.infobae.com/espana/2025/12/11/la-uco-arresta-a-antxon-alonso-el-empresario-vinculado-a-servinabar-y-santos-cerdan-en-la-operacion-contra-leire-diez/"
+    date: "2025-12-11"
+    quote: "La UCO arresta a Antxon Alonso, el empresario vinculado a Servinabar y Santos Cerdán, en la operación contra Leire Díez: presuntos delitos de prevaricación, malversación, tráfico de influencias y organización criminal."
+    note: "Joseba Antxon Alonso Egurrola (Servinabar) fue detenido el 11-dic-2025 en la operación Leire/Servinabar (AN) por presuntos prevaricación, malversación, tráfico de influencias y organización criminal (Infobae); además figura como investigado en el corpus (autoentradaferraz p.41, periodo 2021-actualidad) y entre los 14 de la pieza de obra pública Cerdán/Koldo. Presunción de inocencia."
+
+  - source: "Antxón"
+    target: "tráfico de influencias"
+    type: ACCUSED_OF
+    status: "investigado"
+    outlet: "Infobae"
+    url: "https://www.infobae.com/espana/2025/12/11/la-uco-arresta-a-antxon-alonso-el-empresario-vinculado-a-servinabar-y-santos-cerdan-en-la-operacion-contra-leire-diez/"
+    date: "2025-12-11"
+    quote: "La UCO arresta a Antxon Alonso, el empresario vinculado a Servinabar y Santos Cerdán, en la operación contra Leire Díez: presuntos delitos de prevaricación, malversación, tráfico de influencias y organización criminal."
+    note: "Joseba Antxon Alonso Egurrola (Servinabar) fue detenido el 11-dic-2025 en la operación Leire/Servinabar (AN) por presuntos prevaricación, malversación, tráfico de influencias y organización criminal (Infobae); además figura como investigado en el corpus (autoentradaferraz p.41, periodo 2021-actualidad) y entre los 14 de la pieza de obra pública Cerdán/Koldo. Presunción de inocencia."
+
+  - source: "Antxón"
+    target: "organización criminal"
+    type: ACCUSED_OF
+    status: "investigado"
+    outlet: "Infobae"
+    url: "https://www.infobae.com/espana/2025/12/11/la-uco-arresta-a-antxon-alonso-el-empresario-vinculado-a-servinabar-y-santos-cerdan-en-la-operacion-contra-leire-diez/"
+    date: "2025-12-11"
+    quote: "La UCO arresta a Antxon Alonso, el empresario vinculado a Servinabar y Santos Cerdán, en la operación contra Leire Díez: presuntos delitos de prevaricación, malversación, tráfico de influencias y organización criminal."
+    note: "Joseba Antxon Alonso Egurrola (Servinabar) fue detenido el 11-dic-2025 en la operación Leire/Servinabar (AN) por presuntos prevaricación, malversación, tráfico de influencias y organización criminal (Infobae); además figura como investigado en el corpus (autoentradaferraz p.41, periodo 2021-actualidad) y entre los 14 de la pieza de obra pública Cerdán/Koldo. Presunción de inocencia."
+
+  - source: "Antxón"
+    target: "prevaricación"
+    type: ACCUSED_OF
+    status: "investigado"
+    outlet: "Infobae"
+    url: "https://www.infobae.com/espana/2025/12/11/la-uco-arresta-a-antxon-alonso-el-empresario-vinculado-a-servinabar-y-santos-cerdan-en-la-operacion-contra-leire-diez/"
+    date: "2025-12-11"
+    quote: "La UCO arresta a Antxon Alonso, el empresario vinculado a Servinabar y Santos Cerdán, en la operación contra Leire Díez: presuntos delitos de prevaricación, malversación, tráfico de influencias y organización criminal."
+    note: "Joseba Antxon Alonso Egurrola (Servinabar) fue detenido el 11-dic-2025 en la operación Leire/Servinabar (AN) por presuntos prevaricación, malversación, tráfico de influencias y organización criminal (Infobae); además figura como investigado en el corpus (autoentradaferraz p.41, periodo 2021-actualidad) y entre los 14 de la pieza de obra pública Cerdán/Koldo. Presunción de inocencia."
+
+  - source: "Claudio Rivas Ruiz Capillas"
+    target: "defraudación tributaria"
+    type: ACCUSED_OF
+    status: "imputado"
+    outlet: "Europa Press (vía elDiario.es)"
+    url: "https://www.eldiario.es/politica/audiencia-nacional-propone-juzgar-empresario-claudio-rivas-capitan-guardia-civil-presunto-fraude-hidrocarburos_1_13304261.html"
+    date: "2026-06-15"
+    quote: "Pedraz atribuye a Rivas siete presuntos delitos contra la Hacienda pública, un delito de organización criminal, falsedad continuada y blanqueo de capitales."
+    note: "Claudio Rivas Ruiz-Capillas (Villafuel), principal socio de Aldama en el fraude del IVA de hidrocarburos ('caso Gaslow'), sigue imputado: auto de pase a procedimiento abreviado de Pedraz (15-jun-2026, AN JCI nº 5) que propone juzgar a 16 personas por un presunto fraude de 148 M€ en el IVA de hidrocarburos y le atribuye siete delitos contra la Hacienda Pública, organización criminal, falsedad continuada y blanqueo (Europa Press vía elDiario.es; también The Objective y Confilegal, 15-06-2026). No es un auto de procesamiento (T1 061: el registro publica «imputado», fail-closed); sigue rigiendo la presunción de inocencia."
+
+  - source: "Claudio Rivas Ruiz Capillas"
+    target: "organización criminal"
+    type: ACCUSED_OF
+    status: "imputado"
+    outlet: "Europa Press (vía elDiario.es)"
+    url: "https://www.eldiario.es/politica/audiencia-nacional-propone-juzgar-empresario-claudio-rivas-capitan-guardia-civil-presunto-fraude-hidrocarburos_1_13304261.html"
+    date: "2026-06-15"
+    quote: "Pedraz atribuye a Rivas siete presuntos delitos contra la Hacienda pública, un delito de organización criminal, falsedad continuada y blanqueo de capitales."
+    note: "Claudio Rivas Ruiz-Capillas (Villafuel), principal socio de Aldama en el fraude del IVA de hidrocarburos ('caso Gaslow'), sigue imputado: auto de pase a procedimiento abreviado de Pedraz (15-jun-2026, AN JCI nº 5) que propone juzgar a 16 personas por un presunto fraude de 148 M€ en el IVA de hidrocarburos y le atribuye siete delitos contra la Hacienda Pública, organización criminal, falsedad continuada y blanqueo (Europa Press vía elDiario.es; también The Objective y Confilegal, 15-06-2026). No es un auto de procesamiento (T1 061: el registro publica «imputado», fail-closed); sigue rigiendo la presunción de inocencia."
+
+  # 063 tramo 2 (01-oct): retirada ACCUSED_OF Claudio Rivas Ruiz Capillas→falsedad documental [77a71e17] — La cita guardada no es literal; la fuente (Europa Press vía elDiario.es, 15-06-2026) recoge «falsedad continuada» entre lo que propone el auto: se retira por prudencia hasta reponerla con cita literal y fila de registro.
+
+  - source: "Claudio Rivas Ruiz Capillas"
+    target: "blanqueo de capitales"
+    type: ACCUSED_OF
+    status: "imputado"
+    outlet: "Europa Press (vía elDiario.es)"
+    url: "https://www.eldiario.es/politica/audiencia-nacional-propone-juzgar-empresario-claudio-rivas-capitan-guardia-civil-presunto-fraude-hidrocarburos_1_13304261.html"
+    date: "2026-06-15"
+    quote: "Pedraz atribuye a Rivas siete presuntos delitos contra la Hacienda pública, un delito de organización criminal, falsedad continuada y blanqueo de capitales."
+    note: "Claudio Rivas Ruiz-Capillas (Villafuel), principal socio de Aldama en el fraude del IVA de hidrocarburos ('caso Gaslow'), sigue imputado: auto de pase a procedimiento abreviado de Pedraz (15-jun-2026, AN JCI nº 5) que propone juzgar a 16 personas por un presunto fraude de 148 M€ en el IVA de hidrocarburos y le atribuye siete delitos contra la Hacienda Pública, organización criminal, falsedad continuada y blanqueo (Europa Press vía elDiario.es; también The Objective y Confilegal, 15-06-2026). No es un auto de procesamiento (T1 061: el registro publica «imputado», fail-closed); sigue rigiendo la presunción de inocencia."
+
+  - source: "Joaquín Parra Páez"
+    target: "defraudación tributaria"
+    type: ACCUSED_OF
+    status: "acusado"
+    outlet: "elDiario.es"
+    url: "https://www.eldiario.es/extremadura/sociedad/joaquin-parra-expresidente-badajoz-enfrenta-15-anos-carcel-presunto-fraude-iva-blanqueo_1_13209688.html"
+    date: "2026-05-20"
+    quote: "Joaquín Parra se enfrenta a 15 años y 6 meses de cárcel por un presunto fraude de 13,1 millones de IVA y blanqueo; juicio con otros 14 acusados en la Audiencia Provincial de Málaga."
+    note: "En su causa PROPIA (fraude de IVA en la venta de hidrocarburos, 2020), Joaquín Parra ya está ACUSADO: la Fiscalía pide 15 años y 6 meses por delitos contra la Hacienda Pública, blanqueo y falsedad continuada en documento mercantil, con juicio señalado en la AP de Málaga. Es una causa distinta del caso Leire, donde figura como investigado en el auto de Ferraz (autoentradaferraz p.41) y declaró como testigo ante Pedraz el 8-jul-2026. Presunción de inocencia."
+
+  - source: "Joaquín Parra Páez"
+    target: "blanqueo de capitales"
+    type: ACCUSED_OF
+    status: "acusado"
+    outlet: "elDiario.es"
+    url: "https://www.eldiario.es/extremadura/sociedad/joaquin-parra-expresidente-badajoz-enfrenta-15-anos-carcel-presunto-fraude-iva-blanqueo_1_13209688.html"
+    date: "2026-05-20"
+    quote: "Joaquín Parra se enfrenta a 15 años y 6 meses de cárcel por un presunto fraude de 13,1 millones de IVA y blanqueo; juicio con otros 14 acusados en la Audiencia Provincial de Málaga."
+    note: "En su causa PROPIA (fraude de IVA en la venta de hidrocarburos, 2020), Joaquín Parra ya está ACUSADO: la Fiscalía pide 15 años y 6 meses por delitos contra la Hacienda Pública, blanqueo y falsedad continuada en documento mercantil, con juicio señalado en la AP de Málaga. Es una causa distinta del caso Leire, donde figura como investigado en el auto de Ferraz (autoentradaferraz p.41) y declaró como testigo ante Pedraz el 8-jul-2026. Presunción de inocencia."
+
+  - source: "Joaquín Parra Páez"
+    target: "falsedad documental"
+    type: ACCUSED_OF
+    status: "acusado"
+    outlet: "elDiario.es"
+    url: "https://www.eldiario.es/extremadura/sociedad/joaquin-parra-expresidente-badajoz-enfrenta-15-anos-carcel-presunto-fraude-iva-blanqueo_1_13209688.html"
+    date: "2026-05-20"
+    quote: "Joaquín Parra se enfrenta a 15 años y 6 meses de cárcel por un presunto fraude de 13,1 millones de IVA y blanqueo; juicio con otros 14 acusados en la Audiencia Provincial de Málaga."
+    note: "En su causa PROPIA (fraude de IVA en la venta de hidrocarburos, 2020), Joaquín Parra ya está ACUSADO: la Fiscalía pide 15 años y 6 meses por delitos contra la Hacienda Pública, blanqueo y falsedad continuada en documento mercantil, con juicio señalado en la AP de Málaga. Es una causa distinta del caso Leire, donde figura como investigado en el auto de Ferraz (autoentradaferraz p.41) y declaró como testigo ante Pedraz el 8-jul-2026. Presunción de inocencia."
+
+  # 063 tramo 2 (01-oct, revisión Codex): retirada ACCUSED_OF Carlos López de las Heras→tráfico de influencias — elDiario.es (29-06-2026) da los delitos de la pieza en bloque, no persona a persona; la citación como investigado queda en el rol, atribuida.
+
+  # 063 tramo 2 (01-oct, revisión Codex): retirada ACCUSED_OF Carlos López de las Heras→malversación — elDiario.es (29-06-2026) da los delitos de la pieza en bloque, no persona a persona; la citación como investigado queda en el rol, atribuida.
+
+  # 063 tramo 2 (01-oct, revisión Codex): retirada ACCUSED_OF Carlos López de las Heras→prevaricación — elDiario.es (29-06-2026) da los delitos de la pieza en bloque, no persona a persona; la citación como investigado queda en el rol, atribuida.
+
+  # 063 tramo 2 (01-oct): retirada ACCUSED_OF Julián Mateos→tráfico de influencias [ba6bbb53] — elDiario.es (29-06-2026) atribuye los delitos a la causa en bloque, no persona a persona (decisión del dueño).
+  # 063 tramo 2 (01-oct): retirada ACCUSED_OF Julián Mateos→malversación [82f859be] — elDiario.es (29-06-2026) atribuye los delitos a la causa en bloque, no persona a persona (decisión del dueño).
+  # 063 tramo 2 (01-oct): retirada ACCUSED_OF Julián Mateos→prevaricación [5986cabc] — elDiario.es (29-06-2026) atribuye los delitos a la causa en bloque, no persona a persona (decisión del dueño).
+
+  - source: "Vicente Fernández"
+    target: "fraude"
+    type: ACCUSED_OF
+    status: "imputado"
+    outlet: "Público"
+    url: "https://www.publico.es/politica/tribunales/expresidente-sepi-detenido-leire-diez-cobro-219-000-euros-servinabar.html"
+    date: "2025-12-11"
+    quote: "El expresidente de la SEPI detenido junto a Leire Díez cobró 219.000 euros de Servinabar; la operación se instruye por estafa, malversación, tráfico de influencias y prevaricación."
+    note: "Vicente Fernández, expresidente de la SEPI (2018-2019) y después asesor de Servinabar, es imputado nuclear del caso Leire (grupo 'Hirurok' con Leire Díez y Antxon Alonso), detenido el 10/11-dic-2025; la operación se instruye por estafa/fraude, malversación, tráfico de influencias y prevaricación según Público. Cobró ~219.000 € de Servinabar. Su imputación es previa a la providencia de los 25 del 29-jun-2026. Presunción de inocencia."
+
+  - source: "Vicente Fernández"
+    target: "malversación"
+    type: ACCUSED_OF
+    status: "imputado"
+    outlet: "Público"
+    url: "https://www.publico.es/politica/tribunales/expresidente-sepi-detenido-leire-diez-cobro-219-000-euros-servinabar.html"
+    date: "2025-12-11"
+    quote: "El expresidente de la SEPI detenido junto a Leire Díez cobró 219.000 euros de Servinabar; la operación se instruye por estafa, malversación, tráfico de influencias y prevaricación."
+    note: "Vicente Fernández, expresidente de la SEPI (2018-2019) y después asesor de Servinabar, es imputado nuclear del caso Leire (grupo 'Hirurok' con Leire Díez y Antxon Alonso), detenido el 10/11-dic-2025; la operación se instruye por estafa/fraude, malversación, tráfico de influencias y prevaricación según Público. Cobró ~219.000 € de Servinabar. Su imputación es previa a la providencia de los 25 del 29-jun-2026. Presunción de inocencia."
+
+  - source: "Vicente Fernández"
+    target: "tráfico de influencias"
+    type: ACCUSED_OF
+    status: "imputado"
+    outlet: "Público"
+    url: "https://www.publico.es/politica/tribunales/expresidente-sepi-detenido-leire-diez-cobro-219-000-euros-servinabar.html"
+    date: "2025-12-11"
+    quote: "El expresidente de la SEPI detenido junto a Leire Díez cobró 219.000 euros de Servinabar; la operación se instruye por estafa, malversación, tráfico de influencias y prevaricación."
+    note: "Vicente Fernández, expresidente de la SEPI (2018-2019) y después asesor de Servinabar, es imputado nuclear del caso Leire (grupo 'Hirurok' con Leire Díez y Antxon Alonso), detenido el 10/11-dic-2025; la operación se instruye por estafa/fraude, malversación, tráfico de influencias y prevaricación según Público. Cobró ~219.000 € de Servinabar. Su imputación es previa a la providencia de los 25 del 29-jun-2026. Presunción de inocencia."
+
+  - source: "Vicente Fernández"
+    target: "prevaricación"
+    type: ACCUSED_OF
+    status: "imputado"
+    outlet: "Público"
+    url: "https://www.publico.es/politica/tribunales/expresidente-sepi-detenido-leire-diez-cobro-219-000-euros-servinabar.html"
+    date: "2025-12-11"
+    quote: "El expresidente de la SEPI detenido junto a Leire Díez cobró 219.000 euros de Servinabar; la operación se instruye por estafa, malversación, tráfico de influencias y prevaricación."
+    note: "Vicente Fernández, expresidente de la SEPI (2018-2019) y después asesor de Servinabar, es imputado nuclear del caso Leire (grupo 'Hirurok' con Leire Díez y Antxon Alonso), detenido el 10/11-dic-2025; la operación se instruye por estafa/fraude, malversación, tráfico de influencias y prevaricación según Público. Cobró ~219.000 € de Servinabar. Su imputación es previa a la providencia de los 25 del 29-jun-2026. Presunción de inocencia."
+
+  # 063 tramo 4 (02-oct): retirada ACCUSED_OF Luis Prieto Cuerdo→prevaricación [0ba9d4bb] — prensa de >90 días sin fila de registro.
+
+  # 063 tramo 4 (02-oct): retirada ACCUSED_OF Luis Prieto Cuerdo→fraude a los intereses de la UE [8c157bd2] — prensa de >90 días sin fila de registro.
+
+  - source: "José Antonio Marco Sanjuán"
+    target: "cohecho"
+    type: ACCUSED_OF
+    status: "imputado"
+    outlet: "Telemadrid"
+    url: "https://www.telemadrid.es/programas/telenoticias-1/La-Fiscalia-Anticorrupcion-se-querella-por-cohecho-contra-Jose-Antonio-Marco-Sanjuan-2-2873132698--20260323051837.html"
+    date: "2026-03-23"
+    quote: "La Fiscalía Anticorrupción se querella por cohecho contra José Antonio Marco Sanjuán."
+    note: "José Antonio Marco Sanjuán, expresidente del TEAC y ex 'número 3' de Montero en Hacienda, está imputado por cohecho en el Juzgado de Instrucción nº 35 de Madrid tras la querella de la Fiscalía Anticorrupción (admitida el 23-mar-2026, dirigida contra él y otras 15 personas) por presuntos cobros a cambio de archivar pleitos fiscales; citado a declarar en mayo de 2026 y seguía imputado a 8-jul-2026 (El Debate). El Debate menciona además prevaricación, tráfico de influencias y malversación — solo cohecho está multi-verificado, el resto no se carga. Presunción de inocencia."
+
+  - source: "Ana María Fuentes Pacheco"
+    target: "falsedad documental"
+    type: ACCUSED_OF
+    status: "imputado"
+    outlet: "Vozpópuli"
+    url: "https://www.vozpopuli.com/tribunales/la-gerente-del-psoe-tuvo-que-fabricar-decenas-de-facturas-falsas-para-ocultar-que-financiaba-a-las-cloacas.html"
+    date: "2026-05-29"
+    quote: "La gerente del PSOE habría avalado notas de encargo 'mendaces' para justificar pagos que encubrirían retribuciones a Leire Díez."
+    note: "Ana María Fuentes Pacheco, gerente federal del PSOE (desde oct-2021, a propuesta de Cerdán), está imputada por el juez Pedraz en el caso Leire (pieza de financiación de las 'cloacas', finales de may-2026) por presunta falsedad en documento mercantil: habría avalado notas de encargo 'mendaces' que justificaron pagos del PSOE (27.225 € y 125.000 €) a los abogados Oliver y Teijelo, que encubrirían retribuciones a Leire Díez. Seguía investigada a 2-jul-2026. Según Vozpópuli y El Independiente; presunción de inocencia."
+
+
+  # Rodolfo Reyes: sus aristas ACCUSED_OF de extracción cubren tráfico de influencias
+  # y blanqueo; la orden internacional de detención (25-may-2026) añade otros dos
+  # delitos con cita textual — se cargan aquí (barrido 2026-07-10).
+  - source: "Rodolfo Reyes"
+    target: "apropiación indebida"
+    type: ACCUSED_OF
+    status: "investigado"
+    outlet: "ElNacional.cat"
+    url: "https://www.elnacional.cat/es/politica/juez-calama-emite-orden-detencion-contra-principal-accionista-plus-ultra-rodolfo-reyes_1645222_102.html"
+    date: "2026-05-25"
+    quote: "El juez Calama emite orden internacional de detención contra el principal accionista de Plus Ultra por delitos de apropiación indebida, tráfico de influencias, pertenencia a organización criminal y blanqueo de capitales."
+    note: "Rodolfo Reyes Rojas, considerado por la investigación el principal accionista real de Plus Ultra (vía Snip Aviation, con su pareja Aurora López), tiene orden internacional de detención del juez Calama (25-may-2026) por apropiación indebida, tráfico de influencias, pertenencia a organización criminal y blanqueo, según ElNacional.cat e Infobae. Presunción de inocencia."
+
+  - source: "Rodolfo Reyes"
+    target: "organización criminal"
+    type: ACCUSED_OF
+    status: "investigado"
+    outlet: "ElNacional.cat"
+    url: "https://www.elnacional.cat/es/politica/juez-calama-emite-orden-detencion-contra-principal-accionista-plus-ultra-rodolfo-reyes_1645222_102.html"
+    date: "2026-05-25"
+    quote: "El juez Calama emite orden internacional de detención contra el principal accionista de Plus Ultra por delitos de apropiación indebida, tráfico de influencias, pertenencia a organización criminal y blanqueo de capitales."
+    note: "Rodolfo Reyes Rojas, considerado por la investigación el principal accionista real de Plus Ultra (vía Snip Aviation, con su pareja Aurora López), tiene orden internacional de detención del juez Calama (25-may-2026) por apropiación indebida, tráfico de influencias, pertenencia a organización criminal y blanqueo, según ElNacional.cat e Infobae. Presunción de inocencia."

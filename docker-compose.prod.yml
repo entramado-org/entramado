@@ -1,0 +1,137 @@
+name: entramado
+# Production stack for hosting on a VPS. NO MLX, NO chat, NO embedder.
+# Only Caddy publishes ports (80/443); neo4j/api/web are reachable only on the
+# internal compose network. Run with:
+#   docker compose -f docker-compose.prod.yml up -d --build
+services:
+  neo4j:
+    image: neo4j:5.26
+    container_name: sm_neo4j
+    restart: unless-stopped
+    # Resource caps: idle neo4j was burning ~1 full core (JVM GC over an
+    # oversized heap) on the local M5 host. heap/pagecache tuned to the
+    # ~561 MB dataset; cpus caps the worst case, mem_limit bounds the JVM.
+    cpus: "2"
+    mem_limit: 2g
+    environment:
+      NEO4J_AUTH: "neo4j/${NEO4J_PASSWORD:-changeme}"
+      NEO4J_PLUGINS: '["apoc"]'
+      NEO4J_dbms_security_procedures_unrestricted: "apoc.*"
+      # 1G heap is ample for a 561 MB graph; 768M pagecache still holds the
+      # whole store in RAM. Smaller heap = far less idle GC churn.
+      NEO4J_server_memory_heap_max__size: "1G"
+      NEO4J_server_memory_pagecache_size: "768M"
+    volumes:
+      - ./neo4j/data:/data
+      - ./neo4j/logs:/logs
+      - ./neo4j/plugins:/plugins
+      - ./neo4j/import:/var/lib/neo4j/import
+    healthcheck:
+      test: ["CMD-SHELL", "cypher-shell -u neo4j -p ${NEO4J_PASSWORD:-changeme} 'RETURN 1' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 40s
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile.prod
+    container_name: sm_api
+    restart: unless-stopped
+    mem_limit: 512m
+    environment:
+      NEO4J_URI: "bolt://neo4j:7687"
+      NEO4J_USERNAME: "neo4j"
+      NEO4J_PASSWORD: "${NEO4J_PASSWORD:-changeme}"
+      CORS_ORIGINS: "https://${SITE_HOST}"
+    volumes:
+      - ./sm-vault:/vault:ro                # briefings live here, read-only
+      # última-hora feed (spec 044): DIRECTORY mount — git pull swaps inodes,
+      # a single-file bind would pin the old one and the api would never see edits.
+      - ./pipeline/data/ultima_hora:/data/ultima_hora:ro
+      # patrones llamativos (spec 053): same directory-mount reasoning
+      - ./pipeline/data/patrones:/data/patrones:ro
+      # ontología controlada (spec 069): estados, capas y tipos que sirven API y MCP
+      - ./pipeline/data/ontologia:/data/ontologia:ro
+    depends_on:
+      neo4j:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:8000/health').status==200 else 1)\""]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+
+  # Public read-only MCP connector (spec 009). Same image as api, different
+  # command; reachable only through Caddy's /mcp route (no published ports).
+  mcp:
+    build:
+      context: ./api
+      dockerfile: Dockerfile.prod
+    container_name: sm_mcp
+    restart: unless-stopped
+    mem_limit: 512m
+    command: ["uvicorn", "app.mcp_server:asgi", "--host", "0.0.0.0", "--port", "8008"]
+    environment:
+      NEO4J_URI: "bolt://neo4j:7687"
+      NEO4J_USERNAME: "neo4j"
+      NEO4J_PASSWORD: "${NEO4J_PASSWORD:-changeme}"
+    volumes:
+      - ./sm-vault:/vault:ro
+      # patrones llamativos (spec 053): la tool MCP lee el mismo fichero que la web
+      - ./pipeline/data/patrones:/data/patrones:ro
+      # ontología controlada (spec 069): estados, capas y tipos que sirven API y MCP
+      - ./pipeline/data/ontologia:/data/ontologia:ro
+    depends_on:
+      neo4j:
+        condition: service_healthy
+
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile.prod
+      args:
+        # Relative base -> browser hits the API same-origin via Caddy's /api route.
+        NEXT_PUBLIC_API_BASE: "/api"
+    container_name: sm_web
+    restart: unless-stopped
+    mem_limit: 512m
+    environment:
+      # Server-side (RSC) fetches go container-to-container via compose DNS.
+      API_INTERNAL_BASE: "http://api:8000"
+    depends_on:
+      - api
+
+  caddy:
+    # Custom build: stock caddy:2 + mholt/caddy-ratelimit (per-IP throttle now that
+    # the site is public). `./prod-machine.sh up` builds it via compose --build.
+    build:
+      context: .
+      dockerfile: infra/caddy/Dockerfile
+    image: sm-caddy-ratelimit
+    container_name: sm_caddy
+    restart: unless-stopped
+    mem_limit: 128m
+    # Caddy serves PLAINTEXT on :80 (SITE_HOST=:80); the Tailscale Funnel
+    # terminates TLS publicly and owns host :443, so do NOT map :443 here
+    # (it conflicts with the Funnel and Caddy never listens on it anyway).
+    ports:
+      - "80:80"
+    environment:
+      SITE_HOST: "${SITE_HOST}"
+      BASIC_AUTH_USER: "${BASIC_AUTH_USER}"
+      BASIC_AUTH_HASH: "${BASIC_AUTH_HASH}"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - web
+      - api
+      - mcp
+
+volumes:
+  caddy_data:
+  caddy_config:

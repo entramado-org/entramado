@@ -1,0 +1,44 @@
+Licencia de los datos editoriales de El Entramado
+==================================================
+
+Las capas de datos curadas de este repositorio se publican bajo la licencia
+Creative Commons Reconocimiento 4.0 Internacional (CC BY 4.0):
+
+    https://creativecommons.org/licenses/by/4.0/legalcode.es
+
+Ámbito cubierto por CC BY 4.0
+-----------------------------
+- `pipeline/data/` — capas editoriales y de corrección curadas (contexto,
+  relaciones, acusaciones, claims, contratos, mercantil, subvenciones,
+  contratación, BOE, última hora, patrones, prensa).
+- `api/app/data/` — registro curado de casos (`cases.yaml`).
+- Los textos editoriales del sitio (fichas, glosario, crítica institucional).
+
+Atribución requerida: «El Entramado — entramado.org», con enlace al sitio o a
+este repositorio.
+
+Qué NO cubre esta licencia
+--------------------------
+- El **código** del proyecto, que se licencia bajo GNU AGPL-3.0 (ver `LICENSE`).
+- Los **documentos de `data/*.pdf`**: son documentos oficiales públicos
+  (resoluciones judiciales, diarios de sesiones parlamentarios, informes de
+  auditoría, informes policiales incorporados a causas judiciales) reproducidos
+  tal cual desde sus fuentes. Son obras de terceros; su naturaleza y procedencia
+  se documentan en `data/SOURCES.md`. Las resoluciones judiciales y demás actos
+  oficiales no son objeto de propiedad intelectual (art. 13 de la Ley de
+  Propiedad Intelectual española), sin perjuicio de las condiciones de
+  reutilización de sus publicadores (p. ej. CENDOJ) y de la normativa de
+  protección de datos.
+- Los **datos de registros oficiales** incorporados como overlay (BORME, BOE,
+  BDNS, PLACSP): el dato registral de origen pertenece a su fuente oficial y se
+  reutiliza conforme a sus propias condiciones; lo licenciado CC BY 4.0 es la
+  curación, el cruce y la anotación editorial. Los datos societarios del overlay
+  mercantil se obtuvieron por cortesía de Nearius (https://www.nearius.com/).
+
+Reglas editoriales que viajan con los datos
+-------------------------------------------
+Quien reutilice estas capas debe conservar los marcadores de procedencia y
+estado procesal (`source_kind`, atribuciones «según prensa», estados
+investigado/imputado/condenado): son parte del dato, no decoración. Presentar
+una imputación como condena, o una relación de contexto como indicio, es un uso
+contrario al espíritu de la atribución requerida.

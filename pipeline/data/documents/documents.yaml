@@ -1,0 +1,144 @@
+# Curated DOCUMENT-TYPE metadata — loaded by `make documents`
+# (pipeline/src/documents_loader.py). Pure metadata: SETs d.doc_type on the
+# existing Document nodes so evidence weight is queryable (a Tribunal Supremo
+# auto is not a parliamentary debate phrase). Idempotent; MATCH-only.
+#
+# doc_type ∈ { auto_judicial | informe_uco | transcripcion_parlamentaria |
+#              escrito_acusacion | auditoria | otros }
+#
+# date: AAAA-MM-DD — la fecha CURADA del documento (la que ordena /documentos y
+# documentos_recientes). Si se omite, el loader la deriva del nombre de fichero
+# cuando éste contiene una fecha completa. Las fechas explícitas de abajo se han
+# tomado de la cabecera/disposición del propio documento ("Fecha:", "En Madrid, a…",
+# "Sesión celebrada el…"); ver el log de la sesión 2026-06-26.
+
+documents:
+  # --- Autos / resoluciones judiciales ---
+  - {doc_id: "20250110-auto-desestima-recursos-reforma-pdf.pdf", doc_type: auto_judicial}
+  - {doc_id: "ATS_8919_2025.pdf",  doc_type: auto_judicial, court: "Tribunal Supremo", date: "2025-09-23"}
+  - {doc_id: "ATS_9928_2025.pdf",  doc_type: auto_judicial, court: "Tribunal Supremo", date: "2025-10-31"}
+  - {doc_id: "ATS_10280_2025.pdf", doc_type: auto_judicial, court: "Tribunal Supremo", date: "2025-11-03"}
+  - {doc_id: "ATS_10788_2025.pdf", doc_type: auto_judicial, court: "Tribunal Supremo", date: "2025-11-27"}
+  - {doc_id: "ATS_11406_2025.pdf", doc_type: auto_judicial, court: "Tribunal Supremo", date: "2025-12-10"}
+  - {doc_id: "auto-causa-especial-aforado.pdf",                doc_type: auto_judicial, court: "Tribunal Supremo", date: "2024-11-05"}
+  - {doc_id: "AUTO-IMPUTACION-BEGONA-GOMEZ-11.04.2026.pdf",    doc_type: auto_judicial, court: "Tribunal de Instancia de Madrid nº 41"}
+  - {doc_id: "auto-prision-cerdan-2025-06-30.pdf",             doc_type: auto_judicial, court: "Tribunal Supremo"}
+  - {doc_id: "auto-zapatero.pdf",                              doc_type: auto_judicial, court: "Tribunal Central de Instancia", date: "2026-05-18"}
+  - {doc_id: "auto-zapatero-joyas-2026-06-12.pdf",             doc_type: auto_judicial, court: "Tribunal Central de Instancia"}  # pieza separada Plus Ultra (joyas): contrabando + delito fiscal
+  # OJO: doc_id engañoso — el contenido NO es el auto de entrada en Ferraz, sino el
+  # AUTO DE PEDRAZ de 26.05.2026 (DP 150/2025, caso Leire Díez/"cloacas": organización
+  # criminal, tráfico de influencias, cohecho, revelación de secretos; requerimiento al PSOE).
+  # Renombrar el doc_id exigiría re-keyear chunks/aristas (riesgoso); se corrige fecha+tribunal.
+  - {doc_id: "autoentradaferraz.pdf",                          doc_type: auto_judicial, court: "Tribunal Central de Instancia", date: "2026-05-26"}
+  - {doc_id: "levanta-secreto-santos-cerdan.pdf",              doc_type: auto_judicial, court: "Tribunal Supremo", date: "2025-06-12"}
+  - {doc_id: "ts-cita-abalos.pdf",                             doc_type: auto_judicial, court: "Tribunal Supremo", date: "2024-12-02"}
+  - {doc_id: "2024-10-23-Exposicion-razonada-Abalos.pdf",      doc_type: auto_judicial, court: "Tribunal Supremo"}
+  - {doc_id: "Informe-InstruccionN3.pdf",                      doc_type: auto_judicial, date: "2024-07-29"}  # informe AEAT (DP Badajoz nº3, David Sánchez); fecha de emisión del informe (CreationDate, coherente con el oficio de 18-jun-2024 y plazo 1-jul)
+  - {doc_id: "2025-04-29-badajoz-1-pdf-2.pdf",                 doc_type: auto_judicial}
+  # Causa especial 20775/2020 (TS, instructor Puente) — autos 2024-2026
+  - {doc_id: "ATS_15039_2024.pdf", doc_type: auto_judicial, court: "Tribunal Supremo", date: "2024-12-11"}
+  - {doc_id: "ATS_7320_2025.pdf",  doc_type: auto_judicial, court: "Tribunal Supremo", date: "2025-07-29"}
+  - {doc_id: "ATS_8611_2025.pdf",  doc_type: auto_judicial, court: "Tribunal Supremo", date: "2025-09-18"}
+  - {doc_id: "ATS_9905_2025.pdf",  doc_type: auto_judicial, court: "Tribunal Supremo", date: "2025-10-15"}
+  - {doc_id: "ATS_10789_2025.pdf", doc_type: auto_judicial, court: "Tribunal Supremo", date: "2025-11-27"}
+  - {doc_id: "ATS_242_2026.pdf",   doc_type: auto_judicial, court: "Tribunal Supremo", date: "2026-01-15"}
+  # Ingesta 2026-09-05 (autos CENDOJ de la CE 20775/2020, 31 resoluciones; censo en BACKLOG §1.2 del 08-08):
+  # todos anonimizados; hechos extraídos solo de 14 (sin nodos Person: decisión del dueño, spec 059).
+  - {doc_id: "ATS_3155_2021.pdf", doc_type: auto_judicial, court: "Tribunal Supremo", date: "2021-03-03"}  # inadmisión de la denuncia contra el ministro (mascarillas) y archivo; competencia sobre el aforado
+  - {doc_id: "ATS_6254_2021.pdf", doc_type: auto_judicial, court: "Tribunal Supremo", date: "2021-05-10"}  # desestima súplica contra el archivo de 03-03-2021
+  - {doc_id: "ATS_13325_2024.pdf", doc_type: auto_judicial, court: "Tribunal Supremo", date: "2024-11-05"}  # reapertura de la causa especial y competencia sobre el aforado (versión CENDOJ de auto-causa-especial-aforado.pdf; solo Document, sin hechos)
+  - {doc_id: "AATS_13839_2024.pdf", doc_type: auto_judicial, court: "Tribunal Supremo", date: "2024-11-12"}  # auto aclaratorio del ATS 13325/2024 (errores materiales)
+  - {doc_id: "ATS_2606_2025.pdf", doc_type: auto_judicial, court: "Tribunal Supremo", date: "2025-03-06"}  # desestima apelación de la acusación popular sobre grabaciones del aeropuerto (DP 341/2020)
+  - {doc_id: "ATS_2608_2025.pdf", doc_type: auto_judicial, court: "Tribunal Supremo", date: "2025-03-06"}  # confirma la unificación de las acusaciones populares
+  - {doc_id: "ATS_5540_2025.pdf", doc_type: auto_judicial, court: "Tribunal Supremo", date: "2025-03-06"}  # desestima apelación y nulidad contra el suplicatorio al Congreso
+  - {doc_id: "ATS_5934_2025.pdf", doc_type: auto_judicial, court: "Tribunal Supremo", date: "2025-06-30"}  # auto del instructor de prisión provisional (versión CENDOJ de auto-prision-cerdan-2025-06-30.pdf; solo Document, sin hechos)
+  - {doc_id: "ATS_7081_2025.pdf", doc_type: auto_judicial, court: "Tribunal Supremo", date: "2025-07-16"}  # desestima apelaciones contra diligencias del instructor de 23-04-2025 (informe adjudicación de obras)
+  - {doc_id: "ATS_7107_2025.pdf", doc_type: auto_judicial, court: "Tribunal Supremo", date: "2025-07-23"}  # desestima apelación contra la prisión provisional de 30-06-2025 (sin fundamentos en la versión publicada)
+  - {doc_id: "ATS_9744_2025.pdf", doc_type: auto_judicial, court: "Tribunal Supremo", date: "2025-10-13"}  # confirma medidas cautelares personales a un investigado; relato indiciario obra pública (A-68, A-32)
+  - {doc_id: "ATS_11327_2025.pdf", doc_type: auto_judicial, court: "Tribunal Supremo", date: "2025-12-02"}  # no ha lugar a la personación de un solicitante
+  - {doc_id: "ATS_11788_2025.pdf", doc_type: auto_judicial, court: "Tribunal Supremo", date: "2025-12-10"}  # desestima apelaciones contra el auto de procedimiento abreviado de 03-11-2025
+  - {doc_id: "ATS_207_2026.pdf", doc_type: auto_judicial, court: "Tribunal Supremo", date: "2026-01-08"}  # desestima apelación por denegación de diligencias y acceso a material procesal
+  - {doc_id: "ATS_280_2026.pdf", doc_type: auto_judicial, court: "Tribunal Supremo", date: "2026-01-15"}  # confirma la denegación de devolución de dispositivos informáticos intervenidos
+  - {doc_id: "ATS_246_2026.pdf", doc_type: auto_judicial, court: "Tribunal Supremo", date: "2026-01-16"}  # confirma la negativa a comunicar al Congreso todas las resoluciones
+  - {doc_id: "ATS_248_2026.pdf", doc_type: auto_judicial, court: "Tribunal Supremo", date: "2026-01-16"}  # desestima apelaciones contra prisión provisional (27-11-2025) y apertura de juicio oral (11-12-2025)
+  - {doc_id: "ATS_287_2026.pdf", doc_type: auto_judicial, court: "Tribunal Supremo", date: "2026-01-16"}  # no procede expulsar a los partidos políticos personados como acusación popular
+  - {doc_id: "ATS_288_2026.pdf", doc_type: auto_judicial, court: "Tribunal Supremo", date: "2026-01-16"}  # confirma denegación de diligencias de investigación
+  - {doc_id: "ATS_253_2026.pdf", doc_type: auto_judicial, court: "Tribunal Supremo", date: "2026-01-19"}  # desestima apelaciones del acusado aforado contra su prisión provisional; transcribe los escritos de acusación
+  - {doc_id: "ATS_1640_2026.pdf", doc_type: auto_judicial, court: "Tribunal Supremo", date: "2026-02-06"}  # confirma el acceso de la UCO a las evidencias digitales para la pieza del JCI nº 2 (pagos en metálico del PSOE)
+  - {doc_id: "ATS_2566_2026.pdf", doc_type: auto_judicial, court: "Tribunal Supremo", date: "2026-03-03"}  # pleno de 7: desestima todas las cuestiones previas y resuelve la admisión de prueba para el juicio oral
+  - {doc_id: "ATS_3218_2026.pdf", doc_type: auto_judicial, court: "Tribunal Supremo", date: "2026-03-24"}  # deniega la libertad de dos acusados en vísperas del juicio oral
+  - {doc_id: "ATS_3257_2026.pdf", doc_type: auto_judicial, court: "Tribunal Supremo", date: "2026-03-26"}  # testimonio por informe escrito de la presidenta del Congreso y de un ministro (art. 703 LECrim)
+  - {doc_id: "ATS_3258_2026.pdf", doc_type: auto_judicial, court: "Tribunal Supremo", date: "2026-03-26"}  # estima súplica: sin efecto el ofrecimiento de acciones a INECO y TRAGSATEC
+  - {doc_id: "ATS_4262_2026.pdf", doc_type: auto_judicial, court: "Tribunal Supremo", date: "2026-04-21"}  # desestima súplica sobre espacios en el centro penitenciario para preparar la defensa
+  - {doc_id: "ATS_4512_2026.pdf", doc_type: auto_judicial, court: "Tribunal Supremo", date: "2026-05-07"}  # deniega la libertad solicitada al terminar el juicio oral
+  - {doc_id: "ATS_5556_2026.pdf", doc_type: auto_judicial, court: "Tribunal Supremo", date: "2026-05-27"}  # desestima súplica contra la denegación de libertad de 07-05-2026
+  - {doc_id: "AATS_6465_2026.pdf", doc_type: auto_judicial, court: "Tribunal Supremo", date: "2026-06-24"}  # auto aclaratorio de la STS 418/2026: corrige un cruce de seudónimos («Borja»→«Augusto»)
+  - {doc_id: "AATS_7235_2026.pdf", doc_type: auto_judicial, court: "Tribunal Supremo", date: "2026-07-07"}  # deniega aclaración/complemento de la STS 418/2026 (supuesto acuerdo de conformidad)
+  - {doc_id: "AATS_7236_2026.pdf", doc_type: auto_judicial, court: "Tribunal Supremo", date: "2026-07-17"}  # deniega aclaración/subsanación/complemento de la STS 418/2026
+  # SENTENCIA firme del TS (Sala de lo Penal) núm. 418/2026, 22-jun-2026 — condena a
+  # José Luis Ábalos, Koldo García y Víctor de Aldama (org. criminal, cohecho, tráfico de
+  # influencias, malversación) y los absuelve de prevaricación/uso info privilegiada/falsedad.
+  - {doc_id: "sentencia-ts-abalos-koldo-aldama-2026-06-22.pdf", doc_type: auto_judicial, court: "Tribunal Supremo (Sala de lo Penal)", date: "2026-06-22", sentencia_firme: true}  # única instancia (aforado): firme; incidentes de nulidad pendientes no la suspenden
+  # SENTENCIA 152/2026 de la AP de Badajoz (Sección 1ª), 14-jul-2026 — NO FIRME (cabe
+  # apelación ante el TSJ de Extremadura): condena a los 11 acusados (David Sánchez,
+  # Gallardo, etc.) por prevaricación administrativa (9 años de inhabilitación cada uno;
+  # Gallardo dos delitos) y los absuelve del resto (tráfico de influencias, nombramientos
+  # ilegales). Ingesta DIRIGIDA: facts solo de pp.1-19 + fallo 373-377 + 35 chunks clave;
+  # las 377 págs completas están chunked+embebidas (texto íntegro buscable).
+  - {doc_id: "sentencia-ap-badajoz-david-sanchez-gallardo-2026-07-14.pdf", doc_type: auto_judicial, court: "Audiencia Provincial de Badajoz (Sección 1ª)", date: "2026-07-14", sentencia_firme: false}  # recurrida en apelación ante el TSJ de Extremadura (jul-2026): NO firme
+  # Causa especial 20557/2024 (TS, fiscal general García Ortiz) — ingesta verificada 2026-08-10
+  - {doc_id: "auto-ts-garcia-ortiz-2025-01-13.pdf", doc_type: auto_judicial, court: "Tribunal Supremo", date: "2025-01-13"}  # instructor Hurtado: extiende investigación a Villafañe, cita a investigados
+  - {doc_id: "auto-ts-garcia-ortiz-2025-07-29.pdf", doc_type: auto_judicial, court: "Tribunal Supremo", date: "2025-07-29"}  # auto 21797/2025 (trámites posteriores nº 44, De Porres) + voto particular Palomo del Arco
+  # SENTENCIA TS 1000/2025, 9-dic-2025 — condena a García Ortiz por revelación de datos
+  # reservados (art. 417.1) y le absuelve del resto; INCLUYE los votos particulares de
+  # Polo y Ferrer (pp. 185-238; el PDF suelto del voto es duplicado íntegro, no censado).
+  - {doc_id: "sentencia-ts-garcia-ortiz-fiscal-general.pdf", doc_type: auto_judicial, court: "Tribunal Supremo (Sala de lo Penal)", date: "2025-12-09", sentencia_firme: true}  # única instancia (aforado): firme; incidentes de nulidad desestimados 26-02-2026
+  # Caso Begoña Gómez (Juzgado de Instrucción nº 41 de Madrid)
+  - {doc_id: "auto-begona-incoacion-2024-04-16.pdf", doc_type: auto_judicial, court: "Juzgado de Instrucción nº 41 de Madrid"}
+  - {doc_id: "auto-begona-jurado-2025-09-23.pdf",    doc_type: auto_judicial, court: "Juzgado de Instrucción nº 41 de Madrid"}
+  - {doc_id: "auto-peinado-juicio-oral-begona-2026-06-20.pdf", doc_type: auto_judicial, court: "Tribunal de Instancia de Madrid nº 41 (Tribunal del Jurado 1146/2024)", date: "2026-06-20"}  # apertura de juicio oral: Begoña Gómez, Cristina Álvarez, Barrabés
+  - {doc_id: "auto-peinado-juicio-oral-begona-2026-09-21.pdf", doc_type: auto_judicial, court: "Tribunal de Instancia de Madrid nº 41 (Tribunal del Jurado 1146/2024)", date: "2026-09-21"}  # nuevo auto de apertura de juicio oral tras el auto AP 655/2026: Begoña Gómez (tráfico de influencias y malversación) y Cristina Álvarez (malversación); CSV 1296335874013465898025 (gestiona.comunidad.madrid/csv)
+
+  # --- Informes UCO / Guardia Civil (policía judicial) ---
+  # Informe UCO 96/2025, de 5-jun-2025 (íntegro + paginados por tramos de folios)
+  - {doc_id: "informe-uco.pdf",                doc_type: informe_uco, date: "2025-06-05"}
+  - {doc_id: "informe-uco-cerdan-1-100.pdf",   doc_type: informe_uco, date: "2025-06-05"}
+  - {doc_id: "informe-uco-cerdan-101-200.pdf", doc_type: informe_uco, date: "2025-06-05"}
+  - {doc_id: "informe-uco-cerdan-201-300.pdf", doc_type: informe_uco, date: "2025-06-05"}
+  - {doc_id: "informe-uco-cerdan-301-400.pdf", doc_type: informe_uco, date: "2025-06-05"}
+  - {doc_id: "informe-uco-cerdan-401-490.pdf", doc_type: informe_uco, date: "2025-06-05"}
+  - {doc_id: "informe_guardia_civil.pdf",      doc_type: informe_uco, date: "2024-05-28"}   # GC "DIP 1146-24 TOMO I" — escaneado SIN capa de texto; fecha = CreationDate del PDF (aprox., sin fecha impresa verificable)
+  - {doc_id: "aldama-movil.pdf",               doc_type: informe_uco, date: "2024-12-05"}   # volcado forense del móvil; providencia TS de incorporación, 5-dic-2024
+  - {doc_id: "informe-udef-1907.pdf",          doc_type: informe_uco, date: "2026-04-22"}   # UDEF-BBCA — Plus Ultra (DP 77/2024)
+  - {doc_id: "informe-udef-1908.pdf",          doc_type: informe_uco, date: "2026-04-22"}   # UDEF-BBCA — Plus Ultra comms
+  - {doc_id: "informe-udef-2910-focus-social.pdf", doc_type: informe_uco, date: "2026-06-22"}  # UDEF-BBCA 2910/26 — intermediación Zapatero / GRUPO GLORIA / FOCUS SOCIAL (DP 77/2024)
+
+  # --- Transcripciones parlamentarias (Diario de Sesiones — debate, no prueba) ---
+  - {doc_id: "DSCD-15-CI-8.pdf",  doc_type: transcripcion_parlamentaria, court: "Congreso de los Diputados", date: "2024-05-27"}  # Comisión COVID, IB-Salut (Ureña)
+  - {doc_id: "DS_C_15_103.pdf",   doc_type: transcripcion_parlamentaria, court: "Senado", date: "2024-05-06"}  # comparecencia Ábalos
+  - {doc_id: "DS_C_15_233.pdf",   doc_type: transcripcion_parlamentaria, court: "Senado", date: "2024-11-14"}  # Sánchez Fuentefría
+  - {doc_id: "DS_C_15_659.pdf",   doc_type: transcripcion_parlamentaria, court: "Senado", date: "2026-04-15"}  # comisión SEPI, 15-abr-2026 (Lora Toro)
+  - {doc_id: "DS_C_15_717.pdf",   doc_type: transcripcion_parlamentaria, court: "Senado", date: "2026-05-28"}  # comisión SEPI, 28-may-2026 (Martín Molina)
+  # Los tres siguientes llevan curated_edges: true — sus aristas NO vienen de la extracción
+  # masiva que retiró la Option D, sino de la puerta de revisión humana (spec en
+  # scripts/_ingest_apply_curated.py, veredicto del dueño 2026-07-14): el purge de
+  # aristas de transcripción del cleanup los salta (documents_loader.transcript_doc_ids).
+  - {doc_id: "DS_C_15_727.pdf",   doc_type: transcripcion_parlamentaria, court: "Senado", date: "2026-06-16", curated_edges: true}  # comisión Interior, 16-jun-2026 — Mercedes González (DG GC), caso Leire/Villalba
+  - {doc_id: "DS_C_15_744.pdf",   doc_type: transcripcion_parlamentaria, court: "Senado", date: "2026-06-29", curated_edges: true}  # comisión SEPI, 29-jun-2026 — excomisario Barajas Gómez Martín (ingesta solo pp.23-80)
+  - {doc_id: "DS_C_15_745.pdf",   doc_type: transcripcion_parlamentaria, court: "Senado", date: "2026-06-30", curated_edges: true}  # comisión Koldo, 30-jun-2026 — Alzórriz (mañana) + Marlaska (tarde, caso Leire)
+  - {doc_id: "DS_C_15_754.pdf",   doc_type: transcripcion_parlamentaria, court: "Senado", date: "2026-07-08", curated_edges: true}  # comisión SEPI, 8-jul-2026 — Aagesen (exvocal consejo gestor FASEE); ronda 2, veredicto 2026-07-14b (scripts/_ingest_apply_curated_754.py)
+  # Los tres siguientes: ingesta VERIFICADA (enjambre + adversarial doble + repaso íntegro
+  # del dueño, REVIEW-PASADA4 2026-08-10; apply = scripts/_apply_verified.py) → curated_edges.
+  - {doc_id: "DS_C_15_755.pdf",   doc_type: transcripcion_parlamentaria, court: "Senado", date: "2026-07-13", curated_edges: true}  # comisión SEPI — Soledad Fernández Doctor (ex DG AEAT)
+  - {doc_id: "DS_C_15_756.pdf",   doc_type: transcripcion_parlamentaria, court: "Senado", date: "2026-07-17", curated_edges: true}  # comisión Koldo — Manuel Llamas (DAO Guardia Civil; materia caso Leire)
+  - {doc_id: "DS_C_15_758.pdf",   doc_type: transcripcion_parlamentaria, court: "Senado", date: "2026-07-22", curated_edges: true}  # comisión Koldo — Cristina Narbona (presidenta del PSOE)
+
+  # --- Escrito de acusación (Ministerio Fiscal) ---
+  - {doc_id: "ESCRITO-DE-ACUSACION_fdo.pdf", doc_type: escrito_acusacion, date: "2025-05-14"}  # acusación popular unificada (PA 43/25, Badajoz); "En Badajoz, a 14 de mayo de 2025"
+  - {doc_id: "calificacion-fiscal-abalos-aldama-garcia.pdf", doc_type: escrito_acusacion, court: "Tribunal Supremo", date: "2025-11-19"}  # conclusiones provisionales del Fiscal (causa 20775/2020); "Madrid, 19 de noviembre de 2025", fdo. Luzón
+
+  # --- Auditoría / informe de fiscalización ---
+  - {doc_id: "20240819_informe_audit_ejec_om_adquis_mascarillas_an.pdf", doc_type: auditoria}
+
+  # --- Sin clasificar (filename opaco; revisar) ---
+  - {doc_id: "EN0E47_3.pdf", doc_type: otros, date: "2025-06-30"}  # notificación LexNet del decreto de prisión de Santos Cerdán (30-06-2025)

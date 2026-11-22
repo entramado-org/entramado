@@ -1,0 +1,38 @@
+# Curated CLAIMS-IN-DISPUTE overlay (spec 011, P5). Each claim reifies a
+# contested statement and attaches the postures (ASSERTS / DISPUTES) with their
+# sources. Presunción de inocencia: an accusation is alleged, shown alongside the
+# denial, never as a proven fact. entity_ids verified against the live graph.
+#
+# Loaded by: cd pipeline && uv run python -m src.claims_loader   (make claims)
+#
+# Schema per item:
+#   text:        the contested statement (neutral phrasing)
+#   topic:       short label
+#   about:       [entity_id, …]   # optional anchor (Claim)-[:ABOUT]->(Entity)
+#   asserts: / disputes:          # postures, each:
+#     - person:       display name (or entity_id:)
+#       source_kind:  judicial | prensa | ultima_hora | contexto
+#       doc:          doc_id/título (for judicial)         | outlet+url (for prensa)
+#       page:         page number (judicial)
+#       quote:        verbatim cite (judicial) / reported statement (prensa)
+#       date:         ISO date
+
+claims:
+  # 063 (2026-09-26, dueño): retiradas las 4 afirmaciones del caso Koldo (cobros de Ábalos, comisiones
+  # de Cerdán, mascarillas de Koldo, entregas de Aldama). Sus posturas no tenían fuente en corpus ni
+  # en prensa localizable; sin ellas quedaban vacías o solo con la acusación. Los hechos están en el
+  # grafo con la sentencia del TS de 22-06-2026. Motivo por unidad en esc/decisions (auditoría 063).
+  - claim_id: begona-trafico-influencias-master
+    text: "Begoña Gómez se sirvió de su posición para captar patrocinios privados y favorecer su actividad universitaria (cátedra y máster de la Complutense)."
+    topic: "Caso Begoña Gómez — tráfico de influencias (investigada)"
+    about:
+      - Person:begona-gomez
+    asserts:
+      # 071: retirada la postura de [766c4c7e] (R-2026-10-07-0021): decisión arbitraje-2026-10-03 materializada tras la re-identificación de su titular
+    disputes:
+      - person: Begoña Gómez
+        entity_id: Person:begona-gomez
+        source_kind: prensa
+        outlet: "declaraciones de su defensa"
+        quote: "La defensa de Begoña Gómez niega los hechos y sostiene que no cometió irregularidad alguna."
+        date: "2024-04-24"

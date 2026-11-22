@@ -1,0 +1,298 @@
+# Registro curado de casos (spec 038) — la definición editorial de cada "caso"
+# que agrega la ficha pública /caso/<slug>. NO es un hecho documental: es
+# curación de agregación (como los briefings), por eso vive aquí y NO en Neo4j.
+#
+# Reglas:
+#  · slug: kebab ASCII estable (es la URL pública).
+#  · dek: OBLIGATORIO — 1-2 frases neutras; es el fallback del resumen cuando el
+#    briefing (vault, gitignored) no está montado, y la meta description.
+#  · estado / estado_kind: mantenimiento MANUAL (actualizar `updated` al tocar).
+#    estado_kind ∈ instruccion | juicio | sentencia | archivado.
+#  · entidades[].id: entity_id EXACTO del grafo (verificar con /search);
+#    `core: true` = protagonista (va primero en la galería). `papel` es el rol
+#    EN ESTE CASO (neutral, sin adjetivos acusatorios); si falta, se usa el rol
+#    curado del nodo.
+#  · documentos: Document.doc_id EXACTOS (con .pdf). Alimentan la sección de
+#    documentos Y el filtro de la cronología (r.source_doc IN docs). Un typo =
+#    cronología corta EN SILENCIO → load_cases() avisa si alguno no existe.
+#    Si la lista queda vacía, la cronología se filtra por entidades.
+#  · ultima_hora_tags: caseTag del feed web (web/lib/ultimaHora.ts); la ficha
+#    también matchea ítems del feed por entidad.
+#  · Presunción de inocencia: los estados procesales por persona NO se escriben
+#    aquí — salen del grafo en vivo (accusations layer) y siempre citados.
+
+cases:
+  - slug: caso-koldo
+    titulo: "Caso Koldo · las mascarillas y el MITMA"
+    dek: >-
+      La trama de adjudicaciones de material sanitario en pandemia articulada desde el
+      entorno del Ministerio de Transportes: del asesor Koldo García y el ministro Ábalos
+      al comisionista Aldama y Soluciones de Gestión. Primera pieza con sentencia
+      del Tribunal Supremo.
+    estado: >-
+      Sentencia del Tribunal Supremo (22-jun-2026) para Ábalos, Koldo García y Aldama,
+      contra la que no cabe recurso ordinario; incidentes de nulidad de Ábalos y García
+      pendientes de resolución. Otras piezas de la causa siguen en instrucción.
+    estado_kind: sentencia
+    causa: "Causa Especial 20775/2020, Tribunal Supremo (Sala Segunda)"
+    updated: "2026-09-05"
+    briefing_slug: caso-koldo-mascarillas
+    entidades:
+      - { id: "Person:jose-luis-abalos", papel: "Exministro de Transportes", core: true }
+      - { id: "Person:koldo-garcia", papel: "Asesor del ministro", core: true }
+      - { id: "Person:victor-de-aldama", papel: "Empresario e intermediario", core: true }
+      - { id: "Company:soluciones-de-gestion", papel: "Adjudicataria de los contratos de mascarillas", core: true }
+      - { id: "Organization:ministerio-de-transportes-movilidad-y-agenda-urbana", papel: "Ministerio adjudicador", core: false }
+      - { id: "Company:air-europa", papel: "Aerolínea; sus gestiones de rescate figuran en la causa", core: false }
+      - { id: "Person:santos-cerdan", papel: "Ex secretario de Organización del PSOE (su pieza tiene ficha propia)", core: false }
+      - { id: "Person:jesica-rodriguez-garcia", papel: "Expareja de Ábalos; contratada por Ineco y Tragsatec", core: false }
+      - { id: "Person:joseba-garcia-izaguirre", papel: "Hermano de Koldo García", core: false }
+      - { id: "Person:bartolome-lora-toro", papel: "Vicepresidente de la SEPI, organismo que aprobó el rescate de Air Europa (475 M€)", core: false }
+    documentos:
+      - informe_guardia_civil.pdf
+      - 20240819_informe_audit_ejec_om_adquis_mascarillas_an.pdf
+      - DSCD-15-CI-8.pdf
+      - DS_C_15_103.pdf
+      - aldama-movil.pdf
+      - 2024-10-23-Exposicion-razonada-Abalos.pdf
+      - ts-cita-abalos.pdf
+      - auto-causa-especial-aforado.pdf
+      - ATS_10788_2025.pdf
+      - sentencia-ts-abalos-koldo-aldama-2026-06-22.pdf
+      - calificacion-fiscal-abalos-aldama-garcia.pdf
+      - DS_C_15_758.pdf
+      - ATS_11788_2025.pdf
+      - ATS_248_2026.pdf
+      - ATS_253_2026.pdf
+      - ATS_1640_2026.pdf
+      - ATS_2566_2026.pdf
+      - ATS_3218_2026.pdf
+    ultima_hora_tags: ["Financiación PSOE"]
+    relacionados: [caso-cerdan]
+
+  - slug: caso-cerdan
+    titulo: "Caso Cerdán · la obra pública"
+    dek: >-
+      La pieza que investiga presuntas adjudicaciones de obra pública amañadas en torno a
+      Santos Cerdán, ex secretario de Organización del PSOE, la empresa navarra Servinabar
+      y constructoras como Acciona — documentada en el informe de la UCO de 490 páginas.
+    estado: >-
+      Instrucción abierta; Cerdán estuvo en prisión provisional entre el 30-jun y el
+      19-nov-2025, fecha en que el Tribunal Supremo acordó su libertad provisional.
+    estado_kind: instruccion
+    causa: "Causa Especial 20775/2020 (pieza de obra pública), Tribunal Supremo (Sala Segunda)"
+    updated: "2026-10-02"
+    briefing_slug: cerdan-uco
+    entidades:
+      - { id: "Person:santos-cerdan", papel: "Ex secretario de Organización del PSOE", core: true }
+      - { id: "Company:servinabar", papel: "Empresa navarra que figura en la investigación", core: true }
+      - { id: "Person:antxon", papel: "Empresario, socio en Servinabar", core: true }
+      - { id: "Company:acciona-construccion", papel: "Constructora adjudicataria que figura en los informes", core: true }
+      - { id: "Person:fernando-merino", papel: "Exdirectivo de Acciona Construcción", core: false }
+      - { id: "Person:koldo-garcia", papel: "Enlace con la pieza de las mascarillas", core: false }
+      - { id: "Organization:adif", papel: "Ente adjudicador de obra pública", core: false }
+      - { id: "Organization:psoe", papel: "Sede registrada en la Operación Delorme", core: false }
+    documentos:
+      - informe-uco.pdf
+      - informe-uco-cerdan-1-100.pdf
+      - informe-uco-cerdan-101-200.pdf
+      - informe-uco-cerdan-201-300.pdf
+      - informe-uco-cerdan-301-400.pdf
+      - informe-uco-cerdan-401-490.pdf
+      - levanta-secreto-santos-cerdan.pdf
+      - auto-prision-cerdan-2025-06-30.pdf
+      - autoentradaferraz.pdf
+      - EN0E47_3.pdf
+      - ATS_9744_2025.pdf
+      - ATS_7081_2025.pdf
+    ultima_hora_tags: ["Obra pública"]
+    relacionados: [caso-koldo]
+
+  - slug: caso-begona-gomez
+    titulo: "Caso Begoña Gómez"
+    dek: >-
+      El procedimiento contra la esposa del presidente del Gobierno por su actividad al
+      frente de una cátedra extraordinaria de la Complutense y sus relaciones con
+      empresarios adjudicatarios: de la incoación en 2024 al juicio oral ante el Tribunal
+      del Jurado.
+    estado: >-
+      Auto de apertura de juicio oral ante el Tribunal del Jurado de 21-sep-2026 (Juzgado de
+      Instrucción nº 41 de Madrid), dictado tras el auto 655/2026, de 13-jul-2026, de la
+      Sección 23.ª de la AP de Madrid: Begoña Gómez acusada de tráfico de influencias y
+      malversación; Cristina Álvarez solo de malversación, como cooperadora necesaria; no ha
+      lugar a juicio por corrupción en los negocios (sobreseído) ni por apropiación indebida
+      y administración desleal (descartados por la AP). Barrabés quedó separado del
+      procedimiento del Jurado y la investigación sobre él sigue en unas diligencias previas
+      aparte. Solo se mantiene la obligación de las acusadas de comparecer y estar a
+      disposición del tribunal, sin otras medidas cautelares personales. El Ministerio
+      Fiscal pide el sobreseimiento; acusa la acusación popular. No se ha celebrado el
+      juicio ni hay sentencia: rige la presunción de inocencia.
+    estado_kind: juicio
+    causa: "Juzgado de Instrucción nº 41 de Madrid (Tribunal de Instancia de Madrid)"
+    updated: "2026-10-02"
+    briefing_slug: begona-gomez
+    entidades:
+      - { id: "Person:begona-gomez", papel: "Esposa del presidente del Gobierno; directora de la cátedra", core: true }
+      - { id: "Person:juan-carlos-barrabes", papel: "Empresario; sus cartas de recomendación y las UTE de Red.es figuran en la causa", core: true }
+      - { id: "Person:pedro-sanchez", papel: "Presidente del Gobierno; esposo de Begoña Gómez", core: false }
+    documentos:
+      - auto-begona-incoacion-2024-04-16.pdf
+      - Informe-InstruccionN3.pdf
+      - auto-begona-jurado-2025-09-23.pdf
+      - AUTO-IMPUTACION-BEGONA-GOMEZ-11.04.2026.pdf
+      - auto-peinado-juicio-oral-begona-2026-06-20.pdf
+    ultima_hora_tags: ["Begoña Gómez"]
+    relacionados: []
+
+  - slug: caso-zapatero-plus-ultra
+    titulo: "Caso Zapatero · Plus Ultra y la intermediación"
+    dek: >-
+      La investigación sobre el rescate público de Plus Ultra por la SEPI y la presunta
+      trama de tráfico de influencias e intermediación internacional que los informes de
+      la UDEF sitúan en el entorno del expresidente Rodríguez Zapatero.
+    estado: >-
+      Instrucción abierta; Zapatero investigado (auto de entradas y registros de
+      18-may-2026) y pieza separada sobre las joyas intervenidas, por presuntos delitos
+      contra la Hacienda Pública y de contrabando (auto de 12-jun-2026).
+    estado_kind: instruccion
+    causa: "Diligencias Previas 77/2024-S, Tribunal Central de Instancia nº 2, Madrid"
+    updated: "2026-10-02"
+    briefing_slug: zapatero-plus-ultra
+    entidades:
+      - { id: "Person:jose-luis-rodriguez-zapatero", papel: "Expresidente del Gobierno", core: true }
+      - { id: "Company:plus-ultra-lineas-aereas", papel: "Aerolínea rescatada por la SEPI (53 M€)", core: true }
+      - { id: "Company:analisis-relevante", papel: "Sociedad que figura en la investigación", core: true }
+      - { id: "Organization:sepi", papel: "Ente público que aprobó el rescate", core: false }
+      - { id: "Person:laura-rodriguez-espinosa", papel: "Hija de Zapatero; coadministradora de Whathefav", core: false }
+      - { id: "Person:alba-rodriguez-espinosa", papel: "Hija de Zapatero; coadministradora de Whathefav", core: false }
+      - { id: "Company:whathefav-sl", papel: "Agencia de las hijas de Zapatero; 'elemento finalista' del flujo de fondos según la UDEF", core: false }
+      - { id: "Person:maria-gertrudis-alcazar-jimenez", papel: "Secretaria personal de Zapatero durante dos décadas", core: false }
+      - { id: "Person:julio-martinez-martinez", papel: "Empresario del entorno de Zapatero; la UDEF le sitúa como interlocutor de la «vía Zapatero»", core: false }
+      - { id: "Company:focus-social-research-sac", papel: "Sociedad peruana que figura en el informe UDEF 2910", core: false }
+      - { id: "Company:grupo-gloria", papel: "Grupo empresarial peruano que figura en los informes UDEF", core: false }
+    documentos:
+      - auto-zapatero.pdf
+      - auto-zapatero-joyas-2026-06-12.pdf
+      - informe-udef-1907.pdf
+      - informe-udef-1908.pdf
+      - informe-udef-2910-focus-social.pdf
+      - DS_C_15_659.pdf
+      - DS_C_15_717.pdf
+      - DS_C_15_755.pdf
+    ultima_hora_tags: ["Plus Ultra"]
+    relacionados: [caso-leire]
+
+  - slug: caso-leire
+    titulo: "Caso Leire · las cloacas y la pieza SEPI"
+    dek: >-
+      La causa que instruye el juez Santiago Pedraz (Juzgado Central de Instrucción n.º 5 de
+      la Audiencia Nacional) sobre una supuesta trama que buscaba desestabilizar los
+      procedimientos judiciales que afectaban al PSOE y al Gobierno, según Moncloa.com
+      (10-07-2026), en la que Leire Díez habría coordinado distintas actuaciones, según el
+      auto de Pedraz recogido por Infobae (27-05-2026). Según El Debate (27-05-2026), Pedraz
+      instruye además una pieza separada que afecta a Leire Díez y al expresidente de la
+      SEPI Vicente Fernández.
+    estado: >-
+      Instrucción abierta en la Audiencia Nacional (seguía en curso el 2-sep-2026, según
+      Libertad Digital). Leire Díez figura como investigada: la investigación se dirige,
+      entre otros, contra ella, según Infobae/agencias (26-07-2026). Juan Manuel Serrano
+      (expresidente de Correos) es investigado: Pedraz acordó tenerle como investigado,
+      según Moncloa.com y Vozpópuli (10-07-2026). Leticia de la Hoz (abogada de Koldo
+      García) declaró como investigada ante Pedraz el 14-jul-2026 y negó haber intentado
+      sobornar a la empresaria Carmen Pano, según Libertad Digital (14-07-2026). Rige la
+      presunción de inocencia.
+    estado_kind: instruccion
+    causa: "Audiencia Nacional, Juzgado Central de Instrucción nº 5 (juez Pedraz)"
+    updated: "2026-10-02"
+    briefing_slug: caso-leire-cloacas
+    entidades:
+      - { id: "Person:leire-diez", papel: "Exmilitante del PSOE, figura central de la investigación", core: true }
+      - { id: "Person:jacobo-teijelo", papel: "Abogado", core: true }
+      - { id: "Person:maria-belen-gualda-gonzalez", core: true }
+      - { id: "Company:tubos-reunidos", core: false }
+      - { id: "Organization:sepi", papel: "Objeto de la pieza separada de contratación", core: false }
+      - { id: "Person:juan-manuel-serrano-quintana", papel: "Expresidente de Correos y exjefe de gabinete de Pedro Sánchez en el PSOE", core: true }
+      - { id: "Person:leticia-de-la-hoz-calvo", papel: "Abogada de Koldo García", core: false }
+    documentos:
+      - DS_C_15_756.pdf
+    ultima_hora_tags: ["Caso Leire"]
+    relacionados: [caso-zapatero-plus-ultra]
+
+  - slug: caso-david-sanchez
+    titulo: "Caso David Sánchez · Diputación de Badajoz"
+    dek: >-
+      El procedimiento sobre la contratación del hermano del presidente del Gobierno en la
+      Diputación de Badajoz, donde llegó a ocupar la jefatura de la Oficina de Artes
+      Escénicas, y sobre el desempeño del puesto.
+    estado: >-
+      Sentencia 152/2026 de la Audiencia Provincial de Badajoz, Sección Primera
+      (14-jul-2026): condena no firme a los once acusados por prevaricación administrativa a
+      nueve años de inhabilitación especial para empleo o cargo público y para el derecho de
+      sufragio pasivo cada uno (Gallardo, por dos delitos, a dos penas de nueve años) y
+      absolución del resto de las infracciones que se les imputaban, entre ellas el tráfico
+      de influencias (sentencia, pp. 373-375); el delito de aceptación de nombramiento
+      ilegal que se imputaba a David Sánchez se declaró prescrito (p. 69). Cabe recurso de
+      apelación ante la Sala Civil y Penal del TSJ de Extremadura (p. 376). El Ministerio
+      Fiscal no formuló acusación: la acción penal la ejercieron las acusaciones populares
+      (p. 369). Según EFE (vía Infobae, 14-07-2026), la defensa de David Sánchez anunció
+      recurso, y según The Objective (30-07-2026), Vox recurrió en apelación para pedir
+      también la condena por tráfico de influencias.
+    estado_kind: sentencia
+    causa: "Juzgado de Instrucción nº 3 de Badajoz → AP de Badajoz (Sección 1ª)"
+    briefing_slug: caso-david-sanchez
+    updated: "2026-10-02"
+    entidades:
+      - { id: "Person:david-sanchez", papel: "Hermano del presidente del Gobierno; jefe de la Oficina de Artes Escénicas", core: true }
+      - { id: "Person:miguel-angel-gallardo", papel: "Presidente de la Diputación de Badajoz", core: true }
+      - { id: "Person:luis-carrero", papel: "Exasesor de Moncloa (Unidad de Mensaje); ocupó una plaza en la Diputación", core: true }
+      - { id: "Person:elisa-moriano-morales", papel: "Exdirectora del Área de Cultura de la Diputación", core: false }
+      - { id: "Person:cristina-nunez-fernandez", papel: "Diputada de Cultura", core: false }
+      - { id: "Person:felix-gonzalez-marquez", papel: "Jefe de Servicio de Gestión de RRHH", core: false }
+      - { id: "Person:juana-cinta-calderon-zazo", papel: "Exdirectora del Área de RRHH", core: false }
+      - { id: "Person:emilia-parejo-gala", papel: "Exdirectora del Área de Cultura", core: false }
+      - { id: "Person:francisco-martos-ortiz", papel: "Delegado del Área de Cultura", core: false }
+      - { id: "Person:ricardo-cabezas-martin", papel: "Diputado de Cultura", core: false }
+      - { id: "Person:manuel-candalija-valle", papel: "Director del Área de Cultura", core: false }
+    documentos:
+      - 20250110-auto-desestima-recursos-reforma-pdf.pdf
+      - 2025-04-29-badajoz-1-pdf-2.pdf
+      - ESCRITO-DE-ACUSACION_fdo.pdf
+      - sentencia-ap-badajoz-david-sanchez-gallardo-2026-07-14.pdf
+    ultima_hora_tags: ["David Sánchez"]
+    relacionados: []
+
+  - slug: causa-fiscal-general
+    titulo: "Causa del fiscal general · la filtración del correo de González Amador"
+    dek: >-
+      La causa especial 20557/2024 del Tribunal Supremo contra el fiscal general del Estado,
+      Álvaro García Ortiz, por la revelación del correo de 2 de febrero de 2024 en que la
+      defensa de Alberto González Amador —pareja de la presidenta de la Comunidad de Madrid,
+      Isabel Díaz Ayuso— comunicaba su voluntad de alcanzar una conformidad reconociendo que
+      «se han cometido dos delitos contra la Hacienda Pública» (sentencia TS 1000/2025,
+      p.17-18).
+    estado: >-
+      Sentencia 1000/2025 de la Sala Segunda del Tribunal Supremo (9-dic-2025): condena a
+      García Ortiz como autor de un delito de revelación de datos reservados del art. 417.1
+      CP (multa de 12 meses a 20 €/día, 2 años de inhabilitación especial para el cargo de
+      fiscal general y 10.000 € de indemnización a González Amador por daños morales) y le
+      absuelve «del resto de los delitos objeto de la acusación» (p.184). Las magistradas
+      Susana Polo García y Ana María Ferrer García formularon un voto particular discrepante
+      (p.16 y p.185).
+    estado_kind: sentencia
+    causa: "Causa Especial 20557/2024, Tribunal Supremo (Sala Segunda)"
+    updated: "2026-10-02"
+    briefing_slug: causa-fiscal-general
+    entidades:
+      - { id: "Person:alvaro-garcia-ortiz", papel: "Fiscal general del Estado (2022-2025)", core: true }
+      - { id: "Person:alberto-gonzalez-amador", papel: "Empresario; titular del correo filtrado y acusación particular en la causa", core: true }
+      - { id: "Person:pilar-rodriguez-fernandez", papel: "Fiscal jefa provincial de Madrid", core: true }
+      - { id: "Person:isabel-diaz-ayuso", papel: "Presidenta de la Comunidad de Madrid; pareja de González Amador", core: false }
+      - { id: "Person:carlos-neira", papel: "Abogado de González Amador; autor del correo de 2 de febrero de 2024", core: false }
+      - { id: "Person:miguel-angel-rodriguez", papel: "Jefe de gabinete de la presidenta de la Comunidad de Madrid", core: false }
+      - { id: "Person:juan-lobato", papel: "Entonces portavoz socialista en la Asamblea de Madrid; testigo que recibió el correo y lo hizo constar ante notario", core: false }
+    documentos:
+      - auto-ts-garcia-ortiz-2025-01-13.pdf
+      - auto-ts-garcia-ortiz-2025-07-29.pdf
+      - sentencia-ts-garcia-ortiz-fiscal-general.pdf
+    ultima_hora_tags: []
+    relacionados: []

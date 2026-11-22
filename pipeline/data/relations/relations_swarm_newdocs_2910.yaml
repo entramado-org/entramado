@@ -1,0 +1,16 @@
+# Durable corrections from the Claude swarm relation-verifier, auto-globbed by
+# relations_loader alongside the hand-curated relations.yaml. Its generator
+# (src/verify_relations.py, `make verify-relations-apply`) was retired by spec
+# 069 F5 and the run inputs are gone: this overlay is now MAINTAINED BY HAND.
+# Edit rules in place; never regenerate it.
+# tier=all edges=141 batches=4
+
+deny:
+  - {source: "Marcelo Montenegro Gómez García", source_type: "Person", target: "Luis Alberto Arce Catacora", target_type: "Person", type: "MEMBER_OF", doc: "informe-udef-2910-focus-social.pdf", quote_contains: "el ministro de Economía de Bolivia, Marc", reason: "swarm: Solo dice ministro de Bolivia; no membresía respecto a Arce persona"}
+  - {source: "SOBOCE", source_type: "Company", target: "César Adalid Siles Bazán", target_type: "Person", type: "ASSOCIATED_WITH", doc: "informe-udef-2910-focus-social.pdf", quote_contains: "a la reunión con el “Ministro Siles” ...", reason: "swarm: cita no vincula SOBOCE con Siles; asistentes son del Grupo Gloria"}
+  - {source: "Tribunal Supremo de Justicia", source_type: "Court", target: "SOBOCE", target_type: "Company", type: "PARTY_TO", doc: "informe-udef-2910-focus-social.pdf", quote_contains: "Auto Supremo 59/2025, declarando infunda", reason: "swarm: el Tribunal es órgano juzgador, no parte del proceso"}
+  - {source: "Luis Alberto Arce Catacora", source_type: "Person", target: "María Nela Prada Tejada", target_type: "Person", type: "MET_WITH", doc: "informe-udef-2910-focus-social.pdf", quote_contains: "le confirma la
+reunión con el presidente", reason: "swarm: Prada confirma reunión de Zapatero con Arce, no reunión Arce-Prada"}
+
+fix:
+  []

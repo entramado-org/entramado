@@ -1,0 +1,1783 @@
+# Retiradas y correcciones de ROLES curados de la auditoría dual (spec 061).
+#
+# Lo llena `make qa-dual-patches` y lo revisa un humano; se carga EL ÚLTIMO del
+# overlay de contexto (los `*_qa061.yaml` van al final), así que pisa a
+# `roles_enriched.yaml` para una misma entidad.
+#
+# ⚠️ Un fichero de contexto tiene DOS claves de primer nivel, `entities:` y
+# `relations:`. Añadir una persona al final del fichero la mete bajo `relations:` y
+# su rol NO se carga nunca, en silencio (gotcha de figures.yaml). Añade SIEMPRE
+# dentro de `entities:`.
+#
+# Formas por entrada de `entities:`:
+#   - {type: Person, name: <nombre exacto>, role: <rol corregido>}
+#   - {type: Person, name: <nombre exacto>, role: remove}   # borra el rol (MATCH-only)
+# `relations:` admite además `source_url:` (https) y `source_date:` — ojo, la clave es
+# `source_url` porque `source:`/`target:` ya son los EXTREMOS. Una afirmación
+# de contexto sin fuente es candidata a retirada por el lint L17.
+#
+# NUNCA se aplica al grafo vivo: Path A (efímero sobre el seed → `make context` →
+# diff-gate → re-tar → bump del seed).
+# Curación editorial 2026-09-09 (Fable, T1.5a): 7 roles en nodos con seudónimo judicial (lint L6).
+# Curación editorial 2026-09-09 (Fable, T1.5a): 7 roles en nodos con seudónimo judicial (lint L6).
+entities:
+- type: Person
+  name: Segismundo
+  role: remove
+  reason: 'spec 061 D5/L6: rol curado en nodo con seudónimo judicial; se retira'
+# filas retiradas 2026-10-07: entidad sin nodo en el linaje; véase spec 070 AC89
+- type: Person
+  name: Daniel (seudónimo TS)
+  role: remove
+  reason: 'spec 061 D5/L6: rol curado en nodo con seudónimo judicial; se retira'
+  entity_id: Person:daniel-seudonimo-ts
+- type: Person
+  name: Alfonso
+  role: remove
+  reason: 'spec 061 D5/L6: rol curado en nodo con seudónimo judicial; se retira'
+- type: Person
+  name: Alejandro
+  role: remove
+  reason: 'spec 061 D5/L6: rol curado en nodo con seudónimo judicial; se retira'
+- type: Person
+  name: Magdalena
+  role: remove
+  reason: 'spec 061 D5/L6: rol curado en nodo con seudónimo judicial; se retira'
+
+# Revisión humana de la cola T0 (2026-09-09, Fable + dueño): 14 correcciones por tramo exacto sobre el texto del seed
+# qa061. Evidencia por fila en `reason` (unidad del censo dual + fuente/página). Ver report/revision-T0-2026-09-09.md.
+- type: Person
+  name: María Cristina Álvarez Rodríguez
+  entity_id: Person:maria-cristina-alvarez-rodriguez
+  role: Asesora de Begoña Gómez, personal eventual de la Secretaría General de la Presidencia del Gobierno
+    (Moncloa); acusada en el caso Begoña Gómez, solo por presunta malversación (auto de apertura de juicio oral de 21 de septiembre de 2026, p.65).
+  reason: '061 revisión humana T0 2026-09-09 (Fable, dueño): 3313f3a4: el auto de 20-06-2026 la adscribe
+    a la Secretaría General de la Presidencia, no al «Gabinete»'
+- type: Company
+  name: Softgestor
+  entity_id: Company:softgestor
+  role: Sociedad mercantil señalada en el 'caso Plus Ultra' (DP 77/2024) como instrumento para canalizar
+    fondos; el auto atribuye su control efectivo a su administrador Carlos Alberto Parra Delgado, si bien
+    la gestión de los pagos a Análisis Relevante la habría realizado un contacto 'Fco Flores', ajeno a
+    la sociedad.
+  reason: '061 revisión humana T0 2026-09-09 (Fable, dueño): ad4d3fa9 defecto 1/2 (ambos): auto p.10/p.72'
+- type: Person
+  name: Manuel Aaron Fajardo García
+  entity_id: Person:manuel-aaron-fajardo-garcia
+  role: Hijo del senador del PSOE por Lanzarote Francisco Manuel Fajardo Palarea, según el informe de la UDEF; citado
+    en la instrucción del caso Plus Ultra, donde un mensaje de Rodolfo Reyes recogido por la UDEF lo describe como
+    «la pieza de ZP en Venezuela».
+  reason: '061 revisión humana T0 2026-09-09 (Fable, dueño): ea760367 defecto 2/9 (ambos): la cita no era literal
+    ni del juez; UDEF p.38 | 061 revisión humana T0b 2026-09-11 (Fable, dueño): 1d9c3658/c5d16751 y revisión Codex:
+    «empresario canario afincado en Venezuela» sin fuente en corpus ni prensa → retirado'
+- type: Person
+  name: Julio Martínez Sola
+  entity_id: Person:julio-martinez-sola
+  role: Empresario; vicepresidente de la aerolínea Plus Ultra Líneas Aéreas en 2020-2021 según los informes de la
+    UDEF (informe 1907, p.80) y, según Infobae (20-05-2026), cofundador y presidente de la compañía, cargo que dejó
+    el 24-07-2026 según EFE (vía Infobae); la representó en el contrato con Idella Consulenza Strategica; investigado
+    en el caso Plus Ultra (rescate de la SEPI). Distinto de Julio Martínez Martínez ('Julito'), interlocutor de
+    la 'vía Zapatero'.
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): «fundador y presidente» sin fuente en el corpus (el
+    corpus dice vicepresidente: UDEF 1907 pp.61/80/84/178, auto p.29/p.53); presidente/cofundador solo en prensa
+    → atribuido a Infobae 20-05-2026 (Q1). T0 2026-09-09: 108d2f97 defecto 1 (ambos): administrador único de Alva
+    = Antonio Caldeiro Téllez (auto p.22, UDEF 1908 pp.115/124) Revisión adversarial Codex (parte 2, 15-09-2026):
+    dimisión del 24-07-2026 añadida al rol.'
+- type: Person
+  name: Jesica Rodríguez García
+  entity_id: Person:jesica-rodriguez-garcia
+  role: Expareja del exministro José Luis Ábalos; exazafata de imagen y dentista colegiada; contratada
+    por Ineco y Tragsatec (2019-2021) sin desempeñar trabajo efectivo, según la sentencia del TS de 22-jun-2026
+    (que condenó a Ábalos y Koldo, no a ella); citada como investigada, según prensa (Telemadrid, The
+    Objective), por el juez Ismael Moreno (AN, caso Koldo) el 3-jul-2026 por presuntos tráfico de influencias
+    y malversación.
+  reason: '061 revisión humana T0 2026-09-09 (Fable, dueño): db4cf967 defecto 7 (ambos, Q1): citación
+    sostenida solo por prensa → atribuida'
+- type: Person
+  name: Mercedes González Fernández
+  entity_id: Person:gonzalez-fernandez
+  role: Mercedes González Fernández, exdiputada del PSOE por Madrid (XV legislatura, hasta septiembre de 2024);
+    fue secretaria primera de la Comisión de Investigación del Congreso sobre la compra de material sanitario durante
+    la pandemia (caso Koldo). Dejó su escaño en septiembre de 2024 para reincorporarse como directora general de
+    la Guardia Civil, cargo que ya ocupó unos meses en 2023 (según Público y Artículo 14). Investigada, según The
+    Objective, desde el 2 de julio de 2026 en la causa Leire/'cloacas' (DP 150/2025, juez Pedraz); seguía en el
+    cargo según EFE (vía Infobae, 10-09-2026) y rige la presunción de inocencia
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (a4cd5) vigencia atribuida y fechada; (8b6d0) primer
+    mandato 2023 atribuido; sin más cambios.'
+- type: Person
+  name: Rodolfo Reyes
+  entity_id: Person:rodolfo-reyes
+  role: Empresario de origen venezolano, considerado por la investigación principal accionista de Plus
+    Ultra Líneas Aéreas; investigado en el 'caso Plus Ultra' y, según prensa (El Español, COPE), con orden
+    internacional de detención.
+  reason: '061 revisión humana T0 2026-09-09 (Fable, dueño): df82f2bc (Astra defecto 7, Q1): orden internacional
+    solo en prensa → atribuida'
+- type: Person
+  name: Cristina Narbona
+  entity_id: Person:cristina-narbona
+  role: 'Presidenta del PSOE (desde 2017), diputada y exministra de Medio Ambiente (2004-2008), según Wikipedia.
+    En el caso Leire comparece como TESTIGO, no investigada: según Infobae, declaró ante el juez Pedraz el 15-jul-2026;
+    compareció ante la comisión Koldo del Senado el 22-jul-2026 (DS Senado 758)'
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (ec520) condición de testigo atribuida a Infobae (Q1)
+    y comparecencia parlamentaria citada del corpus; corrige SOBRE la fila vigente de roles_qa061'
+- type: Organization
+  name: Departamento de Investigación Económica y Anticorrupción
+  entity_id: Organization:departamento-de-investigacion-economica-y-anticorrupcion
+  role: Departamento de la UCO (Unidad Central Operativa de la Guardia Civil) especializado en delincuencia
+    económica y anticorrupción; según prensa, su jefatura la ostenta el teniente coronel Antonio Balas.
+  reason: '061 revisión humana T0 2026-09-09 (Fable, dueño): 04946094 (Q1): jefatura sostenida solo por
+    prensa → atribuida'
+- type: Person
+  name: José Luis Rodríguez Zapatero
+  entity_id: Person:jose-luis-rodriguez-zapatero
+  role: Expresidente del Gobierno de España (2004-2011) por el PSOE; exsecretario general del PSOE (2000-2012).
+    Investigado desde mayo de 2026 en el caso Plus Ultra, instruido por el juez José Luis Calama (Sección
+    de Instrucción del Tribunal Central de Instancia, Plaza nº 2, Audiencia Nacional; Diligencias Previas
+    77/2024). Rige la presunción de inocencia.
+  reason: '061 revisión humana T0 2026-09-09 (Fable, dueño): ded77b6f: órgano según cabecera del auto-zapatero.pdf
+    p.1'
+- type: Person
+  name: Miguel Palomero
+  entity_id: Person:miguel-palomero
+  role: Abogado madrileño; investigado en el caso Plus Ultra según El Independiente (detenido el 11-dic-2025,
+    en libertad provisional con retirada de pasaporte); según los informes de la UDEF, presunto intermediario
+    en las gestiones del rescate (entorno de Rodolfo Reyes).
+  reason: '061 revisión humana T0 2026-09-09 (Fable, dueño): daef3309 (Astra defecto 2): «madrileño» e
+    «investigado» sin fuente en paquete ni corpus — 09-09 noche: «madrileño» e «investigado» confirmados
+    en El Independiente 21-05/01-06-2026 (leídos íntegros); atribuido (Q1)'
+- type: Person
+  name: Fernando Merino
+  entity_id: Person:fernando-merino
+  role: Exdirectivo de Acciona (Fernando Agustín Merino Vera); exdelegado en Navarra y La Rioja; investigado,
+    según Público, en el 'caso Cerdán/Koldo'.
+  reason: '061 revisión humana T0 2026-09-09 (Fable, dueño): 05236f6c (Q1): condición de investigado solo
+    en prensa; el Tribunal Supremo como órgano no consta'
+- type: Person
+  name: Leire Díez
+  entity_id: Person:leire-diez
+  role: Exmilitante del PSOE, exdirectiva de empresas públicas (según Wikipedia, jefa de comunicación de ENUSA 2018-2021
+    y directora de Relaciones Institucionales de Correos 2022-2023); apodada 'la fontanera del PSOE' por medios
+    como Infobae; detenida (diciembre de 2025, según Infobae) e investigada por presuntos delitos de cohecho y tráfico
+    de influencias.
+  reason: '061 revisión humana T0c 2026-09-11 (Fable, dueño): 5d5204f6: los rangos 2018-2021 / 2022-2023 solo constan
+    en Wikipedia (el auto de Ferraz sitúa ENUSA en 2019) → atribuidos'
+- type: Person
+  name: Francisco Martos Ortiz
+  entity_id: Person:francisco-martos-ortiz
+  role: Político del PSOE en la provincia de Badajoz; alcalde de Castuera y diputado provincial delegado de la Diputación
+    de Badajoz (sentencia 152/2026, p.210), donde fue Delegado del Área de Cultura; condenado en sentencia NO firme
+    (AP de Badajoz, 152/2026) como cooperador necesario de prevaricación (Bloque B) a 9 años de inhabilitación,
+    absuelto del resto; recurrible ante el TSJ de Extremadura, rige la presunción de inocencia hasta la firmeza
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): 2556640e: mismo ajuste de cargos en presente que el
+    summary; vocabulario de condena no firme.'
+- type: Person
+  name: Cristóbal Cano Quiles
+  entity_id: Person:cristobal-cano-quiles
+  role: Gestor societario señalado en la instrucción del caso Plus Ultra; descrito por el instructor como
+    hombre de confianza de Julio Martínez Martínez en un 'tercer nivel' operativo, encargado de la gestión
+    diaria y la cobertura documental del entramado de sociedades.
+  reason: '061 revisión humana T0 2026-09-09 (Fable, dueño): d43f9abb (Astra defecto 2): «investigado»
+    no consta en el paquete, el corpus ni la prensa leída (Demócrata 21-05-2026; El Independiente 21-05-2026
+    no lo cita entre los detenidos) → «señalado en la instrucción»; el apodo Julito se retira del rol'
+# Revisión humana T0b 2026-09-11 (Fable + dueño).
+- type: Person
+  name: Leopoldo Puente Segura
+  entity_id: Person:leopoldo-puente-segura
+  role: Magistrado de la Sala Segunda (de lo Penal) del Tribunal Supremo desde noviembre de 2020; instructor de
+    la causa especial del caso Koldo/Ábalos, ya sentenciada (STS 418/2026, 22-jun-2026) (autoridad judicial, NO
+    investigado)
+  reason: '061 revisión humana T0b 2026-09-11 (Fable, dueño): 13797c34: rol verificado (ATS en corpus + biografía
+    CGPJ «desde noviembre de 2.020»); se añade que la causa está sentenciada'
+- type: Organization
+  name: Gate Center
+  entity_id: Organization:gate-center
+  role: Think tank con sede en Madrid fundado en 2022, presidido por Daniel Romero-Abreu (Thinking Heads); el expresidente
+    José Luis Rodríguez Zapatero figura como presidente de su Consejo Asesor. Aparece en la investigación judicial
+    (juez Calama) sobre el entramado societario en torno a Zapatero.
+  reason: '061 revisión humana T0b 2026-09-11 (Fable, dueño): e0d94eff: sede en Pekín y «abril de 2022» sin fuente
+    → retirados; resto verificado en informe UDEF p.155/p.174'
+- type: Person
+  name: Alberto González Amador
+  entity_id: Person:alberto-gonzalez-amador
+  role: Empresario (administrador único de Maxwell Cremona S.L.); pareja de Isabel Díaz Ayuso, presidenta de la
+    Comunidad de Madrid; según Público e Infobae (jul-2026), acusado de presuntos delitos contra la Hacienda Pública
+    y falsedad documental, con juicio oral abierto en septiembre de 2025 y aún sin fecha; acusación particular en
+    la causa del Tribunal Supremo que condenó al fiscal general García Ortiz
+  reason: '061 revisión humana T0b 2026-09-11 (Fable, dueño): 0121d889: Q1: juicio oral y falta de señalamiento
+    sostenidos por prensa → atribuidos; acusación particular verificada en la STS García Ortiz p.2 | revisión Codex:
+    atribución extendida a la acusación y a la apertura de juicio oral'
+- type: Person
+  name: Guillermo Alfredo Amaro Chacón
+  entity_id: Person:guillermo-alfredo-amaro-chacon
+  role: Empresario venezolano (según prensa), administrador solidario de la consultora Inteligencia Prospectiva
+    SL; figura en el caso Plus Ultra/Zapatero.
+  reason: '061 revisión humana T0b 2026-09-11 (Fable, dueño): 9c155069: nacionalidad solo en prensa → atribuida;
+    administrador solidario = informe UDEF p.147'
+- type: Person
+  name: Camilo Ibrahim Issa
+  entity_id: Person:camilo-ibrahim-issa
+  role: Empresario venezolano (según Vozpópuli, 05-02-2026), accionista de Plus Ultra Líneas Aéreas a través de
+    Snip Aviation según la UDEF (informe UDEF 1907, p.180); señalado en la instrucción del caso Plus Ultra (DP 77/2024,
+    Audiencia Nacional, juez Calama).
+  reason: '063 tramo 6 (2026-10-03): tramo 6 (2026-10-03), rehecha sobre el texto vigente (deriva): el vigente decía
+    «(según prensa)», que no es una atribución nominal válida: se sustituye por el medio y la fecha (Vozpópuli,
+    05-02-2026, verificado) y se añade la página del informe de la UDEF (1907, p.180).'
+- type: Person
+  name: Víctor de Aldama
+  entity_id: Person:victor-de-aldama
+  role: Empresario y expresidente del Zamora CF. Condenado por la STS 418/2026 (22-jun-2026, Causa Especial 20775/2020)
+    por organización criminal y cohecho en el 'caso Koldo', con la atenuante analógica de confesión apreciada como
+    cualificada (penas privativas de libertad suspendidas) y absuelto del resto; sentencia firme. Según Diario de Castilla y León (07-10-2024), está además investigado en una causa separada por presunto fraude fiscal en hidrocarburos, en la que rige la
+    presunción de inocencia.
+  reason: '061 revisión humana T0b 2026-09-11 (Fable, dueño): c9cca6c6 y revisión Codex: el rol de roles_enriched
+    decía «atenuante muy cualificada» (fallo p.222: análoga a la confesión, cualificada); «presunto cabecilla» de
+    hidrocarburos solo en prensa → atribuido'
+- type: Person
+  name: Begoña Gómez
+  entity_id: Person:begona-gomez
+  role: 'Esposa del presidente del Gobierno Pedro Sánchez; directiva y docente: exdirectora del IE Africa Center
+    (2018-2022), codirectora del Máster de Fundraising de la Universidad Complutense de Madrid (desde 2014/15; suspendido
+    en octubre de 2024) y directora de la Cátedra Extraordinaria de Transformación Social Competitiva de la UCM
+    (constituida en 2020; según Wikipedia, no renovada en 2024); acusada en el caso Begoña Gómez: el auto de apertura de juicio oral de 21 de septiembre de 2026 la envía a juicio ante el Tribunal del Jurado por presuntos tráfico de influencias y malversación (Juzgado de Instrucción nº 41 de Madrid, p.65); rige la presunción de inocencia.'
+  reason: '061 revisión humana T0c 2026-09-11 (Fable, dueño): d3a27c44 «No ostenta ni ha ostentado cargo público»:
+    afirmación absoluta sin fuente, ya retirada del resumen en T0b → retirada también del rol; ac57eab7 «máster
+    asociado» → Máster de Fundraising (auto 11-04-2026 p.2) y directora de la cátedra (auto 20-06 p.38) · 063 pendientes (2026-10-04): «imputada» → «acusada» por el auto de apertura de juicio oral de 21-09-2026 (p.65).'
+- type: Person
+  name: Julio Martínez Martínez
+  entity_id: Person:julio-martinez-martinez
+  role: 'Empresario conocido como ''Julito''; administrador único de Análisis Relevante y titular de Idella Consulenza
+    Strategica; presentado por la UDEF y el auto del juez Calama como el canalizador de fondos hacia el entorno
+    de Zapatero (la ''vía Zapatero'') en el caso Plus Ultra; investigado en la Audiencia Nacional. No es directivo
+    de Plus Ultra: no confundir con Julio Martínez Sola, presidente y cofundador de la aerolínea según Infobae y
+    elDiario.es.'
+  reason: '061 revisión humana T0c 2026-09-11 (Fable, dueño): 3587590b: «UDEF/UCO» → solo UDEF (ninguna fuente cita
+    a la UCO); administrador único según auto p.50; d1ad1ee1 (Fable defecto 1): «presidente de Plus Ultra» para
+    Martínez Sola solo en prensa (el auto lo llama vicepresidente en 2020) → atribuido'
+- type: Person
+  name: Roberto Roselli
+  entity_id: Person:roberto-roselli
+  role: Consejero delegado (CEO) de Plus Ultra Líneas Aéreas según elDiario.es y Rankia (director de operaciones
+    de la aerolínea en 2020 según el auto de Calama, p.54); investigado en el 'caso Plus Ultra' (informe UDEF) y,
+    según Libertad Digital, detenido el 11 de diciembre de 2025.
+  reason: '061 revisión humana T0c 2026-09-11 (Fable, dueño): 145ed2a8 (Astra defecto 7): «origen venezolano» sin
+    fuente → retirado; detención solo en prensa → atribuida; cargo según auto p.54 añadido'
+- type: Organization
+  name: Universidad Complutense de Madrid
+  entity_id: Organization:universidad-complutense-de-madrid
+  role: Universidad pública de Madrid (UCM); sede de la cátedra extraordinaria 'Transformación Social Competitiva'
+    que dirigía Begoña Gómez y del Máster de Fundraising que codirigía; personada como actor civil (perjudicada)
+    en el caso Begoña Gómez, sin ejercer la acusación penal (auto de 20 de junio de 2026).
+  reason: '061 revisión humana T0c 2026-09-11 (Fable, dueño): 6cce3e87 (defecto 9 ambos lados): «personada como
+    acusación» → actor civil/perjudicada (auto 20-06-2026 p.25 y p.78)'
+- type: Company
+  name: Análisis Relevante
+  entity_id: Company:analisis-relevante
+  role: Sociedad de consultoría (Análisis Relevante S.L.), administrada por el empresario Julio Martínez Martínez;
+    el auto del juez Calama (p.10-11) y la UDEF la describen como 'pieza instrumental' de la estructura investigada
+    en el caso Plus Ultra por presunto tráfico de influencias, diseñada para canalizar fondos y desviarlos al extranjero.
+  reason: '061 revisión humana T0c 2026-09-11 (Fable, dueño): b5f20d3b: «presunto blanqueo» no aparece en ninguna
+    fuente sobre la sociedad → retirado; ''pieza instrumental'' es literal del auto p.10-11 (no solo de la UDEF)'
+- type: Company
+  name: Acciona Construcción
+  entity_id: Company:acciona-construccion
+  role: Filial de construcción del grupo Acciona (antes Acciona Infraestructuras SA; informe UCO, p.28); adjudicataria
+    en UTE de las obras públicas cuya adjudicación investiga el caso Koldo/Cerdán (ATS 8611/2025, p.6)
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): Se añade la cita del corpus; «constructora española
+    de obra civil y edificación» sin fuente → sustituido por la denominación anterior que da la UCO.'
+- type: Company
+  name: Afitta SL
+  entity_id: Company:afitta-sl
+  role: 'Afitta SL: sociedad del entorno de Julio Martínez Martínez según el auto de 18-05-2026 del caso Plus Ultra
+    (p.41), receptora de 213.202 euros de Summer Wind SL en 2023; distinta de Afitta Capital SLU, otra sociedad
+    de la misma red (auto, p.36)'
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): Hojas registrales A124034/A124910: 0 apariciones en
+    corpus ni fuentes → retiradas; distinción con Afitta Capital SLU citada del auto p.36.'
+- type: Company
+  name: Alva Skies And Wings SL
+  entity_id: Company:alva-skies-and-wings-sl
+  role: Sociedad titular del 9,46 % de Plus Ultra Líneas Aéreas; su administrador único fue Antonio Caldeiro Téllez
+    (13/10/2016–31/08/2023), según el informe UDEF 1908 (p.124) y el auto de 18 de mayo de 2026 (p.22). Mencionada
+    en el 'auto Zapatero'
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): 3365a9: administrador único = Caldeiro Téllez, no
+    Martínez Sola; «fundador y presidente» sin fuente en corpus.'
+- type: Company
+  name: Apamate Corporate And Trust
+  entity_id: Company:apamate-corporate-and-trust
+  role: Sociedad administrada por Carlos Alberto Parra Delgado y participada al 99,6 % por Softgestor; consignada
+    en una versión del contrato de asesoramiento con Análisis Relevante investigado en el caso Plus Ultra, sin transferencia
+    detectada a su cargo (auto, p.46 y p.72)
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (215e1) «señalada por la UDEF… financiación del entorno
+    de Zapatero» sobreafirma: el auto señala a Softgestor como vehículo; Apamate solo figura en una versión del
+    contrato'
+- type: Company
+  name: Áridos Anfersa SL
+  entity_id: Company:aridos-anfersa-sl
+  role: Empresa granadina de áridos y canteras (según su web), administrada por Francisco Coca Sánchez según la
+    UCO (informe UCO, p.233); citada en la causa Koldo por la contratación de Patricia Úriz (informe UCO, p.233-235)
+    y, según El Debate (21-01-2026), por un contrato de suministro de balasto a Adif
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): «representada, según el corpus, por Francisco Coca
+    Sánchez» → cita concreta; contrato de Adif atribuido a El Debate.'
+- type: Company
+  name: AZVI
+  entity_id: Company:azvi
+  role: 'Grupo Azvi: constructora de obra civil y ferroviaria presidida por Manuel Contreras Caro (escrito de la
+    defensa de Aldama, Causa Especial 20775/2020, p.23); sevillana según El Español (19-09-2024)'
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (79b89) «con sede en Sevilla» no es literal en ninguna
+    fuente → «sevillana según El Español»; presidencia citada al escrito.'
+- type: Company
+  name: Barrabes Ski Montana S.L.U.
+  entity_id: Company:barrabes-ski-montana-s-l-u
+  role: Sociedad del grupo empresarial familiar Barrabés (constituida en 1994, sede en Benasque, Huesca) dedicada
+    al comercio de material deportivo de montaña y esquí; Juan Carlos Barrabés es consejero y su socio único es
+    Grupo Barrabés Cónsul (informe de la UCO, p.13-14 y p.27); junto con Innova Next, una de las sociedades del
+    grupo cuyas adjudicaciones públicas analizó la UCO en el 'caso Begoña Gómez'
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (c9ba4/d2789) fuentes del corpus explicitadas; «investigada
+    en la pieza» sustituido por lo probado (sociedad analizada por la UCO; no consta como investigada en el auto
+    de 20-06-2026, cuyo investigado es Juan Carlos Barrabés).'
+- type: Company
+  name: Grupo Aldesa
+  entity_id: Company:grupo-aldesa
+  role: Grupo empresarial de la construcción; su nombre figura en una nota del teléfono de Koldo García junto a
+    otras constructoras (informe UCO, folio 184) y como pagador de Análisis Relevante en el auto del caso Plus Ultra
+    (auto de 18-05-2026, p.47)
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (b17a2) «español» y «Aldesa Construcciones» sin fuente
+    → retirados; ambas apariciones en corpus citadas'
+- type: Company
+  name: Grupo Barrabés
+  entity_id: Company:grupo-barrabes
+  role: Grupo empresarial del empresario aragonés Juan Carlos Barrabés (presidente y fundador según el informe UCO,
+    p.13), de asesoramiento en transformación digital e innovación; sus adjudicaciones de Red.es a Innova Next se
+    analizaron en el caso Begoña Gómez y, según Europa Press (vía The Objective, 4 de agosto de 2026), la pieza
+    se remitió a la Fiscalía Europea tras la exclusión de Barrabés del procedimiento por la Audiencia de Madrid
+    (Infobae, 16 de julio de 2026)
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): El rol vigente decía «sus sociedades están investigadas/procesadas
+    en la causa»: las sociedades nunca fueron procesadas (lo fue Barrabés, auto 20-06-2026) y él quedó excluido
+    por la AP de Madrid el 16-07-2026 (Infobae) → vocabulario procesal corregido y estado actualizado.'
+- type: Company
+  name: Grupo Cueto
+  entity_id: Company:grupo-cueto
+  role: Conglomerado familiar de empresas dirigido por Juan Carlos Cueto; según la Inspección de Hacienda citada
+    por el Tribunal Supremo (exposición razonada de 23-10-2024, p.3), financiaba y aportaba la estructura empresarial
+    a Soluciones de Gestión en la trama de las mascarillas; investigación judicial en curso
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): ea5c3ea2: procedencia corregida (ONIF/TS y Fiscalía,
+    no UCO) y «motor económico» (no literal) retirado.'
+- type: Company
+  name: Grupo Empresarial Inmark
+  entity_id: Company:grupo-empresarial-inmark
+  role: Consultora española de marketing y asesoramiento de empresas; antigua empleadora de Begoña Gómez (1999-2018),
+    junto con su participada Task Force S.A. (informe UCO de 14 de mayo de 2024, p.44)
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (82da5) «investigación de mercados» sin fuente → «marketing
+    y asesoramiento de empresas» (UCO p.37-38); «filial» → «participada», que es el término del informe.'
+- type: Company
+  name: Have Got Time
+  entity_id: Company:have-got-time
+  role: Sociedad mercantil (Have Got Time, SL), titular nominal del chalet de La Alcaidesa (La Línea de la Concepción,
+    Cádiz) usado por José Luis Ábalos; según la exposición razonada elevada al Tribunal Supremo por el juez Ismael
+    Moreno (JCI nº 2) (p.20) forma parte de la estructura societaria de Claudio Rivas
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): Coherencia con el resumen: el rol repetía «presuntamente
+    controlada de forma indirecta» sin fuente; se sustituye por el literal de la exposición razonada TS p.20 y se
+    añade el municipio correcto. Revisión adversarial Codex (parte 2, 15-09-2026): autoría de la exposición razonada
+    corregida.'
+- type: Company
+  name: IOT Domotic Europe
+  entity_id: Company:iot-domotic-europe
+  role: Sociedad del entramado societario controlado por Julio Martínez Martínez (auto Plus Ultra, p.39; antes Aplicaciones
+    Portuarias según Mundiario, 21-05-2026); receptora de pagos de Plus Ultra por 126.807,36 euros según el análisis
+    bancario (auto, p.37)
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (cf41d) denominación anterior sin fuente en corpus
+    → atribuida a Mundiario; importe y cita añadidos'
+- type: Company
+  name: Lefebvre-El Derecho, S.A.
+  entity_id: Company:lefebvre-el-derecho-s-a
+  role: Sociedad que aportó a la cátedra de Begoña Gómez en la UCM consultoría jurídica y de producto y asesoramiento
+    sobre la arquitectura legal de su plataforma (auto de 20 de junio de 2026, p.5); requerida por el juzgado para
+    aportar sus facturas (auto de 11 de abril de 2026, p.38)
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): «Editorial jurídica y proveedora de servicios»: «editorial»
+    sin fuente en corpus ni fuentes → sustituido por la actividad que consta en el auto.'
+- type: Company
+  name: Lopera Activa SL
+  entity_id: Company:lopera-activa-sl
+  role: Sociedad mercantil en la que el constructor José Ruz, accionista del 20 % de Levantina, Ingeniería y Construcción
+    SL (LIC), ostenta cargos (informe UCO, p.144); El Español la describe como de su propiedad
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): 004bf: «titular también de LIC» contradice el UCO
+    p.144 (20 %); Lopera Activa → cargos/vinculada según UCO, propiedad según El Español'
+- type: Company
+  name: Making Science Group
+  entity_id: Company:making-science-group
+  role: Sociedad española (Making Science Group, S.A., NIF A82861428) desarrolladora del «back end» de la plataforma
+    digital de la cátedra de Begoña Gómez en la UCM, a la que facturó 24.200 euros con IVA (auto de 20 de junio
+    de 2026, p.7)
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): «De tecnología y marketing digital»: 0 apariciones
+    en corpus ni fuentes → sustituido por la actividad que consta en el auto.'
+- type: Company
+  name: Raminatrans
+  entity_id: Company:raminatrans
+  role: Empresa de logística (Raminatrans S.L.) contratada por Puertos del Estado y ADIF en marzo de 2020 para distribuir
+    las mascarillas de Soluciones de Gestión (informe de auditoría, p.44 y p.68); presidida por Rafael Milla Navarro
+    según Moncloa.com (19-04-2025)
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (371e5) «transitaria» sustituido por el literal de
+    la auditoría; presidente atribuido a prensa (no consta en corpus)'
+- type: Company
+  name: Thinking Heads
+  entity_id: Company:thinking-heads
+  role: Grupo empresarial (Thinking Heads Group SL y su sucursal en Estados Unidos Thinking Heads Americas LLC)
+    cuyo administrador único es Daniel Romero-Abreu Kaup; según el auto de 18-05-2026 (p.49-50) y el informe UDEF
+    1907 (p.172), habría abonado 681.318,04 euros a José Luis Rodríguez Zapatero por facturas de servicios profesionales
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (4d0cd) «think tank», «desde 2014», «filial» y dirección
+    del flujo sin fuente o invertidos → reescrito con el auto'
+- type: Company
+  name: Transforma TSC, S.L.
+  entity_id: Company:transforma-tsc-s-l
+  role: Sociedad mercantil (Transforma TSC, S.L.) constituida el 21 de noviembre de 2023 por Begoña Gómez, socia
+    y administradora única (auto de 20 de junio de 2026, p.46), homónima de la marca TSC y de la cátedra que dirigía
+    en la UCM
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): fecha exacta y fuente añadidas; sin cambios de fondo.'
+- type: Company
+  name: VILLAFUEL
+  entity_id: Company:villafuel
+  role: Operadora mayorista de hidrocarburos (Villafuel SL) controlada por Claudio Rivas a través de Still Growing
+    SL (sentencia TS 22-06-2026, p.43); según El Español (11-10-2024), los autos de prisión de Aldama y Rivas la
+    describen como cabecera de la presunta trama del fraude del IVA de los carburantes
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (9440c) «pieza central… vinculada a Aldama» sin atribución
+    → citada del corpus y de El Español'
+- type: Company
+  name: Voli Analítica
+  entity_id: Company:voli-analitica
+  role: 'Sociedad de Julio Martínez Martínez (auto de 18-05-2026, p.24) investigada en el caso Plus Ultra como una
+    de las mercantiles de su entramado societario que facturaron a la aerolínea: el auto le atribuye «un papel relevante»
+    en la canalización de fondos y una facturación «cuya correspondencia con una actividad real resulta, cuando
+    menos, cuestionable» (p.11)'
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (0e2e4) «interpuesta» y «sin causa económica real»
+    no son los términos que el auto aplica a Voli; sustituidos por sus literales con página.'
+- type: Company
+  name: Zaño Sociedad Consultora SL
+  entity_id: Company:zano-sociedad-consultora-sl
+  role: Consultora del exdirigente socialista Gaspar Zarrías (disuelta el 1 de abril de 2026 según El Debate) que,
+    según el auto de entrada y registro de 26-05-2026 (p.5 y p.10), habría servido de vehículo para cuatro pagos
+    de 4.000 € a Leire Díez desde junio de 2024; su sede fue registrada por la UCO el 27-05-2026 en la causa del
+    Tribunal Central de Instancia (Sección de Instrucción nº 5) sobre el entorno de Díez y Cerdán
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): f59049d2: «ya disuelta» atribuido; «pieza sobre presunta
+    financiación irregular del PSOE» sustituido por el objeto y el órgano que constan en el auto (la etiqueta de
+    financiación es de The Objective y va atribuida en el resumen)'
+- type: Organization
+  name: Asociación Hazteoir.org
+  entity_id: Organization:asociacion-hazteoir-org
+  role: Asociación española (HazteOír.org) personada como acusación popular en la causa especial del caso Koldo/Ábalos
+    (sentencia TS 22-06-2026, p.4), en la causa contra el fiscal general (sentencia TS García Ortiz, p.5), en la
+    causa de Begoña Gómez (auto JI 41 Madrid 23-09-2025, p.1) y en el juicio de Badajoz (sentencia AP Badajoz 14-07-2026,
+    p.1); en el caso Plus Ultra, admitida como acusación popular según Estrella Digital (23-05-2026)
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (7c32d) «ultraconservadora» sin literal → retirada;
+    cada personación con su documento o medio.'
+- type: Organization
+  name: Banco Caminos
+  entity_id: Organization:banco-caminos
+  role: Entidad de crédito española nacida en 1977 como Caja de Crédito del Colegio de Ingenieros de Caminos, Canales
+    y Puertos, transformada en Banco Caminos en 2008 y fusionada con Bancofar en 2023 bajo la marca CBNK (según
+    la web corporativa de CBNK)
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (26beb) datos históricos atribuidos a la cronología
+    de cbnk.es; «hacia 2023» → 2023.'
+- type: Organization
+  name: Bar Franky
+  entity_id: Organization:bar-franky
+  role: Establecimiento de hostelería en Pamplona; según el informe de la UCO (p.193-194), utilizado para emitir
+    facturas ficticias a Acciona cuyos pagos se compensaban en efectivo en favor de Koldo García; su asesor fiscal
+    reconoció haber emitido esas facturas a petición de Koldo (El Español, 03-03-2026; The Objective, 13-05-2026)
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (59fbf) se sustituye «según la investigación» por
+    la cita del informe UCO con página y se añade la admisión del asesor con medio nominal.'
+- type: Organization
+  name: Delincuencia Económica
+  entity_id: Organization:delincuencia-economica
+  role: Departamento de Delincuencia Económica y Anticorrupción de la Unidad Central Operativa (UCO) de la Guardia
+    Civil (Diario de Sesiones del Senado, Comisión de Interior, 16-06-2026, p.6); órgano investigador, no investigado
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): El nodo no tenía role; se añade uno mínimo con cita
+    para evitar la confusión con la UDEF policial.'
+- type: Organization
+  name: Estado Mayor del Ejército de Tierra
+  entity_id: Organization:estado-mayor-del-ejercito-de-tierra
+  role: Principal órgano auxiliar de mando del Jefe de Estado Mayor del Ejército de Tierra, en el Ministerio de
+    Defensa (Orden DEF/708/2020, art. 2); en el caso figura por contratos menores de jefaturas de asuntos económicos
+    del Ejército recogidos en el informe de la Guardia Civil (p.163, p.168, p.179)
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (485eb) frase de modelado del grafo retirada; definición
+    y menciones con cita.'
+- type: Organization
+  name: FIADELSO
+  entity_id: Organization:fiadelso
+  role: Fundación de cooperación al desarrollo con sede en Valencia vinculada a José Luis Ábalos y su entorno familiar
+    (auto del TS de 30-06-2025, p.12), de la que fue uno de los fundadores según elDiario.es; cerrada en 2023 según
+    The Objective y en extinción y liquidación judicial promovida por la Generalitat Valenciana según elDiario.es;
+    línea de investigación patrimonial del caso Koldo (informe UCO, pp.54-55)
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): 7fab9df3: cada tramo del rol con su fuente; «liquidación
+    judicial ordenada por la Generalitat» sustituido por lo que dice elDiario.es (demanda de la Generalitat estimada
+    por el juzgado).'
+- type: Organization
+  name: Finance Boutique
+  entity_id: Organization:finance-boutique
+  role: Denominación («finance boutique»/«boutique financiera») con la que, según el auto de 18-05-2026 (p.14-15,
+    p.29, p.66) y el informe UDEF 1907/26 (p.79), los investigados del caso Plus Ultra se referían a la estructura
+    mercantil en torno a Julio Martínez Martínez y J. L. Rodríguez Zapatero; designa la red, no una sociedad concreta
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (352d3) negación registral sin fuente sustituida por
+    lo que dicen auto e informe.'
+- type: Organization
+  name: Fiscalía Anticorrupción
+  entity_id: Organization:fiscalia-anticorrupcion
+  role: 'Fiscalía Especial contra la Corrupción y la Criminalidad Organizada («Fiscalía Anticorrupción»): órgano
+    del Ministerio Fiscal que ejerce la acusación pública en estas causas, con Alejandro Luzón Cánovas como Fiscal
+    de Sala Jefe (STS 22-06-2026, p.2); su intervención no implica culpabilidad (presunción de inocencia)'
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): Retirada la descripción competencial sin fuente («delitos
+    económicos y corrupción de especial trascendencia»); se añade la jefatura probada en corpus.'
+- type: Organization
+  name: Iustitia Europa
+  entity_id: Organization:iustitia-europa
+  role: Partido político español (sentencia TS 22-06-2026, p.4) que ejerce la acusación popular en la causa especial
+    20775/2020 del Tribunal Supremo, en el juicio de Badajoz contra David Sánchez y Miguel Ángel Gallardo (sentencia
+    AP Badajoz 14-07-2026, p.4; letrado Luis María Pardo) y en la causa de Begoña Gómez (auto JI 41 Madrid 23-09-2025,
+    p.1); se presenta como partido «sin ideología y de la sociedad civil» (Moncloa.com, 19-06-2026)
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (9a04a) causas concretas con cita y autodefinición
+    atribuida.'
+- type: Organization
+  name: Manos Limpias
+  entity_id: Organization:manos-limpias
+  role: 'Sindicato Colectivo de Funcionarios Públicos Manos Limpias (secretario: Miguel Bernad Remón, sentencia
+    del TS en la causa del fiscal general, p.3); ejerce la acusación popular en causas mediáticas (Begoña Gómez,
+    David Sánchez, causa especial del caso Koldo, fiscal general)'
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): 70b63319: «pseudosindicato/asociación de ultraderecha»
+    y «fundado 1995» sin fuente en el corpus → rol con la denominación judicial y las causas probadas; las calificaciones
+    de prensa quedan atribuidas en el summary.'
+- type: Organization
+  name: Oficina de Artes Escénicas
+  entity_id: Organization:oficina-de-artes-escenicas
+  role: Denominación del puesto de David Sánchez en la Diputación de Badajoz tras el cambio de nomenclatura de «Coordinador
+    de las Actividades de los Conservatorios» a «Jefe de la Oficina de Artes Escénicas» (sentencia AP Badajoz 14-07-2026,
+    p.232); por ese cambio fue condenado, sin firmeza, por prevaricación administrativa (p.374)
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): «causa por presunta prevaricación y tráfico de influencias»
+    desactualizado: hay sentencia no firme (p.360, p.374).'
+- type: Organization
+  name: Organización Mundial del Turismo
+  entity_id: Organization:organizacion-mundial-del-turismo
+  role: 'Organismo especializado de las Naciones Unidas para el turismo (OMT / UNWTO / ONU Turismo), con sede en
+    Madrid; secretario general entre 2018 y 2025: Zurab Pololikashvili (informe de la UDEF sobre Focus Social Research,
+    p.9)'
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (45c00) el cargo ya no está vigente: «desde enero
+    de 2018» → «entre 2018 y 2025» con cita del corpus.'
+- type: Organization
+  name: Partido Popular
+  entity_id: Organization:partido-popular
+  role: Partido político español de centro-derecha; principal partido de la oposición (presidente Alberto Núñez
+    Feijóo desde abril de 2022, según Wikipedia); acusación popular en la causa especial del TS contra Ábalos
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): atribución Q1 añadida y condición de acusación popular
+    (ts-cita-abalos p.3).'
+- type: Organization
+  name: Plataforma de Contratación del Sector Público
+  entity_id: Organization:plataforma-de-contratacion-del-sector-publico
+  role: Plataforma electrónica de contratación del sector público español (PLACSP, antes PLACE; contrataciondelestado.es),
+    citada por la UCO como fuente de las licitaciones investigadas
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): Retirada la gestión por la Dirección General del Patrimonio
+    del Estado (Ministerio de Hacienda y Función Pública): 0 fuentes descargadas la sostienen.'
+- type: Organization
+  name: Reale Seguros
+  entity_id: Organization:reale-seguros
+  role: Compañía aseguradora; «patrocinador fundacional» de la cátedra extraordinaria de Begoña Gómez en la Universidad
+    Complutense, con una aportación de 60.000 euros (auto de 20 de junio de 2026, p.11 y p.34)
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (c8539) inciso «grupo italiano Reale Group» sin fuente
+    → retirado; literal y cita del auto añadidos.'
+- type: Organization
+  name: Transformatsc.org
+  entity_id: Organization:transformatsc-org
+  role: Dominio web (transformatsc.org) de la plataforma «Transforma TSC» desarrollada en la Cátedra Extraordinaria
+    de Transformación Social Competitiva que dirigía Begoña Gómez en la UCM; dado de alta el 20 de septiembre de
+    2022 y a nombre de Gómez desde el 13 de julio de 2023 (auto de 11-04-2026, p.28-29)
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (bcbc2) fecha de alta corregida a la judicial (20-09-2022)
+    y titularidad añadida con cita.'
+- type: Organization
+  name: Wakalua
+  entity_id: Organization:wakalua
+  role: 'Wakalua Innovation Hub SL: hub de innovación en turismo lanzado el 22 de enero de 2019 por el grupo Globalia
+    en colaboración con la OMT/UNWTO, ubicado en el Barrabés Growth Space de Madrid (informe UCO sobre Barrabés,
+    p.49-51)'
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): Retirado «(FITUR)»: el lanzamiento fue en el Barrabés
+    Growth Space (UNWTO; UCO p.51); «primer hub global» queda como presentación propia en el summary.'
+- type: Person
+  name: Alba Rodríguez Espinosa
+  entity_id: Person:alba-rodriguez-espinosa
+  role: Hija del expresidente José Luis Rodríguez Zapatero; coadministradora solidaria, con su hermana Laura, de
+    Whathefav SL (auto de 18-05-2026, p.69); citada como investigada en el caso Plus Ultra por el juez Calama el
+    18 de junio de 2026, junto a su hermana, según El Independiente (18-06-2026); rige la presunción de inocencia
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): c9478b8d: citación posterior al corpus atribuida al
+    feed (El Independiente 18-06-2026); salvaguarda añadida'
+- type: Person
+  name: Alejandro Delgado Crego
+  entity_id: Person:alejandro-delgado-crego
+  role: Directivo de Plus Ultra Líneas Aéreas (de origen venezolano y ex presidente de Santa Bárbara Airlines, según
+    Okdiario 30-01-2026); investigado en el caso Plus Ultra según los informes UDEF-BBCA 1907/1908 y el auto de
+    la Audiencia Nacional (DP 77/2024)
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): 07c345f7: «director financiero» retirado (cargo que
+    el auto y la UDEF atribuyen a Roberto Roselli); datos de prensa con medio nominal; «(auto Zapatero)» sustituido
+    por la cita precisa'
+- type: Person
+  name: Ana Esther Sánchez García
+  entity_id: Person:ana-esther-sanchez-garcia
+  role: Letrada de la Administración de Justicia del Tribunal Central de Instancia, Sección de Instrucción, Plaza
+    nº 5, que da fe del auto de 26 de mayo de 2026 (DP/PA 150/2025) sobre la entrada y registro en Ferraz; no es
+    investigada
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (d3abc/db737) el nodo no tenía role; el cargo consta
+    literalmente en autoentradaferraz.pdf p.1 y en la firma (p.50). Rol nuevo, descriptivo y sin atribución de ilícito.'
+- type: Person
+  name: Ana María Fuentes Pacheco
+  entity_id: Person:ana-maria-fuentes-pacheco
+  role: Directora gerente federal del PSOE desde octubre de 2021 (auto de 26 de mayo de 2026, p.11; Wikipedia) y
+    exdirectora de la Oficina de Cumplimiento Normativo del partido (2018-2021, según Wikipedia y Vozpópuli); investigada
+    por el juez Santiago Pedraz (Audiencia Nacional, DP 150/2025) en el caso Leire Díez por un posible delito de
+    falsedad en documento mercantil, según Libertad Digital (14-07-2026) y EFE vía Infobae (09-09-2026); rige la
+    presunción de inocencia
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): 1757e890: atribución nominal de cargos y estado procesal;
+    «imputada» → «investigada» (auto p.19 = responsabilidad indiciaria; citación como investigada según LD)'
+- type: Person
+  name: Ángel Víctor Torres
+  entity_id: Person:angel-victor-torres
+  role: Ministro de Política Territorial y Memoria Democrática y expresidente del Gobierno de Canarias (lo presidía
+    a finales de 2020, según el escrito de la defensa de Aldama, p.31); dirigente del PSOE
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): 6392ce51: «desde 2023» y «2019-2023» sin fuente en
+    corpus ni fuentes descargadas → retirados; cargos conservados con la fuente que los prueba'
+- type: Person
+  name: Armengol
+  entity_id: Person:armengol
+  role: 'Francina Armengol Socías: presidenta del Congreso de los Diputados (desde el 17 de agosto de 2023); expresidenta
+    del Govern de las Illes Balears (julio 2015-junio 2023); PSIB-PSOE (según Wikipedia)'
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (f1381/efd35) se añade la atribución «según Wikipedia»;
+    sin otros cambios.'
+- type: Person
+  name: Aurora López López
+  entity_id: Person:aurora-lopez-lopez
+  role: Cónyuge de Rodolfo Reyes Rojas, a través de la cual este es, según la UDEF, el principal accionista de Plus
+    Ultra (informe 1908, p.4); investigada en el caso Plus Ultra (informe UDEF 1907, p.141); según The Objective
+    y El Español (25-05-2026), con orden internacional de detención del juez Calama
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (e818b) «empresaria venezolana», «copropietaria real»
+    y Snip Aviation sin fuente o contradichos por el corpus → retirados; OID atribuida a medio nominal'
+- type: Person
+  name: Camino Arce
+  entity_id: Person:camino-arce
+  role: Subdirectora general de Construcción de la Dirección General de Carreteras del Ministerio de Transportes
+    (nombrada por resolución de 16-11-2018, informe UCO p.285) durante la etapa de Ábalos; según Libertad Digital
+    (27-06-2025, citando a la Fundación de Ingenieros de Caminos), ingeniera de Caminos y, desde el 27-04-2023,
+    directora técnica y de desarrollo de negocio de la empresa pública SEITT
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (74062) nombramiento con página; titulación y SEITT
+    atribuidos a Libertad Digital (Q1).'
+- type: Person
+  name: Carlos Alberto Parra Delgado
+  entity_id: Person:carlos-alberto-parra-delgado
+  role: Administrador único y socio mayoritario (65%) de Softgestor SL y administrador único de Apamate Corporate
+    and Trust SL, grupo societario que el auto de 18 de mayo de 2026 (DP 77/2024, 'caso Plus Ultra') sitúa bajo
+    su control efectivo
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): Retirado ''empresario hispano-venezolano'' (sin fuente);
+    cargos según auto 18-05-2026 p.45/p.71 y UDEF 1907/26 p.156/p.159 (ac36807).'
+- type: Person
+  name: Carlos Moreno
+  entity_id: Person:carlos-moreno
+  role: Exjefe de Gabinete de la ministra de Hacienda María Jesús Montero (en el cargo desde junio de 2018 según
+    la sentencia del TS de 22-06-2026, p.46; The Objective lo describe como exjefe de Gabinete el 22-04-2026); declaró
+    como testigo en el caso Koldo
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): 4a60f699: «Sevilla, 1977» sin fuente retirado; cargo
+    presentado como vigente pese a The Objective 22-04-2026 (exjefe) y al pasado de la sentencia → reescrito'
+- type: Person
+  name: César Adalid Siles Bazán
+  entity_id: Person:cesar-adalid-siles-bazan
+  role: Exministro de Justicia y Transparencia Institucional de Bolivia (26-sep-2024 a jun-2025, según Los Tiempos
+    e Infobae); antes Procurador General del Estado (sep-2023 a sep-2024, informe UDEF 2910/26, p.9)
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (54418) mismos hechos, con atribución nominal (Q1)
+    y el fin del periodo como procurador que da el informe p.9.'
+- type: Person
+  name: Claudio Rivas Ruiz Capillas
+  entity_id: Person:claudio-rivas-ruiz-capillas
+  role: Empresario del sector de los hidrocarburos, accionista y controlador de Villafuel SL a través de Still Growing
+    SL (calificación fiscal, p.12; sentencia TS de 22-06-2026, p.43); según EFE (vía Infobae, 09-07-2026), investigado
+    junto a Víctor de Aldama por presunto fraude de IVA en hidrocarburos
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (04be8) «leonés» y «principal socio» sin fuente →
+    retirados; cargo societario con documento y página; condición de investigado atribuida a EFE (vía Infobae).'
+- type: Person
+  name: Daniel Romero-Abreu Kaup
+  entity_id: Person:daniel-romero-abreu-kaup
+  role: Empresario; administrador único de Thinking Heads Group SL y fundador y presidente del think tank Gate Center,
+    cuyo consejo asesor preside José Luis Rodríguez Zapatero (informe UDEF 1907, p.173-174; auto de 18-05-2026,
+    p.49-50); Libertad Digital (21-05-2026) describe Gate Center como un think tank relacionado con China
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): 4b4fb: «lobbista gaditano» y «fundador y presidente
+    de Thinking Heads» sin fuente (el corpus dice administrador único); «pro-China» atribuido'
+- type: Person
+  name: Danilo Alfonso Diazgranados Manglano
+  entity_id: Person:danilo-alfonso-diazgranados-manglano
+  role: Empresario venezolano (según El Español, 29-06-2026, e Infobae, 26-05-2026) que aparece en la pieza Plus
+    Ultra/Zapatero; según el auto del TCI de 18 de mayo de 2026 (p.36), en una conversación intervenida
+    con el abogado Miguel Palomero afirmó que Julio Martínez Martínez «es el banco del jefe». Rige la presunción
+    de inocencia.
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (59b61) «el banco del jefe» se refería a Julio Martínez
+    Martínez y lo dice Diazgranados (auto p.36, UDEF 1907 p.115), no lo describe a él; «financiero» sin fuente →
+    «empresario venezolano» atribuido a prensa nominal. 063 L23 2026-09-29: «del entorno investigado» → «que aparece
+    en»: ninguna fuente lo cita como investigado.'
+- type: Person
+  name: David Cierco Jiménez de Parga
+  entity_id: Person:david-cierco-jimenez-de-parga
+  role: Director general de Red.es desde julio de 2018 (nombrado el 24-07-2018, informe de la Guardia Civil p.118)
+    hasta su cese posterior, sucedido por Alberto Martínez Lacambra (p.118); antes consejero delegado de Truphone
+    Digital (según Zonamovilidad, 24-07-2018); firmante el 03-06-2020 de los pliegos de los tres expedientes de
+    Red.es analizados por la UCO (p.110)
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (ce6dc) «mayo de 2021» sin fuente → retirado; Truphone
+    atribuido; páginas del informe añadidas.'
+- type: Person
+  name: Domingo Arnaldo Amaro Chacón
+  entity_id: Person:domingo-arnaldo-amaro-chacon
+  role: Empresario nacido en Venezuela; junto a su hermano Guillermo Alfredo, propietario (según Infobae, 25-05-2026)
+    y administrador (informe UDEF 2910/26, p.41) de la consultora Inteligencia Prospectiva SL, cuyo domicilio social
+    fue registrado por orden del auto de 18 de mayo de 2026 en el caso Plus Ultra / entorno de Zapatero (presunción
+    de inocencia)
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): 7a8bc8d4: «vinculado al sector petrolero (PDVSA)»
+    corresponde al padre según Infobae/El Mundo → retirado del rol.'
+- type: Person
+  name: Elisa Moriano Morales
+  entity_id: Person:elisa-moriano-morales
+  role: Exdirectora del Área de Cultura y Acción Ciudadana de la Diputación de Badajoz (en el cargo en 2016-2017
+    según la sentencia 152/2026); condenada en sentencia NO firme (AP de Badajoz, 152/2026) como cooperadora necesaria
+    de prevaricación (Bloque A) a 9 años de inhabilitación, absuelta del resto; recurrible ante el TSJ de Extremadura,
+    rige la presunción de inocencia hasta la firmeza
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): 2fee690e: el intervalo «(2016-2019)» del rol tampoco
+    tiene fuente → sustituido por lo que sostiene la sentencia; vocabulario de condena no firme alineado con el
+    summary.'
+- type: Person
+  name: Fabiola Salazar Calle
+  entity_id: Person:fabiola-salazar-calle
+  role: Jefa de Gabinete del presidente de Bolivia Luis Arce Catacora, según el informe UDEF nº 2910/26 (p.8)
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): be11b83c: «(Gobierno del MAS)» sin fuente → retirado;
+    cita del informe añadida.'
+- type: Person
+  name: Federico Lledo Soria
+  entity_id: Person:federico-lledo-soria
+  role: Exadministrador único (2009-2014) y exsocio único de Summer Wind SL (informe UDEF 1907, p.120); vinculado
+    al flujo de fondos Plus Ultra → Summer Wind → Afitta descrito en el auto de 18 de mayo de 2026 (p.41-42)
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (02182) «exapoderado solidario (hasta 2023)» sin fuente
+    → cargos registrales con cita; resto verificado.'
+- type: Person
+  name: Felipe Baca
+  entity_id: Person:felipe-baca
+  role: 'Luis Felipe Baca Arbulu; investigado en el caso Plus Ultra: los informes de la UDEF le atribuyen encargos
+    de pagos en efectivo a través de Miguel Palomero (UDEF 1907, p.39-46) y, según The Objective (25-05-2026), el
+    juez Calama le atribuye con Simon Verhoeven la gestión de una presunta organización de blanqueo de capitales,
+    constando detenido en Aruba; rige la presunción de inocencia'
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): ca3a5bbc: perfil (peruano, Suiza, articulador de estructuras
+    internacionales) sin fuente retirado; lo probado, con fuente'
+- type: Person
+  name: Félix González Márquez
+  entity_id: Person:felix-gonzalez-marquez
+  role: Funcionario de carrera de la Diputación de Badajoz, Jefe de Servicio de Gestión de RRHH en 2017 (sentencia
+    AP Badajoz 14-07-2026, pp.10 y 212); condenado (NO firme) por la sentencia nº 152/2026 de la AP de Badajoz como
+    autor por cooperación necesaria de un delito de prevaricación administrativa (Bloque A) a nueve años de inhabilitación
+    especial, absuelto del resto; recurrible en apelación ante el TSJ de Extremadura. No confundir con el «Félix»
+    de la conversación intervenida a Koldo García (informe UCO, p.349) ni con el expresidente Felipe González
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): 4ee7d976: cargo presentado como vigente sin fuente
+    → fechado en 2017; fallo con literalidad y tribunal de apelación (p.376)'
+- type: Person
+  name: Fernando Grande-Marlaska
+  entity_id: Person:fernando-grande-marlaska
+  role: Ministro del Interior de España desde 2018; juez de carrera («treinta años … de juez, y muchos años de juez
+    de instrucción», según sus palabras ante la comisión de investigación, DS_C_15_745, p.87)
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): 92185a9e: «junio de 2018», «Audiencia Nacional» y
+    «exvocal del CGPJ» sin fuente en corpus ni fuentes → retirados; se conserva lo probado.'
+- type: Person
+  name: Francisco Enrique Flores Suárez
+  entity_id: Person:francisco-enrique-flores-suarez
+  role: Empresario venezolano (auto de 18 de mayo de 2026, p.72); según informaciones periodísticas recogidas por
+    el informe UDEF 1907/2026 (p.158), fallecido el 6 de febrero de 2026; nombrado en la instrucción del caso Plus
+    Ultra por los pagos de Softgestor a Análisis Relevante
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (f4677) banquero, chavismo y 55 años sin fuente →
+    retirados; fallecimiento con su mediación.'
+- type: Person
+  name: Francisco Martín Aguirre
+  entity_id: Person:francisco-martin-aguirre
+  role: Delegado del Gobierno en la Comunidad de Madrid (cargo que ocupaba en diciembre de 2025 según Europa Press
+    vía Infobae); secretario general de la Presidencia del Gobierno entre julio de 2021 y marzo de 2023 (auto de
+    20-06-2026, p.29)
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): «desde 2023» y «PSOE» sin fuente → retirados; fechas
+    del auto'
+- type: Person
+  name: Gaspar Carlos Zarrías Arévalo
+  entity_id: Person:gaspar-carlos-zarrias-arevalo
+  role: 'Histórico dirigente socialista andaluz; exconsejero de Presidencia y exvicepresidente de la Junta de Andalucía
+    (El Debate, COPE); condenado por los ERE (Audiencia de Sevilla, 2019, inhabilitación; el Tribunal Constitucional
+    anuló la sentencia en julio de 2024 y ordenó rebajar la pena, según Público/EFE); investigado en el caso Leire
+    (Audiencia Nacional, DP 150/2025): el auto de 26-05-2026 aprecia indicios de responsabilidad (p.19). Presunción
+    de inocencia'
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (648db) «secretario de Estado de Cooperación Territorial»
+    sin fuente → retirado; «investigado/imputado» → investigado con auto p.19; condena ERE y anulación TC añadidas
+    con atribución.'
+- type: Person
+  name: Ignacio Espejo-Saavedra Hernández
+  entity_id: Person:ignacio-espejo-saavedra-hernandez
+  role: Director adjunto de la Asesoría Jurídica de Red.es desde 2022 (antes subdirector de la Asesoría Jurídica
+    y vicesecretario general y del Consejo, según la web de Red.es); presidió las mesas de contratación de los expedientes
+    044/20-ED, 014/20-ED y 016/20-ED adjudicados en 2021 a UTE de Innova Next, analizados en el informe de la UCO
+    de 14 de mayo de 2024 del caso Begoña Gómez
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): Cargo vigente según la web de Red.es descargada; presidencia
+    de las mesas según informe UCO p.113; retirado ''entorno del caso Koldo'' (sin fuente) (584a6a0).'
+- type: Person
+  name: Ignacio Zaldívar de la Rica
+  entity_id: Person:ignacio-zaldivar-de-la-rica
+  role: Exdirector de Gestión Administrativa de ADIF; según la sentencia del TS de 22 de junio de 2026 (p.39-40),
+    por encargo de la presidenta de ADIF gestionó ante Tragsatec la contratación de Jessica Rodríguez (entonces
+    pareja de Ábalos) al no poder renovarse su contrato en Ineco; según Europa Press (vía Telemadrid, 03-07-2026),
+    el juez Ismael Moreno (Audiencia Nacional, caso Koldo) le imputó por presuntos malversación y tráfico de influencias
+    y le citó para el 20 de julio de 2026, fecha en que, según elDiario.es, se acogió a su derecho a no declarar.
+    Rige la presunción de inocencia
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (6836c) Ineco retirado (no consta en la sentencia
+    que gestionara esa contratación inicial); citación fechada y atribuida a medio nominal (Europa Press vía Telemadrid
+    03-07-2026) y actualizada con el feed (20-07 y 26-08); «expareja» → «entonces pareja» (sentencia p.29/p.36).'
+- type: Person
+  name: Ismael Oliver
+  entity_id: Person:ismael-oliver
+  role: Abogado penalista, socio director de Oliver & Abogados (según Confilegal, 07-03-2024); exabogado de Koldo
+    García; investigado por el juez Santiago Pedraz en el caso Leire Díez (Audiencia Nacional, DP 150/2025), según
+    el auto de 26-05-2026 (p.19) y Libertad Digital (14-07-2026); rige la presunción de inocencia
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): c0eaf961: atribución nominal del estado procesal y
+    «imputado» → «investigado» (auto p.19; LD 14-07-2026)'
+- type: Person
+  name: Jacobo Teijelo
+  entity_id: Person:jacobo-teijelo
+  role: Abogado penalista (según El Español, 08-07-2025); defensor de Santos Cerdán en el caso Koldo desde julio
+    de 2025, en codefensa con Benet Salellas (Europa Press vía Telemadrid); investigado en el caso Leire (Audiencia
+    Nacional, DP 150/2025) según el auto de 26-05-2026 (p.6) y, según Infobae (12-06-2026) y El Independiente (25-06-2026),
+    declaró como investigado ante el juez Pedraz el 25-06-2026; rige la presunción de inocencia
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (d0396) «penalista» atribuido; condición de investigado
+    añadida con auto en corpus y feed (la fila vigente la omitía).'
+- type: Person
+  name: Javier Pérez Dolset
+  entity_id: Person:javier-perez-dolset
+  role: Empresario tecnológico español; fundador y principal accionista de Zed Worldwide (según Wikipedia y The
+    Objective, 27-05-2025) y cofundador en 1996 de Pyro Studios, creadora de la saga Commandos (según Newtral, 05-06-2025);
+    citado en el auto de entrada y registro en Ferraz en la causa de Leire Díez, la llamada «fontanera» del PSOE
+    (según Newtral)
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): dd6e52a6: trayectoria empresarial y etiqueta periodística
+    atribuidas con medio nominal; parte judicial citada del auto.'
+- type: Person
+  name: Jesús Manuel Gómez García
+  entity_id: Person:jesus-manuel-gomez-garcia
+  role: Exsubsecretario del Ministerio de Transportes, Movilidad y Agenda Urbana (etapa de José Luis Ábalos); cesado
+    a finales de agosto de 2024 por el ministro Óscar Puente, según El Español e Infobae; investigado en el caso
+    Koldo en la Audiencia Nacional (según El Español, 23-09-2024) y testigo en el juicio del Tribunal Supremo en
+    abril de 2026
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (05f9a) cese fechado y atribuido; condición procesal
+    con medio nominal y fecha; testifical del Supremo añadida.'
+- type: Person
+  name: Joaquín Goyache
+  entity_id: Person:joaquin-goyache
+  role: Rector de la Universidad Complutense de Madrid (El Español, 18-05-2026); investigado por el juez Peinado
+    en el caso Begoña Gómez (declaró como investigado el 29-07-2024) y desimputado por la Audiencia Provincial de
+    Madrid en auto de 13-05-2025, según Diario de Pontevedra y Moncloa.com
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): 247a83e2: atribución nominal de la desimputación y
+    de la vigencia del cargo; «imputado» → «investigado»'
+- type: Person
+  name: José Antonio Marco Sanjuán
+  entity_id: Person:jose-antonio-marco-sanjuan
+  role: Inspector de Hacienda; expresidente del Tribunal Económico-Administrativo Central (TEAC) hasta su dimisión
+    en junio de 2025, descrito por El Debate como el 'tres' de María Jesús Montero (extremo que la ministra negó).
+    Investigado por cohecho en el Juzgado de Instrucción nº 35 de Madrid tras la querella de la Fiscalía Anticorrupción
+    admitida en marzo de 2026 (El Periódico vía El Correo Gallego, 23-03-2026); tras dimitir fue destinado a la
+    Dependencia Regional de Inspección de la AEAT en la Comunidad Valenciana, el área que investiga el entramado
+    societario del caso Plus Ultra (El Debate, 08-07-2026). Presunción de inocencia
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): 47092/c1bf2: intervalo 2018-2025 sin fuente retirado;
+    ''que le atribuye además prevaricación, tráfico de influencias y malversación'' no corresponde a la querella
+    admitida (solo cohecho) → retirado; atribuciones con medio nominal'
+- type: Person
+  name: José Blanco
+  entity_id: Person:jose-blanco
+  role: Exministro de Fomento (2009-2011), exsecretario de Organización (2000-2008) y exvicesecretario general (2008-2012)
+    del PSOE, según Wikipedia; Actualidad.es (24-05-2026) le atribuye la consultora Acento Public Affairs
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): Cargos atribuidos a Wikipedia; ''fundador del lobby
+    Acento'' sin fuente → vinculación tal como la publica Actualidad.es (2b58cb9).'
+- type: Person
+  name: Jose Luis Calama Teixeira
+  entity_id: Person:jose-luis-calama-teixeira
+  role: 'Magistrado de la Audiencia Nacional: titular del Juzgado Central de Instrucción nº 4 desde 2018 según Vozpópuli,
+    que firma como magistrado-juez de la plaza nº 2 de la Sección de Instrucción del Tribunal Central de Instancia
+    (auto de 18-05-2026, p.87); juez instructor del caso Plus Ultra, en el que citó como investigado a José Luis
+    Rodríguez Zapatero. Autoridad judicial, NO investigado'
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (386a8) órgano con las dos denominaciones y sus fuentes;
+    «imputación» → «citó como investigado» (auto p.87).'
+- type: Person
+  name: José Manuel Ruano
+  entity_id: Person:jose-manuel-ruano
+  role: José Manuel Ruano de la Fuente, profesor titular de la Universidad Complutense de Madrid (auto de 11-04-2026,
+    p.21), docente de Ciencia Política según elDiario.es; director del máster 'Transformación Social Competitiva'
+    y codirector de la cátedra extraordinaria que codirigía Begoña Gómez (auto de 20-06-2026, p.34)
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (97378) «y de la Administración» sin fuente → retirado;
+    titular y codirección citados del corpus; área atribuida a elDiario.es.'
+- type: Person
+  name: José María Álvarez Pallete
+  entity_id: Person:jose-maria-alvarez-pallete
+  role: Expresidente ejecutivo de Telefónica (abril 2016-enero 2025, según Euronews, 18-01-2025), sucedido por Marc
+    Murtra
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (dd01a) mismos hechos con atribución nominal y mes
+    de inicio (Euronews).'
+- type: Person
+  name: Joseba García Izaguirre
+  entity_id: Person:joseba-garcia-izaguirre
+  role: Hermano de Koldo García Izaguirre; extrabajador de Emfesa (filial de Adif); citado como investigado por
+    el juez Ismael Moreno (Audiencia Nacional, caso Koldo) el 3 de julio de 2026 por presuntos delitos de malversación
+    y tráfico de influencias en la contratación de Jésica Rodríguez en Ineco y Tragsatec (según Infobae, 03-07-2026; según el escrito de la Fiscalía recogido por Libertad Digital, 03-07-2026, en su caso únicamente por la contratación en Ineco);
+    se acogió a no declarar el 20 de julio (según elDiario.es)
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (525c2) «firmaba sus partes de trabajo» no consta
+    en ninguna fuente (Infobae: «habría orientado… sobre cómo cumplimentar los partes»; STS p.38: ella remitía los
+    partes) → retirado; se añade el medio nominal y el silencio del 20-jul.'
+- type: Person
+  name: Juan Carlos Doadrio
+  entity_id: Person:juan-carlos-doadrio
+  role: Exvicerrector de Relaciones Institucionales de la Universidad Complutense de Madrid; testigo en el caso
+    Begoña Gómez (auto de 11 de abril de 2026, p.2) y compareciente en la comisión de investigación del Senado sobre
+    el caso Koldo (10-12-2025, según elDiario.es)
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (1ba36) cargo exacto según el auto y condición de
+    testigo (no «testigo/declarante»); sin cambio de fondo.'
+- type: Person
+  name: Juan Manuel Serrano Quintana
+  entity_id: Person:juan-manuel-serrano-quintana
+  role: Presidente de la Sociedad Estatal Correos y Telégrafos (2018-2023); antes jefe de gabinete de Pedro Sánchez
+    en la Comisión Ejecutiva del PSOE (2014-2018), según The Objective. Su gestión dejó a Correos con «pérdidas
+    récord» y «su peor crisis» (Vozpópuli) y un 'agujero' de más de 1.000 millones de euros según The Objective
+    y El Independiente (Vozpópuli, citando a CCOO y UGT, lo eleva a 1.200 M€). Un informe de la UCO remitido al
+    juez Pedraz (caso Leire, DP 150/2025) le atribuye, según El Español (09-07-2026), una «participación preeminente»
+    en la presunta trama y haber pactado la contratación de Leire Díez en Correos; el 10-07-2026 Pedraz acordó su
+    imputación (condición de investigado) a petición de la Fiscalía Anticorrupción y autorizó el volcado de su teléfono
+    móvil, según Vozpópuli y Libertad Digital. Presunción de inocencia
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (f6bc8) literales de Vozpópuli («pérdidas récord»,
+    «su peor crisis») y 1.200 M atribuidos a CCOO/UGT; (786be) ''preeminente'' atribuido a El Español, imputación/volcado
+    a Vozpópuli y LD, fecha del informe (8-jul) retirada del rol por no constar en las fuentes cacheadas; (4e30c)
+    ''Comisión Ejecutiva'' según The Objective.'
+- type: Person
+  name: Juan Manuel Teixeira Díaz
+  entity_id: Person:juan-manuel-teixeira-diaz
+  role: Mayor general venezolano; presidente del Instituto Nacional de Aeronáutica Civil (INAC) de Venezuela en
+    2021, según el auto de 18 de mayo de 2026 (p.57) y el informe UDEF 1907 (p.59); figura en el caso Plus Ultra
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): cb6f807f: vinculación al chavismo, 2020-2023 y SBR
+    sin fuente → retirados; se conserva lo probado con cita.'
+- type: Person
+  name: Julián Expósito Talavera
+  entity_id: Person:julian-exposito-talavera
+  role: Director del Área de Presidencia y Relaciones Institucionales de la Diputación de Badajoz (2017-2025, según
+    La Portada de Extremadura), actualmente letrado del Organismo Autónomo de Recaudación (OAR) de la propia Diputación
+    (sentencia AP Badajoz 152/2026, p.137); la sentencia lo describe como persona muy próxima a Miguel Ángel Gallardo
+    (p.15). Declaró como testigo en el juicio por la contratación de David Sánchez (p.137); no fue acusado ni condenado
+    en la causa (p.1-3)
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (21ea8/789f7/ab66f) citas doc+página y atribución
+    del intervalo; sin cambios de fondo.'
+- type: Person
+  name: Julián Mateos
+  entity_id: Person:julian-mateos
+  role: 'Julián Mateos (Mateos Aparicio Prieto, según Wikipedia): director de negocios de la SEPI, puesto al frente
+    del fondo de rescate (FASEE) según una noticia de El Mundo de 17 de agosto de 2021 recogida en el auto de 18
+    de mayo de 2026 (p.25)'
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (8a4e4) «Mateos-Aparicio» y «nombrado en agosto de
+    2021» → atribuidos a Wikipedia y a la noticia de El Mundo citada en el auto; se añade la imputación de junio
+    de 2026 atribuida a Wikipedia.'
+- type: Person
+  name: Laura Rodríguez Espinosa
+  entity_id: Person:laura-rodriguez-espinosa
+  role: Hija de José Luis Rodríguez Zapatero; administradora y socia de Whathefav SL junto a su hermana Alba (informe
+    UDEF 1907, p.78), sociedad que según Wikipedia fundaron ambas; citada como investigada en el caso Plus Ultra
+    el 18-06-2026 según El Independiente
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): d3657: «fundadora» solo consta en Wikipedia (atribuido),
+    «agencia de marketing» es descripción de prensa (retirada del rol), «investigada» atribuida al feed con fecha'
+- type: Person
+  name: Leonardo Marcos
+  entity_id: Person:leonardo-marcos
+  role: Exdirector general de la Guardia Civil (junio de 2023–septiembre de 2024) y antes director general de Protección
+    Civil y Emergencias (2020-2023), según Wikipedia; funcionario del Cuerpo Superior de Administradores Civiles
+    del Estado; investigado en el caso Leire (Audiencia Nacional, DP 150/2025) desde la providencia del juez Pedraz
+    de 29-07-2026, según Infobae
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (12540) fechas y cuerpo atribuidos a Wikipedia; condición
+    de investigado añadida (feed Infobae 29-07-2026; declaró el 10-09-2026 según EFE vía Infobae).'
+- type: Person
+  name: Lucas
+  entity_id: Person:lucas
+  role: remove
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): rol de un homónimo civil sobre nodo seudónimo
+    (3a35f) → retirado.'
+- type: Person
+  name: Luis Alberto Arce Catacora
+  entity_id: Person:luis-alberto-arce-catacora
+  role: Expresidente del Estado Plurinacional de Bolivia (2020-2025, informe UDEF 2910/26, p.9); antes ministro
+    de Economía en el gobierno de Evo Morales (según elDiario.es, 24-06-2026)
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (f358c) «economista» sin fuente → retirado; ministerio
+    atribuido; presidencia con página.'
+- type: Person
+  name: Luis Antonio Martín Bernardos
+  entity_id: Person:luis-antonio-martin-bernardos
+  role: Exadministrador solidario de Innova Next SL (grupo Barrabés) entre 2013 y su cese en abril de 2022 (informe
+    UCO, p.19); declaró como testigo ante el juez Peinado el 15-07-2024 según EFE (vía Cronista); no consta investigado
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (bda44) «economista» sin fuente en corpus ni fuentes
+    (Empresia inaccesible) → retirado; condición de testigo atribuida a EFE (vía Cronista, 15-07-2024) y cargo citado
+    del informe UCO'
+- type: Person
+  name: Luis Prieto Cuerdo
+  entity_id: Person:luis-prieto-cuerdo
+  role: Director de Economía Digital de Red.es; según El Independiente (01-10-2025), imputado por la Fiscalía Europea
+    (EPPO) por los contratos de Red.es a Barrabés, la parte del caso Begoña Gómez asumida por la EPPO. Presunción
+    de inocencia
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (29080) estado procesal sostenido solo por prensa
+    → «según El Independiente (01-10-2025)»; ''causa abierta'' sin fuente fechada posterior → retirado.'
+- type: Person
+  name: Manuel Candalija Valle
+  entity_id: Person:manuel-candalija-valle
+  role: Director del Área de Cultura de la Diputación de Badajoz; condenado (NO firme) por la sentencia 152/2026
+    de la AP de Badajoz (p.375) como cooperador necesario de prevaricación administrativa (Bloque C, plaza de Luis
+    María Carrero) a nueve años de inhabilitación; absuelto del resto; recurrible ante el TSJ de Extremadura (p.376)
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (1574b) citas de página añadidas y acentos restaurados;
+    contenido verificado'
+- type: Person
+  name: Marc Murtra
+  entity_id: Person:marc-murtra
+  role: Presidente ejecutivo de Telefónica desde enero de 2025; presidente de Indra de mayo de 2021 a enero de 2025
+    (según la biografía corporativa de Telefónica)
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (57fbc) fechas exactas y atribución Q1.'
+- type: Person
+  name: Marga Prohens
+  entity_id: Person:marga-prohens
+  role: 'Margalida (Marga) Prohens Rigo: presidenta del Govern de les Illes Balears desde julio de 2023 (investida
+    el 6 de julio de 2023, según su comparecencia en el Congreso, DSCD-15-CI-8, p.49) y presidenta del PP de Baleares
+    desde 2021, según Wikipedia'
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): 6c71ab69: año de nacimiento 1982 sin fuente → retirado;
+    nombre completo y presidencia del PP balear desde 2021 atribuidos a Wikipedia; investidura citada del Diario
+    de Sesiones.'
+- type: Person
+  name: María Belén Gualda González
+  entity_id: Person:maria-belen-gualda-gonzalez
+  role: Presidenta de la SEPI desde marzo de 2021 (nombrada el 3 de marzo de 2021, auto de entrada y registro en
+    Ferraz, p.4); citada como investigada por el juez Pedraz en la pieza de amaños de la contratación pública del
+    caso Leire (providencia de 29-06-2026, según elDiario.es)
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (847d7) fecha corregida por el auto; Navantia sin
+    fuente retirada; condición de investigada añadida (feed elDiario.es 29-06-2026; DS 754 p.20).'
+- type: Person
+  name: María del Carmen Pano Sánchez
+  entity_id: Person:maria-del-carmen-pano-sanchez
+  role: 'Conocida públicamente como Carmen Pano; empresaria según El Español (29-06-2026); persona de relación estrecha,
+    «casi familiar», con Víctor de Aldama (STS 22-06-2026, p.143). Testigo en el caso Leire Díez (DP 150/2025, juez
+    Pedraz): declaró haber entregado 90.000 € en efectivo en la sede del PSOE y haber recibido un ofrecimiento para
+    cambiar su testimonio (auto 26-05-2026, p.17; El Español 29-06-2026). En esta causa comparece como testigo'
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): 088f7877: «por orden de Aldama» retirado; 40e765ce:
+    negación absoluta acotada a la DP 150/2025; 4ef1a063: atribución de «empresaria» y literal de la sentencia'
+- type: Person
+  name: María Jesús Montero
+  entity_id: Person:maria-jesus-montero
+  role: Exvicepresidenta primera del Gobierno y exministra de Hacienda (junio 2018–marzo 2026, PSOE); secretaria
+    general del PSOE de Andalucía y candidata a la presidencia de la Junta en las elecciones andaluzas del 17 de
+    mayo de 2026 (según Infobae, 23-03-2026). Antes, consejera de Hacienda de la Junta de Andalucía
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (8b1eb) cargos gubernamentales en pasado (La Moncloa
+    27-03-2026); candidatura fechada y atribuida; (30f60/b086e) consejerías sin fechas: Salud retirada, Hacienda
+    conservada.'
+- type: Person
+  name: María Nela Prada Tejada
+  entity_id: Person:maria-nela-prada-tejada
+  role: Exministra de la Presidencia de Bolivia (9-nov-2020 a 2025, según Urgente.bo e informe UDEF 2910/26, p.8),
+    gobierno de Luis Arce; militante del MAS según Wikipedia
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (8c552) cargo cerrado en 2025 (p.8) y filiación MAS
+    atribuida a Wikipedia.'
+- type: Person
+  name: Miguel González Suela
+  entity_id: Person:miguel-gonzalez-suela
+  role: 'Miguel Ángel González Suela: subsecretario para la Transición Ecológica y el Reto Demográfico desde enero
+    de 2020 (Real Decreto 125/2020); administrador civil del Estado (según ACSACE). Citado en la comparecencia de
+    Sara Aagesen ante la comisión de investigación del Senado sobre la SEPI (8 de julio de 2026, pp.3 y 18 del PDF)
+    por su asistencia delegada al consejo gestor del FASEE y el documento de trabajo del ministerio sobre el rescate
+    de Tubos Reunidos. No consta que esté investigado'
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (7f9fc) «Talavera de la Reina, 1969» sin fuente →
+    retirado; atribución del cuerpo funcionarial; páginas del Diario de Sesiones añadidas.'
+- type: Person
+  name: Miguel Moreno Purroy
+  entity_id: Person:miguel-moreno-purroy
+  role: Asesor del gestor del bar-restaurante Franky de Pamplona según la UCO (informe UCO, p.193) y contable del
+    bar según The Objective y elDiario.es; vinculado por la UCO a la emisión de facturas a nombre de Acciona Infraestructuras
+    y de la UTE Recajo en el entorno de Koldo García (p.193-198); declaró como testigo ante el juez Ismael Moreno
+    el 13-05-2026 (The Objective)
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (e628a) titular/gestor sin fuente → asesor/contable
+    atribuidos; testifical añadida.'
+- type: Person
+  name: Nadia Calviño Santamaría
+  entity_id: Person:nadia-calvino-santamaria
+  role: Exvicepresidenta del Gobierno (primera entre 2021 y 2023, según Wikipedia) y exministra de Economía; accedió
+    a la presidencia del Banco Europeo de Inversiones el 1 de enero de 2024, según The Objective (27-12-2023)
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): dab17db3: rango «2018-2023» sin fuente → retirado;
+    vicepresidencia y BEI atribuidos; vigencia abierta sustituida por la fecha de acceso.'
+- type: Person
+  name: Patricia Úriz
+  entity_id: Person:patricia-uriz
+  role: Esposa de Koldo García según los autos y el informe UCO (expareja según Okdiario); exvocal de
+    Bienestar Social del PSN; contratada a principios de 2020 como ayudante de secretaria (nivel 17) en el Ministerio
+    de Transportes de Ábalos; investigada en el caso Koldo (procedimiento 65/2023, Audiencia Nacional)
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): 4066d504: «auxiliar administrativa» sin fuente → «ayudante
+    de secretaria (nivel 17)»; relación con Koldo con las dos versiones atribuidas; nacimiento trasladado al resumen'
+- type: Person
+  name: Pedro Antonio Rodríguez Fernández
+  entity_id: Person:pedro-antonio-rodriguez-fernandez
+  role: Exadministrador único (2011-2014) y exconsejero (2014-2016) de Geoalcali SL, filial de Highfield Resources
+    (minera australiana, según elDiario.es), promotora de la mina de potasa Mina Muga en Navarra (informe UCO, p.29
+    y p.203)
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (da642) responsabilidad personal sobre Mina Muga y
+    rango 2011-2016 sustituidos por los cargos de la UCO; «australiana» atribuido.'
+- type: Person
+  name: Raif El Arigie
+  entity_id: Person:raif-el-arigie
+  role: Consejero de Plus Ultra Líneas Aéreas según la UDEF (informe 1907, p.76); figura en el caso Plus Ultra (diligencias
+    previas 77/2024, Sección de Instrucción del Tribunal Central de Instancia, juez Calama)
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): 01f61f04: «Juzgado Central de Instrucción nº 2» no
+    consta para esta causa; el auto de 18-05-2026 la sitúa en la Sección de Instrucción del Tribunal Central de
+    Instancia, Plaza nº 2 (p.1, p.3).'
+- type: Person
+  name: Ramón Gordils
+  entity_id: Person:ramon-gordils
+  role: Exviceministro de Cooperación Económica de Venezuela según Infobae (24-05-2026); señalado por la UDEF como
+    «nexo o elemento necesario» de Rodolfo Reyes para acceder a Zapatero en el caso Plus Ultra (informe UDEF 1908,
+    p.36; auto de 18-05-2026, p.53)
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (f98cf) «político/diplomático» y «gobierno de Maduro»
+    sin fuente → retirados; cargo atribuido a medio nominal; papel citado del corpus'
+- type: Person
+  name: Raúl Medina
+  entity_id: Person:raul-medina
+  role: Director general de Aviación Civil (Ministerio de Transportes) en 2020-2021; firmó el 24-02-2021 el informe
+    de la DGAC sobre Plus Ultra aportado a la SEPI (informe UDEF 1908, p.128); no consta investigado
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (25d94) 2015-2022, presidencia de AESA y EUROCONTROL
+    sin fuente en corpus ni fuentes → retirados'
+- type: Person
+  name: Ricardo Cabezas Martín
+  entity_id: Person:ricardo-cabezas-martin
+  role: Concejal del PSOE en el Ayuntamiento de Badajoz (n. 1974) y exdiputado provincial delegado de Cultura, Deportes
+    y Juventud; condenado (NO firme, recurrible ante el TSJ de Extremadura) por la sentencia 152/2026 de la AP de
+    Badajoz como autor de prevaricación administrativa (Bloque C, plaza de Luis María Carrero) a nueve años de inhabilitación;
+    absuelto del resto
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (2cf93) «desde 2015» y «desde julio de 2023» sin fuente
+    → retirados; el cargo provincial es pasado según Extremadura7días (28-05-2025); fallo citado de la sentencia
+    p.375-376'
+- type: Person
+  name: Ruben Goñi Urroz
+  entity_id: Person:ruben-goni-urroz
+  role: Exdirector del Instituto Navarro de Deporte y Juventud (INDJ) (según Wikipedia); el organismo, que presidía
+    en 2017 según el informe de la UCO (p.34), fue el órgano contratante de la obra del Navarra Arena adjudicada
+    en octubre de 2017
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (e3a33) «director gerente» sin fuente → «director»
+    (Wikipedia) + literal «presidido» (UCO p.34); páginas añadidas.'
+- type: Person
+  name: Salvador Illa
+  entity_id: Person:salvador-illa
+  role: Presidente de la Generalitat de Cataluña desde el 10 de agosto de 2024 (PSC, según Wikipedia); exministro
+    de Sanidad del Gobierno de España (13 de enero de 2020-27 de enero de 2021) durante la pandemia de COVID-19
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (21f79) fechas exactas y atribución «según Wikipedia»;
+    sin otros cambios.'
+- type: Person
+  name: Santiago Fernández Lena
+  entity_id: Person:santiago-fernandez-lena
+  role: Abogado, exsocio del despacho Andersen y secretario del consejo de administración de Plus Ultra (según The
+    Objective, 23-05-2026); investigado en el caso Plus Ultra/Zapatero (informe UDEF 1907, p.127). Rige la presunción
+    de inocencia
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (a0eff) «mercantilista» sin fuente retirado; cargos
+    atribuidos; condición de investigado citada del informe.'
+- type: Person
+  name: Sergio Sánchez
+  entity_id: Person:sergio-sanchez
+  role: 'Sergio Sánchez Benítez: excargo del CNI y directivo de Movistar (según Infobae, 19-05-2026); titular del
+    25% de Análisis Relevante SL, administrada por Julio Martínez Martínez, y autor de sus informes de consultoría
+    según el auto de 18 de mayo de 2026 (p.37, p.69) y el informe UDEF 1907 (p.83); vinculado al caso Plus Ultra'
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (4ecf3) «exdirector de Comunicación del CNI» y «Telefónica»
+    sin fuente → «excargo del CNI y directivo de Movistar» con medio nominal; resto verificado y con cita.'
+- type: Person
+  name: Tatiana Ábalos
+  entity_id: Person:tatiana-abalos
+  role: Hija de José Luis Ábalos (exministro de Transportes); según el informe de la UCO (pp.54-55), en junio de
+    2018 reclamó a Koldo García un pago para la fundación FIADELSO, vinculada a su padre
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): a58d74: «dirigía de facto la fundación FIADELSO» sin
+    fuente en corpus ni prensa → sustituido por el hecho probado (reclamación de junio de 2018, UCO pp.54-55; vinculación
+    de FIADELSO a Ábalos y su entorno familiar, auto TS 30-06-2025 p.11).'
+- type: Person
+  name: Vicente Calzado Téllez
+  entity_id: Person:vicente-calzado-tellez
+  role: Director de EMFESA (Enajenación de Materiales Ferroviarios, S.A.), empresa pública dependiente del Ministerio
+    de Transportes participada por Adif, en el cargo desde 2011 según declaró en el Senado (Pressdigital, 29-05-2024);
+    compareció ante la comisión de investigación del Senado sobre el caso Koldo el 29 de mayo de 2024
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): Cargo con fuente y fecha; retirado ''persona de interés/testigo''
+    (no acreditado como categoría) (067631f).'
+- type: Person
+  name: Vicente Fernández
+  entity_id: Person:vicente-fernandez
+  role: Expresidente de la SEPI (23-06-2018 a 04-10-2019, según el auto de 26-05-2026, p.4); letrado de la Junta
+    de Andalucía según Público y okdiario; después asesor de Servinabar (2021-2023, según Público); investigado
+    en la causa del juez Pedraz (Audiencia Nacional, DP 150/2025) sobre presuntos amaños de contratos de empresas
+    públicas (entorno Leire Díez). Presunción de inocencia
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): (8e234) fechas del auto p.4; «letrado de la Junta»
+    y «asesor de Servinabar» atribuidos a Público/okdiario; causa de Pedraz precisada (AN, DP 150/2025).'
+- type: Person
+  name: Zurab Pololikashvili
+  entity_id: Person:zurab-pololikashvili
+  role: Secretario general de la Organización Mundial del Turismo (OMT / ONU Turismo) desde el 1 de enero de 2018,
+    según Casa África, con mandato acotado a 2018-2025 por el informe UDEF 2910/26 (p.9); exministro de Desarrollo
+    Económico de Georgia (2009-2010) y exembajador de Georgia en España (2006-2009), según Casa África
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): 891e2c55: vigencia abierta («desde enero de 2018»)
+    contradicha por UDEF p.9 e Infobae/El Español; cargos anteriores atribuidos a Casa África.'
+- type: Person
+  name: Juan Carlos Barrabés
+  entity_id: Person:juan-carlos-barrabes
+  role: Empresario aragonés, presidente y fundador del Grupo Barrabés (informe UCO de 14-05-2024, p.13); asesoró
+    a Begoña Gómez en su cátedra de la UCM; fue investigado en el caso Begoña Gómez hasta que la Audiencia Provincial
+    de Madrid lo excluyó del procedimiento (Infobae, 16-07-2026); la pieza de Red.es se remitió a la Fiscalía Europea
+    (Europa Press vía The Objective, 04-08-2026)
+  reason: '061 revisión humana T0d 2026-09-15 (Fable, dueño): revisión adversarial Codex (parte 2): el rol vigente
+    («fundador del Grupo Barrabés» / «investigado») no reflejaba la exclusión del 16-07-2026 ni la remisión a la
+    EPPO.'
+- type: Company
+  name: Avintia
+  entity_id: Company:avintia
+  role: Grupo constructor español (Grupo Avintia); según Galiciapress (17-12-2024), adjudicatario en UTE con Constructora
+    San José de un contrato de la Dirección General de Carreteras de 2019, citado en el caso Koldo/Aldama
+  reason: '061 revisión humana T0e 2026-09-17 (Opus 5 + Astra + Jev, dueño): 5fa0b7: la adjudicación solo consta
+    en prensa (verificada en el BOE según el medio) → atribuida.'
+- type: Company
+  name: Instalibero District SL
+  entity_id: Company:instalibero-district-sl
+  role: Sociedad mercantil administrada por Manuel Sallés Carceller (exposición razonada de 23-10-2024, p.23), a
+    quien la prensa sitúa como investigado en la trama de los hidrocarburos (El Español, 24-01-2025); en 2022 tuvo
+    en nómina a Koldo García (20.416,67 euros)
+  reason: '061 revisión humana T0e 2026-09-17 (Opus 5 + Astra + Jev, dueño): e819a6: «(imputado)» sin resolución
+    en corpus → atribución nominal a prensa; se añade el hecho probado (nómina de Koldo, corpus).'
+- type: Company
+  name: Inteligencia Prospectiva
+  entity_id: Company:inteligencia-prospectiva
+  role: Sociedad mercantil española (Inteligencia Prospectiva, S.L.) participada por los hermanos Guillermo Alfredo
+    Amaro Chacón (62%) y Domingo Arnaldo Amaro Chacón (38%), empresarios venezolanos según Público (26-05-2026)
+    e Infobae (25-05-2026); señalada por la UDEF como presunta sociedad instrumental en la causa por el rescate
+    público de Plus Ultra que instruye la Audiencia Nacional (caso Zapatero)
+  reason: '061 revisión humana T0e 2026-09-17 (Opus 5 + Astra + Jev, dueño): abb67f: «hermanos venezolanos» → atribuido
+    a Público (26-05-2026) e Infobae (25-05-2026); el resto (española, 62%/38%, instrumental según UDEF, causa Plus
+    Ultra en la AN) está en el corpus y se conserva.'
+- type: Company
+  name: Marco Infraestructuras y Medio Ambiente SA
+  entity_id: Company:marco-infraestructuras-y-medio-ambiente-sa
+  role: Constructora aragonesa con sede en Zaragoza (CIF A99498255), dedicada a obra civil, carreteras y conservación
+    de infraestructuras
+  reason: '061 revisión humana T0e 2026-09-17 (Opus 5 + Astra + Jev, dueño): Tanda B (dueño): «Grupo Marco» sin
+    fuente en corpus ni en las 5 fuentes descargadas → retirado (propuesta de Astra).'
+- type: Company
+  name: Servinabar
+  entity_id: Company:servinabar
+  role: Servinabar 2000 S.L.U., sociedad navarra de Joseba Antxon Alonso Egurrola (propietario y administrador único,
+    auto de prisión de 30 de junio de 2025, p.11), nacida como empresa de organización de eventos y reconvertida
+    en constructora y consultora de prevención de riesgos laborales según elDiario.es (18-11-2025); pieza central
+    del informe de la UCO en la causa que investiga a Santos Cerdán
+  reason: '061 revisión humana T0e 2026-09-17 (Opus 5 + Astra + Jev, dueño): fa7fc5: la reconversión es un dato
+    de prensa (elDiario.es 18-11-2025) publicado sin atribución en el rol → se añade «según elDiario.es (18-11-2025)»
+    y la cita del auto para la propiedad; sin cambio de fondo.'
+- type: Company
+  name: TASK FORCE SA
+  entity_id: Company:task-force-sa
+  role: Sociedad del Grupo Empresarial Inmark (Madrid), absorbida por Inmark Europa S.A. en 2014; consultora en
+    la que Begoña Gómez fue consejera (desde 2004), secretaria (desde 2009) y apoderada (desde 2010) según el Registro
+    Mercantil (informe UCO 14-05-2024, pp.38-39); trabajó en el grupo Inmark hasta 2018
+  reason: '061 revisión humana T0e 2026-09-17 (Opus 5 + Astra + Jev, dueño): 576624: «directiva/consejera hasta
+    2018» → cargos registrales fechados en Task Force SA (UCO pp.38-39) y vinculación al grupo Inmark hasta 2018;
+    absorción en 2014 (inscrita 24-10-2014, UCO p.38).'
+- type: Organization
+  name: IFEMA
+  entity_id: Organization:ifema
+  role: IFEMA MADRID (Feria de Madrid), recinto ferial y organizador de ferias, congresos y eventos (ifema.es);
+    sede de FITUR (informe UCO 14-05-2024, p.55) y, en el caso Begoña Gómez, sede y coorganizador con el grupo Barrabés
+    del evento «Mañana» de junio de 2019 (informe UCO, pp.57-59)
+  reason: '061 revisión humana T0e 2026-09-17 (Opus 5 + Astra + Jev, dueño): a75dba: «Institución Ferial de Madrid»
+    y «consorcio» sin fuente (0 apariciones en corpus y fuentes) retirados; sustituidos por lo probado (Feria de
+    Madrid, FITUR p.55, evento Mañana pp.57-59, actividad según ifema.es).'
+- type: Person
+  name: Alejandro Murat
+  entity_id: Person:alejandro-murat
+  role: Político mexicano, gobernador de Oaxaca en el momento de los hechos (2018); según el escrito de la defensa
+    de Aldama, que cita los informes UCO 197/2022 y 211/2024, el entorno de Aldama se reunió con él en México y
+    en Madrid (contexto; no investigado en la causa)
+  reason: '061 revisión humana T0e 2026-09-17 (Opus 5 + Astra + Jev, dueño): 6e0336: procedencia de segunda mano
+    (escrito de Aldama citando a la UCO) explicitada; «exgobernador» sin fuente → cargo datado.'
+- type: Person
+  name: Arturo Barrabés Consul
+  entity_id: Person:arturo-barrabes-consul
+  role: Consejero y accionista (32,51 %) de sociedades del grupo familiar Barrabés (informe UCO, p.15); hermano
+    de Juan Carlos (Carlos) Barrabés Cónsul, que en junio de 2024 lo nombró apoderado en siete de sus firmas, entre
+    ellas Innova Next (The Objective, 26-06-2024)
+  reason: '061 revisión humana T0e 2026-09-17 (Opus 5 + Astra + Jev, dueño): f7b75a: «empresario aragonés» sin fuente;
+    poderes con medio, fecha y sociedad que sí consta.'
+- type: Person
+  name: Basiliso Gil Carrasquero
+  entity_id: Person:basiliso-gil-carrasquero
+  role: Administrador único de Caletón Consultores SL, nombrado el 20 de enero de 2021 (informe UDEF 1907, p.120);
+    según la UDEF ostenta «un papel meramente formal» (p.134) y aparece en el caso Plus Ultra como presunto testaferro
+    de esa sociedad
+  reason: '061 revisión humana T0e 2026-09-17 (Opus 5 + Astra + Jev, dueño): Tanda B (dueño): el rol vigente decía
+    «desde junio 2022» (el auto p.40 ya lo llama administrador único en abril de 2022; el 17/06/2022 es un apoderamiento
+    a terceros, p.134); fecha del corpus p.120 (propuesta de Astra). La unidad /role@0:132
+    es patch-propuesto: qa-dual-patches la verá resuelta en la fila vigente.'
+- type: Person
+  name: Director General Financiero y de Control de Gestión
+  entity_id: Person:director-general-financiero-y-de-control-de-gestion
+  role: Cargo de Adif identificado, según El Independiente (26-08-2024) y Moncloa.com (09-10-2024), con Manuel Fresno
+    Castro, director general financiero y de control de gestión de Adif durante la compra de mascarillas de 2020
+    (auditoría del Ministerio de Transportes de 19-08-2024, p.60-62)
+  reason: '061 revisión humana T0e 2026-09-17 (Opus 5 + Astra + Jev, dueño): d852b0: identificación nominal solo
+    en prensa (nombre tachado en la auditoría) → atribución nominal a los dos medios y cita de la auditoría para
+    el cargo.'
+- type: Person
+  name: Eudoro Antonio González Dellán
+  entity_id: Person:eudoro-antonio-gonzalez-dellan
+  role: Abogado y político venezolano (informe UDEF, p.107); exdiputado opositor (MUD) según TalCual (21-09-2024)
+    y The Objective (22-05-2026); el auto de Plus Ultra de 18-05-2026 (p.34) recoge sus mensajes a Julio Martínez
+    destinados a Zapatero sobre Edmundo González y Delcy Rodríguez
+  reason: '061 revisión humana T0e 2026-09-17 (Opus 5 + Astra + Jev, dueño): 03f3b5: «colaborador de Zapatero» e
+    «intermediario entre Caracas y Madrid» sustituidos por lo que consta en el auto y en prensa atribuida. Codex
+    adversarial (parte 1, 18-09-2026): fechas de los medios en el rol.'
+- type: Person
+  name: Felicia Appenteng
+  entity_id: Person:felicia-appenteng
+  role: Presidenta fundadora (founding Chair) del IE Africa Center de la IE University
+  reason: '061 revisión humana T0e 2026-09-17 (Opus 5 + Astra + Jev, dueño): d11bf9: la web del IE dice «founding
+    Chair of IE Africa Center, a newly created center by IE University»: el centro lo creó la universidad; «fundadora
+    y presidenta» → «presidenta fundadora (founding Chair)». Decisión del dueño en la tanda A (propuesta de Astra).'
+- type: Person
+  name: Francisco Flores
+  entity_id: Person:francisco-flores
+  role: Empresario venezolano al que el auto de la Audiencia Nacional de 18-05-2026 (p.72) identifica como posible
+    titular del contacto 'Fco Flores' que gestionaba los pagos de Softgestor a Análisis Relevante en el caso Plus
+    Ultra; informaciones periodísticas recogidas por la UDEF (informe 1907, p.158) lo vinculan con una investigación
+    sobre presunta financiación irregular del PSOE. Falleció el 6-feb-2026 según prensa recogida por la UDEF (p.158)
+    y El Independiente (25-05-2026)
+  reason: '061 revisión humana T0e 2026-09-17 (Opus 5 + Astra + Jev, dueño): b919d3: «vinculado al chavismo» y «fue
+    investigado en la pieza…» sin fuente procesal → etiqueta fuera y vínculo atribuido a prensa vía UDEF; 9fabc7:
+    Libertad Digital no está en fuentes y «extingue la responsabilidad penal (art. 130.1 CP)» es inferencia editorial
+    → retirada; fallecimiento con las fuentes que constan.'
+- type: Person
+  name: Ignacio Mariscal
+  entity_id: Person:ignacio-mariscal
+  role: Consejero delegado de Reale Seguros; testigo en el caso Begoña Gómez (declaró en agosto de 2024 ante el
+    Juzgado de Instrucción nº 41 de Madrid)
+  reason: '061 revisión humana T0e 2026-09-17 (Opus 5 + Astra + Jev, dueño): ee5238: «(Reale Group, España)» sin
+    fuente; fecha de la declaración añadida.'
+- type: Person
+  name: Ion Fernando Antolín Llorente
+  entity_id: Person:ion-fernando-antolin-llorente
+  role: Periodista (Villalón de Campos, 1977); exdirector de Comunicación del PSOE (2022) y brevemente secretario
+    de Estado de Comunicación en diciembre de 2024, cargo del que dimitió a los pocos días, según El Español (29-05-2026)
+  reason: '061 revisión humana T0e 2026-09-17 (Opus 5 + Astra + Jev, dueño): 6ff66a: datos biográficos y de cargos
+    solo en prensa → atribución nominal.'
+- type: Person
+  name: José Ángel Partearroyo
+  entity_id: Person:jose-angel-partearroyo
+  role: Director de Participadas IV de la SEPI en la tramitación del rescate de Plus Ultra (diciembre de 2020, informe
+    UDEF 1907 p.9 y p.37; auto de 18-05-2026 p.20); citado en la instrucción del rescate y mencionado por senadores
+    en la comisión de investigación del Senado sobre la SEPI (DS_C_15_659 p.22; DS_C_15_717 p.29)
+  reason: '061 revisión humana T0e 2026-09-17 (Opus 5 + Astra + Jev, dueño): 2baa9e: «compareció en el Senado» sin
+    fuente retirado; «Ex» sin fuente de cese retirado (el Senado lo llama director en 2026); cargo con documento
+    y página.'
+- type: Person
+  name: José Cristóbal Barrabés Consul
+  entity_id: Person:jose-cristobal-barrabes-consul
+  role: Hermano y coaccionista (32,51 %, informe UCO p.15) del grupo empresarial Barrabés Cónsul y consejero de
+    sociedades del grupo; hermano de Juan Carlos Barrabés Cónsul, investigado en el caso Begoña Gómez y excluido
+    del juicio con jurado por la Audiencia de Madrid (Infobae, 16-07-2026)
+  reason: '061 revisión humana T0e 2026-09-17 (Opus 5 + Astra + Jev, dueño): 6641c9: cita de página para la participación,
+    «consejero» (UCO p.14-15) y vigencia de la situación de Juan Carlos (feed 16-07-2026).'
+- type: Person
+  name: José Luis Escrivá Belmonte
+  entity_id: Person:jose-luis-escriva-belmonte
+  role: Gobernador del Banco de España (desde 2024); exministro de Inclusión, Seguridad Social y Migraciones (2020-2023)
+    —cargo que ocupaba en el momento de los hechos del caso Plus Ultra (informe UDEF 1907, p.35)— y de Transformación
+    Digital y Función Pública (2023-2024)
+  reason: '061 revisión humana T0e 2026-09-17 (Opus 5 + Astra + Jev, dueño): Tanda B (dueño): cargos públicos de
+    contexto conservados; se añade la cita del corpus para el cargo en el momento de los hechos.'
+- type: Person
+  name: Juan Guaidó
+  entity_id: Person:juan-guaido
+  role: Político opositor venezolano; presidente de la Asamblea Nacional y 'presidente encargado' de Venezuela en
+    2019 (El Español, 16-12-2024; Euronews, 11-12-2025), reconocido como presidente por el Gobierno de España en
+    febrero de 2019, que a principios de 2020 pasó a denominarle líder de la oposición (escrito de la defensa de
+    Aldama ante el Tribunal Supremo, p.7); según Wikipedia, ejerció como presidente encargado hasta 2023
+  reason: '061 revisión humana T0e 2026-09-17 (Opus 5 + Astra + Jev, dueño): 276488: «y otros países» sin fuente
+    retirado; «(2019-2023)» solo en Wikipedia → «según Wikipedia»; cargos con medio y página.'
+- type: Person
+  name: Juan Manuel Cendoya
+  entity_id: Person:juan-manuel-cendoya
+  role: Vicepresidente de Banco Santander España y director general de Comunicación, según los informes de la UDEF
+    del caso Plus Ultra (cargo referido a 2020); destinatario de una carta de Plus Ultra que le pedía ayuda para
+    un crédito ICO
+  reason: '061 revisión humana T0e 2026-09-17 (Opus 5 + Astra + Jev, dueño): e29e2f: fechas 2001/2016 y «Marketing
+    Corporativo y Estudios» sin fuente → fuera; cargo datado.'
+- type: Person
+  name: Manuel Martínez
+  entity_id: Person:manuel-martinez
+  role: Hermano de Julio Martínez Martínez (a quien la UDEF señala como «testaferro» de Zapatero en el caso Plus
+    Ultra, informe 1907, p.115); administrador de las sociedades familiares Voli Analítica SL (hasta el 30-03-2021)
+    y ASP Rentas SL según The Objective (16-04-2026) y, con sus hermanos, uno de «los últimos beneficiarios» del
+    75% de Análisis Relevante SL (auto de 18-05-2026, p.37; informe UDEF 1907, p.117)
+  reason: '061 revisión humana T0e 2026-09-17 (Opus 5 + Astra + Jev, dueño): be6c94: «Empresario» sin fuente sustituido
+    por las administraciones societarias probadas (The Objective) y la condición de beneficiario familiar (auto/UDEF
+    con página); «testaferro» con documento. Codex adversarial (parte 1, 18-09-2026): aposición ambigua («señalado…
+    como testaferro» podía leerse referida a Manuel) → paréntesis explícito sobre Julio.'
+- type: Person
+  name: Manuel Salles Carceller
+  entity_id: Person:manuel-salles-carceller
+  role: Empresario; administrador de Instalibero District SL (exposición razonada de 23-10-2024, p.23) y, según
+    Moncloa.com (11-09-2025), su propietario; vinculado al caso Hidrocarburos (obtención del título de operador
+    para Villafuel)
+  reason: '061 revisión humana T0e 2026-09-17 (Opus 5 + Astra + Jev, dueño): f1fa82: «propietario» solo consta en
+    prensa → atribuido; administrador con cita del corpus.'
+- type: Person
+  name: Marcelo Montenegro Gómez García
+  entity_id: Person:marcelo-montenegro-gomez-garcia
+  role: Exministro de Economía y Finanzas Públicas de Bolivia (2020-2025, Gobierno de Luis Arce; informe UDEF 2910/26,
+    p.9)
+  reason: '061 revisión humana T0e 2026-09-17 (Opus 5 + Astra + Jev, dueño): 4bcfa5: «economista boliviano» sin
+    fuente retirado; fechas y página del informe añadidas.'
+- type: Person
+  name: María Sonsoles Espinosa Díaz
+  entity_id: Person:maria-sonsoles-espinosa-diaz
+  role: Esposa del expresidente del Gobierno José Luis Rodríguez Zapatero
+  reason: '061 revisión humana T0e 2026-09-17 (Opus 5 + Astra + Jev, dueño): 3aa20c: «Profesora y música» sin fuente
+    → retirado (parche de Astra).'
+- type: Person
+  name: Mariano Moreno Pavón
+  entity_id: Person:mariano-moreno-pavon
+  role: Exgerente del PSOE (2017-2021, según El Diario de Madrid) durante la etapa de Ábalos como secretario de
+    Organización; presidente de Enusa desde diciembre de 2021 (El Diario de Madrid, 18-10-2025)
+  reason: '061 revisión humana T0e 2026-09-17 (Opus 5 + Astra + Jev, dueño): cfd1d8: intervalo y Enusa solo en prensa
+    → atribución nominal.'
+- type: Person
+  name: Pablo Llarena Conde
+  entity_id: Person:pablo-llarena-conde
+  role: Magistrado de la Sala Segunda (de lo Penal) del Tribunal Supremo desde enero de 2016 (biografía del CGPJ);
+    ponente de la Sala de apelación en la causa especial 20775/2020 (autos de 02-12-2025 y 06-02-2026); según Wikipedia,
+    instructor de la causa especial del 'procés'
+  reason: '061 revisión humana T0e 2026-09-17 (Opus 5 + Astra + Jev, dueño): 9c0c68: instrucción del procés solo
+    en Wikipedia → atribuida; añadido el papel de ponente que sí consta en corpus.'
+- type: Person
+  name: Víctor Ábalos
+  entity_id: Person:victor-abalos
+  role: Empresario, hijo del exministro de Transportes José Luis Ábalos; citado como primer testigo del juicio del
+    caso Koldo en el Tribunal Supremo (El Español, 06-04-2026); según El Español (07-02-2025), la UCO investiga
+    si cobró por facilitar el acceso a su padre
+  reason: '061 revisión humana T0e 2026-09-17 (Opus 5 + Astra + Jev, dueño): 7a4865: «investigado/citado como testigo»
+    → sin condición procesal en corpus; citación como testigo y pesquisas de la UCO con medio nominal.'
+- type: Organization
+  name: Conservatorios
+  entity_id: Organization:conservatorios
+  role: Conservatorios de música de la Diputación de Badajoz; la coordinación de sus actividades fue el objeto de
+    la plaza que ocupó David Sánchez desde 2017 hasta su renuncia en 2025 (caso David Sánchez)
+  reason: '061 revisión humana T0e 2026-09-17 (Opus 5 + Astra + Jev, dueño): QC T0e (muestreo de ok/ok Jev∧Astra,
+    18-09-2026): el rol vigente «centro de trabajo de la plaza ocupada por David Sánchez» estaba obsoleto e impreciso
+    — sentencia AP Badajoz 14-07-2026 p.155 («puesto vacante por renuncia de Don David Sánchez en 2025»), escrito
+    de acusación p.2-3 (la plaza se creó en la Diputación, «por encima de los conservatorios»), informe Diputación
+    p.168 (despacho desde mayo-2024). Unidad 6b554483 del gate (verified) corregida por decisión
+    del dueño.'
+- type: Person
+  name: Eugenio Pereiro Blanco
+  entity_id: Person:eugenio-pereiro-blanco
+  role: Excomisario general de Información de la Policía Nacional (2018-2024); director general de Coordinación
+    y Estudios del Ministerio del Interior (propuesta anunciada en septiembre de 2025, Europa Press vía Infobae;
+    nombramiento recogido en la comisión del Senado, DS 745, p.96-97)
+  reason: '061 revisión humana T0e 2026-09-17 (Opus 5 + Astra + Jev, dueño): Codex adversarial (parte 2, 18-09-2026):
+    «desde sep-2025» no demostrado (la fuente anuncia una propuesta que se elevará al Consejo de Ministros) → fecha
+    del anuncio con atribución.'
+- type: Person
+  name: Jaime Ribes
+  entity_id: Person:jaime-ribes
+  role: Empleado de Banco Santander al que Roberto Roselli (Plus Ultra), en mensajes de junio de 2020 recogidos
+    por la UDEF, describe como «director de la agencia» y «ejecutivo de empresas» en relación con la solicitud de
+    financiación de la aerolínea.
+  reason: '063 auditoría escalonada 2026-09-28: Los cargos proceden solo de los mensajes de Roselli (informe UDEF
+    1907, p.22 y p.26; 1908, p.55 y p.59), así que se atribuyen a él. También se corrige «atendió»: se sustituye
+    por la vinculación descrita en esos mensajes.'
+- type: Person
+  name: Joaquín Parra Páez
+  entity_id: Person:joaquin-parra-paez
+  role: Empresario y expresidente del CD Badajoz; según El Español (3-7-2025), detenido en julio de 2021 por un
+    presunto fraude de IVA de más de 13 millones de euros. Figura entre las personas cuyo registro de accesos a
+    la sede del PSOE en Ferraz requirió el auto del juez Pedraz de 26-may-2026 (autoentradaferraz.pdf, pp.40-41).
+    El 8-jul-2026 declaró como testigo ante el juez Santiago Pedraz (Audiencia Nacional, DP 150/2025) en la causa
+    de las 'cloacas' del PSOE, donde, según Libertad Digital (8-7-2026), afirmó que Leire Díez contactó con él y
+    se reunía en nombre de Pedro Sánchez. Presunción de inocencia.
+  reason: '063 auditoría escalonada 2026-09-28: Amount corrected to match El Español; the Ferraz list is not a list
+    of persons under investigation; the testimony is now attributed to Libertad Digital.'
+- type: Person
+  name: Ismael Moreno
+  entity_id: Person:ismael-moreno
+  role: 'Magistrado titular del Juzgado Central de Instrucción nº 2 de la Audiencia Nacional; instructor desde febrero
+    de 2024 de la pieza principal del caso Koldo (mascarillas) y de sus piezas derivadas (obra pública, contrataciones
+    de Jésica Rodríguez). Órgano instructor: no es parte investigada ni acusada en las causas.'
+  reason: '063 auditoría escalonada 2026-09-28: «Desde que el Tribunal Supremo le asignó la competencia en julio
+    de 2024» es inexacto: el caso ya estaba en su juzgado en febrero de 2024 (El Debate 23-02-2024). Infobae (28-07-2024)
+    sitúa en julio de 2024 la decisión del Supremo sobre la competencia frente a la Fiscalía Europea.'
+- type: Person
+  name: Miguel Ángel Figueroa
+  entity_id: Person:miguel-angel-figueroa
+  role: Exdirector de Participadas III de la SEPI (2018-2021). Según elDiario.es (29-06-2026), el juez Santiago
+    Pedraz, a petición de la Fiscalía Anticorrupción, lo incluyó entre las 25 personas investigadas en el caso Leire
+    por presuntos amaños en la contratación pública, en relación con el rescate de Tubos Reunidos; según El Independiente
+    (24-06-2026), un informe de la UCO le atribuye haber hecho llegar a Vicente Fernández «al menos nueve archivos
+    informáticos» del expediente de ese rescate. Imputación = citación a declarar, no condena; presunción de inocencia.
+  reason: '063 auditoría escalonada 2026-09-28: Se retira «providencia», que no está probada, y la frase «uno de
+    los 6 cargos […] indicios suficientes», que no tiene fuente. Se quita la valoración «topo» y la fecha errónea
+    del informe, y se añade la atribución nominal (elDiario.es 29-06-2026 y El Independiente 24-06-2026).'
+- type: Person
+  name: Joan Groizard
+  entity_id: Person:joan-groizard
+  role: 'Joan Groizard Payeras (Palma, 1989): secretario de Estado de Energía desde noviembre de 2024; antes director
+    general del IDAE (2019-2024) y director de Energías Renovables del IDAE (2018). Citado en la comparecencia de
+    Sara Aagesen ante la comisión de investigación del Senado sobre la SEPI (Diario de Sesiones del Senado núm.
+    754, 8 de julio de 2026, p.21). No consta que esté investigado.'
+  reason: '063 auditoría escalonada 2026-09-28: Se añade la cita del corpus para la mención en el Senado, y la afirmación
+    categórica «NO investigado» pasa a la salvaguarda «No consta que esté investigado».'
+  # --- 063 L23 (2026-09-29): los 20 citados como investigados en la pieza de contratación del caso Leire
+  # (29-06-2026) conservaban el rol original de la capa de última hora («Imputado (presunto)», «técnico de la
+  # trama», «presunto testaferro según El Español», que ese diario no dice). Mismo patrón que el de la
+  # revisión 063 del 28-09: cargo según la lista nominal de elDiario.es y citación atribuida; SIN delitos por persona
+  # (la fuente los da para la pieza entera) y SIN fila de registro (repondría las ACCUSED_OF caducadas por persona).
+  # Superado el 04-10 (063 L23): retiradas ya esas ACCUSED_OF (tramo 2, 01-oct), llevan fila `investigado` en accusations.yaml.
+  # Sin archivo conocido a 29-09 (búsqueda en prensa); declaraciones fijadas para julio.
+- type: Person
+  name: Miguel Ángel Santiago Mesa
+  entity_id: Person:miguel-angel-santiago-mesa
+  role: 'Exdirector corporativo de la SEPI, según elDiario.es (29-06-2026). Según elDiario.es (29-06-2026), el juez Santiago Pedraz (Audiencia Nacional), a petición de la Fiscalía Anticorrupción, lo incluyó entre las 25 personas citadas como investigadas en la pieza del caso Leire sobre presuntas irregularidades en la contratación pública. Citación como investigado no es condena; rige la presunción de inocencia.'
+  reason: '063 L23 2026-09-29: rol de la capa de última hora sustituido por cargo y citación atribuidos a la lista nominal de elDiario.es 29-06-2026.'
+- type: Person
+  name: Rosario Martín Manzanedo
+  entity_id: Person:rosario-martin-manzanedo
+  role: 'Directora de Participadas de la SEPI, según elDiario.es (29-06-2026). Según elDiario.es (29-06-2026), el juez Santiago Pedraz (Audiencia Nacional), a petición de la Fiscalía Anticorrupción, la incluyó entre las 25 personas citadas como investigadas en la pieza del caso Leire sobre presuntas irregularidades en la contratación pública. Citación como investigada no es condena; rige la presunción de inocencia.'
+  reason: '063 L23 2026-09-29: rol de la capa de última hora sustituido por cargo y citación atribuidos a la lista nominal de elDiario.es 29-06-2026.'
+- type: Person
+  name: Fernando Albert Aragón
+  entity_id: Person:fernando-albert-aragon
+  role: 'Secretario general y director de la asesoría jurídica de SEPIDES, según elDiario.es (29-06-2026). Según elDiario.es (29-06-2026), el juez Santiago Pedraz (Audiencia Nacional), a petición de la Fiscalía Anticorrupción, lo incluyó entre las 25 personas citadas como investigadas en la pieza del caso Leire sobre presuntas irregularidades en la contratación pública. Citación como investigado no es condena; rige la presunción de inocencia.'
+  reason: '063 L23 2026-09-29: rol de la capa de última hora sustituido por cargo y citación atribuidos a la lista nominal de elDiario.es 29-06-2026.'
+- type: Person
+  name: María de la Concepción Ortiz Fuerte
+  entity_id: Person:maria-de-la-concepcion-ortiz-fuerte
+  role: 'Presidenta del Tribunal Administrativo Central de Recursos Contractuales (TACRC), según elDiario.es (29-06-2026). Según elDiario.es (29-06-2026), el juez Santiago Pedraz (Audiencia Nacional), a petición de la Fiscalía Anticorrupción, la incluyó entre las 25 personas citadas como investigadas en la pieza del caso Leire sobre presuntas irregularidades en la contratación pública. Citación como investigada no es condena; rige la presunción de inocencia.'
+  reason: '063 L23 2026-09-29: rol de la capa de última hora sustituido por cargo y citación atribuidos a la lista nominal de elDiario.es 29-06-2026.'
+- type: Person
+  name: José Ramón Sempere Vera
+  entity_id: Person:jose-ramon-sempere-vera
+  role: 'Presidente del Consejo de Administración de MERCASA (2018-2024), según elDiario.es (29-06-2026). Según elDiario.es (29-06-2026), el juez Santiago Pedraz (Audiencia Nacional), a petición de la Fiscalía Anticorrupción, lo incluyó entre las 25 personas citadas como investigadas en la pieza del caso Leire sobre presuntas irregularidades en la contratación pública. Citación como investigado no es condena; rige la presunción de inocencia.'
+  reason: '063 L23 2026-09-29: rol de la capa de última hora sustituido por cargo y citación atribuidos a la lista nominal de elDiario.es 29-06-2026.'
+- type: Person
+  name: María Teresa Castillo Pasalodos
+  entity_id: Person:maria-teresa-castillo-pasalodos
+  role: 'Directora de Desarrollo Corporativo de MERCASA, según elDiario.es (29-06-2026). Según elDiario.es (29-06-2026), el juez Santiago Pedraz (Audiencia Nacional), a petición de la Fiscalía Anticorrupción, la incluyó entre las 25 personas citadas como investigadas en la pieza del caso Leire sobre presuntas irregularidades en la contratación pública. Citación como investigada no es condena; rige la presunción de inocencia.'
+  reason: '063 L23 2026-09-29: rol de la capa de última hora sustituido por cargo y citación atribuidos a la lista nominal de elDiario.es 29-06-2026.'
+- type: Person
+  name: José Vicente Berlanga Arona
+  entity_id: Person:jose-vicente-berlanga-arona
+  role: 'Presidente del Consejo de Administración de ENUSA (2018-2021), según elDiario.es (29-06-2026). Según elDiario.es (29-06-2026), el juez Santiago Pedraz (Audiencia Nacional), a petición de la Fiscalía Anticorrupción, lo incluyó entre las 25 personas citadas como investigadas en la pieza del caso Leire sobre presuntas irregularidades en la contratación pública. Citación como investigado no es condena; rige la presunción de inocencia.'
+  reason: '063 L23 2026-09-29: rol de la capa de última hora sustituido por cargo y citación atribuidos a la lista nominal de elDiario.es 29-06-2026.'
+- type: Person
+  name: Rosario Arévalo Sández
+  entity_id: Person:rosario-arevalo-sandez
+  role: 'Directora Corporativa de ENUSA, según elDiario.es (29-06-2026). Según elDiario.es (29-06-2026), el juez Santiago Pedraz (Audiencia Nacional), a petición de la Fiscalía Anticorrupción, la incluyó entre las 25 personas citadas como investigadas en la pieza del caso Leire sobre presuntas irregularidades en la contratación pública. Citación como investigada no es condena; rige la presunción de inocencia.'
+  reason: '063 L23 2026-09-29: rol de la capa de última hora sustituido por cargo y citación atribuidos a la lista nominal de elDiario.es 29-06-2026.'
+- type: Person
+  name: Francisco Javier López Buciega
+  entity_id: Person:francisco-javier-lopez-buciega
+  role: 'Director de Servicios Urbanos de ACCIONA, según elDiario.es (29-06-2026). Según elDiario.es (29-06-2026), el juez Santiago Pedraz (Audiencia Nacional), a petición de la Fiscalía Anticorrupción, lo incluyó entre las 25 personas citadas como investigadas en la pieza del caso Leire sobre presuntas irregularidades en la contratación pública. Citación como investigado no es condena; rige la presunción de inocencia.'
+  reason: '063 L23 2026-09-29: rol de la capa de última hora sustituido por cargo y citación atribuidos a la lista nominal de elDiario.es 29-06-2026.'
+- type: Person
+  name: Juan Antonio Carrillo Donaire
+  entity_id: Person:juan-antonio-carrillo-donaire
+  role: 'Catedrático de Derecho Administrativo y socio de un despacho de abogados, según elDiario.es (29-06-2026). Según elDiario.es (29-06-2026), el juez Santiago Pedraz (Audiencia Nacional), a petición de la Fiscalía Anticorrupción, lo incluyó entre las 25 personas citadas como investigadas en la pieza del caso Leire sobre presuntas irregularidades en la contratación pública. Citación como investigado no es condena; rige la presunción de inocencia.'
+  reason: '063 L23 2026-09-29: rol de la capa de última hora sustituido por cargo y citación atribuidos a la lista nominal de elDiario.es 29-06-2026.'
+- type: Person
+  name: Francisco Irazusta Rodríguez
+  entity_id: Person:francisco-irazusta-rodriguez
+  role: 'Expresidente de Tubos Reunidos, según elDiario.es (29-06-2026). Según elDiario.es (29-06-2026), el juez Santiago Pedraz (Audiencia Nacional), a petición de la Fiscalía Anticorrupción, lo incluyó entre las 25 personas citadas como investigadas en la pieza del caso Leire sobre presuntas irregularidades en la contratación pública. Citación como investigado no es condena; rige la presunción de inocencia.'
+  reason: '063 L23 2026-09-29: rol de la capa de última hora sustituido por cargo y citación atribuidos a la lista nominal de elDiario.es 29-06-2026.'
+- type: Person
+  name: Jesús Pérez Rodríguez Urrutia
+  entity_id: Person:jesus-perez-rodriguez-urrutia
+  role: 'Consejero de Tubos Reunidos, según elDiario.es (29-06-2026). Según elDiario.es (29-06-2026), el juez Santiago Pedraz (Audiencia Nacional), a petición de la Fiscalía Anticorrupción, lo incluyó entre las 25 personas citadas como investigadas en la pieza del caso Leire sobre presuntas irregularidades en la contratación pública. Citación como investigado no es condena; rige la presunción de inocencia.'
+  reason: '063 L23 2026-09-29: rol de la capa de última hora sustituido por cargo y citación atribuidos a la lista nominal de elDiario.es 29-06-2026.'
+- type: Person
+  name: Félix Azcona Lacarra
+  entity_id: Person:felix-azcona-lacarra
+  role: 'Representante de Beyol Gestión, según elDiario.es (29-06-2026). Según elDiario.es (29-06-2026), el juez Santiago Pedraz (Audiencia Nacional), a petición de la Fiscalía Anticorrupción, lo incluyó entre las 25 personas citadas como investigadas en la pieza del caso Leire sobre presuntas irregularidades en la contratación pública. Citación como investigado no es condena; rige la presunción de inocencia.'
+  reason: '063 L23 2026-09-29: rol de la capa de última hora sustituido por cargo y citación atribuidos a la lista nominal de elDiario.es 29-06-2026.'
+- type: Person
+  name: Juan Ignacio Fernández-Micheltorena
+  entity_id: Person:juan-ignacio-fernandez-micheltorena
+  role: 'Director financiero de Erri Berri, según elDiario.es (29-06-2026). Según elDiario.es (29-06-2026), el juez Santiago Pedraz (Audiencia Nacional), a petición de la Fiscalía Anticorrupción, lo incluyó entre las 25 personas citadas como investigadas en la pieza del caso Leire sobre presuntas irregularidades en la contratación pública. Citación como investigado no es condena; rige la presunción de inocencia.'
+  reason: '063 L23 2026-09-29: rol de la capa de última hora sustituido por cargo y citación atribuidos a la lista nominal de elDiario.es 29-06-2026.'
+- type: Person
+  name: Fernando Samper Rivas
+  entity_id: Person:fernando-samper-rivas
+  role: 'Director del Grupo Forestalia, según elDiario.es (29-06-2026). Según elDiario.es (29-06-2026), el juez Santiago Pedraz (Audiencia Nacional), a petición de la Fiscalía Anticorrupción, lo incluyó entre las 25 personas citadas como investigadas en la pieza del caso Leire sobre presuntas irregularidades en la contratación pública. Citación como investigado no es condena; rige la presunción de inocencia.'
+  reason: '063 L23 2026-09-29: rol de la capa de última hora sustituido por cargo y citación atribuidos a la lista nominal de elDiario.es 29-06-2026.'
+- type: Person
+  name: Roberto Pérez Águeda
+  entity_id: Person:roberto-perez-agueda
+  role: 'Vinculado al Grupo Forestalia, según elDiario.es (29-06-2026). Según elDiario.es (29-06-2026), el juez Santiago Pedraz (Audiencia Nacional), a petición de la Fiscalía Anticorrupción, lo incluyó entre las 25 personas citadas como investigadas en la pieza del caso Leire sobre presuntas irregularidades en la contratación pública. Citación como investigado no es condena; rige la presunción de inocencia.'
+  reason: '063 L23 2026-09-29: rol de la capa de última hora sustituido por cargo y citación atribuidos a la lista nominal de elDiario.es 29-06-2026.'
+- type: Person
+  name: Eduardo Pérez Águeda
+  entity_id: Person:eduardo-perez-agueda
+  role: 'Vinculado al Grupo Forestalia, según elDiario.es (29-06-2026). Según elDiario.es (29-06-2026), el juez Santiago Pedraz (Audiencia Nacional), a petición de la Fiscalía Anticorrupción, lo incluyó entre las 25 personas citadas como investigadas en la pieza del caso Leire sobre presuntas irregularidades en la contratación pública. Citación como investigado no es condena; rige la presunción de inocencia.'
+  reason: '063 L23 2026-09-29: rol de la capa de última hora sustituido por cargo y citación atribuidos a la lista nominal de elDiario.es 29-06-2026.'
+- type: Person
+  name: Carmelo Aznárez Pellicer
+  entity_id: Person:carmelo-aznarez-pellicer
+  role: 'Administrador de Mediaciones Martínez SL, según elDiario.es (29-06-2026). Según elDiario.es (29-06-2026), el juez Santiago Pedraz (Audiencia Nacional), a petición de la Fiscalía Anticorrupción, lo incluyó entre las 25 personas citadas como investigadas en la pieza del caso Leire sobre presuntas irregularidades en la contratación pública. Citación como investigado no es condena; rige la presunción de inocencia.'
+  reason: '063 L23 2026-09-29: rol de la capa de última hora sustituido por cargo y citación atribuidos a la lista nominal de elDiario.es 29-06-2026.'
+- type: Person
+  name: Mikel Arrarás Abejón
+  entity_id: Person:mikel-arraras-abejon
+  role: 'Arquitecto técnico de Servinabar, según elDiario.es (29-06-2026). Según elDiario.es (29-06-2026), el juez Santiago Pedraz (Audiencia Nacional), a petición de la Fiscalía Anticorrupción, lo incluyó entre las 25 personas citadas como investigadas en la pieza del caso Leire sobre presuntas irregularidades en la contratación pública. Citación como investigado no es condena; rige la presunción de inocencia.'
+  reason: '063 L23 2026-09-29: rol de la capa de última hora sustituido por cargo y citación atribuidos a la lista nominal de elDiario.es 29-06-2026.'
+- type: Company
+  name: Adentro Construimos
+  entity_id: Company:adentro-construimos
+  role: remove
+  reason: '063 tramo 2 (2026-10-01): tanda 2026-09-30: decisión del árbitro'
+- type: Person
+  name: Francisco Javier Lorente
+  entity_id: Person:francisco-javier-lorente
+  role: Gestionaba el bar Franky de Pamplona, señalado por la UCO como intermediario en una presunta operativa de
+    facturación con ACCIONA (informe UCO, pp.193-194). No consta que figure como investigado en la causa judicial.
+  reason: '063 tramo 2 (2026-10-01): Se retira «dueño», que choca con la UCO, que atribuye la propiedad a su pareja.
+    Se añade la cita del informe. La salvaguarda pasa a «no consta» porque declaró ante el juez el 13-05-2026 en
+    una condición que no está documentada.'
+- type: Person
+  name: Alfonso Serrano Sánchez-Capuchino
+  entity_id: Person:alfonso-serrano-sanchez-capuchino
+  role: 'Político del PP. Según la exposición razonada del Juzgado Central de Instrucción nº 2 al Tribunal Supremo
+    (23 de octubre de 2024, p.1), la Fiscalía Anticorrupción incoó el 22 de abril de 2022 diligencias de investigación
+    como consecuencia de su denuncia; las diligencias 10/2022 sirvieron de base a la querella de la Fiscalía que
+    dio origen a las Diligencias Previas 65/2023. Intervino por el Grupo Parlamentario Popular en la comisión de
+    investigación del Senado sobre los contratos de la pandemia relacionados con Koldo García Izaguirre (Diario
+    de Sesiones del Senado, 6 de mayo de 2024, pp.39 y 46). No consta que haya sido investigado: la exposición razonada
+    de 23 de octubre de 2024 solo le menciona como autor de la denuncia que originó las diligencias de la Fiscalía
+    Anticorrupción (p.1).'
+  reason: '063 tramo 2 (2026-10-01): tanda 2026-10-01: decisión del dueño'
+- type: Person
+  name: Carlos Vidaurre
+  entity_id: Person:carlos-vidaurre
+  role: Empresario constructor, dueño de Adentro Construimos SL; investigado en el 'caso Sendaviva' por presunto
+    cohecho y tráfico de influencias, según El Español (05-05-2026).
+  reason: '063 tramo 2 (2026-10-01): Se retira «navarro» (0 apariciones en corpus y fuentes) y se añade la atribución
+    de prensa a la condición de investigado, porque no hay fila en el registro.'
+- type: Person
+  name: Leticia de la Hoz Calvo
+  entity_id: Person:leticia-de-la-hoz-calvo
+  role: remove
+  reason: '063 tramo 2 (2026-10-01): tanda 2026-10-01: decisión del árbitro'
+- type: Company
+  name: Corpoestructura
+  entity_id: Company:corpoestructura
+  role: Sociedad mercantil (CORPOESTRUCTURA S.L.) de la que Rodolfo Reyes fue administrador solidario, parte de
+    un contrato de asesoramiento con Análisis Relevante fechado el 1 de abril de 2021, recogido en el informe 1908/2026
+    de la UDEF (p.148) y en el auto del juez Calama sobre el rescate de Plus Ultra (p.25).
+  reason: '063 tramo 3 (2026-10-01): «Constituida en julio de 2018» no tiene fuente (el corpus solo da el nombramiento
+    de administradores el 05/09/2018). «Vinculada a la trama» se sustituye por el hecho documentado.'
+- type: Person
+  name: Alejandro Soler
+  entity_id: Person:alejandro-soler
+  role: Persona mencionada como «ALEJANDRO SOLER» por Koldo García, que afirma llevarse «muy bien» con él, en una
+    conversación grabada con Santos Cerdán y transcrita en el informe de la UCO del caso Cerdán (folio 363), al
+    hablar de la zona de Alicante. No consta investigado.
+  reason: '063 tramo 3 (2026-10-01): Se retira «Político del PSOE en la provincia de Alicante» porque el corpus
+    y las fuentes archivadas no lo prueban: el informe UCO solo transcribe el nombre. Se concreta que la mención
+    está en una conversación grabada (AUDIO 6, folio 363) y se cita el folio.'
+- type: Person
+  name: Manuel Chaves
+  entity_id: Person:manuel-chaves
+  role: 'Manuel Chaves González: expresidente de la Junta de Andalucía (1990–2009), expresidente del PSOE (2000–2012)
+    y, después, vicepresidente tercero del Gobierno y ministro de Política Territorial con Zapatero (2009–2011).
+    Fue condenado en el caso de los ERE a nueve años de inhabilitación por prevaricación; según elDiario.es (16-07-2024),
+    en julio de 2024 el Tribunal Constitucional estimó en parte su recurso de amparo y ordenó a la Audiencia de
+    Sevilla reconsiderar y rebajar esa condena.'
+  reason: '063 tramo 3 (2026-10-01): tanda 2026-10-01: decisión del dueño'
+- type: Person
+  name: José Antonio Griñán
+  entity_id: Person:jose-antonio-grinan
+  role: 'José Antonio Griñán Martínez: expresidente de la Junta de Andalucía (2009–2013), exministro de Sanidad
+    y de Trabajo con Felipe González y exsecretario general del PSOE-A. Fue condenado en el caso de los ERE a seis
+    años de prisión por malversación y a quince años de inhabilitación por prevaricación; según elDiario.es (16-07-2024),
+    en julio de 2024 el Tribunal Constitucional anuló su condena de prisión por malversación y ordenó a la Audiencia
+    de Sevilla revisar y rebajar la inhabilitación.'
+  reason: '063 tramo 3 (2026-10-01): tanda 2026-10-01: decisión del dueño'
+- type: Person
+  name: Morales (audios UCO)
+  entity_id: Person:morales-audios-uco
+  role: «MORALES», nombre que Koldo García menciona, asociándolo a Euskadi, en las conversaciones con Santos Cerdán
+    que él mismo grabó el 21 de enero de 2021 (AUDIOS 4 y 5), transcritas en el informe de la UCO sobre Cerdán (folios
+    349 y 351); persona sin identificar en los documentos analizados.
+  reason: '063 tramo 5 (2026-10-03): tanda 2026-10-03: decisión del dueño'
+- type: Person
+  name: Rubén Eladio López Martínez
+  entity_id: Person:ruben-eladio-lopez-martinez
+  role: Inspector de la Policía Nacional, según Infobae (29-02-2024) y elDiario.es (05-09-2025); director de la
+    Unidad de Emergencias, Coordinación y Gestión de Crisis del Ministerio de Transportes (MITMA) durante la etapa
+    de José Luis Ábalos (informe UDEF 1907, p.36)
+  reason: '063 tramo 5 (2026-10-03): tanda 2026-10-03: decisión del dueño'
+- type: Person
+  name: Francisco Javier García Vieira
+  entity_id: Person:francisco-javier-garcia-vieira
+  role: Director de Servicios Públicos Digitales de Red.es (según el informe de la Guardia Civil del caso Begoña
+    Gómez, p.122).
+  reason: '063 tramo 5 (2026-10-03): tanda 2026-10-03: decisión del dueño'
+- type: Person
+  name: José Luis Álvarez Trujillo
+  entity_id: Person:jose-luis-alvarez-trujillo
+  role: 'Mencionado en las conversaciones del caso Plus Ultra que reproduce la UDEF (informe 1908, p.126): según
+    esos chats, habló con Antonio Caldeiro, administrador único de ALVA Skies and Wings SL (accionista de Plus Ultra),
+    sobre su voto en el consejo de la aerolínea en febrero de 2021. El informe no precisa su cargo. No consta que
+    esté investigado.'
+  reason: '063 tramo 5 (2026-10-03): avisos de la auditoría, revisión con lectura de fuente: el rol publicado («Directivo
+    de Plus Ultra… «ALVA» en los informes policiales») no tenía fuente: «ALVA» es la sociedad ALVA Skies and Wings
+    SL (UDEF 1908 pp.115, 124 y 126), y el corpus no le da cargo en Plus Ultra; sin fila en accusations.yaml.'
+- type: Person
+  name: José Barrabés
+  entity_id: Person:jose-barrabes
+  role: Fundador de la tienda familiar de montaña de Benasque (Huesca) de la que nació barrabes.com, según Marketing4eCommerce
+    (27-12-2022); falleció en diciembre de 2022.
+  reason: '063 tramo 5 (2026-10-03): avisos de la auditoría, revisión con lectura de fuente: «Patriarca del Grupo
+    Barrabés» venía de una cita de prensa que no prueba titularidad del grupo; se atribuye y se ciñe a lo que dice
+    el artículo.'
+- type: Organization
+  name: Hedima Dn Formación S.L.U.
+  entity_id: Organization:hedima-dn-formacion-s-l-u
+  role: remove
+  reason: '063 tramo 6 (2026-10-03): tanda 2026-10-03: decisión del árbitro'
+- type: Organization
+  name: Gabinete del Ministro
+  entity_id: Organization:gabinete-del-ministro
+  role: remove
+  reason: '063 tramo 6 (2026-10-03): tanda 2026-10-03: decisión del árbitro'
+- type: Organization
+  name: Axencia Turismo de Galicia
+  entity_id: Organization:axencia-turismo-de-galicia
+  role: remove
+  reason: '063 tramo 6 (2026-10-03): tanda 2026-10-03: decisión del árbitro'
+- type: Organization
+  name: Autoridad Portuaria de Vigo
+  entity_id: Organization:autoridad-portuaria-de-vigo
+  role: remove
+  reason: '063 tramo 6 (2026-10-03): tanda 2026-10-03: decisión del árbitro'
+- type: Organization
+  name: Fundación EOI (Escuela de Organización Industrial)
+  entity_id: Organization:fundacion-eoi
+  role: 'Fundación Escuela de Organización Industrial (EOI), adscrita a la Secretaría General de Industria y de
+    la Pequeña y Mediana Empresa del Ministerio de Industria, Comercio y Turismo. Su Dirección General figura como
+    órgano de contratación en PLACSP de dos expedientes en los que resultó adjudicataria Innova Next SLU: el servicio
+    de planificación y ejecución de dos viajes de estudios a San Francisco (adjudicado el 07.03.2019) y el acuerdo
+    marco de selección de entidades especializadas en Industria 4.0 (formalizado el 09.08.2019, con 20 adjudicatarios),
+    según el informe de la Guardia Civil (UCO), p.176.'
+  reason: '063 tramo 6 (2026-10-03): tanda 2026-10-03: decisión del árbitro'
+- type: Company
+  name: Grupo Vivir
+  entity_id: Company:grupo-vivir
+  role: remove
+  reason: '063 tramo 6 (2026-10-03): tanda 2026-10-03: decisión del árbitro'
+- type: Person
+  name: Familiar de Ramón Alzórriz (no investigada)
+  entity_id: Person:familiar-de-ramon-alzorriz
+  role: 'Persona anonimizada: pareja de Ramón Alzórriz, particular no investigada; trabajó en Servinabar
+    (14-06-2021 a 13-09-2024) según declaró él en la comisión del Senado (DS Senado núm. 745, 30-06-2026, pp.46-47).'
+  reason: '067 (2026-10-07): nodo anonimizado por decisión del dueño (patrón spec 059 §D.1): particular nombrada solo
+    como pareja de un cargo público; nombre, alias y resumen (incluido su salario) retirados.'
+relations: []

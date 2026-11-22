@@ -1,0 +1,19 @@
+# Overlay de correcciones derivadas del enrich swarm 2026-06-20 (triaje de aristas
+# engañosas, deny_posible_real). Solo aristas EXTRACTED concretas sobre nodos reales.
+# Las del cluster anonimizado (David/Benito/Juan Miguel…) NO se niegan: son relaciones
+# procesales reales entre pseudónimos, ya marcados is_pseudonym en context/pseudonyms.yaml.
+# Endpoints por entity_id explícito para no depender de la resolución por tipo.
+
+deny:
+  # Vínculos espurios entre órganos económicos del Ejército de Tierra y una empresa
+  # del grupo Barrabés (Barrabés Ski Montaña): extracción cruzada de un expediente de
+  # contratación militar; sin respaldo en el caso Begoña Gómez/Barrabés.
+  - {source_id: "Organization:jefatura-de-asuntos-economicos-de-la-fuerza-terrestre", target_id: "Company:barrabes-ski-montana-s-l-u", type: PARTICIPATED_IN, reason: "Vínculo no verificado órgano militar↔Barrabés Ski Montaña (swarm 2026-06-20)."}
+  - {source_id: "Organization:jefatura-de-intendencia-de-asuntos-economicos-este", target_id: "Company:barrabes-ski-montana-s-l-u", type: PARTICIPATED_IN, reason: "Vínculo no verificado órgano militar↔Barrabés Ski Montaña (swarm 2026-06-20)."}
+  # Kutxabank ligado por INVOLVES a operaciones bancarias genéricas (boilerplate de un
+  # requerimiento de información de la UCO): no implica conducta del banco.
+  - {source_id: "Organization:kutxabank-s-a", target_id: "Event:cambio-de-divisas", type: INVOLVES, reason: "Boilerplate de requerimiento bancario UCO; no implica al banco (swarm 2026-06-20)."}
+  - {source_id: "Organization:kutxabank-s-a", target_id: "Event:ingresos-en-efectivo", type: INVOLVES, reason: "Boilerplate de requerimiento bancario UCO; no implica al banco (swarm 2026-06-20)."}
+  - {source_id: "Organization:kutxabank-s-a", target_id: "Event:swift", type: INVOLVES, reason: "Boilerplate de requerimiento bancario UCO; no implica al banco (swarm 2026-06-20)."}
+  - {source_id: "Organization:kutxabank-s-a", target_id: "Event:reintegros", type: INVOLVES, reason: "Boilerplate de requerimiento bancario UCO; no implica al banco (swarm 2026-06-20)."}
+  - {source_id: "Organization:kutxabank-s-a", target_id: "MoneyAmount:300-euros", type: INVOLVES, reason: "Boilerplate de requerimiento bancario UCO; no implica al banco (swarm 2026-06-20)."}

@@ -1,0 +1,957 @@
+# Ontología controlada del grafo (spec 069). FUENTE ÚNICA de todo término que elige un LLM o Jev:
+# tipos de entidad, tipos de relación, estados procesales, capas de procedencia (source_kind),
+# delitos canónicos y etiquetas de defecto. Nadie copia estas listas: se derivan con
+# pipeline/src/ontologia.py (Python), api/app/ontologia.py (API/MCP, horneada en /data/ontologia)
+# y web/lib/ontologia.generated.json (web). `make ontologia-check` falla si hay una copia.
+#
+# Reglas de redacción de las fichas (lenguaje claro, forma ASD-STE100):
+# - definición: una frase, máximo 25 palabras, voz activa, presente;
+# - un término = un significado; si dos términos se pisan, `excluye` dice a cuál va el caso;
+# - ejemplos SINTÉTICOS (este fichero es público): «Persona A», «Empresa B», «Juzgado C»…;
+# - sinónimos: formas que un LLM puede devolver y que el código convierte al término.
+#
+# Sube `version` con CADA cambio de contenido: la versión viaja en cada registro de decisión.
+version: 1
+
+# Qué hace un punto de decisión cuando el LLM duda (decisión del 07-oct, spec 069).
+politica_duda:
+  acusatoria:
+    accion: revision
+    definicion: "La arista o el estado va a la cola de revisión. Nunca entra ni se mantiene en el grafo sin una persona."
+  no_acusatoria:
+    accion: mantener
+    definicion: "La arista se mantiene y su registro de decisión la marca con confianza baja."
+
+# ---------------------------------------------------------------------------------------------
+tipos_entidad:
+  Person:
+    definicion: "Un ser humano identificado por su nombre civil o por un seudónimo judicial."
+    incluye: ["cargos públicos", "particulares", "seudónimos judiciales del CENDOJ (se quedan como Person)"]
+    excluye: ["un cargo sin nombre («el ministro») — no es entidad", "un grupo de personas — Organization"]
+  Organization:
+    definicion: "Una entidad pública o colectiva sin ánimo de lucro: ministerio, partido, cuerpo policial, fundación, asociación."
+    incluye: ["órganos de la Administración", "partidos", "UCO, Fiscalía, Guardia Civil"]
+    excluye: ["un juzgado o tribunal — Court", "una sociedad mercantil — Company"]
+  Company:
+    definicion: "Una sociedad mercantil o empresa con forma jurídica: S.L., S.A., cooperativa."
+    incluye: ["empresas públicas con forma de sociedad", "sociedades extranjeras"]
+    excluye: ["una marca de producto («un móvil de la marca B») — no es entidad"]
+  Court:
+    definicion: "Un órgano judicial: juzgado, tribunal, audiencia o sala."
+    incluye: ["Tribunal Supremo", "Audiencia Nacional", "juzgados de instrucción"]
+    excluye: ["la Fiscalía — Organization", "una causa — LegalCase"]
+  LegalCase:
+    definicion: "Una causa judicial NOMBRADA o NUMERADA, o un expediente con código."
+    incluye: ["«Causa Especial 1/2026»", "«Diligencias Previas 2/2026»", "«Operación C»"]
+    excluye: ["una ley, real decreto, orden, código o artículo — no es entidad",
+              "un término procesal genérico («causa», «sumario», «juicio oral») — no es entidad"]
+  Crime:
+    definicion: "Un delito canónico de la sección `delitos` de esta ontología."
+    incluye: ["solo los delitos canónicos y sus sinónimos"]
+    excluye: ["una conducta descrita sin calificación jurídica", "un tema («la corrupción») — no es entidad"]
+  MoneyAmount:
+    definicion: "Un importe de dinero. NUNCA es una entidad del grafo: va en `amount` y `currency` de la arista de flujo."
+    incluye: []
+    excluye: ["todo importe — va como propiedad de PAID, RECEIVED o RECEIVED_GRANT"]
+    extraible: false
+  Event:
+    definicion: "Un hecho fechable con nombre propio o descripción concreta: reunión, viaje, adjudicación, registro policial."
+    incluye: ["«reunión del 3 de marzo en el hotel D»", "«registro de la sede de Empresa B»"]
+    excluye: ["un objeto o producto («mascarillas») — no es entidad", "una causa — LegalCase"]
+  Location:
+    definicion: "Un lugar: municipio, país, dirección pública, inmueble identificado."
+    incluye: ["inmuebles objeto de propiedad (OWNS)"]
+    excluye: ["el domicilio particular de una persona — no se publica"]
+  Contract:
+    definicion: "Un contrato identificado: público adjudicado (órgano → contrato → adjudicataria) o privado firmado entre partes."
+    incluye: ["contratos públicos con expediente o importe identificado", "contratos privados identificados (fecha, objeto o partes)"]
+    excluye: ["un acuerdo genérico sin contrato identificado — no es entidad"]
+
+# ---------------------------------------------------------------------------------------------
+# Campos de cada relación: clase (acusatoria|no_acusatoria), direccion (texto), simetrica,
+# solo_loader (el extractor no la emite: viene de un registro oficial agregado), lleva_estado
+# (la arista lleva un estado procesal: `status` y su fuente), duda (opcional: sustituye la política de
+# duda de su clase), sujeto/objeto
+# (tipos de entidad admitidos en cada extremo) y la ficha.
+tipos_relacion:
+  WORKS_FOR:
+    clase: no_acusatoria
+    direccion: "persona → empleador"
+    simetrica: false
+    solo_loader: false
+    lleva_estado: false
+    sujeto: [Person]
+    objeto: [Organization, Company, Person, Court]
+    definicion: "La persona trabaja o presta un servicio estable para la entidad o la persona."
+    incluye: ["contrato laboral", "asesor o chófer de una persona", "consultor estable de una empresa",
+              "juez, fiscal o letrado destinado en un juzgado o tribunal (decisión 07-oct)"]
+    excluye: ["un cargo público por nombramiento — APPOINTED_TO", "pertenecer a un órgano colegiado — MEMBER_OF",
+              "administrador inscrito en el Registro Mercantil — ADMINISTRA"]
+    ejemplo_si: "«Persona A es asesora de Persona B en el ministerio.» → (Persona A) WORKS_FOR (Persona B)"
+    ejemplo_no: "«Persona A visitó la sede de Empresa B.» → no hay relación laboral"
+    sinonimos: [TRABAJA_PARA]
+  MEMBER_OF:
+    clase: no_acusatoria
+    direccion: "miembro → colectivo"
+    simetrica: false
+    solo_loader: false
+    lleva_estado: false
+    sujeto: [Person, Organization, Company]
+    objeto: [Organization, Company]
+    definicion: "La entidad pertenece a un colectivo: partido, consejo, órgano colegiado o asociación."
+    incluye: ["afiliación a un partido", "consejero de un consejo de administración"]
+    excluye: ["relación laboral — WORKS_FOR", "cargo público por nombramiento oficial — APPOINTED_TO", "propiedad — OWNS",
+              "administrador inscrito en el BORME — ADMINISTRA (si el texto dice además que es consejero, emite las dos)"]
+    ejemplo_si: "«Persona A es miembro de la ejecutiva del Partido C.» → (Persona A) MEMBER_OF (Partido C)"
+    ejemplo_no: "«Persona A asistió a un acto del Partido C.» → PARTICIPATED_IN del evento, no MEMBER_OF"
+    sinonimos: [MIEMBRO_DE]
+  ASSOCIATED_WITH:
+    clase: no_acusatoria
+    direccion: "A ↔ B"
+    simetrica: true
+    solo_loader: false
+    lleva_estado: false
+    sujeto: [Person, Organization, Company]
+    objeto: [Person, Organization, Company]
+    # Decisión 07-oct (spec 069 §Decisiones 2): relación afirmada, nunca co-mención.
+    definicion: "El texto afirma un vínculo concreto entre las dos entidades y ningún otro tipo lo describe mejor."
+    incluye: ["comunicación documentada entre las dos: llamada, mensaje, correo",
+              "«socio», «colaborador», «hombre de confianza de» sin relación laboral o societaria documentada"]
+    excluye: ["dos nombres en el mismo párrafo, lista o documento (co-mención) — no hay relación",
+              "un encuentro — MET_WITH", "parentesco — FAMILY_OF", "un tipo más preciso que el texto sostiene"]
+    ejemplo_si: "«Persona A llamó a Persona B el día 4 para hablar del contrato.» → (Persona A) ASSOCIATED_WITH (Persona B)"
+    ejemplo_no: "«Asistieron Persona A, Persona B y Persona C.» → co-mención: ninguna relación entre ellas"
+    sinonimos: [ASOCIADO_CON]
+  MET_WITH:
+    clase: no_acusatoria
+    direccion: "A ↔ B"
+    simetrica: true
+    solo_loader: false
+    lleva_estado: false
+    sujeto: [Person, Organization, Company]
+    objeto: [Person, Organization, Company]
+    # Decisión 07-oct (spec 069 §Decisiones 3): solo encuentro.
+    definicion: "Las dos entidades se reunieron: encuentro presencial o videoconferencia que el texto identifica como reunión."
+    incluye: ["comida, reunión o visita documentada entre las dos", "videoconferencia descrita como reunión"]
+    excluye: ["una llamada, un mensaje o un correo — ASSOCIATED_WITH si el texto afirma la comunicación",
+              "coincidir en un mismo acto sin encuentro entre ellas — PARTICIPATED_IN del evento"]
+    ejemplo_si: "«Persona A y Persona B comieron juntas en el restaurante D.» → (Persona A) MET_WITH (Persona B)"
+    ejemplo_no: "«Persona A envió un mensaje a Persona B.» → no es MET_WITH (es ASSOCIATED_WITH)"
+    sinonimos: [SE_REUNIO_CON, REUNION_CON]
+  PAID:
+    clase: acusatoria
+    direccion: "pagador → receptor"
+    simetrica: false
+    solo_loader: false
+    lleva_estado: false
+    sujeto: [Person, Company, Organization]
+    objeto: [Person, Company, Organization]
+    definicion: "El texto afirma que el pagador entregó dinero al receptor. El importe va en `amount` y `currency`."
+    incluye: ["transferencia, entrega en efectivo o pago ejecutado y documentado"]
+    excluye: ["un pago futuro, pactado o hipotético («percibiría», «se comprometió a pagar») — no hay relación",
+              "la firma de un contrato sin constancia de pago — PARTY_TO",
+              "un apunte contable sin pagador identificado — no hay relación"]
+    ejemplo_si: "«Empresa B transfirió 15.000 euros a Persona A.» → (Empresa B) PAID (Persona A), amount=15000"
+    ejemplo_no: "«Persona A cobraría un 1 % si se adjudicaba el contrato.» → condicional: no hay relación"
+    sinonimos: [PAGO, PAGO_A]
+  RECEIVED:
+    clase: acusatoria
+    direccion: "receptor → pagador"
+    simetrica: false
+    solo_loader: false
+    lleva_estado: false
+    sujeto: [Person, Company, Organization]
+    objeto: [Person, Company, Organization]
+    definicion: "El texto afirma que el receptor recibió dinero del pagador. Es la dirección inversa de PAID."
+    incluye: ["cobro documentado desde el punto de vista de quien recibe"]
+    excluye: ["los mismos casos que PAID", "una subvención o ayuda pública — RECEIVED_GRANT"]
+    ejemplo_si: "«Persona A recibió 15.000 euros de Empresa B.» → (Persona A) RECEIVED (Empresa B), amount=15000"
+    ejemplo_no: "«Persona A esperaba recibir una comisión.» → no hay relación"
+    sinonimos: [RECIBIO]
+  ACCUSED_OF:
+    clase: acusatoria
+    direccion: "persona o sociedad investigada → delito"
+    simetrica: false
+    solo_loader: false
+    lleva_estado: true
+    sujeto: [Person, Company]
+    objeto: [Crime]
+    definicion: "El texto afirma que ESA persona o sociedad está investigada, imputada, procesada o acusada por ESE delito."
+    incluye: ["atribución explícita de un delito canónico a esa persona en un acto o informe"]
+    excluye: ["el delito nombrado en el pasaje sin atribuirlo a esa persona — no hay relación",
+              "conducta descrita sin calificación jurídica — no hay relación",
+              "un destino que no es un delito («influyó a favor de X») — no hay relación",
+              "una sentencia condenatoria — CONVICTED_OF"]
+    ejemplo_si: "«El auto investiga a Persona A por un delito de cohecho.» → (Persona A) ACCUSED_OF (cohecho)"
+    ejemplo_no: "«La causa investiga un posible cohecho; Persona A declaró como testigo.» → no hay relación"
+    sinonimos: [ACUSADO_DE]
+  CONVICTED_OF:
+    clase: acusatoria
+    direccion: "persona o sociedad condenada → delito"
+    simetrica: false
+    solo_loader: false
+    lleva_estado: true
+    sujeto: [Person, Company]
+    objeto: [Crime]
+    definicion: "Una sentencia condena a esa persona o sociedad por ese delito. La firmeza la fija el estado procesal, no el tipo."
+    incluye: ["sentencia condenatoria firme (estado condenado) o recurrible (estado condenado_no_firme)"]
+    excluye: ["una acusación o petición de condena — ACCUSED_OF", "una condena de OTRA persona del mismo fallo"]
+    ejemplo_si: "«La sentencia condena a Persona A como autora de un delito de malversación.» → (Persona A) CONVICTED_OF (malversación)"
+    ejemplo_no: "«La Fiscalía pide cuatro años para Persona A.» → ACCUSED_OF, no CONVICTED_OF"
+    sinonimos: [CONDENADO_POR]
+  INVESTIGATED_BY:
+    clase: acusatoria
+    direccion: "persona o sociedad investigada → órgano que investiga o causa"
+    simetrica: false
+    solo_loader: false
+    lleva_estado: true
+    sujeto: [Person, Company, Organization]
+    objeto: [Court, Organization, LegalCase]
+    definicion: "Un juzgado, fiscalía o cuerpo policial investiga a la entidad, o la entidad está investigada en esa causa."
+    incluye: ["(Persona A) INVESTIGATED_BY (Juzgado C)", "(Persona A) INVESTIGATED_BY (UCO)", "(Persona A) INVESTIGATED_BY (Causa Especial 1/2026)"]
+    excluye: ["el órgano como sujeto — invierte la dirección",
+              "un delito como objeto — ACCUSED_OF",
+              "ser perjudicado o acusación popular — PARTY_TO", "ser testigo — no hay relación"]
+    ejemplo_si: "«El Juzgado C investiga a Persona A.» → (Persona A) INVESTIGATED_BY (Juzgado C)"
+    ejemplo_no: "«La UCO analizó los correos de Persona A, que es testigo.» → no hay relación"
+    sinonimos: [INVESTIGADO_POR]
+  PARTY_TO:
+    clase: no_acusatoria
+    direccion: "parte → causa o contrato"
+    simetrica: false
+    solo_loader: false
+    lleva_estado: false
+    sujeto: [Person, Company, Organization]
+    objeto: [LegalCase, Contract]
+    definicion: "La entidad es parte personada en una causa (acusación, perjudicado, responsable civil) o firmante de un contrato."
+    incluye: ["acusación popular o particular", "perjudicado o responsable civil personado", "firmante de un contrato público o privado sin pago documentado"]
+    excluye: ["ser investigado — INVESTIGATED_BY (ser parte no es ser acusado)", "declarar como testigo — no hay relación",
+              "un pago ejecutado — PAID"]
+    ejemplo_si: "«Asociación E ejerce la acusación popular en la Causa Especial 1/2026.» → (Asociación E) PARTY_TO (Causa Especial 1/2026)"
+    ejemplo_no: "«Persona A y Persona B aparecen en el sumario.» → co-mención: no hay relación"
+    sinonimos: [PARTE_EN]
+  OWNS:
+    clase: no_acusatoria
+    direccion: "propietario → bien"
+    simetrica: false
+    solo_loader: false
+    lleva_estado: false
+    sujeto: [Person, Company, Organization]
+    objeto: [Company, Organization, Location]
+    definicion: "La entidad es propietaria real de una empresa, una participación societaria o un inmueble."
+    incluye: ["socio o accionista documentado", "titularidad de un inmueble"]
+    excluye: ["poseer un aparato de una marca — no hay relación", "tener una cuenta en un banco — no hay relación",
+              "control sin propiedad documentada — CONTROLS", "administrador registral — ADMINISTRA"]
+    ejemplo_si: "«Persona A es la socia única de Empresa B.» → (Persona A) OWNS (Empresa B)"
+    ejemplo_no: "«Persona A usaba un teléfono de la marca F.» → no hay relación"
+    sinonimos: [POSEE]
+  CONTROLS:
+    clase: no_acusatoria
+    direccion: "quien controla → entidad controlada"
+    simetrica: false
+    solo_loader: false
+    lleva_estado: false
+    # Decisión 07-oct (T1.6): control de hecho o testaferro insinúa una conducta irregular. Ante la duda, a revisión aunque no sea acusatoria.
+    duda: revision
+    sujeto: [Person, Company, Organization]
+    objeto: [Company, Organization]
+    definicion: "El texto afirma que la entidad dirige de hecho a otra, aunque no conste como propietaria ni administradora."
+    incluye: ["administrador de hecho", "quien está detrás de un testaferro, si el texto lo afirma"]
+    excluye: ["propiedad documentada — OWNS", "administrador inscrito — ADMINISTRA", "un cargo directivo con contrato — WORKS_FOR"]
+    ejemplo_si: "«Según el informe, Persona A dirigía Empresa B a través de Persona C.» → (Persona A) CONTROLS (Empresa B)"
+    ejemplo_no: "«Persona A tenía buena relación con Empresa B.» → ASSOCIATED_WITH si es un vínculo afirmado"
+    sinonimos: [CONTROLA]
+  ADMINISTRA:
+    clase: no_acusatoria
+    direccion: "administrador → sociedad"
+    simetrica: false
+    solo_loader: false
+    lleva_estado: false
+    sujeto: [Person, Company]
+    objeto: [Company]
+    definicion: "La entidad consta como administradora inscrita de la sociedad en el Registro Mercantil (BORME)."
+    incluye: ["administrador único, solidario o mancomunado", "consejero delegado inscrito"]
+    excluye: ["control de hecho — CONTROLS", "propiedad — OWNS"]
+    ejemplo_si: "«BORME: nombramiento de Persona A como administradora única de Empresa B.» → (Persona A) ADMINISTRA (Empresa B)"
+    ejemplo_no: "«Persona A gestionaba de hecho Empresa B.» → CONTROLS"
+    sinonimos: [ADMINISTRADOR_DE, ADMINISTRA_DE]
+  RECEIVED_GRANT:
+    clase: no_acusatoria
+    direccion: "beneficiario → órgano concedente"
+    simetrica: false
+    solo_loader: false
+    lleva_estado: false
+    sujeto: [Person, Company, Organization]
+    objeto: [Organization]
+    definicion: "El beneficiario recibió una subvención o ayuda pública del órgano concedente. Es un hecho legal, no una acusación."
+    incluye: ["concesiones de la BDNS", "ayuda pública documentada en el corpus"]
+    excluye: ["un pago entre particulares o empresas — PAID / RECEIVED", "un contrato público — CONTRACT_AWARDED_TO"]
+    ejemplo_si: "«El ministerio concedió a Empresa B una ayuda de 20.000 euros.» → (Empresa B) RECEIVED_GRANT (ministerio)"
+    ejemplo_no: "«Empresa B solicitó una subvención.» → solicitud: no hay relación"
+    sinonimos: [RECIBIO_SUBVENCION, SUBVENCION, RECIBIO_AYUDA]
+  MINOR_CONTRACTOR_OF:
+    clase: no_acusatoria
+    direccion: "adjudicataria → órgano de contratación"
+    simetrica: false
+    solo_loader: true
+    lleva_estado: false
+    sujeto: [Company, Person, Organization]
+    objeto: [Organization, Company]
+    definicion: "Agregado de contratos menores del registro oficial (PLACSP): la adjudicataria contrató con el órgano. Es legal."
+    incluye: ["solo filas del registro oficial agregado"]
+    excluye: ["un contrato concreto citado en un documento — AWARDED_CONTRACT / CONTRACT_AWARDED_TO"]
+    ejemplo_si: "Registro PLACSP: 12 contratos menores de Empresa B con el ayuntamiento G → (Empresa B) MINOR_CONTRACTOR_OF (ayuntamiento G)"
+    ejemplo_no: "«Empresa B obtuvo un contrato del ayuntamiento G.» (en un auto) → capa judicial: CONTRACT_AWARDED_TO"
+    sinonimos: [CONTRATOS_MENORES, ADJUDICATARIA_DE_MENORES, CONTRATISTA_MENOR_DE]
+  CONTRACTOR_OF:
+    clase: no_acusatoria
+    direccion: "adjudicataria → órgano de contratación"
+    simetrica: false
+    solo_loader: true
+    lleva_estado: false
+    sujeto: [Company, Person, Organization]
+    objeto: [Organization, Company]
+    definicion: "Agregado de licitaciones y contratos de la capa ampliada (PLACSP y plataformas autonómicas). Es legal."
+    incluye: ["solo filas del registro oficial agregado"]
+    excluye: ["un contrato concreto citado en un documento — AWARDED_CONTRACT / CONTRACT_AWARDED_TO"]
+    ejemplo_si: "Registro ampliado: licitaciones de Empresa B con la consejería H → (Empresa B) CONTRACTOR_OF (consejería H)"
+    ejemplo_no: "«Empresa B es contratista de la consejería H.» (en un auto) → capa judicial: CONTRACT_AWARDED_TO"
+    sinonimos: []
+  APPOINTED_TO:
+    clase: no_acusatoria
+    direccion: "persona → órgano"
+    simetrica: false
+    solo_loader: false
+    lleva_estado: false
+    sujeto: [Person]
+    objeto: [Organization, Court, Company]
+    definicion: "La persona ocupa o ocupó un cargo público por nombramiento oficial en el órgano. Es legal."
+    incluye: ["nombramientos y ceses del BOE", "cargo público documentado en el corpus"]
+    excluye: ["relación laboral — WORKS_FOR", "afiliación — MEMBER_OF",
+              "cargo en una sociedad inscrito en el BORME — ADMINISTRA (un nombramiento público y una inscripción son dos hechos: emite las dos)"]
+    ejemplo_si: "«BOE: se nombra a Persona A directora general en el ministerio.» → (Persona A) APPOINTED_TO (ministerio)"
+    ejemplo_no: "«Persona A aspiraba al cargo.» → no hay relación"
+    sinonimos: [NOMBRADO_PARA, NOMBRADO_EN, CARGO_EN]
+  SUBSIDIARY_OF:
+    clase: no_acusatoria
+    direccion: "filial → matriz"
+    simetrica: false
+    solo_loader: false
+    lleva_estado: false
+    sujeto: [Company, Organization]
+    objeto: [Company, Organization]
+    definicion: "La entidad es filial o dependiente orgánica de la matriz."
+    incluye: ["filial societaria", "organismo adscrito a un ministerio"]
+    excluye: ["propiedad de una persona — OWNS", "colaboración entre empresas — ASSOCIATED_WITH"]
+    ejemplo_si: "«Empresa B es filial de Empresa C.» → (Empresa B) SUBSIDIARY_OF (Empresa C)"
+    ejemplo_no: "«Empresa B y Empresa C firmaron un acuerdo.» → no es SUBSIDIARY_OF"
+    sinonimos: [FILIAL_DE]
+  OCCURRED_AT:
+    clase: no_acusatoria
+    direccion: "evento → lugar"
+    simetrica: false
+    solo_loader: false
+    lleva_estado: false
+    sujeto: [Event]
+    objeto: [Location]
+    definicion: "El evento ocurrió en ese lugar."
+    incluye: ["reunión, registro o entrega en un lugar identificado"]
+    excluye: ["una persona en un lugar — no hay relación", "participar en un evento — PARTICIPATED_IN"]
+    ejemplo_si: "«La reunión se celebró en el hotel D.» → (reunión) OCCURRED_AT (hotel D)"
+    ejemplo_no: "«Persona A vive en el municipio G.» → no hay relación (domicilio particular)"
+    sinonimos: [OCURRIO_EN]
+  PARTICIPATED_IN:
+    clase: no_acusatoria
+    direccion: "participante → evento"
+    simetrica: false
+    solo_loader: false
+    lleva_estado: false
+    sujeto: [Person, Company, Organization]
+    objeto: [Event]
+    definicion: "La entidad actúa en el evento: asiste, organiza, firma o interviene."
+    incluye: ["asistir a una reunión o acto", "organizar un viaje documentado"]
+    excluye: ["un evento que solo se refiere a la entidad — INVOLVES", "un objeto que no es un evento — no hay relación"]
+    ejemplo_si: "«Persona A asistió a la reunión del 3 de marzo.» → (Persona A) PARTICIPATED_IN (reunión del 3 de marzo)"
+    ejemplo_no: "«Persona A pertenece a la Organización E.» → MEMBER_OF"
+    sinonimos: [PARTICIPO_EN]
+  INVOLVES:
+    clase: no_acusatoria
+    direccion: "evento, causa o contrato → entidad afectada"
+    simetrica: false
+    solo_loader: false
+    lleva_estado: false
+    sujeto: [Event, LegalCase, Contract]
+    objeto: [Person, Company, Organization]
+    pares_extra: [[LegalCase, Crime], [LegalCase, Event]]
+    definicion: "El evento, la causa o el contrato se refiere a la entidad o la afecta, sin que la entidad actúe en él."
+    incluye: ["la empresa cuyo contrato es objeto de un registro policial", "una causa → el delito que investiga (LegalCase → Crime, sin persona)",
+              "una causa → un evento al que se refiere: un registro, una reunión (LegalCase → Event, decisión 07-oct)"]
+    excluye: ["la entidad actúa en el evento — PARTICIPATED_IN", "la entidad está investigada — INVESTIGATED_BY",
+              "dos personas entre sí — no es INVOLVES"]
+    ejemplo_si: "«El registro afectó a la sede de Empresa B.» → (registro) INVOLVES (Empresa B)"
+    ejemplo_no: "«Persona A organizó el viaje.» → PARTICIPATED_IN"
+    sinonimos: [INVOLUCRA]
+  FAMILY_OF:
+    clase: no_acusatoria
+    direccion: "A ↔ B"
+    simetrica: true
+    solo_loader: false
+    lleva_estado: false
+    # Decisión 07-oct (T1.6): parentesco de particulares: privacidad (patrón de la spec 067). Ante la duda, a revisión aunque no sea acusatoria.
+    duda: revision
+    sujeto: [Person]
+    objeto: [Person]
+    definicion: "El texto afirma un parentesco o una relación de pareja entre las dos personas."
+    incluye: ["cónyuge, pareja, hijo, hermano, padre o madre afirmado en el texto"]
+    excluye: ["un parentesco inferido de ASSOCIATED_WITH, MET_WITH o del apellido — no hay relación"]
+    ejemplo_si: "«Persona A, hermana de Persona B, firmó el contrato.» → (Persona A) FAMILY_OF (Persona B)"
+    ejemplo_no: "«Persona A y Persona B comparten apellido.» → no hay relación"
+    sinonimos: [FAMILIAR_DE, ESPOSA_DE, ESPOSO_DE, CONYUGE_DE, PAREJA_DE, HIJO_DE, HIJA_DE, HERMANO_DE,
+                HERMANA_DE, PADRE_DE, MADRE_DE]
+  AWARDED_CONTRACT:
+    clase: no_acusatoria
+    direccion: "órgano adjudicador → contrato"
+    simetrica: false
+    solo_loader: false
+    lleva_estado: false
+    sujeto: [Organization, Company]
+    objeto: [Contract]
+    definicion: "El órgano adjudicó el contrato. Va siempre del órgano al contrato, nunca de la adjudicataria."
+    incluye: ["adjudicación documentada con órgano y contrato identificados"]
+    excluye: ["la adjudicataria — CONTRACT_AWARDED_TO (del contrato a la adjudicataria)"]
+    ejemplo_si: "«El ministerio adjudicó el contrato de suministro K.» → (ministerio) AWARDED_CONTRACT (contrato K)"
+    ejemplo_no: "«Empresa B ganó el contrato K.» → (contrato K) CONTRACT_AWARDED_TO (Empresa B)"
+    sinonimos: [ADJUDICO, ADJUDICA_A]
+  CONTRACT_AWARDED_TO:
+    clase: no_acusatoria
+    direccion: "contrato → adjudicataria"
+    simetrica: false
+    solo_loader: false
+    lleva_estado: false
+    sujeto: [Contract]
+    objeto: [Company, Person, Organization]
+    definicion: "El contrato se adjudicó a esa entidad."
+    incluye: ["adjudicataria documentada de un contrato identificado"]
+    excluye: ["el órgano que adjudica — AWARDED_CONTRACT"]
+    ejemplo_si: "«El contrato K se adjudicó a Empresa B.» → (contrato K) CONTRACT_AWARDED_TO (Empresa B)"
+    ejemplo_no: "«Empresa B se presentó a la licitación.» → no hay relación"
+    sinonimos: [ADJUDICADO_A]
+
+# ---------------------------------------------------------------------------------------------
+# Estados procesales (aristas ACCUSED_OF, CONVICTED_OF, INVESTIGATED_BY y fila `estado` del registro).
+# El ORDEN DE ESTE FICHERO es la escalera procesal (de menos a más grave) que usan los linters.
+# orden: rango de gravedad que sirve la API para elegir el estado más grave (admite empates).
+# fase: abierta (la causa sigue) | cerrada (disposición favorable: nunca se reabre sola) | condena.
+# admite_prensa: la prensa atribuida basta para declararlo.
+estados_procesales:
+  absuelto:
+    orden: 1
+    fase: cerrada
+    admite_prensa: false
+    exige_fuente: ninguna
+    definicion: "Una sentencia absuelve a la persona de ese delito."
+    incluye: ["sentencia absolutoria, firme o recurrida (si se recurre, sigue absuelto hasta otra sentencia)"]
+    excluye: ["archivo o sobreseimiento sin juicio — archivado"]
+    ejemplo_si: "«La sentencia absuelve a Persona A del delito de cohecho.»"
+    ejemplo_no: "«El juez archiva la causa para Persona A.» → archivado"
+    sinonimos: []
+  archivado:
+    orden: 1
+    fase: cerrada
+    admite_prensa: false
+    exige_fuente: ninguna
+    definicion: "Un auto archiva o sobresee la causa para esa persona."
+    incluye: ["sobreseimiento libre", "sobreseimiento provisional (se puede reabrir: solo una persona actualiza el registro)", "archivo para esa persona"]
+    excluye: ["absolución tras juicio — absuelto"]
+    ejemplo_si: "«El auto acuerda el sobreseimiento provisional respecto de Persona A.»"
+    ejemplo_no: "«La sentencia absuelve a Persona A.» → absuelto"
+    sinonimos: [sobreseido]
+  investigado:
+    orden: 2
+    fase: abierta
+    admite_prensa: true
+    exige_fuente: ninguna
+    definicion: "Un auto, un informe policial o la prensa atribuida dice que la persona está investigada en una causa."
+    incluye: ["citación como investigada", "querella o denuncia ADMITIDA con la persona como investigada",
+              "una arista ACCUSED_OF ya sostenida por un documento y sin estado registrado (estado mínimo de esa arista, no de la persona)"]
+    excluye: ["testigo, perjudicado o mencionado — ningún estado", "una querella solo presentada o una noticia de que «podría» ser investigada — ningún estado",
+              "una persona sin documento que la investigue — ningún estado (nunca se asigna por defecto)"]
+    ejemplo_si: "«El juez cita a Persona A en calidad de investigada.»"
+    ejemplo_no: "«Persona A declara como testigo.» → ningún estado"
+    sinonimos: []
+  imputado:
+    orden: 3
+    fase: abierta
+    admite_prensa: true
+    exige_fuente: ninguna
+    definicion: "Un auto atribuye hechos concretos a la persona: auto de imputación (terminología anterior a la LO 13/2015) o de continuación del procedimiento del jurado (LOTJ)."
+    incluye: ["auto de imputación", "auto de continuación LOTJ"]
+    excluye: ["una citación como investigada — investigado", "la palabra «imputado» en prensa posterior a 2015 sin auto — investigado"]
+    ejemplo_si: "«El auto de continuación del procedimiento del jurado se dirige contra Persona A.»"
+    ejemplo_no: "«La prensa dice que Persona A podría ser imputada.» → ningún estado nuevo"
+    sinonimos: []
+  procesado:
+    orden: 4
+    fase: abierta
+    admite_prensa: false
+    exige_fuente: acto_acusatorio
+    definicion: "Un auto de procesamiento se dicta contra la persona."
+    incluye: ["auto de procesamiento en el corpus"]
+    excluye: ["la prensa sola — nunca basta"]
+    ejemplo_si: "«El auto declara procesada a Persona A por malversación.»"
+    ejemplo_no: "«Según un diario, Persona A será procesada.» → no basta"
+    sinonimos: []
+  acusado:
+    orden: 4
+    fase: abierta
+    admite_prensa: false
+    exige_fuente: acto_acusatorio
+    definicion: "Un escrito de acusación o un auto de apertura de juicio oral se dirige contra la persona."
+    incluye: ["escrito de acusación en el corpus", "auto de apertura de juicio oral en el corpus",
+              "auto de apertura de juicio oral fuera del corpus: la fuente es el ACTO (`tipo: auto_apertura_juicio_oral` con su `url`) y dos medios lo confirman"]
+    excluye: ["la prensa como fuente (`tipo: prensa`) — nunca basta", "una querella o denuncia admitida — investigado"]
+    ejemplo_si: "«La Fiscalía formula escrito de acusación contra Persona A.»"
+    ejemplo_no: "«Una asociación presenta una querella contra Persona A.» → investigado"
+    sinonimos: []
+  condena_anulada:
+    # Decisión 07-oct (dueño, revisión Codex #15): término propio para una condena que el Tribunal
+    # Constitucional anula y devuelve al tribunal para una nueva sentencia (caso ERE, jul-2024).
+    orden: 4
+    fase: abierta
+    admite_prensa: false
+    exige_fuente: sentencia
+    definicion: "El Tribunal Constitucional anula la condena y ordena dictar una sentencia nueva. No hay condena vigente. Rige la presunción de inocencia."
+    incluye: ["sentencia del Tribunal Constitucional que otorga el amparo y anula la condena", "condena anulada a la espera de la sentencia nueva"]
+    excluye: ["absolución en la sentencia nueva — absuelto", "condena en la sentencia nueva — condenado_no_firme o condenado", "recurso pendiente sin resolver — condenado_no_firme"]
+    ejemplo_si: "«El Tribunal Constitucional otorga el amparo a Persona A, anula su condena y ordena a la Audiencia dictar una sentencia nueva.»"
+    ejemplo_no: "«Persona A recurre su condena ante el Tribunal Supremo.» → condenado_no_firme"
+    sinonimos: []
+  condenado_no_firme:
+    orden: 5
+    fase: condena
+    admite_prensa: false
+    exige_fuente: ninguna
+    # Decisión 07-oct (spec 069 §Decisiones 4): término propio. El loader lo deriva también de
+    # documents.yaml `sentencia_firme: false` (o sin declarar) para las CONVICTED_OF.
+    definicion: "Una sentencia condena a la persona y es recurrible o está recurrida. Rige la presunción de inocencia."
+    incluye: ["sentencia condenatoria sin `sentencia_firme: true` en documents.yaml"]
+    excluye: ["sentencia firme — condenado"]
+    ejemplo_si: "«La Audiencia C condena a Persona A; la sentencia no es firme.»"
+    ejemplo_no: "«El Supremo confirma la condena y la sentencia es firme.» → condenado"
+    sinonimos: ["condena no firme"]
+  condenado:
+    orden: 6
+    fase: condena
+    admite_prensa: false
+    exige_fuente: ninguna
+    definicion: "Una sentencia firme condena a la persona: documents.yaml declara `sentencia_firme: true`."
+    incluye: ["sentencia firme"]
+    excluye: ["sentencia recurrible o recurrida — condenado_no_firme"]
+    ejemplo_si: "«La sentencia es firme y condena a Persona A.»"
+    ejemplo_no: "«Persona A ha recurrido la condena.» → condenado_no_firme"
+    sinonimos: []
+
+# ---------------------------------------------------------------------------------------------
+# Capas de procedencia (`source_kind`). rango: menor = más autoritativa. `judicial` se guarda como
+# null en el grafo (aristas extraídas del corpus).
+capas:
+  judicial:
+    rango: 0
+    definicion: "Arista extraída de un documento del corpus judicial o policial: auto, sentencia, informe, atestado."
+    incluye: ["informe policial o atestado que consta en la causa"]
+    excluye: ["prensa que cita el documento — prensa"]
+    ejemplo_si: "Arista extraída del auto de 20 de junio, p.31."
+    ejemplo_no: "Un diario resume el auto → prensa"
+  contrato:
+    rango: 1
+    definicion: "Arista del overlay curado de contratos públicos (órgano → contrato → adjudicataria)."
+    incluye: ["contracts.yaml"]
+    excluye: ["agregados oficiales — contratacion"]
+    ejemplo_si: "Fila de contracts.yaml: ministerio → contrato K → Empresa B."
+    ejemplo_no: "Fila del agregado PLACSP → contratacion"
+  acusacion:
+    rango: 2
+    definicion: "Arista del REGISTRO CURADO de acusaciones y condenas, revisado por el dueño. No significa «escrito de acusación»."
+    incluye: ["accusations/*.yaml"]
+    excluye: ["la arista judicial extraída de la misma imputación — judicial (se queda la de acusacion)"]
+    ejemplo_si: "Fila de accusations/*.yaml: Persona A, cohecho, revisada por el dueño."
+    ejemplo_no: "Escrito de acusación del corpus extraído por el pipeline → judicial"
+  prensa:
+    rango: 3
+    definicion: "Arista sostenida por un medio nominal con fecha, del overlay de prensa."
+    incluye: ["«fuentes abiertas»", "agencia de origen citada"]
+    excluye: ["«según la prensa» sin medio — no vale como fuente"]
+    ejemplo_si: "«Según el diario M (12-05-2026), Persona A cobró de Empresa B.»"
+    ejemplo_no: "«Según la prensa» sin medio → no vale como fuente"
+  ultima_hora:
+    rango: 4
+    definicion: "Arista del feed de última hora, atribuida a un medio y con caducidad."
+    incluye: ["ultima_hora/feed.yaml"]
+    excluye: ["prensa consolidada — prensa"]
+    ejemplo_si: "Ítem del feed: según la agencia N (06-10-2026), Persona A declara mañana."
+    ejemplo_no: "Noticia consolidada en press/*.yaml → prensa"
+  contexto:
+    rango: 5
+    definicion: "Conocimiento público general (cargos, partidos, parentescos públicos). Identifica personas; no es un hecho del caso."
+    incluye: ["context/*.yaml"]
+    excluye: ["todo hecho o indicio del caso"]
+    ejemplo_si: "Persona A es ministra del ministerio G (conocimiento público)."
+    ejemplo_no: "«Persona A pagó a Empresa B» → nunca contexto"
+  mercantil:
+    rango: 6
+    definicion: "Arista del Registro Mercantil (BORME): administradores y estructura societaria."
+    incluye: ["mercantil/*.yaml"]
+    excluye: ["control de hecho afirmado en una causa — judicial"]
+    ejemplo_si: "BORME: Persona A, administradora única de Empresa B."
+    ejemplo_no: "«El auto dice que Persona A dirigía Empresa B» → judicial"
+  subvencion:
+    rango: 7
+    definicion: "Arista de la Base de Datos Nacional de Subvenciones (BDNS)."
+    incluye: ["subvenciones/*.yaml"]
+    excluye: ["ayuda citada en un auto — judicial"]
+    ejemplo_si: "BDNS: ayuda de 20.000 euros a Empresa B del ministerio G."
+    ejemplo_no: "Un auto cita la ayuda → judicial"
+  contratacion:
+    rango: 8
+    definicion: "Arista de los agregados oficiales de contratación (PLACSP y plataformas autonómicas)."
+    incluye: ["contratacion/*.yaml", "capa ampliada"]
+    excluye: ["contrato curado — contrato"]
+    ejemplo_si: "PLACSP: 12 contratos menores de Empresa B con el ayuntamiento G."
+    ejemplo_no: "Contrato K de contracts.yaml → contrato"
+  boe:
+    rango: 9
+    definicion: "Arista de nombramientos y ceses publicados en el BOE (sección II.A)."
+    incluye: ["boe/*.yaml"]
+    excluye: ["cargo citado en un auto — judicial"]
+    ejemplo_si: "BOE: nombramiento de Persona A como directora general."
+    ejemplo_no: "Un auto cita el cargo → judicial"
+
+# ---------------------------------------------------------------------------------------------
+# Delitos canónicos (nombre del nodo Crime). Un subtipo que el documento califica (cohecho pasivo,
+# falsedad en documento mercantil) es un término propio con `familia` = su delito general: así no se
+# pierde la calificación y se puede agrupar. Un nombre coloquial va en `sinonimos`; el código canoniza
+# (sin mayúsculas ni tildes). Un delito sin forma canónica va a la cola de revisión. `articulos`: CP.
+delitos:
+  cohecho:
+    articulos: "419-427"
+    definicion: "Una autoridad o funcionario pide o acepta una dádiva por un acto de su cargo, o alguien se la ofrece. Úsalo si el documento no dice la modalidad."
+    incluye: ["soborno, cuando el documento no precisa activo o pasivo"]
+    excluye: ["el documento dice «activo» o «pasivo» — usa ese término", "influir en un funcionario sin dádiva — tráfico de influencias"]
+    ejemplo_si: "«Persona A aceptó 10.000 euros por adjudicar el contrato K.» (calificado como cohecho)"
+    ejemplo_no: "«Persona A presionó al alcalde por su amistad.» → tráfico de influencias"
+    sinonimos: [soborno]
+  cohecho pasivo:
+    familia: cohecho
+    articulos: "419-422"
+    definicion: "Una autoridad o funcionario pide o acepta una dádiva por un acto de su cargo."
+    incluye: ["el documento califica el cohecho como pasivo"]
+    excluye: ["quien ofrece o entrega la dádiva — cohecho activo"]
+    ejemplo_si: "«La Fiscalía acusa al alcalde de cohecho pasivo.»"
+    ejemplo_no: "«La Fiscalía acusa al empresario que pagó al alcalde.» → cohecho activo"
+    sinonimos: []
+  cohecho activo:
+    familia: cohecho
+    articulos: "424"
+    definicion: "Un particular ofrece o entrega una dádiva a una autoridad o funcionario por un acto de su cargo."
+    incluye: ["el documento califica el cohecho como activo"]
+    excluye: ["el funcionario que la acepta — cohecho pasivo"]
+    ejemplo_si: "«La Fiscalía acusa a Persona A, empresaria, de cohecho activo.»"
+    ejemplo_no: "«El funcionario aceptó el pago.» → cohecho pasivo"
+    sinonimos: []
+  cohecho impropio:
+    familia: cohecho
+    articulos: "422"
+    definicion: "Una autoridad o funcionario acepta una dádiva ofrecida en consideración a su cargo o función, sin pedir un acto concreto."
+    incluye: ["el documento califica el cohecho como impropio"]
+    excluye: ["dádiva por un acto concreto del cargo — cohecho pasivo"]
+    ejemplo_si: "«El auto investiga a Persona A por cohecho impropio por los regalos recibidos.»"
+    ejemplo_no: "«Persona A pidió dinero por firmar la licencia.» → cohecho pasivo"
+    sinonimos: []
+  tráfico de influencias:
+    articulos: "428-431"
+    definicion: "Alguien influye en una autoridad o funcionario, prevaliéndose de una relación, para obtener una resolución con beneficio."
+    incluye: ["ofrecerse a influir a cambio de dinero (art. 430)"]
+    excluye: ["dádiva por un acto del cargo — cohecho"]
+    ejemplo_si: "«Persona A se valió de su relación con el ministro para obtener la licencia.»"
+    ejemplo_no: "«Persona A cobró por firmar la licencia.» → cohecho"
+    sinonimos: []
+  malversación:
+    articulos: "432-435"
+    definicion: "Una autoridad o funcionario sustrae o desvía fondos públicos a su cargo."
+    incluye: ["administración desleal de patrimonio público"]
+    excluye: ["apropiación de bienes privados — apropiación indebida"]
+    ejemplo_si: "«El director desvió fondos del organismo a una cuenta de Empresa B.»"
+    ejemplo_no: "«El gestor se quedó con el dinero de un cliente.» → apropiación indebida"
+    sinonimos: []
+  organización criminal:
+    articulos: "570 bis-570 quater"
+    definicion: "Varias personas se organizan de forma estable y coordinada para cometer delitos."
+    incluye: []
+    excluye: ["grupo criminal (art. 570 ter) — es otro delito", "una trama descrita sin calificación jurídica — no hay delito"]
+    ejemplo_si: "«El auto califica la trama como organización criminal.»"
+    ejemplo_no: "«Varias personas coincidieron en el contrato.» → no hay delito"
+    sinonimos: []
+  grupo criminal:
+    articulos: "570 ter"
+    definicion: "Varias personas se unen para cometer delitos sin la estabilidad o la estructura de una organización criminal."
+    incluye: ["el documento califica los hechos como grupo criminal"]
+    excluye: ["organización criminal (art. 570 bis) — es otro delito"]
+    ejemplo_si: "«La sentencia condena por grupo criminal y descarta la organización criminal.»"
+    ejemplo_no: "«El auto califica la trama como organización criminal.» → organización criminal"
+    sinonimos: []
+  blanqueo de capitales:
+    articulos: "301-304"
+    definicion: "Alguien adquiere, convierte u oculta bienes que proceden de un delito."
+    incluye: ["blanqueo imprudente"]
+    excluye: ["ocultar bienes a acreedores — alzamiento de bienes"]
+    ejemplo_si: "«Persona A compró inmuebles con el dinero de las comisiones.»"
+    ejemplo_no: "«Persona A vendió sus bienes para no pagar a sus acreedores.» → alzamiento de bienes"
+    sinonimos: [blanqueo]
+  financiación ilegal:
+    articulos: "304 bis-304 ter"
+    definicion: "Un partido político recibe donaciones o aportaciones prohibidas por la ley."
+    incluye: ["financiación ilegal de partidos políticos"]
+    excluye: ["un pago a una persona del partido sin aportación al partido — otro delito o ninguno"]
+    ejemplo_si: "«El Partido C recibió una donación anónima prohibida.»"
+    ejemplo_no: "«Persona A, del Partido C, cobró una comisión personal.» → otro delito"
+    sinonimos: [financiación ilegal de partidos, financiación ilegal de partidos políticos]
+  prevaricación:
+    articulos: "404-406, 446-449"
+    definicion: "Una autoridad dicta a sabiendas una resolución arbitraria, administrativa o judicial."
+    incluye: ["prevaricación administrativa", "prevaricación judicial"]
+    excluye: ["nombrar a quien no reúne los requisitos — nombramientos ilegales"]
+    ejemplo_si: "«El alcalde adjudicó a sabiendas sin concurso.»"
+    ejemplo_no: "«El alcalde nombró a un asesor sin título exigido.» → nombramientos ilegales"
+    sinonimos: [prevaricación administrativa, prevaricación judicial]
+  fraude:
+    articulos: "436"
+    definicion: "Una autoridad o funcionario que interviene en un contrato, suministro o liquidación pública se concierta con los interesados o usa un artificio para defraudar a un ente público."
+    incluye: ["fraude a la Administración"]
+    excluye: ["engaño entre particulares — estafa", "fraude a Hacienda — delito contra la Hacienda Pública",
+              "«amaño» o «contratación fraudulenta» sin calificación penal — no hay delito (va a revisión)"]
+    ejemplo_si: "«El funcionario pactó con Empresa B el precio del contrato K para inflarlo.»"
+    ejemplo_no: "«Persona A engañó a un comprador particular.» → estafa"
+    sinonimos: [fraude a la administración]
+  estafa:
+    articulos: "248-251"
+    definicion: "Alguien engaña a otro para que haga un acto de disposición en perjuicio propio o ajeno, con ánimo de lucro."
+    incluye: ["estafa agravada"]
+    excluye: ["fraude en un contrato público por un funcionario — fraude"]
+    ejemplo_si: "«Persona A cobró por un servicio que nunca prestó, mediante engaño.»"
+    ejemplo_no: "«El funcionario infló el contrato público.» → fraude"
+    sinonimos: []
+  falsedad documental:
+    articulos: "390-400 bis"
+    definicion: "Alguien altera o simula un documento. Úsalo si el documento no dice la clase (mercantil, oficial, privado)."
+    incluye: ["falsedad en documento oficial o público", "falsedad en documento privado"]
+    excluye: ["revelar un documento — revelación de secretos o de datos reservados"]
+    ejemplo_si: "«Empresa B presentó facturas falsas al ministerio.»"
+    ejemplo_no: "«Persona A filtró un informe.» → revelación"
+    sinonimos: [falsedad en documento oficial, falsedad en documento público]
+  falsedad en documento mercantil:
+    familia: falsedad documental
+    articulos: "392"
+    definicion: "Un particular altera o simula un documento mercantil: factura, contrato, libro contable."
+    incluye: ["facturas falsas"]
+    excluye: ["documento oficial o público — falsedad documental"]
+    ejemplo_si: "«La acusación imputa falsedad en documento mercantil por las facturas de Empresa B.»"
+    ejemplo_no: "«Persona A falsificó un certificado del ministerio.» → falsedad documental"
+    sinonimos: []
+  alzamiento de bienes:
+    articulos: "257-258"
+    definicion: "Un deudor oculta o se desprende de bienes para impedir que sus acreedores cobren."
+    incluye: ["insolvencia punible por ocultación"]
+    excluye: ["ocultar el origen delictivo de bienes — blanqueo de capitales"]
+    ejemplo_si: "«Persona A traspasó sus inmuebles a un familiar para no pagar la deuda.»"
+    ejemplo_no: "«Persona A ocultó el origen de las comisiones.» → blanqueo de capitales"
+    sinonimos: []
+  apropiación indebida:
+    articulos: "253-254"
+    definicion: "Alguien se queda con dinero o bienes que recibió en depósito, comisión o administración."
+    incluye: []
+    excluye: ["fondos públicos por un funcionario — malversación"]
+    ejemplo_si: "«El administrador se quedó con el dinero de la comunidad que gestionaba.»"
+    ejemplo_no: "«El funcionario desvió fondos públicos.» → malversación"
+    sinonimos: []
+  negociaciones prohibidas:
+    articulos: "439-441"
+    definicion: "Una autoridad o funcionario interviene en un negocio en el que tiene interés por razón de su cargo."
+    incluye: ["actividades prohibidas a los funcionarios"]
+    excluye: ["usar información del cargo para lucrarse — uso de información privilegiada"]
+    ejemplo_si: "«El concejal participó en la empresa que contrataba con su ayuntamiento.»"
+    ejemplo_no: "«El concejal usó información del cargo para comprar terrenos.» → uso de información privilegiada"
+    sinonimos: [negociaciones y actividades prohibidas]
+  uso de información privilegiada:
+    articulos: "442"
+    definicion: "Una autoridad o funcionario usa información que conoce por su cargo para obtener un beneficio."
+    incluye: []
+    excluye: ["información bursátil privilegiada de un particular — no está en esta ontología"]
+    ejemplo_si: "«El concejal compró terrenos sabiendo por su cargo que se iban a recalificar.»"
+    ejemplo_no: "«Un inversor particular operó en bolsa con información interna.» → fuera de esta ontología"
+    sinonimos: []
+  descubrimiento y revelación de secretos:
+    articulos: "197-201"
+    definicion: "Alguien descubre o difunde secretos o datos personales de otra persona sin su consentimiento."
+    incluye: ["el documento cita los arts. 197-201"]
+    excluye: ["un funcionario que revela información reservada de su cargo (art. 417) — revelación de datos reservados",
+              "«revelación de secretos» sin artículo — nombre ambiguo, va a revisión"]
+    ejemplo_si: "«Persona A accedió al correo de Persona B y lo difundió (art. 197).»"
+    ejemplo_no: "«El fiscal filtró un correo del expediente (art. 417).» → revelación de datos reservados"
+    sinonimos: []
+  revelación de datos reservados:
+    articulos: "417"
+    definicion: "Una autoridad o funcionario revela secretos o informaciones que conoce por su cargo y que no deben divulgarse."
+    incluye: ["revelación de secretos por funcionario"]
+    excluye: ["revelación por un particular — descubrimiento y revelación de secretos", "«revelación de secretos» sin artículo — va a revisión"]
+    ejemplo_si: "«El funcionario filtró a un medio datos reservados del expediente.»"
+    ejemplo_no: "«Un particular difundió datos de otra persona.» → descubrimiento y revelación de secretos"
+    sinonimos: [revelación de secretos por funcionario]
+  infidelidad en la custodia de documentos:
+    articulos: "413-416"
+    definicion: "Una autoridad o funcionario sustrae, destruye u oculta documentos que custodia por su cargo."
+    incluye: []
+    excluye: ["revelar su contenido — revelación de datos reservados"]
+    ejemplo_si: "«El secretario destruyó documentos del expediente que custodiaba.»"
+    ejemplo_no: "«El secretario filtró el expediente.» → revelación de datos reservados"
+    sinonimos: []
+  delito contra la Hacienda Pública:
+    articulos: "305-305 bis"
+    definicion: "Alguien defrauda a la Hacienda Pública eludiendo tributos por más de la cuantía legal."
+    incluye: ["delito fiscal", "defraudación tributaria", "evasión fiscal calificada como delito"]
+    excluye: ["fraude en un contrato público — fraude", "fraude a la Seguridad Social (art. 307) o de subvenciones (art. 308) — no están en esta ontología (revisión)"]
+    ejemplo_si: "«Persona A eludió el pago del IRPF por encima de la cuantía legal.»"
+    ejemplo_no: "«El funcionario infló un contrato público.» → fraude"
+    sinonimos: [delito fiscal, defraudación tributaria, evasión fiscal, delito contra la hacienda pública]
+  fraude a los intereses financieros de la Unión Europea:
+    familia: delito contra la Hacienda Pública
+    articulos: "306"
+    definicion: "Alguien elude el pago de cantidades a los presupuestos de la Unión Europea o desvía fondos europeos, por encima de la cuantía legal."
+    incluye: ["fraude de fondos europeos calificado en el art. 306"]
+    excluye: ["fraude a la Hacienda española — delito contra la Hacienda Pública"]
+    ejemplo_si: "«La Fiscalía Europea investiga a Empresa B por fraude a los intereses financieros de la Unión Europea.»"
+    ejemplo_no: "«Empresa B no pagó el IVA.» → delito contra la Hacienda Pública"
+    sinonimos: []
+  encubrimiento:
+    articulos: "451-454"
+    definicion: "Alguien, sin participar en el delito, ayuda a que sus autores eludan la investigación o se aprovechen de él."
+    incluye: []
+    excluye: ["impedir que un testigo declare — obstrucción a la justicia"]
+    ejemplo_si: "«Persona A ocultó el dinero del delito para ayudar al autor.»"
+    ejemplo_no: "«Persona A amenazó a un testigo.» → obstrucción a la justicia"
+    sinonimos: []
+  extorsión:
+    articulos: "243"
+    definicion: "Alguien obliga a otro con violencia o intimidación a hacer un acto patrimonial en su perjuicio."
+    incluye: []
+    excluye: ["un funcionario que exige un pago indebido — concusión"]
+    ejemplo_si: "«Persona A amenazó a Empresa B para que le pagara.»"
+    ejemplo_no: "«El funcionario cobró una tasa que no existe.» → concusión"
+    sinonimos: []
+  concusión:
+    articulos: "437"
+    definicion: "Una autoridad o funcionario exige derechos, tarifas o pagos que no se deben o en cuantía mayor."
+    incluye: ["exacciones ilegales"]
+    excluye: ["pedir una dádiva por un acto del cargo — cohecho"]
+    ejemplo_si: "«El funcionario exigió una tarifa que la ley no prevé.»"
+    ejemplo_no: "«El funcionario aceptó un regalo por firmar.» → cohecho"
+    sinonimos: [exacciones ilegales]
+  obstrucción a la justicia:
+    articulos: "463-467"
+    definicion: "Alguien impide o dificulta un procedimiento judicial: intimida a testigos, no comparece o destruye pruebas."
+    incluye: []
+    excluye: ["ayudar a un autor tras el delito — encubrimiento"]
+    ejemplo_si: "«Persona A presionó a un testigo para que no declarara.»"
+    ejemplo_no: "«Persona A escondió el dinero del autor.» → encubrimiento"
+    sinonimos: []
+  corrupción en los negocios:
+    articulos: "286 bis-286 quater"
+    definicion: "Un directivo o empleado de una empresa pide o acepta un beneficio para favorecer a otro en el comercio."
+    incluye: ["corrupción en el sector privado"]
+    excluye: ["si interviene un funcionario — cohecho"]
+    ejemplo_si: "«El directivo de Empresa B cobró por elegir a un proveedor.»"
+    ejemplo_no: "«El funcionario cobró por elegir a un proveedor.» → cohecho"
+    sinonimos: [corrupción en el sector privado]
+  nombramientos ilegales:
+    articulos: "405"
+    definicion: "Una autoridad nombra para un cargo público a quien no reúne los requisitos legales, a sabiendas."
+    incluye: []
+    excluye: ["otras resoluciones arbitrarias — prevaricación"]
+    ejemplo_si: "«El alcalde nombró gerente a una persona sin el título exigido, a sabiendas.»"
+    ejemplo_no: "«El alcalde adjudicó un contrato sin concurso.» → prevaricación"
+    sinonimos: [nombramiento ilegal]
+  intrusismo profesional:
+    articulos: "403"
+    definicion: "Alguien ejerce una profesión que exige un título oficial sin tenerlo."
+    incluye: []
+    excluye: []
+    ejemplo_si: "«Persona A ejerció como abogada sin título.»"
+    ejemplo_no: "«Persona A actuó como asesora sin título exigido.» → no es intrusismo"
+    sinonimos: [intrusismo]
+
+# Nombres que el documento usa para MÁS DE UN delito (revisión de Codex del 07-oct): se canonizan por el
+# ARTÍCULO citado (el candidato cuyos `articulos` lo contienen); sin artículo van a la cola de revisión.
+# Ningún término ni sinónimo puede estar aquí.
+delitos_ambiguos:
+  revelación de secretos: [descubrimiento y revelación de secretos, revelación de datos reservados]
+
+# ---------------------------------------------------------------------------------------------
+# Taxonomía ÚNICA de defectos / etiquetas de cambio de una unidad auditada (la de la spec 063).
+# Sustituye a los códigos 1-8 (052) y 0-9 (061): esas generaciones se retiran (spec 069 F5).
+# clase: la que usa la regla de acuerdo dual (dos lectores coinciden si sus etiquetas tienen la misma clase).
+etiquetas_defecto:
+  ok:
+    clase: sin-cambio
+    definicion: "La unidad es fiel a sus fuentes y no cambia nada."
+    incluye: ["veredicto verificado", "veredicto incierto con `requested_sources`"]
+    excluye: ["cualquier cambio en la unidad"]
+    ejemplo_si: "La cita existe en la página y sostiene la arista: keep."
+    ejemplo_no: "La página citada no contiene la cita → otra etiqueta"
+  cita:
+    clase: sin-cambio
+    definicion: "Solo se añade documento y página, o medio y fecha. El contenido no cambia."
+    incluye: ["añadir «(auto de 20 de junio, p.31)»"]
+    excluye: ["añadir «según X» — atrib"]
+    ejemplo_si: "Se añade «(informe UCO, p.76)» a una frase ya correcta."
+    ejemplo_no: "Se añade «según el diario M» → atrib"
+  atrib:
+    clase: atribucion
+    definicion: "Se añade una atribución nominal («según X (fecha)») a un dato que la necesita."
+    incluye: []
+    excluye: ["cambiar el dato — reescrita"]
+    ejemplo_si: "«Fue detenido» pasa a «fue detenido, según el diario M (12-05-2026)»."
+    ejemplo_no: "Se corrige la fecha de la detención → reescrita"
+  reescrita:
+    clase: fondo
+    definicion: "Cambia el fondo: un dato se retira o se corrige dentro de una frase que se conserva."
+    incluye: []
+    excluye: ["la frase entera desaparece — retirada"]
+    ejemplo_si: "«En 2019» pasa a «en 2020» dentro de la misma frase."
+    ejemplo_no: "Se borra la frase entera → retirada"
+  retirada:
+    clase: fondo
+    definicion: "La frase o el dato desaparece del texto."
+    incluye: []
+    excluye: ["la frase se conserva con un cambio — reescrita"]
+    ejemplo_si: "Se borra una frase sin fuente sobre el patrimonio de Persona A."
+    ejemplo_no: "Se corrige un dato dentro de la frase → reescrita"
+  alias:
+    clase: identidad
+    definicion: "Solo se deniega un alias de la entidad (`alias_deny`)."
+    incluye: ["nombre de otra persona", "DNI", "descripción usada como alias"]
+    excluye: ["el nombre civil correcto — nunca se deniega"]
+    ejemplo_si: "Se deniega el alias «hijo de Persona B» de Persona A."
+    ejemplo_no: "Se cambia el resumen de Persona A → reescrita o retirada"
+  estado:
+    clase: estado
+    definicion: "Cambia la fila de estado procesal del registro (`estado.action = set`)."
+    incluye: []
+    excluye: ["el estado de una sola arista — arista"]
+    ejemplo_si: "La fila de estado de Persona A pasa de investigado a acusado con el escrito de acusación."
+    ejemplo_no: "Una arista ACCUSED_OF cambia de estado → arista (set_status)"
+  arista:
+    clase: arista
+    definicion: "Una acción sobre la arista distinta de `keep`: deny, retype, invert, set_prop o set_status."
+    incluye: []
+    excluye: ["mantener la arista — ok"]
+    ejemplo_si: "Una MET_WITH sostenida solo por una llamada pasa a ASSOCIATED_WITH (retype)."
+    ejemplo_no: "La arista es fiel y se mantiene → ok"

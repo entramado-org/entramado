@@ -1,0 +1,387 @@
+# Overlay CONTRATACION (PLACSP contratos menores) — data file CURADO (spec 046, Fase 2).
+# Cargado por `make contratacion` (contratacion_loader.py). NO confundir con
+# matches.candidate.yaml (semilla del recon 045, no se carga) ni con la capa judicial
+# de contratos reificados (source_kind='contrato', contracts_loader).
+#
+# Reglas (spec/plan 046 + decisiones dueño 2026-07-14):
+#   * AGREGADOS, nunca contrato a contrato: una arista MINOR_CONTRACTOR_OF por
+#     (adjudicataria, órgano destacado curado), clave de MERGE
+#     {source_kind:'contratacion', placsp_key:"agg|<organo_entity_id>"} — el NIF es
+#     ATRIBUTO, nunca clave. El total global de la empresa va como props del nodo
+#     (is_contratacion + placsp_*); el menudeo sin órgano destacado es solo props.
+#   * total_eur NUNCA se llama amount y rango NUNCA date_* → la capa queda FUERA de
+#     /flujos y de la cronología por construcción.
+#   * `adjudicataria` SIEMPRE debe existir (MATCH = gate ≤1 salto); los stubs de
+#     `organos:` solo se crean si faltan Y los referencia una arista con adjudicataria viva.
+#   * sin_menores: negativos informativos (0 contratos menores en el barrido) — solo props.
+#   * La adjudicación de un contrato menor es LEGAL: la señal editorial es el cruce con el
+#     reparto del caso (y la consecuencia), nunca el contrato en sí. Presunción de inocencia.
+#
+# Fuente: dumps oficiales PLACSP 2018-01..2026-07 (3.568.541 adjudicaciones tras dedup;
+# findings/placsp-recon.md). Totales del BARRIDO REFINADO de Fase 2 (decisión dueño
+# 2026-07-14): NIF-exacto (con erratas del publicador consolidadas) + denominación exacta
+# normalizada sin formas jurídicas para filas sin NIF + UTEs por NIF de UTE; dedup por
+# (entry-id, adjudicatario); AwardDate corruptas (0001-01-01…) ignoradas en los rangos.
+# Importes = suma de PayableAmount (EUR, en general sin IVA). Reproducible:
+# scripts de sesión spec046_{aggregate,pairs}.py sobre _index/ (gitignored, re-generable
+# con _placsp_recon_sweep.py). El dump 2018 incluye adjudicaciones fechadas en 2017.
+
+organos:   # stubs — creados solo si no existen. Aena / ADIF / Guardia Civil /
+           # Ministerio de Defensa YA son nodos → NO van aquí.
+  - id: "Organization:universidad-del-pais-vasco"
+    name: "Universidad del País Vasco / EHU"
+    role: "Universidad pública vasca; su Rectorado consta en PLACSP como órgano de contratación de menores (agencia de viajes: Globalia Corporate Travel)"
+  - id: "Organization:universidad-de-sevilla"
+    name: "Universidad de Sevilla"
+    role: "Universidad pública andaluza; su Rectorado consta en PLACSP como órgano de contratación de menores (agencia de viajes: Globalia Corporate Travel)"
+  - id: "Organization:demarcaciones-de-carreteras-del-estado"
+    name: "Demarcaciones de Carreteras del Estado"
+    role: "Servicios territoriales de la Dirección General de Carreteras (Mº de Transportes); órganos de contratación de conservación de la red estatal en PLACSP — la demarcación concreta va en el detalle de cada relación"
+  - id: "Organization:confederacion-hidrografica-del-jucar"
+    name: "Confederación Hidrográfica del Júcar"
+    role: "Organismo de cuenca (Mº para la Transición Ecológica); órgano de contratación de obras y conservación en PLACSP"
+  - id: "Organization:ayuntamiento-de-chinchilla-de-montearagon"
+    name: "Ayuntamiento de Chinchilla de Montearagón"
+    role: "Ayuntamiento de Chinchilla de Montearagón (Albacete); su Alcaldía consta en PLACSP como órgano de contratación de un menor de suministro de gasóleo adjudicado a Villafuel"
+
+adjudicatarias:
+  # ============ Con órgano destacado (15 aristas) ============
+  # s86 (2026-08-27): ancla re-apuntada de Company:globalia al nodo propio de la filial
+  # (la dueña real del NIF B57986846; la matriz ya no lleva capa de contratación).
+  - adjudicataria: "Company:globalia-corporate-travel"
+    nif: "B57986846"
+    denominacion_placsp: "GLOBALIA CORPORATE TRAVEL S.L.U."
+    n_contratos: 1297
+    total_eur: 1654414
+    rango: "2018-06..2026-06"
+    organos_top: "Rectorado UPV/EHU (521), Rectorado U. Sevilla (228), Junta de CLM, Junta CyL, Diputación de Jaén, AP Motril"
+    nota: "Filial agencia de viajes del grupo de Llucmajor (R.M. Palma PM79779, verificado
+      Nearius; opera también como 'BCD M&E' con el mismo NIF, y desde 2024-25 como 'SEKAI
+      CORPORATE TRAVEL S.L.U.' con el MISMO NIF B57986846 — rebranding verificado en 3
+      canales por el recon 054 / overlay 055: menores Euskadi/UPV-EHU, PLACSP agregadas y
+      menores Xunta/Turismo de Galicia). Incluye 59 adjudicaciones a
+      las UTE de handling del grupo (Groundforce = UTE Globalia Handling SAU–Iberhandling
+      SAU, NIFs U66551045/U87305900/U56507346/U56507551/U57919714). NO confundir con los
+      homónimos Globalia Urbanismo/Artes Gráficas (rechazados con evidencia registral en
+      el recon 045). NB: los placsp_* del nodo vivo son fill-only — esta nota aplica en
+      rebuilds desde cero; la atribución viva del alias viaja por amp_nota / summary /
+      aliases (spec 055)."
+    organos_destacados:
+      - organo: "Organization:universidad-del-pais-vasco"
+        organo_detalle: "Rectorado de la Universidad del País Vasco / EHU"
+        n_contratos: 521
+        total_eur: 486123
+        rango: "2021-10..2026-02"
+        ejemplo_link: "https://contrataciondelestado.es/wps/poc?uri=deeplink:detalle_licitacion&idEvl=VFPzat1NhOzCfVQHDepjGQ%3D%3D"
+        ejemplo_titulo: "«Reserva de dinero para ir cargando viajes que se contraten a esta agencia» (12.000 €, 2024-03-22)"
+        note: "El mayor cliente de menores de la agencia del grupo: 521 microcontratos de viajes en 4,5 años."
+      - organo: "Organization:universidad-de-sevilla"
+        organo_detalle: "Rectorado de la Universidad de Sevilla"
+        n_contratos: 228
+        total_eur: 134368
+        rango: "2023-10..2025-03"
+        ejemplo_link: "https://contrataciondelestado.es/wps/poc?uri=deeplink:detalle_licitacion&idEvl=V6QcGDXPz58Xhk1FZxEyvw%3D%3D"
+        ejemplo_titulo: "Alquiler de vehículo para desplazamientos del Sr. Rector (16.940 €, 2024-04-12)"
+      - organo: "Organization:aena"
+        organo_detalle: "Direcciones de los aeropuertos Adolfo Suárez Madrid-Barajas, Barcelona-El Prat y Palma de Mallorca"
+        via_ute: "UTE GLOBALIA HANDLING SAU–IBERHANDLING SAU (Groundforce MAD/BCN; U66551045, U87305900, U56507346, U56507551, U57919714)"
+        n_contratos: 21
+        total_eur: 26760
+        rango: "2018-09..2025-04"
+        ejemplo_link: "https://contrataciondelestado.es/wps/poc?uri=deeplink:detalle_licitacion&idEvl=lWN3C60XAbeiEJrVRqloyA%3D%3D"
+        ejemplo_titulo: "Servicio de protocolo — Groundforce (2.858 €, 2022-02-03)"
+        note: "Menores de handling adjudicados a las UTE del grupo en los aeropuertos de Aena — cazados por la pasada UTE del recon."
+
+  - adjudicataria: "Company:obras-publicas-y-regadios"
+    nif: "A13395264"
+    denominacion_placsp: "OBRAS PUBLICAS Y REGADIOS S.A."
+    n_contratos: 12
+    total_eur: 503280
+    rango: "2018-09..2024-09"
+    organos_top: "Demarcación Carreteras Andalucía Oriental/Cataluña, AP Huelva, ADIF AV"
+    nota: "OPR — adjudicataria de menores del Estado hasta 2024-09 pese al concurso
+      declarado en 2025 (cronología concursal en findings/bdns-recon): señal de
+      consecuencia, no de ilegalidad."
+    organos_destacados:
+      - organo: "Organization:demarcaciones-de-carreteras-del-estado"
+        organo_detalle: "Demarcación de Carreteras del Estado en Andalucía Oriental y en Cataluña"
+        n_contratos: 6
+        total_eur: 263237
+        rango: "2021-11..2022-11"
+        ejemplo_link: "https://contrataciondelestado.es/wps/poc?uri=deeplink:detalle_licitacion&idEvl=t8TbX%2FJOdkKrz3GQd5r6SQ%3D%3D"
+        ejemplo_titulo: "Reposición de firme en carril central, pk 111+500–113+000 (48.103 €, 2022-11-10)"
+      - organo: "Organization:adif"
+        organo_detalle: "ADIF Alta Velocidad — Presidencia"
+        n_contratos: 1
+        total_eur: 48326
+        rango: "2018-09..2018-09"
+        ejemplo_link: "https://contrataciondelestado.es/wps/poc?uri=deeplink:detalle_licitacion&idEvl=nT98X21TF8mmq21uxhbaVQ%3D%3D"
+        ejemplo_titulo: "Saneo del deslizamiento en la ladera izquierda del desmonte 1 (48.326 €, 2018-09-21)"
+        note: "Mercantil del reparto de obra pública del informe UCO; contratación menor con ADIF AV previa al concurso de 2025."
+
+  - adjudicataria: "Company:aquaterra-servicios-infraestructuras-sl"
+    nif: "B04783338"
+    denominacion_placsp: "AQUATERRA SERVICIOS INFRAESTRUCTURAS SL"
+    n_contratos: 30
+    total_eur: 1274347
+    rango: "2020-12..2025-11"
+    organos_top: "Demarcaciones de Carreteras del Estado (Galicia, Cantabria, CyL Oriental, Madrid)"
+    nota: "Empresa anclada al corpus por el informe UCO (UTE con Acciona en la Variante de
+      Logroño investigada; NIF citado en el corpus). 12 de las 30 adjudicaciones vía UTE
+      Conservación Almazán."
+    organos_destacados:
+      - organo: "Organization:demarcaciones-de-carreteras-del-estado"
+        organo_detalle: "Demarcaciones de Galicia, Cantabria, Castilla y León Oriental y Madrid"
+        via_ute: "SEÑALIZACIONES VILLAR S.A. y AQUATERRA (UTE CONSERVACIÓN ALMAZÁN, U01636109) en 12 de 29"
+        n_contratos: 29
+        total_eur: 1227520
+        rango: "2020-12..2025-11"
+        ejemplo_link: "https://contrataciondelestado.es/wps/poc?uri=deeplink:detalle_licitacion&idEvl=hv1DT4lJvM%2BsNfRW6APEDw%3D%3D"
+        ejemplo_titulo: "Malla metálica de cerramiento en la autovía VG-20 (48.000 €, 2024-09-04)"
+
+  - adjudicataria: "Company:civis-global-sl"
+    nif: "B36684157"
+    denominacion_placsp: "CIVIS GLOBAL S.L.U."
+    n_contratos: 39
+    total_eur: 1099961
+    rango: "2017-08..2026-05"
+    organos_top: "Demarcaciones de Carreteras (Galicia, Asturias), Diputación de Pontevedra, AP Ferrol"
+    nota: "Constructora de Vigo; su presidente Víctor del Canto aparece en la agenda de
+      García Izaguirre [aldama-movil pp.25-26]. Homónimos CIVIS Hoteles/Consultores/
+      Ibercivis excluidos por NIF."
+    organos_destacados:
+      - organo: "Organization:demarcaciones-de-carreteras-del-estado"
+        organo_detalle: "Demarcación de Carreteras del Estado de Galicia y de Asturias"
+        n_contratos: 14
+        total_eur: 558037
+        rango: "2017-08..2025-10"
+        ejemplo_link: "https://contrataciondelestado.es/wps/poc?uri=deeplink:detalle_licitacion&idEvl=LTFqrIAHzUIQK2TEfXGy%2BA%3D%3D"
+        ejemplo_titulo: "Reparación de muretes de mampostería (60.453 €, 2017-08-29)"
+
+  - adjudicataria: "Company:construcciones-perez-jimenez"
+    nif: "B18077867"
+    denominacion_placsp: "CONSTRUCCIONES PEREZ JIMENEZ S.L."
+    n_contratos: 12
+    total_eur: 493408
+    rango: "2017-12..2023-11"
+    organos_top: "Demarcación Carreteras Andalucía Oriental, Ayto. Armilla, CH Guadalquivir"
+    nota: "El dato fuente alterna B18077867 / A18077867 (errata del publicador, 1 fila,
+      consolidada aquí). A18036509 NO es esta empresa: es HORMIGONES ASFÁLTICOS ANDALUCES
+      SA (HORMACESA, hoja GR1951) — verificado vía Nearius/BORME 2026-07-14, cero
+      administradores compartidos con la hoja GR3193 de Pérez Jiménez."
+    organos_destacados:
+      - organo: "Organization:demarcaciones-de-carreteras-del-estado"
+        organo_detalle: "Demarcación de Carreteras del Estado en Andalucía Oriental"
+        n_contratos: 5
+        total_eur: 250089
+        rango: "2017-12..2021-12"
+        ejemplo_link: "https://contrataciondelestado.es/wps/poc?uri=deeplink:detalle_licitacion&idEvl=Ux56FgV%2BE2yXQV0WE7lYPw%3D%3D"
+        ejemplo_titulo: "Refuerzo de firme en la N-323 (60.403 €, 2017-12-01)"
+
+  - adjudicataria: "Company:marco-infraestructuras-y-medio-ambiente-sa"
+    nif: "A99498255"
+    denominacion_placsp: "MARCO INFRAESTRUCTURAS Y MEDIO AMBIENTE S.A."
+    n_contratos: 10
+    total_eur: 336882
+    rango: "2019-07..2025-12"
+    organos_top: "Demarcación Carreteras Aragón, Aena Valencia, ADIF"
+    organos_destacados:
+      - organo: "Organization:demarcaciones-de-carreteras-del-estado"
+        organo_detalle: "Demarcación de Carreteras del Estado en Aragón"
+        n_contratos: 5
+        total_eur: 230606
+        rango: "2022-05..2025-12"
+        ejemplo_link: "https://contrataciondelestado.es/wps/poc?uri=deeplink:detalle_licitacion&idEvl=TzC5aZt64UqAAM7L03kM8A%3D%3D"
+        ejemplo_titulo: "Inyecciones de relleno en los estribos del viaducto de Valhondo, A-23 (48.300 €, 2025-11-03)"
+
+  - adjudicataria: "Company:levantina-ingenieria-y-construccion"
+    nif: "B97016125"
+    denominacion_placsp: "LEVANTINA INGENIERIA Y CONSTRUCCION S.L."
+    n_contratos: 7
+    total_eur: 273208
+    rango: "2018-09..2023-11"
+    organos_top: "Demarcaciones de Carreteras, Aena Reus, ADIF AV, D.G. del Agua"
+    nota: "LIC (admin José 'Pepe' Ruz, caso Koldo). Menores hasta 2023-11; en liquidación
+      desde 2025-07 (BORME). Misma señal de consecuencia que en BDNS (aval ICO oct-2023 →
+      concurso jun-2024)."
+    organos_destacados:
+      - organo: "Organization:adif"
+        organo_detalle: "ADIF Alta Velocidad — Presidencia"
+        n_contratos: 1
+        total_eur: 34493
+        rango: "2020-05..2020-05"
+        ejemplo_link: "https://contrataciondelestado.es/wps/poc?uri=deeplink:detalle_licitacion&idEvl=IEUOmV8M%2FC0uf4aBO%2BvQlQ%3D%3D"
+        ejemplo_titulo: "Actuaciones previas a la puesta en servicio (34.493 €, 2020-05-27)"
+        note: "Única adjudicación menor de ADIF a la constructora de Pepe Ruz en el periodo; la relación LIC–obra pública del corpus es de contratación mayor."
+
+  - adjudicataria: "Company:torrescamara-y-cia-de-obras-s-a"
+    nif: "A46298220"
+    denominacion_placsp: "TORRESCAMARA Y CIA DE OBRAS S.A."
+    n_contratos: 20
+    total_eur: 783126
+    rango: "2018-02..2026-03"
+    organos_top: "CH Júcar (12), aytos. Valencia/Castellón"
+    nota: "Constructora valenciana del informe UCO de amaños [informe-uco p.190]."
+    organos_destacados:
+      - organo: "Organization:confederacion-hidrografica-del-jucar"
+        organo_detalle: "Presidencia de la Confederación Hidrográfica del Júcar"
+        n_contratos: 12
+        total_eur: 519051
+        rango: "2018-02..2024-12"
+        ejemplo_link: "https://contrataciondelestado.es/wps/poc?uri=deeplink:detalle_licitacion&idEvl=0Zs7lxyU%2BC%2BP66GS%2BONYvQ%3D%3D"
+        ejemplo_titulo: "Acondicionamiento del camino de servicio y accesos (48.395 €, 2023-03-02)"
+
+  - adjudicataria: "Company:comercial-cueto-92-s-l"
+    nif: "B79321840"
+    denominacion_placsp: "COMERCIAL CUETO 92 S.L."
+    n_contratos: 30
+    total_eur: 322500
+    rango: "2018-09..2026-02"
+    organos_top: "SEA 27 Base Aérea de Getafe (19), SEA 15 Cuartel General del Aire, SEA 62 Cuatro Vientos"
+    nota: "Proveedora habitual de unidades del Ejército del Aire — patrón de cliente
+      coherente con su papel de proveedora en la sentencia TS de mascarillas
+      [sentencia-ts-abalos-koldo-aldama-2026-06-22, p.31]."
+    organos_destacados:
+      - organo: "Organization:ministerio-de-defensa"
+        organo_detalle: "Ejército del Aire: SEA 27 (Base Aérea de Getafe), SEA 15 (Cuartel General) y SEA 62 (Cuatro Vientos)"
+        n_contratos: 30
+        total_eur: 322500
+        rango: "2018-09..2026-02"
+        ejemplo_link: "https://contrataciondelestado.es/wps/poc?uri=deeplink:detalle_licitacion&idEvl=bhWUp1I0W4ZxseVhcqrkhw%3D%3D"
+        ejemplo_titulo: "CLOMA — suministro de material para mantenimiento de vehículos pesados (18.150 €, 2026-02-23)"
+
+  - adjudicataria: "Company:barrabes-ski-montana-s-l-u"
+    nif: "B22167480"
+    denominacion_placsp: "BARRABES SKI MONTAÑA S.L.U."
+    n_contratos: 80
+    total_eur: 538824
+    rango: "2018-04..2026-05"
+    organos_top: "Base Aérea de Zaragoza (13), Guardia Civil (9), UME, CH Tajo, aytos./CCAA varios"
+    nota: "La tienda de material de montaña del grupo Barrabés (Benasque, Huesca) —
+      corrobora con detalle la pauta de contratación pública del grupo que describe el
+      informe de la Guardia Civil [informe_guardia_civil pp.13-16]. El racimo societario
+      quedó desglosado en el gate 046: TODO lo societario es B22167480; Barrabés
+      Internet/Consul/Tuca del Mont = 0 menores."
+    organos_destacados:
+      - organo: "Organization:guardia-civil"
+        organo_detalle: "Jefatura de Asuntos Económicos, 8ª Zona (Aragón) y Comandancia de Huesca"
+        n_contratos: 9
+        total_eur: 86568
+        rango: "2022-10..2025-10"
+        ejemplo_link: "https://contrataciondelestado.es/wps/poc?uri=deeplink:detalle_licitacion&idEvl=pS3ZiQbIgldWhbmkna2nXQ%3D%3D"
+        ejemplo_titulo: "Adquisición de 90 arneses de barranquismo (15.021 €, 2023-02-17)"
+        note: "El comprador es la institución (material de montaña para unidades de rescate); relación comercial legal — el interés es el cruce con el caso Begoña Gómez del grupo."
+
+  - adjudicataria: "Company:innova-next-slu"
+    nif: "B86413689"
+    denominacion_placsp: "INNOVA NEXT SL"
+    n_contratos: 8
+    total_eur: 135810
+    rango: "2019-05..2021-12"
+    organos_top: "EM del Ejército (3), Hacienda Aragón, CSIC, ENISA, Junta CLM"
+    nota: "La empresa de Juan Carlos Barrabés de la pieza Begoña Gómez. Los menores CESAN
+      tras 2021-12 (los 24,9 M€ del grupo que cita la UCO son contratación mayor + ayudas,
+      no menores). T1 061 (2026-09-16): innova-next fundido en innova-next-slu (merges.yaml)."
+    organos_destacados:
+      - organo: "Organization:ministerio-de-defensa"
+        organo_detalle: "Jefatura de Asuntos Económicos del Estado Mayor del Ejército"
+        n_contratos: 3
+        total_eur: 53724
+        rango: "2019-11..2020-08"
+        ejemplo_link: "https://contrataciondelestado.es/wps/poc?uri=deeplink:detalle_licitacion&idEvl=qXFBG5uBPHyXQV0WE7lYPw%3D%3D"
+        ejemplo_titulo: "Curso «El ABC del desarrollo web» (17.908 €, 2019-11-22)"
+
+  - adjudicataria: "Company:villafuel"
+    nif: "B01959998"
+    denominacion_placsp: "Combustibles Villafuel S.L."
+    n_contratos: 1
+    total_eur: 1275
+    rango: "2022-01..2022-01"
+    organos_top: "Alcaldía del Ayto. de Chinchilla de Montearagón (único menor del barrido 2018-2026)"
+    nota: "La operadora mayorista de hidrocarburos de la presunta trama del fraude del IVA
+      de los carburantes (Aldama/Claudio Rivas; inhabilitada como operador por Orden
+      TED/113/2025, BOE-A-2025-2271). Su ÚNICA huella en la contratación menor pública
+      2018-2026, adjudicada meses ANTES de su alta CNMC como operador mayorista
+      (15-09-2022). 'Combustibles Villafuel S.L.' es denominación errónea del publicador:
+      no existe sociedad registrada con ese nombre; el NIF B01959998 es VILLAFUEL SL
+      (R.M. Madrid hoja M726015, sede Villaviciosa de Odón). Rechazada por error como
+      homónimo en el recon 045 y reincorporada el 2026-07-14 tras verificar el NIF.
+      Recibir un contrato menor es legal — presunción de inocencia."
+    organos_destacados:
+      - organo: "Organization:ayuntamiento-de-chinchilla-de-montearagon"
+        organo_detalle: "Alcaldía del Ayuntamiento de Chinchilla de Montearagón (Albacete)"
+        n_contratos: 1
+        total_eur: 1275
+        rango: "2022-01..2022-01"
+        ejemplo_link: "https://contrataciondelestado.es/wps/poc?uri=deeplink:detalle_licitacion&idEvl=0gbqAWUeB9iXQV0WE7lYPw%3D%3D"
+        ejemplo_titulo: "Contrato adquisición 1.500 litros gasóleo B para La Felipa (1.275 €, 2022-01-26)"
+        note: "Suministro municipal legal y minúsculo; el interés es que es la única traza de la mayorista del presunto fraude del IVA en la contratación menor pública, previa a su licencia CNMC."
+
+  # ============ Solo props (sin órgano destacado) ============
+  - adjudicataria: "Company:thinking-heads"
+    nif: "B83220475"
+    denominacion_placsp: "THINKING HEADS GROUP S.L."
+    n_contratos: 26
+    total_eur: 228143
+    rango: "2017-11..2026-05"
+    organos_top: "Soc. Desarrollo Santa Cruz de Tenerife (5), Ayto. Illescas, ministerios y organismos varios"
+    nota: "Incluye la filial Thinking Heads Digital SL (B85982346) y una fila V83220475
+      (errata del publicador por B83220475). Conferenciantes para el sector público —
+      menudeo institucional coherente con su papel en el corpus."
+
+  - adjudicataria: "Company:aridos-anfersa-sl"
+    nif: "B18487421"
+    denominacion_placsp: "ARIDOS ANFERSA SL"
+    n_contratos: 13
+    total_eur: 97395
+    rango: "2018-03..2026-03"
+    organos_top: "Ayto. Caniles (4), Ayto. Constantina, aytos. Granada/Sevilla, Diputación de Sevilla"
+    nota: "Menudeo municipal andaluz; empresa anclada al corpus por las nóminas de
+      Patricia Uriz [informe-uco pp.233-235]."
+
+  - adjudicataria: "Company:asch-infraestructuras-y-servicios-sa"
+    nif: "A73998346"
+    denominacion_placsp: "ASCH INFRAESTRUCTURAS Y SERVICIOS S.A."
+    n_contratos: 5
+    total_eur: 128534
+    rango: "2021-12..2025-11"
+    organos_top: "Consejerías Región de Murcia, ENAIRE, ISDEFE"
+
+  - adjudicataria: "Company:avintia"
+    nif: "B85084135"
+    denominacion_placsp: "AVINTIA PROYECTOS Y CONSTRUCCIONES S.L. / GRUPO AVINTIA S.L."
+    n_contratos: 4
+    total_eur: 186050
+    rango: "2021-09..2024-06"
+    organos_top: "CIEMAT, D.G. Servicio Exterior, Demarcación Carreteras, D.G. Planificación Económica"
+
+  - adjudicataria: "Company:acciona-construccion"
+    nif: "A81638108"
+    denominacion_placsp: "ACCIONA CONSTRUCCION S.A."
+    n_contratos: 90
+    total_eur: 14558090
+    rango: "2017-03..2026-05"
+    organos_top: "AP Valencia (34), Base Aérea de Zaragoza, U. Murcia, AP Las Palmas, Demarcaciones"
+    nota: "Volumen esperable en una gran constructora; el interés editorial es el cruce
+      con la trama de amaños de obra pública del corpus (Servinabar/Cerdán), no los
+      menores en sí. Incluye 1 adjudicación vía UTE Acciona Construcción–Acciona
+      Industrial (Aena El Prat). SOLO props por decisión del dueño (2026-07-14): sin
+      arista destacada."
+
+sin_menores:   # negativos informativos — 0 contratos menores en el barrido 2018-01..2026-07.
+               # Solo props del nodo; la ausencia se registra con su rango y sin insinuación:
+               # su negocio fue la adjudicación grande/de emergencia o privada, no el menudeo.
+  - entity_id: "Company:servinabar"
+    nota: "Servinabar 2000 SL: 0 contratos menores en PLACSP 2018-2026 (8,5 años de dumps)."
+  - entity_id: "Company:soluciones-de-gestion"
+    nota: "Soluciones de Gestión y Apoyo a Empresas (mascarillas): 0 contratos menores en PLACSP 2018-2026."
+  - entity_id: "Company:have-got-time"
+    nota: "Have Got Time SL: 0 contratos menores en PLACSP 2018-2026."
+  - entity_id: "Company:deluxe-fortune-sl"
+    nota: "Deluxe Fortune SL: 0 contratos menores en PLACSP 2018-2026."
+  # NB deploy 2026-07-14: "Management Pro Invest" (sin_registro del recon 045) NO tiene
+  # nodo en el grafo vivo (verificado buscar_entidades) → sin ancla que marcar; queda solo
+  # documentado en findings/placsp-recon. Fiadelso es Organization:, no Company: (errata
+  # de la semilla del recon, cazada por el gate ≤1 salto en el primer pase del loader).
+  - entity_id: "Organization:fiadelso"
+    nota: "FIADELSO: 0 contratos menores en PLACSP 2018-2026 (8,5 años de dumps)."

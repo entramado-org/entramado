@@ -1,0 +1,39 @@
+{
+  "name": "entramado-web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "build:e2e": "NEXT_PUBLIC_API_BASE=http://$(../dev-machine.sh ip):8000 next build",
+    "start:e2e": "next start -p 3100",
+    "test:e2e": "playwright test",
+    "gen:teaser": "node scripts/genTeaser.mjs"
+  },
+  "dependencies": {
+    "d3-force": "^3.0.0",
+    "lucide-react": "0.451.0",
+    "next": "16.4.5",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "react-force-graph-2d": "1.29.2",
+    "react-markdown": "10.1.0",
+    "remark-gfm": "4.0.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "@tailwindcss/typography": "0.5.15",
+    "@types/d3-force": "^3.0.10",
+    "@types/node": "20.16.11",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "autoprefixer": "10.4.20",
+    "postcss": "8.5.25",
+    "tailwindcss": "3.4.13",
+    "typescript": "5.6.3"
+  },
+  "overrides": {
+    "postcss-selector-parser": "^7.1.6"
+  }
+}

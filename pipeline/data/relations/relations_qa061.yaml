@@ -1,0 +1,25 @@
+# Correcciones de ARISTAS de la auditoría dual (spec 061).
+#
+# Lo llena `make qa-dual-patches` desde los defectos con parche acordado por los dos
+# lectores (Fable + Astra) y lo revisa un humano ANTES de aplicarlo. Se carga EL
+# ÚLTIMO del overlay de relaciones (los `*_qa061.yaml` van al final).
+#
+# `deny:` — borra la arista EXTRAÍDA (source_kind null/'judicial') que casa:
+#   - {source: <nombre>, target: <nombre>, type: <REL_TYPE>, doc: <pdf>, reason: <por qué>}
+# `fix:` — corrige en su sitio la arista EXTRAÍDA: `corrected_type`, `swap_direction`
+#   y/o `set:` con props sustantivas (spec 061):
+#   - {source: …, target: …, type: PAID,
+#      set: {amount: 12000, currency: EUR, date: '2021-03-04', status: investigado,
+#            note: …, source_kind: prensa},
+#      reason: <por qué>}
+#   Props admitidas en `set:`: amount, currency, date, status, note, source_kind.
+#   `source_kind` SOLO a la baja (judicial→contrato→acusacion→prensa→ultima_hora→
+#   contexto): degradar una arista mal respaldada es legítimo, ascenderla sería
+#   fabricar respaldo documental. `set.source_kind` y `swap_direction` no pueden ir
+#   en la misma fila (el SET se aplica antes del swap) — sepáralas.
+#
+# NUNCA se aplica al grafo vivo: Path A (efímero sobre el seed → `make relations` →
+# diff-gate → re-tar → bump del seed).
+
+deny: []
+fix: []

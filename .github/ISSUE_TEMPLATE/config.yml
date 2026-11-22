@@ -1,0 +1,10 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Rectificación, corrección de contenido o propuesta de caso
+    url: mailto:contacto@entramado.org
+    about: >-
+      Todo lo que afecte a personas (hechos, estados procesales, identidades, casos nuevos)
+      va por correo, no por GitHub: los issues son públicos al instante.
+  - name: Vulnerabilidad o secreto expuesto
+    url: https://github.com/entramado-org/entramado/security/advisories/new
+    about: Comunícalo en privado (ver SECURITY.md).

@@ -1,0 +1,28 @@
+name: Error técnico
+description: Un fallo de la web, la API, el conector MCP o el pipeline, o un enlace roto.
+labels: ["técnico"]
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        **Este issue es público.** No incluyas acusaciones, nombres de particulares ni datos
+        personales, tampoco en URLs, capturas o logs. Si el problema es de contenido sobre una persona, escribe a
+        contacto@entramado.org.
+  - type: textarea
+    id: que
+    attributes:
+      label: Qué ocurre
+      description: Qué esperabas y qué ves. URL de la página o endpoint afectado.
+    validations:
+      required: true
+  - type: textarea
+    id: pasos
+    attributes:
+      label: Cómo reproducirlo
+  - type: checkboxes
+    id: aviso
+    attributes:
+      label: Confirmación
+      options:
+        - label: Este issue no contiene datos personales ni acusaciones.
+          required: true

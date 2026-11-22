@@ -1,0 +1,124 @@
+<!doctype html>
+<!--
+  Fuente de web/app/opengraph-image.png (tarjeta OG 1200×630).
+  La original (spec 035) se generó ad hoc; este HTML existe para que la próxima
+  edición no vuelva a serlo. Regenerar con:
+
+    "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
+      --headless=new --screenshot=web/app/opengraph-image.png \
+      --window-size=1200,630 --hide-scrollbars --default-background-color=00000000 \
+      "file://$PWD/web/scripts/opengraph-image.html"
+
+  Mantener el texto en sintonía con title/DESCRIPTION de web/app/layout.tsx y con
+  web/app/opengraph-image.alt.txt.
+-->
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  body {
+    position: relative;
+    background: #070a12;
+    font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
+    color: #e2e8f0;
+  }
+  .vignette {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(700px 420px at 78% 42%, rgba(245, 158, 11, 0.07), transparent 70%),
+      radial-gradient(900px 600px at 15% 20%, rgba(30, 41, 59, 0.35), transparent 70%);
+  }
+  svg.graph { position: absolute; inset: 0; }
+  .copy { position: absolute; left: 88px; top: 148px; width: 640px; }
+  .badge {
+    color: #f59e0b;
+    font-size: 27px;
+    font-weight: 600;
+    letter-spacing: 3px;
+  }
+  h1 {
+    margin-top: 26px;
+    font-size: 92px;
+    font-weight: 700;
+    letter-spacing: -2px;
+    color: #eef2f8;
+    line-height: 1;
+  }
+  .tagline {
+    margin-top: 34px;
+    font-size: 33px;
+    line-height: 1.42;
+    color: #a9b6c9;
+  }
+  .rule {
+    margin-top: 30px;
+    width: 490px;
+    height: 2px;
+    background: #f59e0b;
+    opacity: 0.85;
+  }
+  .cases {
+    margin-top: 24px;
+    font-size: 25px;
+    color: #93a1b5;
+    white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+  <div class="vignette"></div>
+  <svg class="graph" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+    <g stroke="#64748b" stroke-opacity="0.28" stroke-width="1">
+      <line x1="880" y1="298" x2="785" y2="180" />
+      <line x1="880" y1="298" x2="745" y2="196" />
+      <line x1="880" y1="298" x2="765" y2="241" />
+      <line x1="880" y1="298" x2="737" y2="320" />
+      <line x1="880" y1="298" x2="915" y2="205" />
+      <line x1="880" y1="298" x2="996" y2="157" />
+      <line x1="880" y1="298" x2="868" y2="405" />
+      <line x1="880" y1="298" x2="912" y2="410" />
+      <line x1="880" y1="298" x2="1090" y2="256" />
+      <line x1="785" y1="180" x2="680" y2="130" />
+      <line x1="785" y1="180" x2="745" y2="196" />
+      <line x1="745" y1="196" x2="765" y2="241" />
+      <line x1="765" y1="241" x2="700" y2="297" />
+      <line x1="700" y1="297" x2="737" y2="320" />
+      <line x1="996" y1="157" x2="915" y2="205" />
+      <line x1="912" y1="410" x2="942" y2="488" />
+      <line x1="868" y1="405" x2="847" y2="380" />
+    </g>
+    <g fill="#8494ab">
+      <circle cx="680" cy="130" r="6" />
+      <circle cx="745" cy="196" r="9" />
+      <circle cx="765" cy="241" r="7" />
+      <circle cx="700" cy="297" r="4.5" />
+      <circle cx="737" cy="320" r="7" />
+      <circle cx="915" cy="205" r="6" />
+      <circle cx="996" cy="157" r="8" />
+      <circle cx="847" cy="380" r="5" />
+      <circle cx="912" cy="410" r="9" />
+      <circle cx="1090" cy="256" r="5" />
+    </g>
+    <g fill="#f59e0b">
+      <circle cx="785" cy="180" r="8" />
+      <circle cx="868" cy="405" r="7" />
+      <circle cx="942" cy="488" r="6" />
+    </g>
+    <circle cx="880" cy="298" r="31" fill="none" stroke="#f59e0b" stroke-opacity="0.35" stroke-width="7" />
+    <circle cx="880" cy="298" r="21" fill="#f59e0b" />
+  </svg>
+  <div class="copy">
+    <div class="badge">ENTRAMADO.ORG</div>
+    <h1>El Entramado</h1>
+    <div class="tagline">
+      El grafo de los casos de corrupción<br />
+      que rodean al Gobierno en España,<br />
+      con cita de fuente.
+    </div>
+    <div class="rule"></div>
+    <div class="cases">Caso Koldo &middot; Cerdán &middot; Ábalos &middot; Aldama &middot; Begoña Gómez &middot; Plus Ultra</div>
+  </div>
+</body>
+</html>

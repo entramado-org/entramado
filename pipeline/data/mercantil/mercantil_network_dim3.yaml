@@ -1,0 +1,48 @@
+# Overlay MERCANTIL — Fase 2, DIMENSIÓN 3: participaciones / cadena de control empresa↔empresa.
+# spec 032. Cargado por `make mercantil` (load_network_both en mercantil_loader.py, mismo `network:` key).
+#
+# Las 4 aristas unen dos nodos que YA EXISTEN (source.exists + target.exists = rama `both` del loader):
+# 0 nodos nuevos. El gate ≤1 salto sigue valiendo literal (ambos endpoints MATCHeados; ausente → fila
+# descartada, nunca crea huérfanos). Idempotente. `anchor:` es documental (el loader lo ignora).
+#
+# source_kind='mercantil'; datos oficiales BORME citados por hoja. BORME capta ADMINISTRADORES
+# REGISTRALES (persona física o jurídica), no la titularidad accionarial ni conducta delictiva alguna →
+# estructura societaria, NO imputación. Presunción de inocencia.
+#
+# Verificado 1:1 contra Nearius/BORME (personas_de_empresa / neo4j_query CARGO_EN) el 2026-07-08:
+#   - PLUS ULTRA LINEAS AEREAS SA (M525845): entre sus administradores persona jurídica figuran
+#     SNIP AVIATION SL ✓ y FLYSPAIN SL ✓ (nombramiento). NB: Alva Skies And Wings SL NO se añade aquí —
+#     ya está en el grafo como `OWNS` judicial (de los autos), arista más fuerte. La "maraña" de admins
+#     genéricos de Plus Ultra (Welcoming/Patrifin/Vildacane/Egutec/Lucen/Bell Partners/FGM/Jet Aircraft;
+#     auditores Gayca/Audicar) se DESCARTA: carrusel registral sin vínculo al caso (verificado 1:1).
+#   - FORMIGUERO BARRABES SL (M648880): admin persona jurídica LLITARRADA INNOVA SL ✓.
+#   - STEP ONE VENTURES SL (M461635): admin persona jurídica LLITARRADA INNOVA SL ✓.
+# El merge del duplicado Deluxe Fortune (deluxe-fortune-s-l → deluxe-fortune-sl) va por merges.yaml
+# (make context), no aquí.
+
+network:
+  # ============ Cluster Plus Ultra — administradores persona jurídica registrales ============
+  - anchor: "Company:plus-ultra-lineas-aereas"
+    rel: ADMINISTRA
+    source: { id: "Company:snip-aviation-sl", exists: true }
+    target: { id: "Company:plus-ultra-lineas-aereas", exists: true }
+    edge: { borme_id: "M525845", rol: "administrador registral (persona jurídica)", note: "Snip Aviation SL, administrador persona jurídica registral de Plus Ultra Líneas Aéreas SA (BORME, hoja M525845). Estructura societaria (admin registral, no titularidad accionarial ni conducta), no imputación." }
+
+  - anchor: "Company:plus-ultra-lineas-aereas"
+    rel: ADMINISTRA
+    source: { id: "Company:flyspain-s-l", exists: true }
+    target: { id: "Company:plus-ultra-lineas-aereas", exists: true }
+    edge: { borme_id: "M525845", rol: "administrador registral (persona jurídica)", note: "Flyspain SL, administrador persona jurídica registral de Plus Ultra Líneas Aéreas SA (BORME, hoja M525845). Estructura societaria, no imputación." }
+
+  # ============ Cluster Barrabés — participación empresa↔empresa (persona jurídica administradora) ============
+  - anchor: "Company:formiguero-barrabes-sl"
+    rel: ADMINISTRA
+    source: { id: "Company:llitarrada-innova-sl", exists: true }
+    target: { id: "Company:formiguero-barrabes-sl", exists: true }
+    edge: { borme_id: "M648880", rol: "administrador registral (persona jurídica)", note: "Llitarrada Innova SL, administrador persona jurídica registral de Formiguero Barrabés SL (BORME, hoja M648880). Estructura intra-grupo Barrabés, no imputación." }
+
+  - anchor: "Company:step-one"
+    rel: ADMINISTRA
+    source: { id: "Company:llitarrada-innova-sl", exists: true }
+    target: { id: "Company:step-one", exists: true }
+    edge: { borme_id: "M461635", rol: "administrador registral (persona jurídica)", note: "Llitarrada Innova SL, administrador persona jurídica registral de Step One Ventures SL (BORME, hoja M461635). Estructura intra-grupo Barrabés, no imputación." }

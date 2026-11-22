@@ -1,0 +1,143 @@
+# Overlay MERCANTIL (registro mercantil / BORME) — 1ª carga: SOLO PROPS.
+# Cargado por `make mercantil` (pipeline/src/mercantil_loader.py). source_kind del nodo NO se toca;
+# solo se añaden props registrales (fill-only) + is_mercantil=true a nodos que YA existen.
+# Datos oficiales públicos (BORME), citados por borme_id. Estructura ≠ culpabilidad — presunción
+# de inocencia. entity_ids VERIFICADOS 1:1 contra el grafo vivo (API pública) el 2026-07-05.
+# NB: los que NO existan como nodo se saltan (log mercantil_skip_missing); NO crea nodos ni aristas.
+#
+# Fuente del recon: findings/nearius-mercantil-recon.md + matches.candidate.yaml (semilla).
+# Deliberadamente conservador: solo identidades empresa↔nodo LIMPIAS. Excluidos (identidad
+# grupo-vs-SA ambigua o nodo inexistente): grupo-aldesa (Aldesa Construcciones SA M7401),
+# avintia (sin hoja limpia aún), Constructora San José (no es nodo).
+
+companies:
+  # --- Núcleo del caso -------------------------------------------------------
+  - entity_id: "Company:servinabar"
+    type: Company
+    hoja: "NA35314"
+    provincia: "NAVARRA"
+    capital_social: 3000
+    fecha_constitucion: "2015-09-04"
+    domicilio: "Aranguren (Navarra)"
+    borme_id: "BORME-A-2015-190-31"
+  - entity_id: "Company:levantina-ingenieria-y-construccion"   # LIC (admin Pepe Ruz)
+    type: Company
+    hoja: "V73916"
+    provincia: "VALENCIA"
+    en_liquidacion: true
+    liquidacion_fecha: "en liquidación desde 2025-07-17 (BORME-A-2025-140-46)"
+    borme_id: "BORME-A-2021-34-46"
+  - entity_id: "Company:obras-publicas-y-regadios"             # OPR (en concurso 545/2025)
+    type: Company
+    hoja: "M713768"
+    provincia: "MADRID"
+    domicilio: "Madrid"
+    objeto_social: "Obra pública, regadíos e ingeniería (socio único: OPR Seomer SL)"
+    en_concurso: true
+    concurso_fecha: "declarado 2025; firme 23-12-2025 (proc. 545/2025)"
+    concurso_juzgado: "Juzgado de lo Mercantil nº 7 de Madrid"
+    borme_id: "BORME-A-2026-15-28"
+  - entity_id: "Company:deluxe-fortune-sl"                     # vehículo Aldama
+    type: Company
+    hoja: "M543192"
+    provincia: "MADRID"
+    fecha_constitucion: "2012"
+    borme_id: "BORME-A-2012-153-28"
+  - entity_id: "Company:plus-ultra-lineas-aereas"
+    type: Company
+    hoja: "M525845"
+    provincia: "MADRID"
+    borme_id: "BORME-A-2019-63-28"
+  - entity_id: "Company:globalia"
+    type: Company
+    hoja: "PM26677"
+    provincia: "ILLES BALEARS"
+    borme_id: "BORME-A-2009-218-07"
+  # s86: la antigua filial de viajes del grupo (hoy SEKAI, mismo NIF) — nodo propio.
+  - entity_id: "Company:globalia-corporate-travel"
+    type: Company
+    nif: "B57986846"
+    hoja: "PM79779"
+    provincia: "ILLES BALEARS"
+    borme_id: "BORME-A-2022-18-07"
+  # --- Constructoras de obra pública ----------------------------------------
+  - entity_id: "Company:asch-infraestructuras-y-servicios-sa"
+    type: Company
+    nif: "A73998346"
+    hoja: "MU95789"
+    provincia: "MURCIA"
+    borme_id: "BORME-A-2025-104-30"
+  - entity_id: "Company:construcciones-perez-jimenez"
+    type: Company
+    nif: "B18077867"
+    hoja: "GR3193"
+    provincia: "GRANADA"
+    borme_id: "BORME-A-2016-47-18"
+  - entity_id: "Company:ferrovial"
+    type: Company
+    hoja: "M204873"
+    provincia: "MADRID"
+    borme_id: "BORME-A-2021-54-28"
+  - entity_id: "Company:acciona-construccion"
+    type: Company
+    hoja: "M185418"
+    provincia: "MADRID"
+    borme_id: "BORME-A-2026-23-28"
+  - entity_id: "Company:sacyr"
+    type: Company
+    hoja: "M33841"
+    provincia: "MADRID"
+    borme_id: "BORME-A-2025-30-28"
+  - entity_id: "Company:ortiz-construcciones-y-proyectos-sa"
+    type: Company
+    hoja: "M167515"
+    provincia: "MADRID"
+    borme_id: "BORME-A-2025-145-28"
+  - entity_id: "Company:marco-infraestructuras-y-medio-ambiente-sa"
+    type: Company
+    nif: "A99498255"
+    hoja: "Z62204"
+    provincia: "ZARAGOZA"
+    borme_id: "BORME-A-2025-225-50"   # último acto en hoja Z62204 (placeholder resuelto, auditoría 2026-07-08)
+  - entity_id: "Company:azvi"
+    type: Company
+    hoja: "SE3636"
+    provincia: "SEVILLA"
+    borme_id: "BORME-A-2025-44-41"
+
+  # --- Profundización (spec 031): concurso/disolución + objeto + histórico de capital -------
+  # Verificado 1:1 contra Nearius vivo (obtener_empresa_por_hoja) el 2026-07-08. Situación
+  # mercantil = señal pública, NO imputación (el concurso lo insta la propia sociedad / acreedores;
+  # el administrador concursal no es pieza de la trama). Presunción de inocencia.
+  - entity_id: "Company:have-got-time"         # vehículo Aldama (hidrocarburos); antes NO enriquecido
+    type: Company
+    hoja: "M730138"
+    provincia: "MADRID"
+    capital_social: 3000
+    cnae: "4671"
+    fecha_constitucion: "2021-01-07"
+    domicilio: "Las Rozas de Madrid"
+    objeto_social: "Refino, comercialización y distribución de petróleos y derivados; explotación de estaciones de servicio (constituida como construcción, cambió el objeto en 2021)"
+    en_concurso: true
+    concurso_fecha: "proc. 151/2023"
+    concurso_juzgado: "Juzgado de lo Mercantil nº 7 de Madrid"
+    disuelta: true
+    disuelta_fecha: "disuelta 2024; hoja cerrada definitivamente 2025-11-20 (art. 485 TRLC)"
+    borme_id: "BORME-A-2025-227-28"
+  - entity_id: "Company:boreal-sinergias-sl"   # ya nodo mercantil (tanda 2); añade disolución + objeto
+    type: Company
+    hoja: "M636817"
+    provincia: "MADRID"
+    capital_social: 3000
+    fecha_constitucion: "2016-12-01"
+    objeto_social: "Promoción inmobiliaria: compraventa e intermediación de fincas y construcción sobre ellas"
+    disuelta: true
+    disuelta_fecha: "disuelta y extinguida 2024-02-15 (liquidador: Avintia Desarrollos Inmobiliarios SL)"
+    borme_id: "BORME-A-2024-38-28"
+  - entity_id: "Company:inteligencia-prospectiva"   # núcleo Plus Ultra; showcase de histórico de capital
+    type: Company
+    hoja: "M713721"
+    provincia: "MADRID"
+    objeto_social: "Actividades de sociedad holding / consultoría de organización (ex Beren Europe SL → Alaska Ilimitada SL)"
+    capital_historico: "3.000 € (2020, constitución como Beren Europe) → 10.000 € (2020) → 264.500 € (2022-05) → 701.500 € (2022-12)"
+    borme_id: "BORME-A-2022-242-28"

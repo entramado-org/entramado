@@ -1,0 +1,1140 @@
+# Curated context layer — ENRICHED ROLES (swarm-generated, web-sourced, verified).
+#
+# Produced by the enrich-entity-descriptions Workflow: each role was drafted from
+# public sources and passed an adversarial fact-check; high-profile figures got a
+# 3-vote review. Loaded by `make context` alongside the hand-curated figures.yaml /
+# organizaciones.yaml. This file sorts AFTER them, so its `role` wins on shared
+# entities (the curated files are left untouched; delete this file to revert).
+#
+# GROUND RULE (updated 2026-05-30, per user): unlike figures.yaml's "never alleged
+# wrongdoing" rule, these roles MAY state the person's ROLE IN THE CASE, but ONLY
+# with presumption-of-innocence language ("investigado", "imputado", "presunta
+# trama", "según la UCO") and backed by the `sources` listed. Never assert guilt.
+#
+# `sources` is provenance only — context_loader ignores it (reads name/type/role).
+# Re-run `make context` after editing.
+
+entities:
+- name: AZVI
+  type: Company
+  role: 'Grupo Azvi: constructora andaluza de obra civil y ferroviaria, con sede en Sevilla, presidida
+    por Manuel Contreras Caro'
+  sources:
+  - https://www.elespanol.com/espana/20240919/constructora-azvi-ficho-koldo-mes-obra-obtener-contratos-abalos/886911857_0.html
+  - https://theobjective.com/espana/tribunales/2025-07-26/audio-koldo-constructora-azvi-amanos/
+  - https://www.eleconomista.es/actualidad/noticias/13411501/06/25/mas-de-un-centenar-de-adjudicaciones-publicas-bajo-sospecha-por-mordidas-a-abalos-santos-cerdan-y-koldo-garcia.html
+  - https://www.libertaddigital.com/espana/politica/2026-05-09/koldo-se-quejo-por-darle-obras-a-azvi-la-empresa-vinculada-a-las-obras-del-tramo-del-accidente-de-adamuz-1b-7401468/
+- name: Acciona
+  type: Company
+  role: Grupo empresarial español cotizado (IBEX 35) de infraestructuras, construcción, agua y energías
+    renovables; matriz Acciona, S.A., con filiales como Acciona Construcción, S.A. (Acciona Energía cotiza
+    por separado en el IBEX 35 desde 2021).
+  sources:
+  - https://es.wikipedia.org/wiki/Acciona
+  - https://www.acciona.com/
+  - https://www.eldiario.es/politica/son-adjudicaciones-alianza-acciona-empresa-vinculada-cerdan-lupa-justicia_1_12779315.html
+- name: Air Europa
+  type: Company
+  role: Aerolínea española del Grupo Globalia (familia Hidalgo); receptora en noviembre de 2020 de un
+    rescate público de 475 millones de euros vía el fondo (FASEE) de la SEPI.
+  sources:
+  - https://www.infobae.com/espana/2026/04/22/el-rescate-a-air-europa-se-cuela-en-el-juicio-del-caso-mascarillas-con-el-rastro-del-dinero-en-efectivo-y-versiones-enfrentadas-sobre-lo-ocurrido-antes-de-la-ayuda/
+  - https://theobjective.com/espana/tribunales/2026-04-27/uco-abalos-hidalgo-calvino-air-europa/
+- name: Análisis Relevante
+  type: Company
+  role: Sociedad de consultoría (Análisis Relevante S.L.), administrada por el empresario Julio Martínez
+    Martínez; señalada por la UDEF como 'pieza instrumental' en la investigación de la rama Zapatero/Plus
+    Ultra por presunto blanqueo y tráfico de influencias.
+  sources:
+  - https://www.eldiario.es/politica/empresas-salpicadas-investigacion-zapatero-whathefav-analisis-relevante_1_13234431.html
+  - https://www.infobae.com/espana/2026/05/19/analisis-relevante-la-empresa-vinculada-a-zapatero-y-sus-hijas-por-la-que-habrian-recibido-mordidas-del-rescate-a-la-aerolinea-plus-ultra/
+  - https://www.infobae.com/espana/2026/05/25/el-rastro-del-dinero-del-caso-plus-ultra-julio-martinez-canalizaba-los-fondos-de-las-influencias-y-zapatero-y-su-entorno-serian-los-principales-beneficiarios/
+- name: Barrabes Internet Sl
+  type: Company
+  role: Sociedad del Grupo Barrabés (Barrabes Internet, S.L./S.L.U.) dedicada a servicios de internet,
+    consultoría y comercio electrónico.
+  sources:
+  - https://theobjective.com/economia/2026-04-14/barrabes-empresa-avalada-begona-gomez/
+- name: Barrabes Ski Montana S.L.U.
+  type: Company
+  role: Sociedad del grupo empresarial de la familia Barrabes (sede en Benasque, Huesca) dedicada al comercio
+    de material de montana y esqui; vinculada a Juan Carlos Barrabes y, junto con Innova Next SL, investigada
+    en la pieza del 'caso Begona Gomez'.
+  sources:
+  - https://www.elindependiente.com/espana/tribunales/2024/08/23/la-uco-registra-el-domicilio-y-la-empresa-de-barrabes-por-el-caso-de-begona-gomez/
+  - https://www.elindependiente.com/espana/tribunales/2024/05/28/la-uco-senala-que-barrabes-logro-el-90-de-las-adjudicaciones-publicas-entre-2021-y-2022/
+  - https://www.libertaddigital.com/espana/2024-06-24/pleno-de-barrabes-ocho-sociedades-vinculadas-al-guru-de-begona-gomez-necesitaron-ayuda-del-ico-y-la-lograron-7139455/
+  - https://es.wikipedia.org/wiki/Caso_Bego%C3%B1a_G%C3%B3mez
+- name: Caletón Consultores SL
+  type: Company
+  role: Sociedad de consultoria identificada en las diligencias previas 77/2024 (caso Plus Ultra / auto
+    Zapatero) como sociedad instrumental del entramado, controlada de facto por Santiago Fernandez Lena
+  sources:
+  - https://www.eleconomista.es/actualidad/noticias/13935228/05/26/plus-ultra-pago-17-millones-al-testaferro-de-zapatero-a-traves-de-sociedades-instrumentales.html
+  - https://www.actualidad.es/politica/2026/05/25/acusaciones-de-la-udef-julio-martinez-redes-societarias-y-el-rescate-de-plus-ultra/
+  - https://www.infobae.com/espana/2026/05/20/las-presuntas-maniobras-de-zapatero-para-ocultar-el-dinero-del-caso-plus-ultra-facturas-falsas-de-50000-euros-una-sociedad-offshore-en-dubai-y-ordenes-para-borrar-la-palabra-comision/
+- name: Construcciones Pérez Jiménez
+  type: Company
+  role: Constructora granadina de obra civil (carreteras y autovias, CNAE 4211), Construcciones Perez
+    Jimenez S.L. (NIF B18077867), constituida en 1987; aparece en el informe de la UCO de la trama de
+    obra publica del caso Koldo.
+  sources:
+  - https://www.elindependientedegranada.es/politica/tres-empresas-dos-investigados-granada-informe-uco
+  - https://www.democrata.es/actualidad/informe-cerdan-a-quien-senala-uco-cupula-transportes-abalos/
+  - https://empresite.eleconomista.es/CONSTRUCCIONES-PEREZ-JIMENEZ.html
+  - https://www.axesor.es/Informes-Empresas/408227/CONSTRUCCIONES_PEREZ_JIMENEZ_SOCIEDAD_LIMITADA.html
+- name: GEOALCALI
+  type: Company
+  role: Geoalcali S.L., filial española de la minera cotizada Highfield Resources (matriz australiana);
+    titular del proyecto de potasa Mina Muga (Navarra/Aragón).
+  sources:
+  - https://www.eldiario.es/navarra/mina-muga-proyecto-uco-situa-origen-trama-cerdan-koldo-navarra_1_12381803.html
+  - https://www.vozpopuli.com/economia/empresas/la-uco-sospecha-que-la-relacion-de-koldo-y-cerdan-con-acciona-surgio-por-una-mina-que-se-adjudico-en-2024.html
+  - https://navarra.okdiario.com/articulo/sociedad/geoalcali-niega-relacion-investigacion-uco/20251120155653623715.html
+- name: Globalia
+  type: Company
+  # s86: la filial de viajes (Globalia Corporate Travel/Sekai, B57986846) tiene nodo
+  # propio — su role vive en organizaciones.yaml. Mantener este role en sincronía con el
+  # de la matriz de organizaciones.yaml (este fichero carga después y manda).
+  role: Grupo turístico español (Globalia Corporación Empresarial), de la familia Hidalgo; matriz de la
+    aerolínea Air Europa y de Halcón Viajes. Su antigua filial de viajes Globalia Corporate Travel S.L.U.
+    (hoy Sekai, fuera del grupo desde 2020-21) tiene ficha propia
+  sources:
+  - https://es.wikipedia.org/wiki/Juan_Jos%C3%A9_Hidalgo
+  - https://www.moncloa.com/2026/03/20/aldama-rescate-air-europa-3366770/
+  - https://www.newtral.es/rescate-air-europa/20240301/
+- name: Grupo Barrabés
+  type: Company
+  role: Grupo empresarial aragonés de consultoría e innovación fundado por Carlos Barrabés; sus sociedades
+    están investigadas/procesadas en la causa del caso Begoña Gómez por adjudicaciones de Red.es (presunción
+    de inocencia).
+  sources:
+  - https://theobjective.com/espana/2025-12-11/barrabes-silencio-senado-begona-gomez/
+  - https://theobjective.com/economia/2026-04-14/barrabes-empresa-avalada-begona-gomez/
+  - https://www.eldiariodehuesca.com/actualidad/carlos-barrabes-acusado-trafico-influencias-corrupcion-en-negocios-en-sector-privado-dentro-caso-begona-gomez_42565_102.html
+- name: Innova Next SLU
+  type: Company
+  role: Sociedad mercantil de consultoría tecnológica del grupo del empresario Juan Carlos Barrabés; implicada
+    en el caso Begoña Gómez.
+  sources:
+  - https://es.wikipedia.org/wiki/Caso_Bego%C3%B1a_G%C3%B3mez
+  - https://www.elespanol.com/espana/tribunales/20250929/intervencion-dice-contratos-barrabes-begona-gomez-apoyo-pudieron-incurrir-fraude-ley/1003743946044_0.html
+  - https://www.vozpopuli.com/tribunales/la-uco-revela-que-begona-gomez-mantuvo-actividad-comercial-en-la-empresa-de-su-catedra-hasta-que-fue-imputada.html
+- name: Inteligencia Prospectiva
+  type: Company
+  role: Sociedad mercantil española (Inteligencia Prospectiva, S.L.) participada por los hermanos venezolanos
+    Guillermo Alfredo Amaro Chacón (62%) y Domingo Arnaldo Amaro Chacón (38%); señalada por la UDEF como
+    presunta sociedad instrumental en la causa por el rescate público de Plus Ultra que instruye la Audiencia
+    Nacional (caso Zapatero).
+  sources:
+  - https://www.publico.es/politica/inteligencia-prospectiva-destino-92-pagos-empresas-vinculadas-zapatero-martinez.html
+  - https://www.infobae.com/espana/2026/05/24/quien-es-quien-en-el-caso-plus-ultra-un-entramado-de-empresarios-politicos-y-sociedades-que-coloca-en-el-centro-de-la-investigacion-a-zapatero/
+  - https://www.eldiario.es/politica/empresas-salpicadas-investigacion-zapatero-whathefav-analisis-relevante_1_13234431.html
+- name: LIC
+  type: Company
+  role: Levantina, Ingenieria y Construccion (LIC SL), constructora valenciana (Alberic) investigada en
+    la rama valenciana del caso Koldo
+  sources:
+  - https://www.esdiario.com/comunidad-valenciana/250612/161068/jose-ruz-constructor-valenciano-intimo-koldo-abalos-llevaba-contratos-uco.html
+  - https://valenciaplaza.com/valenciaplaza/comunitat-valenciana1/lic-la-constructora-valenciana-vinculada-a-las-mordidas-del-caso-koldo
+  - https://www.elespanol.com/invertia/20250118/constructora-jose-ruz-vinculada-trama-koldo-adquirida-cyes-esyc-concurso-acreedores/917158539_0.html
+- name: Levantina Ingeniería y Construcción
+  type: Company
+  role: Constructora española (Levantina, Ingeniería y Construcción SL, 'LIC'), vinculada a José Ruz;
+    mencionada en la instrucción del caso Koldo/Cerdán por presunto amaño de obra pública.
+  sources:
+  - https://www.diariodeleon.es/nacional/251115/2066243/informe-sobre-dinero-cerdan-desata-registros-uco-acciona.html
+  - https://www.eldiario.es/politica/son-adjudicaciones-alianza-acciona-empresa-vinculada-cerdan-lupa-justicia_1_12779315.html
+- name: Llitarrada Innova Sl
+  type: Company
+  role: Sociedad holding espanola (CIF B86684032, constituida el 4-3-2013, sede en Madrid), cabecera del
+    entramado societario del empresario Juan Carlos (Carlos) Barrabes
+  sources:
+  - https://www.empresia.es/empresa/llitarrada-innova/
+  - https://www.axesor.es/Informes-Empresas/7697259/LLITARRADA_INNOVA_SL.html
+  - https://www.vozpopuli.com/economia/inmobiliario/socio-begona-gomez-muda-su-holding-personal-sede-rectores-madrid.html
+- name: Obras Públicas y Regadíos
+  type: Company
+  role: Constructora de ingeniería civil (OPR, Obras Públicas y Regadíos S.A.); señalada por la UCO entre
+    las empresas analizadas en la causa de Santos Cerdán/Ábalos.
+  sources:
+  - https://opr.es/
+  - https://theobjective.com/espana/tribunales/2025-06-23/constructoras-salpicadas-amanos-cerdan-koldo-web-investigacion/
+  - https://www.cordobabn.com/articulo/nacional/registros-informe-cerdan-esquema-abalos-adjudicaciones-historicas-reserva-hostal/20250618145104228284.html
+- name: Plus Ultra
+  type: Company
+  role: Aerolínea española (Plus Ultra Líneas Aéreas S.A.) con accionistas vinculados a capital venezolano;
+    rescatada con 53 M€ de la SEPI en 2021; núcleo del 'caso Plus Ultra'.
+  sources:
+  - https://es.wikipedia.org/wiki/Plus_Ultra_L%C3%ADneas_A%C3%A9reas
+  - https://es.euronews.com/my-europe/2026/05/25/caso-plus-ultra-quien-es-quien-investigacion-salpica-zapatero
+  - https://www.infobae.com/espana/2026/05/27/el-sumario-de-4000-folios-del-caso-plus-ultra-por-el-que-se-imputa-a-zapatero-ningun-mensaje-directo-suyo-pero-muchas-conversaciones-que-apuntan-a-su-liderazgo-en-la-trama/
+- name: Sacyr
+  type: Company
+  role: Sacyr, grupo espanol de construccion, concesiones e infraestructuras
+  sources:
+  - https://es.wikipedia.org/wiki/Caso_Koldo
+  - https://www.eldiario.es/politica/claves-informe-uco-apunta-intermediacion-cerdan-cobro-mordidas-abalos-koldo-garcia_1_12379117.html
+  - https://www.sacyr.com/
+- name: Servinabar
+  type: Company
+  role: Servinabar 2000 S.L.U., sociedad navarra (reconvertida en constructora/consultora de prevención
+    de riesgos) de Joseba Antxon Alonso Egurrola; pieza central del informe de la UCO en la causa que
+    investiga a Santos Cerdán.
+  sources:
+  - https://www.eldiario.es/euskadi/secretos-movil-antxon-alonso-dan-nueva-dimension-papel-servinabar-2000-trama-cerdan_1_12778022.html
+  - https://www.elplural.com/politica/espana/claves-informe-uco-trio-conformado-cerdan-servinabar-acciona_365429102
+  - https://www.eldiario.es/navarra/directivo-navarra-confirma-acciona-introdujo-servinabar-2000-ute-belate_1_12999914.html
+  - https://www.eldiario.es/euskadi/pagos-empresario-antxon-alonso-familiares-santos-cerdan-refuerzan-vinculacion-servinabar-2000_1_12509270.html
+- name: Softgestor
+  type: Company
+  role: Sociedad mercantil señalada en el 'caso Plus Ultra' (DP 77/2024) como instrumento para canalizar
+    fondos; el sumario atribuye su control real a Francisco Flores.
+  sources:
+  - https://www.infobae.com/espana/2026/05/25/los-hermanos-amaro-chacon-y-francisco-flores-quienes-son-los-empresarios-venezolanos-vinculados-al-entorno-de-zapatero-en-el-caso-plus-ultra/
+  - https://www.elindependiente.com/espana/2026/05/25/la-udef-pone-el-foco-en-whathefav-la-sociedad-de-las-hijas-de-zapatero-elemento-finalista-de-la-trama-de-corrupcion/
+- name: Soluciones de Gestión
+  type: Company
+  role: 'Soluciones de Gestión y Ayuda a las Empresas SL: mercantil adjudicataria en 2020 de contratos
+    de emergencia de mascarillas en el ''caso Koldo''.'
+  sources:
+  - https://www.elconfidencial.com/espana/2024-02-23/soluciones-gestion-empresa-fantasma-mascarillas_3834567/
+  - https://www.publico.es/politica/mascarillas-trama-koldo-53-millones-contratos-empresa-sin-actividad.html
+- name: Whathefav SL
+  type: Company
+  role: Sociedad de comunicación administrada por las hijas de José Luis Rodríguez Zapatero (Alba y Laura
+    Rodríguez Espinosa); señalada por la UDEF en el 'caso Plus Ultra' (DP 77/2024) como presunto 'elemento
+    finalista' del flujo de fondos.
+  sources:
+  - https://www.elindependiente.com/espana/2026/05/25/la-udef-pone-el-foco-en-whathefav-la-sociedad-de-las-hijas-de-zapatero-elemento-finalista-de-la-trama-de-corrupcion/
+  - https://www.infobae.com/espana/2026/05/26/la-udef-sostiene-que-las-hijas-de-zapatero-usaron-su-empresa-whathefav-para-ocultar-pagos-de-la-trama-plus-ultra-mediante-facturas-falsas/
+  - https://www.infobae.com/espana/2026/05/24/quien-es-quien-en-el-caso-plus-ultra-un-entramado-de-empresarios-politicos-y-sociedades-que-coloca-en-el-centro-de-la-investigacion-a-zapatero/
+- name: Áridos Anfersa SL
+  type: Company
+  role: Empresa espanola del sector de los aridos y la explotacion de canteras (representada, según la documentación analizada, por Francisco Coca Sanchez), citada en la causa Koldo en relacion con contratos de Adif.
+  sources:
+  - https://www.anfersa.es/
+  - https://www.eldebate.com/espana/20260121/uco-investiga-contrato-adif-cantera-certificacion-empleo-mujer-koldo-como-proveedora-material-tramo-adamuz_376640.html
+  - https://www.elcorreogallego.es/espana/2024/12/04/aldama-128-contratos-publicos-constructoras-koldo-comisiones-112333298.html
+- name: Obra ferroviaria — Logroño
+  type: Contract
+  role: Contrato de obra pública en Logroño (variante/Ronda Sur, en realidad obra de carretera, no ferroviaria)
+    adjudicado a la UTE Acciona y presuntamente afectado por los amaños investigados en la rama de obra
+    pública del caso Koldo
+  sources:
+  - https://www.infobae.com/espana/agencias/2025/11/18/las-obras-adjudicadas-por-245-millones-a-la-ute-entre-acciona-y-la-empresa-vinculada-a-cerdan-que-el-ts-investiga/
+  - https://www.eldiario.es/la-rioja/bingo-logrono-detalles-informe-uco-trama-acciona-cerdan-rioja_1_12778092.html
+  - https://es.wikipedia.org/wiki/Caso_Koldo
+- name: Obra ferroviaria — Sant Feliú de Llobregat
+  type: Contract
+  role: Contrato de integración del ferrocarril en Sant Feliú de Llobregat (Barcelona) adjudicado a Acciona,
+    presuntamente afectado por los amaños investigados en la rama de obra pública del caso Koldo
+  sources:
+  - https://www.infobae.com/espana/agencias/2025/11/18/las-obras-adjudicadas-por-245-millones-a-la-ute-entre-acciona-y-la-empresa-vinculada-a-cerdan-que-el-ts-investiga/
+  - https://www.moncloa.com/2025/12/03/caso-koldo-tres-obras-3344453
+  - https://es.wikipedia.org/wiki/Caso_Koldo
+- name: Obra ferroviaria — Sevilla
+  type: Contract
+  role: Contrato de obra pública en Sevilla (Puente del Centenario / accesos SE-40, en realidad obra de
+    puente/viario, no ferroviaria) adjudicado a Acciona, presuntamente afectado por los amaños investigados
+    en la rama de obra pública del caso Koldo
+  sources:
+  - https://www.infobae.com/espana/agencias/2025/11/18/las-obras-adjudicadas-por-245-millones-a-la-ute-entre-acciona-y-la-empresa-vinculada-a-cerdan-que-el-ts-investiga/
+  - https://www.elpespunte.es/articulo/sevilla/cerdan-puente-centenario-uco-cifra-18-millones-cobrado-servinabar/20251119114402115666.html
+  - https://es.wikipedia.org/wiki/Caso_Koldo
+- name: Suministro de mascarillas — ADIF (2020)
+  type: Contract
+  role: Contrato de suministro de mascarillas adjudicado en 2020 por vía de emergencia COVID en el ámbito
+    del Ministerio de Transportes/ADIF, integrado en la trama de mascarillas del caso Koldo
+  sources:
+  - https://es.wikipedia.org/wiki/Caso_Koldo
+  - https://www.eldiario.es/politica/53-millones-trama-mascarillas-concurso-sobrecostes-pagados-parte-fondos-europeos_1_10949340.html
+  - https://www.poderjudicial.es/cgpj/es/Poder-Judicial/Tribunal-Supremo/Oficina-de-Comunicacion/Notas-de-prensa/El-instructor-del-Tribunal-Supremo-abre-juicio-oral-al-exministro-Abalos--su-exasesor-Koldo-Garcia-y-el-empresario-Aldama-por-la-contratacion-irregular-de-mascarillas-durante-la-pandemia-de-COVID
+- name: Suministro de mascarillas — Puertos del Estado (2020)
+  type: Contract
+  role: Contrato de suministro de mascarillas adjudicado en 2020 por vía de emergencia COVID a través
+    de Puertos del Estado, integrado en la trama de mascarillas del caso Koldo
+  sources:
+  - https://es.wikipedia.org/wiki/Caso_Koldo
+  - https://www.eldiario.es/politica/53-millones-trama-mascarillas-concurso-sobrecostes-pagados-parte-fondos-europeos_1_10949340.html
+  - https://www.poderjudicial.es/cgpj/es/Poder-Judicial/Tribunal-Supremo/Oficina-de-Comunicacion/Notas-de-prensa/El-instructor-del-Tribunal-Supremo-abre-juicio-oral-al-exministro-Abalos--su-exasesor-Koldo-Garcia-y-el-empresario-Aldama-por-la-contratacion-irregular-de-mascarillas-durante-la-pandemia-de-COVID
+- name: Audiencia Nacional
+  type: Court
+  role: Organo judicial espanol con jurisdiccion en todo el territorio para delitos economicos graves,
+    corrupcion, terrorismo y crimen organizado; sede en Madrid.
+  sources:
+  - https://es.wikipedia.org/wiki/Audiencia_Nacional_(Espa%C3%B1a)
+  - https://www.poderjudicial.es/cgpj/eu/Botere-Judiziala/Auzitegi-Gorena/Auzi-Berriak/El-Tribunal-Supremo-asigna-al-juez-Ismael-Moreno-la-competencia-para-investigar-las-presuntas-irregularidades-en-los-contratos-de-las-mascarillas-durante-la-pandemia
+  - https://www.elindependiente.com/espana/2026/05/12/el-juez-ismael-moreno-rechaza-archivar-la-investigacion-a-koldo-por-las-mascarillas-de-baleares-y-canarias/
+  - https://theobjective.com/espana/tribunales/2025-12-15/supremo-investigacion-audiencia-nacional-pagos-psoe/
+- name: Juzgado Central de Instrucción número 2
+  type: Court
+  role: Juzgado Central de Instrucción nº 2 de la Audiencia Nacional (Madrid), cuyo titular es el juez
+    Ismael Moreno Chamarro; instruye la causa del caso Koldo (mascarillas) en la Audiencia Nacional.
+  sources:
+  - https://www.infobae.com/espana/2024/07/28/quien-es-ismael-moreno-el-juez-encargado-de-investigar-el-caso-koldo-de-policia-en-el-franquismo-a-magistrado-de-la-audiencia-nacional/
+  - https://www.eldebate.com/espana/20240223/caso-koldo-recae-juez-veterano-audiencia-nacional-conocido-alargar-instrucciones_176707.html
+- name: Sala de lo Penal
+  type: Court
+  role: Sala de lo Penal (Sala Segunda) del Tribunal Supremo, competente para instruir y enjuiciar a aforados;
+    tramita la Causa Especial 20775/2020 (Ábalos/Koldo/Cerdán)
+  sources:
+  - https://es.wikipedia.org/wiki/Sala_Segunda_del_Tribunal_Supremo
+  - https://www.tribunalsupremo.es/
+  - https://www.poderjudicial.es/cgpj/es/Poder-Judicial/Sala-de-Prensa/Archivo-de-notas-de-prensa/El-instructor-del-Tribunal-Supremo-mantiene-la-prision-provisional-de-Santos-Cerdan-al-persistir-el-riesgo-de-destruccion-de-pruebas
+- name: Tribunal Central de Instancia
+  type: Court
+  role: Órgano judicial de ámbito nacional (sede en Madrid) creado por la Ley Orgánica 1/2025; desde el
+    31 de diciembre de 2025 sus Secciones (entre ellas Instrucción) asumieron las competencias de los
+    antiguos Juzgados Centrales de la Audiencia Nacional
+  sources:
+  - https://www.boe.es/buscar/act.php?id=BOE-A-2025-76
+  - https://es.wikipedia.org/wiki/Tribunal_Central_de_Instancia
+- name: Tribunal Supremo
+  type: Court
+  role: 'Tribunal Supremo de España: máximo órgano jurisdiccional; su Sala Segunda (de lo Penal) instruye
+    y enjuicia las causas con aforados del ''caso Koldo''.'
+  sources:
+  - https://www.atlantico.net/espana/pardo-vera-declara-supremo-caso_1_20260413-4233789.html
+  - https://www.poderjudicial.es/cgpj/es/Poder-Judicial/Tribunal-Supremo/
+- name: Tribunal del Jurado
+  type: Court
+  role: Órgano judicial español de participación ciudadana en la administración de justicia penal, regulado
+    por la Ley Orgánica 5/1995 del Tribunal del Jurado
+  sources:
+  - https://es.wikipedia.org/wiki/Tribunal_del_Jurado_(Espa%C3%B1a)
+  - https://www.boe.es/buscar/act.php?id=BOE-A-1995-12095
+- name: ADIF
+  type: Organization
+  role: Administrador de Infraestructuras Ferroviarias (ADIF) y ADIF Alta Velocidad, entidades públicas
+    empresariales adscritas al Ministerio de Transportes, responsables de la red ferroviaria española.
+  sources:
+  - https://es.wikipedia.org/wiki/Administrador_de_Infraestructuras_Ferroviarias
+  - https://www.adif.es/
+- name: AENA
+  type: Organization
+  role: 'Aena S.M.E., S.A.: gestor aeroportuario espanol (sociedad mercantil estatal cotizada, mayoria
+    publica del Estado via Enaire) adscrito al Ministerio de Transportes; opera la red de aeropuertos
+    de interes general.'
+  sources:
+  - https://www.aena.es/
+  - https://es.wikipedia.org/wiki/Aena
+- name: Agencia Tributaria
+  type: Organization
+  role: Agencia Estatal de Administracion Tributaria (AEAT), organismo publico espanol de gestion y recaudacion
+    de impuestos
+  sources:
+  - https://sede.agenciatributaria.gob.es/
+  - https://es.wikipedia.org/wiki/Agencia_Estatal_de_Administraci%C3%B3n_Tributaria
+- name: Ayuntamiento de Madrid
+  type: Organization
+  role: Administración local del municipio de Madrid; órgano de contratación pública (incluida el Área
+    de Gobierno de Economía, Innovación y Empleo).
+  sources:
+  - https://es.wikipedia.org/wiki/Ayuntamiento_de_Madrid
+  - https://www.elespanol.com/madrid/capital/20250210/arranca-juicio-caso-mascarillas-medina-luceno-estafar-ayuntamiento-madrid/922408202_0.html
+  - https://www.eldiario.es/politica/mascarillas-caras-espana-mala-calidad-sobreprecios-mordidas-ayuntamiento-madrid_1_9061127.html
+- name: Banco Caminos
+  type: Organization
+  role: Entidad de credito espanola nacida en 1977 ligada al colectivo de ingenieros de Caminos; banco
+    desde 2008; integrada (con Bancofar) bajo la marca CBNK hacia 2023.
+  sources:
+  - https://www.bancocaminos.es/conocenos/asi-somos
+  - https://cbnk.es/conocenos
+  - https://es.wikipedia.org/wiki/Banco_Caminos
+- name: Confederación Hidrográfica del Tajo
+  type: Organization
+  role: Organismo autónomo de cuenca dependiente del Ministerio para la Transición Ecológica y el Reto
+    Demográfico (CIF Q2817005H), encargado de la gestión del agua en la demarcación del río Tajo.
+  sources:
+  - https://www.chtajo.es/
+  - https://es.wikipedia.org/wiki/Confederaci%C3%B3n_Hidrogr%C3%A1fica_del_Tajo
+  - https://administracion.gob.es/pagFront/espanaAdmon/directorioOrganigrama/fichaUnidadOrganica.htm?codigoUnidad=EA0043828
+- name: Congreso de los Diputados
+  type: Organization
+  role: Cámara baja de las Cortes Generales de España; poder legislativo en cuyo seno se han constituido
+    comisiones de investigación relacionadas con el caso Koldo/mascarillas.
+  sources:
+  - https://www.congreso.es/
+- name: Consejo de Ministros
+  type: Organization
+  role: Órgano colegiado del Gobierno de España (gabinete/poder ejecutivo) presidido por el presidente
+    del Gobierno.
+  sources:
+  - https://www.lamoncloa.gob.es/consejodeministros/Paginas/index.aspx
+- name: Contratación del Estado
+  type: Organization
+  role: 'Junta Consultiva de Contratación Pública del Estado: órgano colegiado consultivo en materia de
+    contratación del sector público, adscrito al Ministerio de Hacienda'
+  sources:
+  - https://www.hacienda.gob.es/es-ES/Areas%20Tematicas/Contratacion/Junta%20Consultiva%20de%20Contratacion%20Administrativa/Paginas/Organos%20colegiados%20y%20funciones.aspx
+- name: Correos
+  type: Organization
+  role: Sociedad Estatal Correos y Telégrafos, S.A.; operador postal público de España (grupo público
+    estatal).
+  sources:
+  - https://www.correos.es/
+  - https://theobjective.com/espana/tribunales/2026-04-25/trama-koldo-mascarillas-proveedor-contrato/
+  - https://theobjective.com/espana/tribunales/2026-04-16/correo-aldama-jefe-puertos-koldo-mascarillas/
+- name: Departamento de Investigación Económica y Anticorrupción
+  type: Organization
+  role: Departamento de la UCO (Unidad Central Operativa de la Guardia Civil) especializado en delincuencia
+    económica y anticorrupción, cuya jefatura ostenta el teniente coronel Antonio Balas.
+  sources:
+  - https://theobjective.com/espana/2026-05-28/exmando-uco-datos-sensibles-leire-diez-psoe/
+  - https://www.eldiario.es/politica/teniente-coronel-balas-interroga-generales-sufrieron-investigacion-filtraciones-hizo-abalos_1_13255401.html
+- name: Diputación de Badajoz
+  type: Organization
+  role: Diputación Provincial de Badajoz (Extremadura); administración local provincial gobernada por
+    el PSOE.
+  sources:
+  - https://es.wikipedia.org/wiki/Caso_David_S%C3%A1nchez
+  - https://www.infobae.com/espana/agencias/2026/03/03/la-diputacion-de-badajoz-comunica-al-tribunal-que-el-hermano-de-sanchez-cobro-340572-euros-en-nueve-anos/
+  - https://www.infobae.com/espana/agencias/2026/05/28/maxima-expectacion-ante-la-audiencia-de-badajoz-por-el-juicio-a-david-sanchez-y-gallardo/
+  - https://www.eldiario.es/extremadura/politica/david-sanchez-pide-nulidad-causa-contrato-diputacion-basada-recortes-prensa-mentiras_1_13256513.html
+- name: Dirección General de Carreteras
+  type: Organization
+  role: Dirección General de Carreteras, órgano del Ministerio de Transportes (antes MITMA/Fomento) responsable
+    de la red estatal de carreteras.
+  sources:
+  - https://www.libertaddigital.com/espana/politica/2025-08-02/la-justicia-cree-probado-que-cerdan-impuso-al-director-de-carreteras-en-el-cargo-para-poder-amanar-las-obras-publicas-7282663/
+  - https://www.elespanol.com/espana/tribunales/20260520/exdirector-carreteras-responsabiliza-ministros-sobreprecios-varias-obras-sospechosas-amanos/1003744253104_0.html
+- name: FIADELSO
+  type: Organization
+  role: Fundación de cooperación al desarrollo (ONGD) fundada por José Luis Ábalos; cerrada/inactiva desde
+    2023 y en proceso de liquidación judicial ordenado por la Generalitat Valenciana; línea de investigación
+    patrimonial del caso Koldo
+  sources:
+  - https://www.eldiario.es/comunitat-valenciana/generalitat-valenciana-inicia-liquidacion-judicial-fundacion-vinculada-exministro-abalos_1_10112143.html
+  - https://www.eldiario.es/comunitat-valenciana/uco-vincula-hija-abalos-pagos-trama-caso-koldo-fundacion-fiadelso-vinculada-psoe_1_12380506.html
+  - https://www.eldiario.es/comunitat-valenciana/abalos-utilizo-pagos-trama-koldo-fiadelso-pagar-gastos-injustificados-ong_1_12398027.html
+  - https://theobjective.com/espana/politica/2025-06-13/tatiana-abalos-mordidas-cerdan-ong/
+- name: Fiscalía
+  type: Organization
+  role: Ministerio Fiscal español; esta ficha agrupa menciones de varias fiscalías distintas (Anticorrupción,
+    Fiscalía General del Estado, Fiscalía del Tribunal Supremo) y, erróneamente, de la Fiscalía Europea (EPPO).
+  sources:
+  - https://www.fiscal.es/
+  - https://www.eppo.europa.eu/es
+- name: Gate Center
+  type: Organization
+  role: Entidad (think tank) con sedes en Madrid y Pekín, fundada en abril de 2022 y gestionada en el
+    entorno de Thinking Heads; el expresidente José Luis Rodríguez Zapatero figura como presidente de
+    su comité asesor. Aparece en la investigación judicial (juez Calama) sobre el entramado societario
+    en torno a Zapatero.
+  sources:
+  - https://www.libertaddigital.com/espana/2026-05-21/el-juez-calama-investiga-el-pago-de-1-2-millones-a-zapatero-a-traves-de-un-think-tank-relacionado-con-china-7406771/
+  - https://www.publico.es/politica/inteligencia-prospectiva-destino-92-pagos-empresas-vinculadas-zapatero-martinez.html
+  - https://www.actualidad.es/politica/2026/05/24/pagos-sociedades-y-comunicaciones-el-mapa-que-situa-a-zapatero-en-la-trama-plus-ultra/
+- name: Guardia Civil
+  type: Organization
+  role: Instituto armado de naturaleza militar con funciones de policía judicial y seguridad pública en
+    España; incluye la Unidad Central Operativa (UCO).
+  sources:
+  - https://es.wikipedia.org/wiki/Guardia_Civil_(Espa%C3%B1a)
+  - https://es.wikipedia.org/wiki/Unidad_Central_Operativa
+- name: IB-Salut
+  type: Organization
+  role: Servei de Salut de les Illes Balears (IB-Salut); ente público sanitario dependiente de la Conselleria
+    de Salut del Govern balear.
+  sources:
+  - https://www.ibsalut.es/es/servicio-de-salud/organizacion/organos-de-direccion/direccion-general
+  - https://www.consalud.es/politica/koldo-garcia-llamo-exgobierno-baleares-compra-37-millones-euros-en-mascarillas.html
+  - https://www.menorca.info/balears/noticias/2024/03/21/2129383/caso-mascarillas-salut-pide-declarar-nulo-contrato-por-compraron-del-caso-koldo.html
+  - https://www.eldebate.com/espana/baleares/20260418/mascarillas-armengol-millon-medio-lote-koldo-pudren-almacen_407825.html
+- name: IE África Center
+  type: Organization
+  role: Centro de IE University (Instituto de Empresa) dedicado a África, dirigido por Begoña Gómez (aprox.
+    2018-2022); aparece en la investigación judicial sobre Begoña Gómez.
+  sources:
+  - https://www.ie.edu/africacenter/
+  - https://www.elespanol.com/espana/tribunales/20240507/ie-no-ingresos-africa-center-destino-eur-salarios-anos-begona-gomez/853165039_0.html
+- name: INECO
+  type: Organization
+  role: 'Ineco (Ingeniería y Economía del Transporte, S.M.E., M.P., S.A.): empresa pública de ingeniería
+    y consultoría del transporte dependiente del Ministerio de Transportes y Movilidad Sostenible.'
+  sources:
+  - https://es.wikipedia.org/wiki/INECO
+  - https://www.transportes.gob.es/empresas-fomento/ineco
+  - https://theobjective.com/espana/politica/2024-09-27/ineco-abalos-mexico-ficho-jesica/
+- name: Ministerio de Defensa
+  type: Organization
+  role: Departamento del Gobierno de España responsable de la política de defensa y de las Fuerzas Armadas.
+  sources:
+  - https://okdiario.com/espana/sanchez-movilizo-aviones-militares-traer-espana-primeras-mascarillas-trama-koldo-12489841
+  - https://www.newtral.es/guia-caso-koldo/20240303/
+- name: Ministerio de Fomento
+  type: Organization
+  role: Denominacion del actual Ministerio de Transportes hasta enero de 2020 (paso a llamarse Ministerio
+    de Transportes, Movilidad y Agenda Urbana, MITMA); dirigido en esa etapa por Jose Luis Abalos.
+  sources:
+  - https://www.newtral.es/guia-caso-koldo/20240303/
+  - https://es.wikipedia.org/wiki/Caso_Koldo
+  - https://www.lamoncloa.gob.es/serviciosdeprensa/notasprensa/transportes/Paginas/2020/230120-abalos.aspx
+- name: Ministerio de Transportes, Movilidad y Agenda Urbana
+  type: Organization
+  role: Departamento ministerial del Gobierno de España responsable de transportes, movilidad e infraestructuras
+    (denominación MITMA, 2020-2023).
+  sources:
+  - https://www.transportes.gob.es/
+  - https://es.wikipedia.org/wiki/Caso_Koldo
+- name: Noran Coop
+  type: Organization
+  role: Sociedad cooperativa vasca (Noran S. Coop. Pequeña), con sede en Donostia/San Sebastián, vinculada
+    a Antxon Alonso (Servinabar) y Koldo García.
+  sources:
+  - https://www.elespanol.com/espana/20250730/uco-investiga-destino-eur-constructora-cerdan-traspaso-cooperativa-koldo/1003743868018_0.html
+  - https://www.euskadi.eus/gobierno-vasco/-/entidad/noran-s-coop-pequena/
+  - https://empresite.eleconomista.es/NORAN-PEQUENA.html
+- name: OTRI
+  type: Organization
+  role: 'Oficina de Transferencia de Resultados de Investigación (hoy Oficina de Transferencia de Conocimiento)
+    de la Universidad Complutense de Madrid: gestiona la propiedad intelectual/industrial y el registro
+    de los resultados de investigación de la universidad.'
+  sources:
+  - https://www.ucm.es/otri/quienes-somos-
+  - https://www.libertaddigital.com/espana/politica/2026-04-26/la-prueba-que-acorrala-a-begona-gomez-en-el-software-eludio-el-registro-del-programa-en-la-complutense-1b-7394002/
+  - https://www.eldebate.com/espana/20250925/juez-peinado-encarga-uco-investigue-adjudicacion-software-begona-gomez-mails-complutense_338120.html
+- name: PSOE
+  type: Organization
+  role: Partido Socialista Obrero Español (PSOE), partido político español de centro-izquierda, fundado
+    en 1879; partido que sostiene al Gobierno de España bajo Pedro Sánchez.
+  sources:
+  - https://es.wikipedia.org/wiki/Partido_Socialista_Obrero_Espa%C3%B1ol
+  - https://www.psoe.es/
+- name: Partido Popular
+  type: Organization
+  role: Partido político español de centro-derecha; principal partido de la oposición (presidente Alberto
+    Núñez Feijóo desde abril de 2022).
+  sources:
+  - https://es.wikipedia.org/wiki/Partido_Popular
+  - https://www.pp.es/
+  - https://en.wikipedia.org/wiki/People%27s_Party_(Spain)
+- name: Puertos del Estado
+  type: Organization
+  role: Organismo público (Mº de Transportes) que coordina las Autoridades Portuarias del sistema portuario
+    estatal; presidido en 2020 por Francisco Toledo.
+  sources:
+  - https://www.infobae.com/espana/agencias/2026/04/15/expresidente-de-puertos-niega-presiones-en-los-contratos-de-mascarillasnadie-me-influyo/
+  - https://www.teleprensa.com/articulo/nacional-3/exresponsables-puertos-dicen-que-nadie-influyo-contratacion-empresa-vinculada-aldama/202604151747312393095.html
+- name: Red.es
+  type: Organization
+  role: 'Entidad Pública Empresarial Red.es, M.P.: organismo público español de impulso de la transformación
+    digital.'
+  sources:
+  - https://es.wikipedia.org/wiki/Red.es
+  - https://red.es/
+- name: Renfe
+  type: Organization
+  role: Renfe-Operadora, entidad publica empresarial espanola de transporte ferroviario adscrita al Ministerio
+    de Transportes
+  sources:
+  - https://www.renfe.com/
+  - https://en.wikipedia.org/wiki/Koldo_Case
+- name: SEPBLAC
+  type: Organization
+  role: Servicio Ejecutivo de la Comision de Prevencion del Blanqueo de Capitales e Infracciones Monetarias;
+    Unidad de Inteligencia Financiera de Espana, adscrito a la Comision (orbita del Ministerio de Economia),
+    con apoyo de medios y personal del Banco de Espana.
+  sources:
+  - https://www.sepblac.es/es/
+  - https://es.wikipedia.org/wiki/Servicio_Ejecutivo_de_la_Comisi%C3%B3n_de_Prevenci%C3%B3n_del_Blanqueo_de_Capitales_e_Infracciones_Monetarias
+  - https://www.boe.es/diario_boe/txt.php?id=BOE-A-2021-3064
+- name: SEPI
+  type: Organization
+  role: 'Sociedad Estatal de Participaciones Industriales: holding empresarial público español, gestor
+    del Fondo de Apoyo a la Solvencia de Empresas Estratégicas (FASEE).'
+  sources:
+  - https://es.wikipedia.org/wiki/Sociedad_Estatal_de_Participaciones_Industriales
+  - https://www.eldiario.es/politica/siete-claves-rescate-plus-ultra-investiga-juez-caso-zapatero_1_13240595.html
+  - https://www.sepi.es/es/fondo-fasee
+- name: SWIFT
+  type: Organization
+  role: Cooperativa internacional de mensajería financiera interbancaria (Society for Worldwide Interbank
+    Financial Telecommunication), con sede en Bélgica.
+  sources:
+  - https://www.swift.com/about-us
+  - https://es.wikipedia.org/wiki/SWIFT
+- name: Subsecretaría
+  type: Organization
+  role: 'Subsecretaría del Ministerio de Transportes (incl. su Unidad temporal PRTR): órgano de servicios
+    comunes y gestión administrativa del ministerio'
+  sources:
+  - https://www.mitma.gob.es/
+- name: Tribunal de Cuentas
+  type: Organization
+  role: Supremo organo fiscalizador de las cuentas y la gestion economica del sector publico espanol;
+    con funcion jurisdiccional contable. Rango constitucional (art. 136 CE), dependiente de las Cortes
+    Generales.
+  sources:
+  - https://es.wikipedia.org/wiki/Tribunal_de_Cuentas_(Espa%C3%B1a)
+  - https://www.tcu.es/tribunal-de-cuentas/es/la-institucion/Presentacion/
+  - https://app.congreso.es/consti/constitucion/indice/sinopsis/sinopsis.jsp?art=136&tipo=2
+  - https://www.boe.es/buscar/act.php?id=BOE-A-1982-11584
+- name: Unidad Central Operativa
+  type: Organization
+  role: Unidad Central Operativa (UCO) de la Guardia Civil, unidad de investigación de delitos graves
+    y de delincuencia económica y anticorrupción.
+  sources:
+  - https://es.wikipedia.org/wiki/Unidad_Central_Operativa
+  - https://www.telecinco.es/noticias/espana/20251118/informe-uco-santos-cerdan-entorno-familiar-beneficiado-dinero-adjudicaciones-amanos-obra-publica_18_017613923.html
+- name: Universidad Complutense de Madrid
+  type: Organization
+  role: Universidad pública de Madrid (UCM); sede de la cátedra extraordinaria 'Transformación Social
+    Competitiva' y del máster que codirigía Begoña Gómez; personada como acusación en el caso Begoña Gómez.
+  sources:
+  - https://es.wikipedia.org/wiki/Caso_Bego%C3%B1a_G%C3%B3mez
+  - https://es.euronews.com/my-europe/2026/05/25/uco-irregularidades-catedra-begona-gomez-cuestiona-software
+  - https://okdiario.com/espana/uco-concluye-que-begona-gomez-registro-nombre-web-marca-del-software-pagado-complutense-17145958
+- name: Wakalua
+  type: Organization
+  role: 'Wakalua Innovation Hub: primer hub global de innovación en turismo, vinculado al Grupo Globalia,
+    lanzado en enero de 2019 (FITUR) en colaboración con la Organización Mundial del Turismo (OMT/UNWTO).'
+  sources:
+  - https://www.untourism.int/global/press-release/2019-01-24/wakalua-first-global-tourism-innovation-hub-launched-globalia-collaboration
+  - https://www.libertaddigital.com/espana/politica/2025-05-12/los-tres-hechos-que-unen-a-begona-gomez-y-air-europa-y-ya-investiga-el-juez-wakalua-una-cita-y-una-llamada-de-hidalgo-7252753/
+- name: Alejandro
+  type: Person
+  # Residual tras la escisión de homónimos (relations.yaml splits, 2026-07-16, enmienda
+  # spec 049): el nodo queda como el seudónimo judicial del ATS_10280_2025. roles_qa061.yaml
+  # retira este rol (spec 061 D5/L6); el texto queda neutro (sin cargo).
+  role: 'Seudónimo de anonimización del Tribunal Supremo (''don Alejandro'') en ATS_10280_2025
+    (Causa Especial 20775/2020). Persona real distinta; la fuente no da su nombre civil — no
+    atribuir identidad.'
+- name: Ana Isabel Meras Santiago
+  type: Person
+  role: Letrada de la Administración de Justicia del Tribunal Central de Instancia, Plaza número 2, de
+    Madrid; fedataria que firma el auto del caso Plus Ultra/Zapatero, Diligencias Previas 77/2024, de
+    18 de mayo de 2026.
+  sources:
+  - https://www.infobae.com/espana/2026/05/24/cronologia-del-caso-zapatero-de-los-primeros-contactos-para-tocar-puertas-al-rescate-de-53-millones-a-plus-ultra/
+  - https://www.mundiario.com/articulo/politica/causa-zapatero-anatomia-auto-judicial-mas-relevante-democracia/20260523214015387663.html
+- name: Ana María Fuentes Pacheco
+  type: Person
+  role: Gerente federal del PSOE (desde 2021) y exresponsable de la Oficina de Cumplimiento (2018-2021);
+    imputada por el juez Pedraz en el caso 'cloacas'/Leire Díez (causa abierta)
+  sources:
+  - https://www.eleconomista.es/actualidad/noticias/13939754/05/26/quien-es-ana-maria-fuentes-la-gerente-del-psoe-imputada-por-el-juez-tras-la-entrada-de-la-uco-en-ferraz.html
+  - https://www.democrata.es/tribunales/ana-maria-fuentes-gerente-psoe-imputada/
+  - https://www.vozpopuli.com/espana/politica/la-gerente-del-psoe-investigada-por-la-financiacion-de-las-cloacas-diseno-la-operativa-interna-para-prevenir-delitos.html
+  - https://es.wikipedia.org/wiki/Ana_Mar%C3%ADa_Fuentes
+- name: Antonio Fernández Menéndez
+  type: Person
+  role: Empresario granadino vinculado a Obras Públicas y Regadíos (OPR); representante/apoderado de OPR;
+    investigado en el caso Koldo por presuntas mordidas a cambio de obra pública; hermano de Daniel Fernández
+    Menéndez.
+  sources:
+  - https://www.eldiario.es/andalucia/empresarios-granada-punto-mira-juez-caso-koldo-supuestas-mordidas-cambio-obras_1_12626081.html
+  - https://www.cope.es/emisoras/andalucia/granada-provincia/granada/noticias/ts-cita-viernes-declarar-dos-empresarios-granadinos-investigados-caso-koldo-20250704_3180630.html
+  - https://www.eldebate.com/espana/20250707/socio-cerdan-servinabar-otros-empresarios-caso-psoe-declaran-este-lunes-supremo_314516.html
+- name: Antxón
+  type: Person
+  role: Joseba Antxon Alonso Egurrola, empresario vasco; administrador/socio de Servinabar 2000 SL, sociedad
+    vinculada a Santos Cerdán.
+  sources:
+  - https://www.infobae.com/espana/2025/12/11/la-uco-arresta-a-antxon-alonso-el-empresario-vinculado-a-servinabar-y-santos-cerdan-en-la-operacion-contra-leire-diez/
+  - https://okdiario.com/espana/uco-detiene-antxon-alonso-socio-cerdan-servinabar-15915154
+- name: Armengol
+  type: Person
+  role: 'Francina Armengol Socías: presidenta del Congreso de los Diputados (desde el 17 de agosto de
+    2023); expresidenta del Govern de las Illes Balears (julio 2015-junio 2023); PSIB-PSOE.'
+  sources:
+  - https://es.wikipedia.org/wiki/Francina_Armengol
+  - https://www.eldiario.es/politica/uco-concluye-armengol-remitio-koldo-garcia-servicio-salud-contacto-vender-mascarillas-trama_1_13149318.html
+  - https://www.ultimahora.es/noticias/local/2026/05/21/2634067/aldama-dice-armengol-cobro-comisiones-baleares-por-mascarillas.html
+- name: Bar Franky
+  type: Organization  # era Person (mal tipado); re-key 2026-07-10 al canónico Organization — evita el ciclo crear-duplicado→plegar en cada make context
+  role: Establecimiento de hostelería en Pamplona; según la investigación, presuntamente
+    usado para emitir facturas falsas a Acciona y devolver efectivo en favor de Koldo García
+  sources:
+  - https://theobjective.com/espana/tribunales/2026-05-13/franky-facturas-falsas-koldo-acciona/
+  - https://www.elespanol.com/espana/politica/20260303/asesor-fiscal-bar-franky-pamplona-admite-emitio-facturas-falsas-acciona-favor-koldo-garcia/1003744153848_0.html
+  - https://www.elindependiente.com/espana/2026/03/03/koldo-garcia-ordeno-facturas-falsas-restaurante-franky-nombre-acciona-segun-asesor-fiscal/
+- name: Begoña Gómez
+  type: Person
+  role: Esposa del presidente del Gobierno Pedro Sánchez; gestora y docente universitaria vinculada a
+    la Universidad Complutense de Madrid (codirección de la Cátedra Extraordinaria de Transformación Social
+    Competitiva y de un máster asociado, hasta 2024) y exdirectora del Africa Center del Instituto de
+    Empresa (2018-2022). No ostenta ni ha ostentado cargo público.
+  sources:
+  - https://es.wikipedia.org/wiki/Caso_Bego%C3%B1a_G%C3%B3mez
+  - https://es.wikipedia.org/wiki/Bego%C3%B1a_G%C3%B3mez
+  - https://www.eldiario.es/politica/juez-rechaza-archivar-caso-begona-gomez-e-insiste-juzgue-jurado-popular_1_13199724.html
+  - https://www.eldebate.com/espana/20260506/juez-peinado-mantiene-procesamiento-begona-juicio-jurado_414693.html
+- name: Camino Arce
+  type: Person
+  role: Camino Arce Blanco, ingeniera de Caminos; alto cargo de la Direccion General de Carreteras del
+    Ministerio de Transportes (Subdireccion General de Construccion) durante la etapa de Abalos; posteriormente
+    directiva en la publica SEITTSA.
+  sources:
+  - https://www.libertaddigital.com/espana/politica/2025-06-27/oscar-puente-mantuvo-en-cargos-oficiales-a-las-dos-personas-que-exigio-koldo-para-seguir-amanando-obras-7270307/
+# "Cristóbal Cano" (corto) fusionado en "Cristóbal Cano Quiles" — auditoría sesión 38, ver merges.yaml.
+- name: Daniel Fernández Menéndez
+  type: Person
+  role: Administrador (mancomunado) de la mercantil Obras Publicas y Regadios (OPR); hermano de Antonio
+    Fernandez Menendez (apoderado de OPR). Investigado en la pieza de obra publica del caso Koldo por
+    presuntos amanos de adjudicaciones.
+  sources:
+  - https://www.elindependientedegranada.es/politica/tres-empresas-dos-investigados-granada-informe-uco
+  - https://www.elindependiente.com/espana/2025/07/04/uco-constructores-caso-koldo/
+  - https://www.eldiario.es/andalucia/empresarios-granada-punto-mira-juez-caso-koldo-supuestas-mordidas-cambio-obras_1_12626081.html
+- name: David Sánchez
+  type: Person
+  role: 'Músico (compositor); hermano del presidente del Gobierno, Pedro Sánchez; exjefe de la Oficina
+    de Artes Escénicas de la Diputación de Badajoz. Condenado (NO firme) por la sentencia 152/2026 de la
+    AP de Badajoz (14-jul-2026) como cooperador necesario de un delito de prevaricación administrativa
+    a 9 años de inhabilitación; absuelto de tráfico de influencias. Recurrible ante el TSJ de Extremadura:
+    rige la presunción de inocencia.'
+  sources:
+  - https://theobjective.com/espana/tribunales/2026-07-14/david-sanchez-condenado-nueve-anos-inhabilitacion-prevaricacion/
+  - https://www.elindependiente.com/espana/2026/05/24/hermano-pedro-sanchez-tres-anos-carcel/
+  - https://www.eldiario.es/extremadura/politica/david-sanchez-banquillo-guia-seguir-juicio-hermano-presidente_1_13249954.html
+  - https://www.infobae.com/espana/2026/05/28/comienza-el-juicio-a-david-sanchez-el-hermanito-musico-de-pedro-sanchez-las-acusaciones-piden-carcel-y-la-fiscalia-no-ve-nada/
+- name: Delcy Rodríguez
+  type: Person
+  role: Política venezolana (PSUV); vicepresidenta de Venezuela 2018-2026 y, desde enero de 2026, presidenta
+    encargada de Venezuela; protagonista del 'Delcygate' en España.
+  sources:
+  - https://es.wikipedia.org/wiki/Delcy_Rodr%C3%ADguez
+  - https://en.wikipedia.org/wiki/Delcy_Rodr%C3%ADguez
+  - https://www.cronista.com/espana/politica-es/delcygate-en-espana-los-contactos-de-delcy-rodriguez-sucesora-de-maduro-con-el-sanchismo/
+- name: Domingo Arnaldo Amaro Chacón
+  type: Person
+  role: Empresario de origen venezolano vinculado al sector petrolero (PDVSA); junto a su hermano controla
+    la consultora Inteligencia Prospectiva, investigada en la pieza del caso Plus Ultra / entorno de Zapatero
+    (presunción de inocencia).
+  sources:
+  - https://www.infobae.com/espana/2026/05/25/los-hermanos-amaro-chacon-y-francisco-flores-quienes-son-los-empresarios-venezolanos-vinculados-al-entorno-de-zapatero-en-el-caso-plus-ultra/
+  - https://www.mundiario.com/articulo/politica/dos-empresarios-venezolanos-emergen-como-pieza-clave-trama-plus-ultra/20260525131332387822.html
+- name: Elisa Moriano Morales
+  type: Person
+  role: Exdirectora del Area de Cultura y Accion Ciudadana de la Diputacion de Badajoz (2016-2019); condenada
+    (NO firme) por la sentencia 152/2026 de la AP de Badajoz como cooperadora necesaria de prevaricación
+    (Bloque A) a 9 años de inhabilitación; absuelta del resto; recurrible ante el TSJ de Extremadura
+  sources:
+  - https://www.libertaddigital.com/espana/2024-12-10/la-uco-identifica-a-tres-personas-de-la-orbita-socialista-que-transformaron-el-puesto-para-darselo-al-hermano-de-sanchez-7195832/
+  - https://www.esdiario.com/nacional/260528/188986/caso-david-sanchez-i-otros-imputados.html
+  - https://theobjective.com/espana/tribunales/2025-04-09/imputada-caso-david-sanchez-contratacion/
+- name: Fernando Merino
+  type: Person
+  role: Exdirectivo de Acciona (Fernando Agustín Merino Vera); exdelegado en Navarra y La Rioja; investigado
+    en el 'caso Cerdán/Koldo' por el Tribunal Supremo.
+  sources:
+  - https://www.libremercado.com/2025-06-13/acciona-se-desvincula-de-la-trama-y-abre-una-investigacion-interna-fernando-agustin-merino-vera-fue-despedido-7265555/
+  - https://www.publico.es/politica/tribunales/tres-datos-clave-relacion-acciona-exdirectivo-investigado-caso-cerdan.html
+  - https://www.noticiasdenavarra.com/politica/2025/09/24/fernando-merino-exdelegado-acciona-navarra-10124691.html
+- name: Francisco Martos Ortiz
+  type: Person
+  role: Politico del PSOE en la provincia de Badajoz; exalcalde de Castuera y exdiputado provincial (Delegado
+    del Area de Cultura) de la Diputacion de Badajoz; condenado (NO firme) por la sentencia 152/2026 de
+    la AP de Badajoz como cooperador necesario de prevaricación (Bloque B) a 9 años de inhabilitación;
+    absuelto del resto; recurrible ante el TSJ de Extremadura
+  sources:
+  - https://okdiario.com/investigacion/diputado-psoe-protege-hermano-pedro-sanchez-prision-13457431
+  - https://confilegal.com/20201107-el-alcalde-socialista-de-castuera-badajoz-condenado-a-3-anos-de-prision-por-mobbing-al-arquitecto-municipal/
+  - https://www.eldiario.es/extremadura/politica/absuelto-alcalde-castuera-acoso-laboral-lesiones-psiquicas_1_8893573.html
+  - https://www.infobae.com/espana/2026/05/28/comienza-el-juicio-a-david-sanchez-el-hermanito-musico-de-pedro-sanchez-las-acusaciones-piden-carcel-y-la-fiscalia-no-ve-nada/
+- name: Ignacio Espejo-Saavedra Hernández
+  type: Person
+  role: Directivo de Red.es (área de Asesoría/Subdirección Jurídica; vicesecretario general y del Consejo);
+    ha presidido mesas de contratación de Red.es, organismo cuyos contratos de 2021 a la UTE Innova Next-The
+    Valley están bajo investigación (caso Begoña Gómez / entorno del caso Koldo)
+  sources:
+  - https://www.red.es/es/organos-de-gobierno/comite-de-direccion/ignacio-espejo-saavedra-hernandez
+  - https://contrataciondelestado.es/wps/wcm/connect/PLACE_es/Site/area/docAccCmpnt?srv=cmpnt&cmpntname=GetDocumentsById&DocumentIdParam=f79133c4-27c4-4f27-8b6c-5c886f065ec2
+- name: Isabel Pardo de Vera
+  type: Person
+  role: 'Isabel Pardo de Vera Posada: expresidenta de ADIF (2018-2021) y exsecretaria de Estado de Transportes,
+    Movilidad y Agenda Urbana (2021-2023).'
+  sources:
+  - https://es.wikipedia.org/wiki/Isabel_Pardo_de_Vera
+  - https://www.eldiario.es/politica/juez-retira-pasaporte-expresidenta-adif-imputada-caso-koldo_1_12480512.html
+  - https://www.atlantico.net/espana/pardo-vera-declara-supremo-caso_1_20260413-4233789.html
+- name: Ismael Oliver
+  type: Person
+  role: Abogado penalista, socio director de Oliver & Abogados; fue defensor de Koldo García; imputado
+    por el juez Pedraz en la pieza de las 'cloacas'/Leire Díez (causa abierta)
+  sources:
+  - https://okdiario.com/espana/koldo-cambia-estrategia-contrata-abogado-pollo-carvajal-14237688
+  - https://confilegal.com/20240307-oliver-abogados-una-boutique-especializada-en-penal-economico-con-una-experiencia-unica-en-empresas/
+  - https://www.infobae.com/espana/2026/05/27/el-juez-ve-indicios-de-que-la-abogada-de-koldo-ofrecio-50000-euros-a-carmen-pano-para-intentar-cambiar-su-declaracion-sobre-los-pagos-en-ferraz-esta-se-vende/
+  - https://spain.news-pravda.com/world/2026/05/27/93956.html
+- name: Javier Herrero
+  type: Person
+  role: Francisco Javier Herrero Lizano, exdirector general de Carreteras del Ministerio de Fomento/Transportes
+    (desde junio de 2018); investigado en el 'caso Koldo'.
+  sources:
+  - https://www.libertaddigital.com/espana/politica/2025-11-21/el-nombramiento-clave-en-el-reparto-de-obras-publicas-por-la-trama-socialista-tambien-derivo-de-la-negociacion-del-pnv-7322637/
+  - https://www.democrata.es/actualidad/informe-cerdan-a-quien-senala-uco-cupula-transportes-abalos/
+  - https://www.lasvocesdelpueblo.com/isabel-pardo-y-javier-herrero-ante-el-juez-por-el-caso-koldo/
+- name: Javier Hidalgo
+  type: Person
+  role: Empresario; exconsejero delegado de Globalia (matriz de Air Europa); hijo del fundador Juan José
+    Hidalgo.
+  sources:
+  - https://www.publico.es/politica/tribunales/javier-hidalgo-rebaja-papel-aldama-rescate-air-europa-era-canal-transmisor-simplemente.html
+  - https://www.infobae.com/espana/agencias/2026/04/21/javier-hidalgo-globalia-situa-a-aldama-como-canal-de-comunicacion-con-varios-ministerios/
+  - https://www.elindependiente.com/espana/2026/04/22/interrogantes-una-hora-negativas-javier-hidalgo-juicio-caso-mascarillas/
+- name: Javier Pérez Dolset
+  type: Person
+  role: Empresario tecnologico espanol; fundador de Zed Worldwide y cofundador de Pyro Studios (saga Commandos);
+    citado en los documentos analizados en la causa de Leire Diez ('fontaneros del PSOE').
+  sources:
+  - https://www.newtral.es/empresario-javier-perez-dolset/20250605/
+  - https://theobjective.com/espana/2025-05-27/quien-javier-perez-dolset/
+  - https://es.wikipedia.org/wiki/Javier_P%C3%A9rez_Dolset
+- name: Joan Groizard
+  type: Person
+  role: 'Joan Groizard Payeras (Palma, 1989): secretario de Estado de Energía desde noviembre de 2024;
+    antes director general del IDAE (2019-2024) y director de Energías Renovables del IDAE (2018).
+    Citado en la comparecencia de Sara Aagesen ante la comisión de investigación del Senado sobre la
+    SEPI. NO investigado.'
+  sources:
+  - https://www.elespanol.com/invertia/empresas/energia/20241128/gobierno-nombra-joan-groizard-ahora-director-general-idae-nuevo-secretario-energia/904659716_0.html
+  - https://elperiodicodelaenergia.com/joan-groizard-nuevo-secretario-de-estado-de-energia/
+  - https://www.miteco.gob.es/en/ministerio/organizacion/organigrama/secretaria-estado-energia/se_energia.html
+- name: Jose Luis Calama Teixeira
+  type: Person
+  role: Magistrado del Juzgado Central de Instrucción nº 4 de la Audiencia Nacional; juez instructor del
+    caso Plus Ultra (imputación de Zapatero). Autoridad judicial, NO investigado.
+  sources:
+  - https://www.vozpopuli.com/tribunales/quien-es-jose-luis-calama-el-juez-que-ha-imputado-a-jose-luis-rodriguez-zapatero-por-el-caso-plus-ultra.html
+  - https://www.poderjudicial.es/cgpj/es/Poder-Judicial/Noticias-Judiciales/----La-Audiencia-Nacional-cita-al-expresidente-Jose-Luis-Rodriguez-Zapatero-como-investigado-por-delitos-de-trafico-de-influencias-y-otros-conexos
+  - https://www.eldiario.es/politica/juez-calama-califica-zapatero-nucleo-decisor-red-apoya-conversaciones-pana-zapatero-detras_1_13233672.html
+- name: José Luis Rodríguez Zapatero
+  type: Person
+  role: Expresidente del Gobierno de España (2004-2011) por el PSOE; exsecretario general del PSOE (2000-2012).
+    Investigado desde mayo de 2026 en el caso Plus Ultra, instruido por el juez José Luis Calama en el
+    Juzgado Central de Instrucción nº 4 de la Audiencia Nacional (Diligencias Previas 77/2024). Rige la
+    presunción de inocencia.
+  sources:
+  - https://es.wikipedia.org/wiki/Jos%C3%A9_Luis_Rodr%C3%ADguez_Zapatero
+  - https://es.euronews.com/my-europe/2026/05/25/caso-plus-ultra-quien-es-quien-investigacion-salpica-zapatero
+  - https://www.eldiario.es/politica/zapatero-imputado-blanqueo-capitales-caso-plus-ultra_1_13231540.html
+  - https://www.infobae.com/espana/2026/05/24/quien-es-quien-en-el-caso-plus-ultra-un-entramado-de-empresarios-politicos-y-sociedades-que-coloca-en-el-centro-de-la-investigacion-a-zapatero/
+- name: José Luis Ábalos
+  type: Person
+  role: Exministro de Fomento (2018-2020) y de Transportes, Movilidad y Agenda Urbana (2020-2021); exsecretario
+    de Organización del PSOE ("número tres"); exdiputado por Valencia. Condenado por la STS 418/2026
+    (22-jun-2026, Sala Segunda del TS, Causa Especial 20775/2020) por organización criminal, cohecho,
+    tráfico de influencias y malversación en el "caso Koldo"; absuelto de prevaricación, uso de información
+    privilegiada y falsedad. Sentencia firme (instancia única ante el Supremo).
+  sources:
+  - https://es.wikipedia.org/wiki/Jos%C3%A9_Luis_%C3%81balos
+  - https://www.eldiario.es/politica/juez-tribunal-supremo-envia-prision-provisional-jose-luis-abalos-koldo-garcia_1_12801994.html
+  - https://www.infobae.com/espana/2026/05/04/la-fiscalia-mantendra-la-peticion-de-siete-anos-de-prision-para-victor-de-aldama-y-rechazara-rebajar-la-pena-pese-a-su-colaboracion-con-la-justicia/
+  - https://confilegal.com/20260510-caso-koldo-supremo-sentencia-organizacion-criminal-abalos/
+- name: José Ruz
+  type: Person
+  role: Empresario constructor, propietario de Levantina Ingeniería y Construcción (LIC); investigado
+    en el 'caso Koldo/Cerdán'.
+  sources:
+  - https://okdiario.com/espana/empresario-acusado-pagar-mordidas-psoe-admite-reuniones-abalos-llamadas-lineas-seguras-15060231
+  - https://theobjective.com/espana/2025-07-05/gobierno-obra-pueblo-natal-cerdan-levantina/
+  - https://www.infobae.com/espana/2025/07/04/los-tres-empresarios-investigados-en-la-trama-cerdan-niegan-haber-pagado-comisiones-a-abalos-y-koldo-garcia-cambio-de-la-adjudicacion-de-obras-publicas/
+- name: Juan Carlos Barrabés
+  type: Person
+  role: Empresario tecnológico, fundador del Grupo Barrabés; investigado en el 'caso Begoña Gómez'.
+  sources:
+  - https://es.wikipedia.org/wiki/Caso_Bego%C3%B1a_G%C3%B3mez
+  - https://www.infobae.com/espana/2026/05/05/begona-gomez-niega-ante-la-fiscalia-europea-haber-influido-en-contratos-publicos-adjudicados-a-empresas-de-juan-carlos-barrabes/
+  - https://theobjective.com/economia/2026-04-14/barrabes-empresa-avalada-begona-gomez/
+- name: Juan Carlos Etero
+  type: Person
+  role: 'Empresario (Juan Carlos Etero Martínez) que, según el informe de la UCO en el caso Koldo, habría
+    simulado la contratación de Koldo García: le dio de alta en la Seguridad Social y le abonó una nómina
+    mensual que después le compensaba LIC (Levantina Ingeniería y Construcción).'
+  sources:
+  - https://www.elespanol.com/valencia/20250612/uco-sostiene-constructor-ruz-pago-koldo-nomina-euros-cobro-abalos/1003743802162_0.html
+  - https://www.libertaddigital.com/espana/politica/2025-07-07/las-empresas-de-la-trama-de-obras-amanadas-pagaban-nominas-a-koldo-para-hacer-llegar-la-financiacion-al-psoe-7273058/
+  - https://www.infobae.com/espana/agencias/2025/06/12/la-uco-dice-que-koldo-logro-que-empresas-de-la-presunta-trama-les-contrataran-a-el-y-su-mujer-como-contraprestacion/
+- name: Juana Cinta Calderón Zazo
+  type: Person
+  role: Exdirectora del Área de RRHH de la Diputación de Badajoz (2016-2023); concejala/teniente de alcalde
+    en Olivenza (PSOE); condenada (NO firme) por la sentencia 152/2026 de la AP de Badajoz como cooperadora
+    necesaria de prevaricación (Bloque B) a 9 años de inhabilitación; absuelta del resto; recurrible ante
+    el TSJ de Extremadura
+  sources:
+  - https://es.ayuntamientodeolivenza.com/da-juana-cinta-calderon-zazo/
+  - https://www.moncloa.com/2025/10/16/david-sanchez-rrhh-peritaje-3269102/
+  - https://www.libertaddigital.com/espana/2025-04-28/juez-biedma-procesa-david-sanchez-10-personas-prevaricacion-trafico-de-influencias-7247715/
+  - https://www.esdiario.com/nacional/260528/188986/caso-david-sanchez-i-otros-imputados.html
+- name: Julio Martínez Martínez
+  type: Person
+  role: Empresario conocido como 'Julito'; administrador de Análisis Relevante y titular de Idella
+    Consulenza Strategica; presentado por la UDEF/UCO como el pagador del entorno de Zapatero (la
+    'vía Zapatero') en el caso Plus Ultra; investigado por la Audiencia Nacional. NO es el presidente
+    de Plus Ultra (ese es Julio Martínez Sola).
+  sources:
+  - https://es.wikipedia.org/wiki/Caso_Plus_Ultra
+  - https://elpais.com/espana/2025-12-11/la-audiencia-nacional-ordena-detener-a-seis-investigados-en-el-caso-plus-ultra-entre-ellos-villarejo.html
+  - https://www.infobae.com/espana/2026/05/25/el-rastro-del-dinero-del-caso-plus-ultra-julio-martinez-canalizaba-los-fondos-de-las-influencias-y-zapatero-y-su-entorno-serian-los-principales-beneficiarios/
+  - https://www.lavanguardia.com/politica/20251211/11000000/plus-ultra-zapatero-detenidos.html
+- name: Julio Martínez Sola
+  type: Person
+  role: Empresario; fundador y presidente de la aerolínea Plus Ultra Líneas Aéreas y administrador
+    único de Alva Skies and Wings SL (titular del 9,46% de Plus Ultra); investigado en el caso Plus
+    Ultra (rescate de 53 millones de la SEPI) por la Audiencia Nacional. Distinto de Julio Martínez
+    Martínez ('Julito'), interlocutor de la 'vía Zapatero'. Rige la presunción de inocencia.
+  sources:
+  - https://es.wikipedia.org/wiki/Caso_Plus_Ultra
+  - https://elpais.com/espana/2025-12-11/la-audiencia-nacional-ordena-detener-a-seis-investigados-en-el-caso-plus-ultra-entre-ellos-villarejo.html
+  - https://www.infobae.com/espana/2026/05/25/el-rastro-del-dinero-del-caso-plus-ultra-julio-martinez-canalizaba-los-fondos-de-las-influencias-y-zapatero-y-su-entorno-serian-los-principales-beneficiarios/
+- name: Julián Expósito Talavera
+  type: Person
+  role: Director del Área de Presidencia y Relaciones Institucionales de la Diputación de Badajoz
+    (2017-2025), actualmente letrado del Organismo Autónomo de Recaudación (OAR) de la propia
+    Diputación; la sentencia 152/2026 de la AP de Badajoz lo describe como persona muy próxima a
+    Miguel Ángel Gallardo. Declaró como testigo en el juicio por la contratación de David Sánchez;
+    NO acusado ni condenado en la causa.
+  sources:
+  - https://www.laportadadeextremadura.com/badajoz/badajoz-ciudad/exdirector-presidencia-diputacion-defiende-modificacion-contractual-david-sanchez_5599_102.html
+  - https://dip-badajoz.es/diputacion/organigrama/getDetallePersona.php?id=jexpositot.oar
+  - https://www.esdiario.com/nacional/260602/189358/testigos-diputacion-justifican-cambios-puesto-david-sanchez.html
+- name: Jéssica Rodríguez García
+  type: Person
+  role: Expareja / 'relación particular' (según la UCO) de José Luis Ábalos; contratada por las públicas
+    Ineco y Tragsatec (Min. Transportes); figura del 'caso Koldo' / mascarillas.
+  sources:
+  - https://www.elindependiente.com/espana/2026/04/06/juicio-caso-mascarillas-supremo-hijo-abalos-jessica-rodriguez/
+  - https://www.publico.es/politica/tribunales/jessica-rodriguez-cobro-43-978-euros-empresas-publicas-tragsatec-e-ineco-2019-2021.html
+  - https://www.infobae.com/espana/2025/08/25/todo-lo-que-se-sabe-de-la-contratacion-de-jessica-rodriguez-ex-de-abalos-en-tragsatec-e-ineco-44000-euros-cobrados-en-un-trabajo-al-que-no-acudia/
+- name: Koldo García
+  type: Person
+  role: Exasesor y exchófer de José Luis Ábalos en el Ministerio de Transportes (2018-2021); figura central
+    del 'caso Koldo'. Condenado por la STS 418/2026 (22-jun-2026, Causa Especial 20775/2020) por
+    organización criminal, cohecho, tráfico de influencias y malversación (esta última como cooperador
+    necesario); absuelto de prevaricación, uso de información privilegiada y falsedad. Sentencia firme.
+  sources:
+  - https://www.elindependiente.com/espana/2025/12/11/el-supremo-envia-a-juicio-a-abalos-y-koldo-garcia-y-les-mantiene-en-prision/
+  - https://es.wikipedia.org/wiki/Caso_Koldo
+  - https://www.infobae.com/espana/2026/05/04/la-fiscalia-mantendra-la-peticion-de-siete-anos-de-prision-para-victor-de-aldama-y-rechazara-rebajar-la-pena-pese-a-su-colaboracion-con-la-justicia/
+  - https://theobjective.com/espana/tribunales/2025-11-27/supremo-abalos-koldo-prision-mascarillas/
+- name: Leire Díez
+  type: Person
+  role: Exmilitante del PSOE, exdirectiva de empresas públicas (ENUSA, jefa de comunicación 2018-2021;
+    Correos, directora de Relaciones Institucionales 2022-2023); apodada por la prensa 'la fontanera del
+    PSOE'; detenida e investigada por presuntos delitos de cohecho y tráfico de influencias.
+  sources:
+  - https://es.wikipedia.org/wiki/Caso_Leire_D%C3%ADez
+  - https://www.infobae.com/espana/2025/12/10/leire-diez-la-fontanera-del-psoe-detenida-por-presuntos-delitos-de-cohecho-y-trafico-de-influencias/
+  - https://www.publico.es/politica/tribunales/cinco-claves-auto-judicial-salpica-psoe-trama-liderada-santos-cerdan-leire-diez.html
+  - https://www.mundiario.com/articulo/politica/juez-pedraz-situa-cerdan-frente-trama-cloacas-leire-diez/20260527203653388117.html
+- name: Leopoldo Puente Segura
+  type: Person
+  role: Magistrado de la Sala Segunda (de lo Penal) del Tribunal Supremo desde noviembre de 2020; juez
+    instructor de la causa especial del caso Koldo/Ábalos (autoridad judicial, NO investigado)
+  sources:
+  - https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-13806
+  - https://www.poderjudicial.es/cgpj/es/Poder-Judicial/Tribunal-Supremo/Portal-de-Transparencia/Biografias/Puente-Segura--Leopoldo
+  - https://confilegal.com/20251127-el-magistrado-instructor-del-supremo-leopoldo-puente-manda-a-abalos-y-a-koldo-garcia-a-prision-por-riesgo-de-fuga/
+  - https://www.eldiario.es/politica/juez-tribunal-supremo-envia-prision-provisional-jose-luis-abalos-koldo-garcia_1_12801994.html
+- name: Luis Antonio Martín Bernardos
+  type: Person
+  role: Economista/exadministrador solidario de Innova Next SL (sociedad del grupo Barrabés, órbita del
+    caso Begoña Gómez) hasta 2022; declaró como testigo, no investigado
+  sources:
+  - https://www.elespanol.com/espana/tribunales/20260518/escassi-rosauro-varo-joaquin-goyache-lista-testigos-pide-begona-gomez-juicio/1003744249966_0.html
+  - https://www.cronista.com/espana/actualidad-es/un-testigo-clave-en-la-causa-de-begona-gomez-declaro-que-se-reunio-dos-veces-con-pedro-sanchez-en-la-moncloa/
+  - https://www.empresia.es/persona/martin-bernardos-luis-antonio/
+- name: Luis Carrero
+  type: Person
+  role: Exasesor de Moncloa (Luis María Carrero Pérez, Unidad de Mensaje 2020-2023); condenado (NO firme)
+    por la sentencia 152/2026 de la AP de Badajoz como cooperador necesario de prevaricación (Bloque C,
+    su plaza en la Diputación) a 9 años de inhabilitación; absuelto de tráfico de influencias; recurrible
+    ante el TSJ de Extremadura.
+  sources:
+  - https://www.elespanol.com/espana/politica/20250718/exasesor-moncloa-investigado-caso-david-sanchez-renuncia-puesto-diputacion-badajoz/1003743853888_0.html
+  - https://www.moncloa.com/2025/04/29/david-sanchez-procesado-3224775/
+  - https://www.eldiario.es/extremadura/politica/david-sanchez-banquillo-guia-seguir-juicio-hermano-presidente_1_13249954.html
+- name: Luis Prieto Cuerdo
+  type: Person
+  role: Director de Economía Digital de Red.es; imputado por la Fiscalía Europea (EPPO) en los contratos
+    a Barrabés vinculados al caso Begoña Gómez (causa abierta)
+  sources:
+  - https://www.elindependiente.com/espana/2025/10/01/fiscalia-europea-tiene-imputado-directivo-red-es-sigue-oscar-lopez/
+  - https://es.linkedin.com/in/luis-prieto-cuerdo
+- name: María Cristina Álvarez Rodríguez
+  type: Person
+  role: Asesora de Begoña Gómez en el Gabinete de la Presidencia del Gobierno (Moncloa); acusada en el caso Begoña Gómez, solo por presunta malversación (auto de apertura de juicio oral de 21 de septiembre de 2026, p.65).
+  sources:
+  - https://www.elespanol.com/espana/tribunales/20260526/peinado-convoca-begona-gomez-cristina-alvarez-barrabes-audiencia-previa-juicio-jurado-junio/1003744259845_0.html
+  - https://www.eldiario.es/politica/audiencia-provincial-avala-juez-peinado-imputase-begona-gomez-asistente-malversacion_1_12859563.html
+  - https://es.wikipedia.org/wiki/Caso_Bego%C3%B1a_G%C3%B3mez
+- name: María Gertrudis Alcázar Jiménez
+  type: Person
+  role: Secretaria personal de José Luis Rodríguez Zapatero durante cerca de dos décadas; señalada por
+    el juez instructor en el 'caso Plus Ultra' (auto relativo al entorno de Zapatero).
+  sources:
+  - https://www.infobae.com/espana/2026/05/21/quien-es-gertrudis-alcazar-la-secretaria-que-custodio-durante-dos-decadas-el-acceso-a-zapatero-y-que-ahora-el-juez-situa-en-el-corazon-del-caso-plus-ultra/
+  - https://www.democrata.es/en/courts/who-is-maria-gertrudis-alcazar-zapatero-s-secretary-pointed-out-by-the-judge-in-the-plus-ultra-case/
+  - https://www.articulo14.es/politica/gertrudis-alcazar-la-secretaria-era-una-pieza-operativa-esencial-dentro-de-la-red-organizada-20260520.html
+- name: Miguel González Suela
+  type: Person
+  role: 'Miguel Ángel González Suela (Talavera de la Reina, 1969): subsecretario para la Transición
+    Ecológica y el Reto Demográfico desde enero de 2020 (Real Decreto 125/2020); administrador civil
+    del Estado. Citado en la comparecencia de Sara Aagesen ante la comisión de investigación del
+    Senado sobre la SEPI por los informes del ministerio al consejo gestor del FASEE. NO investigado.'
+  sources:
+  - https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-948
+  - https://www.miteco.gob.es/en/ministerio/organizacion/organigrama/subsecretaria-transicion-ecologica-y-reto-demografico/ss_transicionyretodemografico.html
+  - https://www.administradoresciviles.org/actualidad/noticias-sobre-administradores-civiles-del-estado/1495-miguel-gonzalez-suela-nuevo-subsecretario-de-transicion-ecologica-y-reto-demografico
+- name: Miguel Moreno Purroy
+  type: Person
+  role: Titular/gestor del bar-restaurante Franky de Pamplona; vinculado por la UCO a la emisión de facturas
+    a nombre de Acciona en el entorno de Koldo García.
+  sources:
+  - https://theobjective.com/espana/tribunales/2026-05-13/franky-facturas-falsas-koldo-acciona/
+  - https://navarra.okdiario.com/articulo/politica/gestor-bar-franky-admite-juez-como-hacian-facturas-trama-koldo-cerdan/20260513143247644741.html
+  - https://www.eldiario.es/navarra/dueno-bar-franky-pamplona-senalado-uco-niega-haber-emitido-facturas-falsas-acciona_1_13015570.html
+- name: Miguel Ángel Gallardo
+  type: Person
+  role: Expresidente de la Diputación de Badajoz y dirigente del PSOE en Extremadura; condenado (NO firme)
+    por la sentencia 152/2026 de la AP de Badajoz (14-jul-2026) como autor de dos delitos de prevaricación
+    (Bloques A y B) a sendas penas de 9 años de inhabilitación; absuelto de tráfico de influencias; recurrible
+    ante el TSJ de Extremadura
+  sources:
+  - https://theobjective.com/espana/tribunales/2026-07-14/david-sanchez-condenado-nueve-anos-inhabilitacion-prevaricacion/
+  - https://es.wikipedia.org/wiki/Caso_David_S%C3%A1nchez
+  - https://www.infobae.com/espana/2026/05/28/el-juicio-por-la-contratacion-de-david-sanchez-en-la-diputacion-de-badajoz-se-aplaza-tras-el-choque-entre-defensas-y-fiscalia-por-la-prescripcion-y-las-nulidades/
+  - https://www.eleconomista.es/actualidad/noticias/13941076/05/26/arranca-el-juicio-contra-el-hermano-de-pedro-sanchez-las-claves-del-proceso-por-presunto-enchufe-en-la-diputacion-de-badajoz.html
+- name: Palomero
+  type: Person
+  role: 'Miguel Palomero: abogado de Madrid con relación profesional directa con Rodolfo Reyes (accionista
+    mayoritario/de facto de Plus Ultra); figura en el caso Plus Ultra/Zapatero (auto-zapatero) como presunto
+    intermediario. Causa en instrucción.'
+  sources:
+  - https://www.infobae.com/espana/2026/05/28/el-papel-de-miguel-palomero-dentro-de-la-presunta-trama-internacional-de-plus-ultra-que-realizaba-operaciones-con-petroleo-y-oro-venezolano/
+  - https://www.infobae.com/espana/2026/05/26/plus-ultra-es-una-extension-del-caso-koldo-la-persona-que-une-a-zapatero-y-abalos-hay-que-cuidar-a-los-jueces-policias-y-funcionarios/
+  - https://www.elindependiente.com/espana/2026/05/26/papel-clave-venezolano-rodolfo-reyes-nombres-caso-plus-ultra/
+  - https://www.elindependiente.com/espana/2026/05/24/abogado-trama-zapatero-recibir-50-000-euros-cuidar-jueces-policias-funcionarios/
+- name: Patricia Úriz
+  type: Person
+  role: Patricia Úriz Iriarte, pareja/exmujer de Koldo García; contratada como auxiliar
+    administrativa en el Ministerio de Transportes (Ábalos) y exvocal de Bienestar Social del PSN. Investigada
+    en el caso Koldo.
+  sources:
+  - https://www.moncloa.com/2024/02/23/patricia-uriz-empresaria-koldo-2455776/
+  - https://www.elespanol.com/reportajes/20240222/mujer-colocada-ministerio-hermano-sindicalista-familia-koldo-dentro-trama/834417064_0.html
+  - https://navarra.okdiario.com/articulo/navarra/koldo-garcia-mujer-patricia-uriz-psn-jose-luis-abalos-colocacion-ministerio-transporte-empleo/20200225183557313734.html
+- name: Pedro Saura
+  type: Person
+  role: Economista y político del PSOE; secretario de Estado de Infraestructuras, Transporte y Vivienda
+    con José Luis Ábalos (2018-2021); después presidente de Paradores (2021-2023) y de Correos (desde
+    dic. 2023); exdiputado por Murcia.
+  sources:
+  - https://es.wikipedia.org/wiki/Pedro_Saura_Garc%C3%ADa
+  - https://www.transportes.gob.es/ministerio/comunicacion/sala-prensa/lun-18062018-0805
+  - https://www.elespanol.com/espana/murcia/20241016/pp-murcia-pide-explicaciones-socialista-pedro-saura-presunta-vinculacion-caso-koldo/893910662_0.html
+- name: Pedro Sánchez
+  type: Person
+  role: Presidente del Gobierno de España (desde junio de 2018) y secretario general del PSOE (desde 2017).
+  sources:
+  - https://www.lamoncloa.gob.es/presidente/
+  - https://es.wikipedia.org/wiki/Pedro_S%C3%A1nchez
+  - https://es.wikipedia.org/wiki/Caso_David_S%C3%A1nchez
+  - https://www.infobae.com/espana/2025/11/19/santos-cerdan-sale-de-la-carcel-de-soto-del-real-tras-cinco-meses-en-prision-provisional/
+- name: Ricardo Cabezas Martín
+  type: Person
+  role: 'Político del PSOE en Badajoz (n. 1974): concejal y portavoz del Grupo Municipal Socialista en
+    el Ayuntamiento de Badajoz desde 2015 y diputado provincial (Cultura) desde julio de 2023; condenado
+    (NO firme) por la sentencia 152/2026 de la AP de Badajoz como autor de prevaricación (Bloque C, plaza
+    de Luis Carrero) a 9 años de inhabilitación; absuelto del resto; recurrible ante el TSJ de Extremadura.'
+  sources:
+  - https://www.aytobadajoz.es/es/ayto/corporacion-municipal/concejal/22837/ricardo-cabezas-martin/
+  - https://transparencia.dip-badajoz.es/transparencia-institucional/cargos-electos/equipo-de-gobierno/ricardo-cabezas-martin/
+  - https://www.extremadura7dias.com/noticia/vox-exige-dimision-de-ricardo-cabezas-acusado-prevaricacion
+- name: Roberto Roselli
+  type: Person
+  role: Empresario de origen venezolano, consejero delegado (CEO) de Plus Ultra Líneas Aéreas; detenido
+    en diciembre de 2025 e investigado en el 'caso Plus Ultra'.
+  sources:
+  - https://rankiabusiness.com/detencion-julio-martinez-y-roberto-roselli-plus-ultra-investigacion-judicial/
+  - https://www.libertaddigital.com/espana/2025-12-13/el-juez-deja-en-libertad-a-los-tres-detenidos-del-caso-plus-ultra-que-acorrala-a-zapatero-7333220/
+  - https://www.democrata.es/tribunales/quien-es-quien-en-caso-plus-ultra-red-investiga-audiencia-nacional/
+- name: Rodolfo Reyes
+  type: Person
+  role: Empresario de origen venezolano, considerado por la investigación principal accionista de Plus
+    Ultra Líneas Aéreas; investigado y con orden internacional de detención en el 'caso Plus Ultra'.
+  sources:
+  - https://theobjective.com/espana/tribunales/2026-05-25/juez-orden-internacional-detencion-dueno-plus-ultra/
+  - https://www.cope.es/programas/la-linterna/noticias/juez-calama-emite-orden-internacional-detener-rodolfo-reyes-principal-accionista-plus-ultra-20260525_3371359.html
+  - https://www.elespanol.com/espana/tribunales/20260525/juez-calama-emite-orden-internacional-detener-rodolfo-reyes-principal-accionista-plus-ultra/1003744259618_0.html
+- name: Salvador Illa
+  type: Person
+  role: Presidente de la Generalitat de Cataluña (desde agosto de 2024, PSC); ex ministro de Sanidad del
+    Gobierno de España (enero 2020-enero 2021) durante la pandemia de COVID-19
+  sources:
+  - https://es.wikipedia.org/wiki/Salvador_Illa
+  - https://www.publico.es/politica/salvador-illa-desmiente-pp-comision-mascarillas-me-vi-vez-koldo-pero-sanidad-compro.html
+  - https://web.gencat.cat/
+- name: Santiago Fernández Lena
+  type: Person
+  role: Abogado mercantilista (exsocio del despacho Andersen) y secretario del consejo de administración
+    de Plus Ultra; investigado en el caso Plus Ultra/Zapatero (presunción de inocencia)
+  sources:
+  - https://www.vozpopuli.com/tribunales/el-abogado-de-plus-ultra-imputado-escondia-31000-euros-en-efectivo-en-una-caja-de-zapatos.html
+  - https://www.vozpopuli.com/economia/el-abogado-de-plus-ultra-dejo-el-despacho-adersen-dias-antes-de-la-detencion-para-centrarse-en-la-defensa.html
+  - https://okdiario.com/investigacion/udef-registro-casa-del-financiero-plus-ultra-investiga-abogado-del-presidente-16159926
+  - https://theobjective.com/espana/tribunales/2026-05-23/andersen-cese-abogados-caso-zapatero/
+- name: Santos Cerdán
+  type: Person
+  role: Exsecretario de Organización del PSOE y exdiputado por Navarra; investigado en la rama Cerdán-Servinabar
+    del 'caso Koldo'.
+  sources:
+  - https://elpais.com/espana/2025-11-19/el-juez-del-caso-koldo-decide-este-miercoles-si-deja-en-libertad-a-santos-cerdan.html
+  - https://www.elespanol.com/espana/20250618/cerdan-dueno-servinabar-uco-halla-escrituras-constructora-gano-contratos/1003743809649_0.html
+  - https://confilegal.com/20251119-el-supremo-pone-en-libertad-provisional-a-santos-cerdan/
+  - https://www.elindependiente.com/espana/2025/06/12/santos-cerdan-dimite-como-secretario-de-organizacion-del-psoe-y-entrega-su-acta-de-diputado/
+- name: Sara Aagesen Muñoz
+  type: Person
+  role: Vicepresidenta tercera del Gobierno y ministra para la Transición Ecológica y el Reto Demográfico
+    (desde noviembre de 2024); secretaria de Estado de Energía (enero 2020-noviembre 2024) y en esa
+    condición vocal del consejo gestor del FASEE de la SEPI. Compareció el 8 de julio de 2026 ante la
+    comisión de investigación del Senado sobre la SEPI. NO investigada.
+  sources:
+  - https://www.lamoncloa.gob.es/gobierno/Paginas/biografias-xv-legislatura/ministra-sara-aagesen.aspx
+  - https://es.euronews.com/my-europe/2024/11/25/quien-es-sara-aagesen-la-nueva-vicepresidenta-del-gobierno
+  - https://www.miteco.gob.es/en/ministerio/organizacion/organigrama/ministra-miteco.html
+- name: Sánchez Manzanares
+  type: Person
+  role: 'Alvaro Sanchez Manzanares (n. 1972): exsecretario general de Puertos del Estado, cesado en marzo
+    de 2024; investigado en el caso Koldo por la compra de mascarillas'
+  sources:
+  - https://www.telecinco.es/noticias/espana/20240305/caso-koldo-quien-es-alvaro-sanchez-manzanares-cesado-puertos-estado-oscar-puente_18_011886502.html
+  - https://www.eldiario.es/politica/ex-secretario-general-puertos-dice-juez-cumplio-instrucciones-ministerio-contratar-empresa-caso-koldo_1_11644652.html
+  - https://www.elindependiente.com/economia/2025/07/20/de-las-mascarillas-de-koldo-a-las-obras-de-cerdan-todos-los-investigados-en-el-huracan-judicial-de-transportes/
+- name: Vicente Calzado Téllez
+  type: Person
+  role: Director (gerente) de EMFESA (Enajenación de Materiales Ferroviarios S.A.), sociedad pública del
+    ámbito ferroviario; compareció en el Senado por el caso Koldo como persona de interés/testigo
+  sources:
+  - https://theobjective.com/espana/tribunales/2024-12-28/abalos-koldo-emfesa-nepotismo/
+  - https://www.pressdigital.es/articulo/politica/2024-05-29/4849135-director-emfesa-admite-amistad-koldo-pero-dice-contrato-hermano-meritos-no-relacion
+- name: Víctor de Aldama
+  type: Person
+  role: 'Empresario y expresidente del Zamora CF. Condenado por la STS 418/2026 (22-jun-2026, Causa
+    Especial 20775/2020) por organización criminal y cohecho en el ''caso Koldo'', con atenuante muy
+    cualificada de colaboración con la justicia (penas privativas suspendidas) y absuelto del resto;
+    sentencia firme. Sigue siendo además presunto cabecilla de una trama de fraude fiscal en hidrocarburos,
+    causa separada en la que rige la presunción de inocencia (sin sentencia firme).'
+  sources:
+  - https://es.wikipedia.org/wiki/V%C3%ADctor_de_Aldama
+  - https://www.infobae.com/espana/2026/05/04/la-fiscalia-mantendra-la-peticion-de-siete-anos-de-prision-para-victor-de-aldama-y-rechazara-rebajar-la-pena-pese-a-su-colaboracion-con-la-justicia/
+  - https://www.diariodecastillayleon.es/zamora/241007/83282/detienen-expresidente-zamora-cf-fraude-182-millones-hidrocarburos.html
+- name: Ángel Contreras
+  type: Person
+  role: Ingeniero de caminos (Torrent, 1975); director general de Conservación y Mantenimiento de ADIF
+    (2018-2023) y presidente de Adif y Adif Alta Velocidad (diciembre 2023-septiembre 2024)
+  sources:
+  - https://www.adif.es/w/d.-angel-contreras-marin
+  - https://es.wikipedia.org/wiki/%C3%81ngel_Contreras
+  - https://www.elindependiente.com/espana/tribunales/2024/05/20/la-uco-ubica-al-presidente-de-adif-en-amanos-de-la-trama-del-caso-koldo/
+- name: Óscar Puente
+  type: Person
+  role: Ministro de Transportes y Movilidad Sostenible de España (desde el 21-nov-2023); exalcalde de
+    Valladolid (2015-2023); PSOE.
+  sources:
+  - https://es.wikipedia.org/wiki/%C3%93scar_Puente_Santiago
+  - https://www.lamoncloa.gob.es/gobierno/Paginas/biografias-xv-legislatura/ministro-oscar-puente.aspx
+  - https://www.eldiario.es/castilla-y-leon/politica/oscar-puente-candidato-votado-valladolid-pp-no-dejo-gobernar-llega-consejo-ministros_1_10699626.html

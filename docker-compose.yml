@@ -1,0 +1,100 @@
+name: entramado
+services:
+  neo4j:
+    image: neo4j:5.26
+    container_name: sm_neo4j
+    ports:
+      - "7474:7474"   # HTTP / Neo4j Browser
+      - "7687:7687"   # Bolt
+    environment:
+      NEO4J_AUTH: "neo4j/${NEO4J_PASSWORD:-changeme}"
+      NEO4J_PLUGINS: '["apoc"]'
+      NEO4J_dbms_security_procedures_unrestricted: "apoc.*"
+      # Sized for the ~561 MB dataset and a small Docker Desktop VM (the Mac VM
+      # is ~3.8 GB by default). The old 4G/2G exceeded the VM and neo4j refused
+      # to boot ("exceeds physical memory"), so `make neo4j` broke the DB. 1G
+      # heap + 768M pagecache holds the whole store in RAM. Override per-machine
+      # via .env (NEO4J_HEAP/NEO4J_PAGECACHE) if you have more headroom.
+      NEO4J_server_memory_heap_max__size: "${NEO4J_HEAP:-1G}"
+      NEO4J_server_memory_pagecache_size: "${NEO4J_PAGECACHE:-768M}"
+    volumes:
+      - ./neo4j/data:/data
+      - ./neo4j/logs:/logs
+      - ./neo4j/plugins:/plugins
+      - ./neo4j/import:/var/lib/neo4j/import
+    healthcheck:
+      test: ["CMD-SHELL", "cypher-shell -u neo4j -p ${NEO4J_PASSWORD:-changeme} 'RETURN 1' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 40s
+
+  api:
+    build: ./api
+    container_name: sm_api
+    ports:
+      - "8000:8000"
+    environment:
+      NEO4J_URI: "bolt://neo4j:7687"
+      NEO4J_USERNAME: "neo4j"
+      NEO4J_PASSWORD: "${NEO4J_PASSWORD:-changeme}"
+      CORS_ORIGINS: "http://localhost:3000"
+    volumes:
+      - ./api:/app
+      - ./sm-vault:/vault:ro                # briefings live here, read-only
+      # última-hora feed (spec 044): directory mount, mirrors prod
+      - ./pipeline/data/ultima_hora:/data/ultima_hora:ro
+      # patrones llamativos (spec 053): directory mount, mirrors prod
+      - ./pipeline/data/patrones:/data/patrones:ro
+      # ontología controlada (spec 069): estados, capas y tipos que sirven API y MCP
+      - ./pipeline/data/ontologia:/data/ontologia:ro
+    depends_on:
+      neo4j:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:8000/health').status==200 else 1)\""]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
+
+  # Public read-only MCP connector (spec 009) — dev mirror of the prod service,
+  # with the source bind-mounted and --reload for HMR parity with api.
+  mcp:
+    build: ./api
+    container_name: sm_mcp
+    command: ["uvicorn", "app.mcp_server:asgi", "--host", "0.0.0.0", "--port", "8008", "--reload"]
+    ports:
+      - "8008:8008"
+    environment:
+      NEO4J_URI: "bolt://neo4j:7687"
+      NEO4J_USERNAME: "neo4j"
+      NEO4J_PASSWORD: "${NEO4J_PASSWORD:-changeme}"
+    volumes:
+      - ./api:/app
+      - ./sm-vault:/vault:ro
+      # patrones llamativos (spec 053): la tool MCP lee el mismo fichero que la web
+      - ./pipeline/data/patrones:/data/patrones:ro
+      # ontología controlada (spec 069): estados, capas y tipos que sirven API y MCP
+      - ./pipeline/data/ontologia:/data/ontologia:ro
+    depends_on:
+      neo4j:
+        condition: service_healthy
+
+  web:
+    build: ./web
+    container_name: sm_web
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_BASE: "${NEXT_PUBLIC_API_BASE:-http://localhost:8000}"
+      # Server-side fetches (Next RSC) go container-to-container via compose DNS.
+      # The browser still uses NEXT_PUBLIC_API_BASE above.
+      API_INTERNAL_BASE: "http://api:8000"
+      WATCHPACK_POLLING: "true"
+    volumes:
+      - ./web:/app
+      - /app/node_modules
+      - /app/.next
+    depends_on:
+      - api

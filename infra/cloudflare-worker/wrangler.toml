@@ -1,0 +1,22 @@
+# Cloudflare Worker — página de mantenimiento de entramado.org (spec 040).
+#
+# Proxea todo el tráfico de la zona y, cuando el Cloudflare Tunnel del Mac está caído
+# (error 1033), sirve una página propia de mantenimiento en vez del error del edge.
+# Deploy: `npx wrangler deploy` desde este directorio. Ver README.md.
+
+name = "entramado-maintenance"
+main = "worker.js"
+compatibility_date = "2026-07-11"
+
+# La ruta engancha el Worker a TODO el tráfico de la zona ya proxied por el túnel.
+# `zone_name` evita tener que hardcodear el zone_id.
+routes = [
+  { pattern = "entramado.org/*", zone_name = "entramado.org" },
+]
+
+# El account_id NO se versiona: exporta `CLOUDFLARE_ACCOUNT_ID` en el entorno
+# (valor: `npx wrangler whoami` tras `npx wrangler login`; la cuenta ya es dueña
+# de la zona entramado.org). Sin él, wrangler pide elegir cuenta interactivamente.
+
+# No queremos un subdominio *.workers.dev público: el Worker solo vive en la ruta.
+workers_dev = false

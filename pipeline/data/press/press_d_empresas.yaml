@@ -1,0 +1,126 @@
+# Empresas — neutral structural enrichment (press / open sources).
+# NEUTRAL facts only: founders, owners, parent/subsidiary, sector, year founded.
+# Allegations / scandal framing live in the judicial documents, NOT here.
+
+entities:
+  # --- Companies (some MERGE onto existing graph nodes) ---
+  - {name: "Acciona",                type: Company}        # MERGE
+  - {name: "Soluciones de Gestión",  type: Company}        # MERGE
+  - {name: "Servinabar",             type: Company}        # MERGE
+  - {name: "Grupo Barrabés",         type: Company}        # MERGE
+  - {name: "Innova Next SLU",        type: Company}        # MERGE
+  - {name: "Air Europa",             type: Company}        # MERGE
+  - {name: "Plus Ultra",             type: Company}        # MERGE (Plus Ultra Líneas Aéreas)
+
+  # --- People / parents declared as new endpoints ---
+  - {name: "José Manuel Entrecanales", type: Person, role: "Presidente de Acciona desde 2004"}
+  - {name: "Familia Entrecanales",     type: Person, role: "Familia accionista de control de Acciona"}
+  - {name: "Antxón",                   type: Person}        # MERGE (Antxón Alonso, propietario de Servinabar)
+  - {name: "Juan Carlos Barrabés",     type: Person}        # MERGE
+  - {name: "José Barrabés",            type: Person, role: "Patriarca del Grupo Barrabés"}
+  - {name: "Globalia",                 type: Company, role: "Holding turístico, matriz de Air Europa"}
+  - {name: "Juan José Hidalgo",        type: Person, role: "Fundador de Globalia"}
+  - {name: "Julio Martínez Sola",      type: Person, role: "Cofundador de Plus Ultra Líneas Aéreas"}
+  - {name: "Fernando González",        type: Person, role: "Cofundador de Plus Ultra Líneas Aéreas"}
+
+relations:
+  # ===================== ACCIONA =====================
+  - source: "José Manuel Entrecanales"
+    target: "Acciona"
+    type: CONTROLS
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Acciona"
+    date: "2004"
+    quote: "Acciona está presidida por José Manuel Entrecanales Domecq desde 2004."
+    note: "Presidente de Acciona desde 2004."
+
+  - source: "Familia Entrecanales"
+    target: "Acciona"
+    type: CONTROLS
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Acciona"
+    quote: "La familia Entrecanales controla la mayoría del capital de la compañía a través de las sociedades Wit Europese Investering BV y Tussen de Grachten BV, que en conjunto suman un 55,73% del capital."
+    note: "Familia de control con ~55,73% del capital."
+
+  # Acciona: sector / origen (atributo neutral, registrado como nota de la empresa)
+  # "es una empresa española de promoción y gestión de infraestructuras (agua, concesiones,
+  #  construcciones y servicios) y energías renovables." — Wikipedia
+  # "En 1997 se fusiona con Entrecanales y Távora para formar la tercera empresa constructora
+  #  española, que se denominaría Acciona." — Wikipedia
+
+  # ===================== AIR EUROPA =====================
+  - source: "Globalia"
+    target: "Air Europa"
+    type: CONTROLS
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Air_Europa"
+    date: "1998"
+    quote: "En 1998, Juan José Hidalgo reagrupa sus empresas, entre ellas Air Europa, en el holding Globalia Corporación Empresarial S.A."
+    note: "Air Europa integrada en el holding Globalia (matriz)."
+
+  - source: "Juan José Hidalgo"
+    target: "Air Europa"
+    type: CONTROLS
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Air_Europa"
+    date: "1991"
+    quote: "En 1991 un grupo de inversores, encabezado por Juan José Hidalgo, adquirió la compañía."
+    note: "Adquirida en 1991 por el grupo de Juan José Hidalgo. Fundada en 1984 como Air España S.A."
+
+  # Air Europa: sector — "Air Europa Líneas Aéreas S.A.U., más conocida como Air Europa,
+  #  es una aerolínea española." — Wikipedia
+
+  # ===================== PLUS ULTRA =====================
+  # 063 tramo 3 (01-oct): retirada OWNS Julio Martínez Sola→Plus Ultra [d7850d48] — «fundada por» (Wikipedia) no acredita propiedad actual.
+
+  - source: "Fernando González"
+    target: "Plus Ultra"
+    type: OWNS
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Plus_Ultra_L%C3%ADneas_A%C3%A9reas"
+    date: "2011"
+    quote: "Plus Ultra Líneas Aéreas fue fundada en el año 2011 por Julio Martínez Sola y Fernando González."
+    note: "Cofundador (2011)."
+
+  # Plus Ultra: sector — "Plus Ultra Línea Aéreas es una aerolínea española fundada en el
+  #  año 2011" — Wikipedia. COA obtenido en 2015.
+
+  # ===================== SERVINABAR =====================
+  - source: "Antxón"
+    target: "Servinabar"
+    type: OWNS
+    outlet: "elDiario.es"
+    url: "https://www.eldiario.es/euskadi/pagos-empresario-antxon-alonso-familiares-santos-cerdan-refuerzan-vinculacion-servinabar-2000_1_12509270.html"
+    date: "2015"
+    quote: "El 100% de las participaciones de esta mercantil nacida en 2015 son de su amigo Antxon Alonso"
+    note: "Antxón Alonso, propietario del 100% de Servinabar 2000 (mercantil constituida en 2015)."
+
+  # Servinabar: sector — "Porque Servinabar 2000 es una empresa constructora." — elDiario.es
+  # (misma URL).
+
+  # ===================== GRUPO BARRABÉS / INNOVA NEXT =====================
+  - source: "José Barrabés"
+    target: "Grupo Barrabés"
+    type: OWNS
+    outlet: "Marketing4eCommerce"
+    url: "https://marketing4ecommerce.net/fallece-jose-barrabes-fundador-de-barrabes-com-y-uno-de-los-pioneros-del-ecommerce-en-espana/"
+    quote: "transformó el bazar en una tienda especializada en accesorios y ropa de montaña."
+    note: "Patriarca fundador del negocio familiar de montaña en Benasque (Huesca)."
+
+  - source: "Grupo Barrabés"
+    target: "Innova Next SLU"
+    type: CONTROLS
+    outlet: "Newtral"
+    url: "https://www.newtral.es/contratos-empresas-barrabes/20240719/"
+    quote: "una entidad que se dedica a la prestación de servicios de consultoría estratégica"
+    note: "Innova Next SLU, filial de consultoría del Grupo Barrabés (matriz: Grupo Barrabés Consul SL)."
+
+  # ===================== SOLUCIONES DE GESTIÓN =====================
+  # NOTA: el único vínculo de propiedad/administración (Víctor de Aldama) aparece SOLO en
+  # cobertura del escándalo de mascarillas; por ello NO se incluye como relación.
+  # Hechos NEUTRALES de registro (atributo de empresa, sin relación):
+  #  - Constitución: 1998. "Fecha de constitución 23-6-1998" — Empresite/elEconomista
+  #    (https://empresite.eleconomista.es/SOLUCIONES-GESTION-APOYO-EMPRESAS.html)
+  #  - Sede: Zaragoza.
+  #  - Sector CNAE 7112: "Servicios técnicos de ingeniería y otras actividades relacionadas
+  #    con el asesoramiento técnico".

@@ -1,0 +1,311 @@
+# Curated context layer — ORGANIZATIONS, COMPANIES and COURTS: neutral public
+# descriptions ("what this institution/company is"), plus a couple of public
+# corporate ownership facts. No alleged conduct — only what the body publicly is.
+#
+# Types MUST match the existing node's label (Organization / Company / Court) or
+# a new node would be created instead of enriching the real one.
+#
+# ⚠️ FUENTE OBLIGATORIA EN `relations:` (spec 061) — desde la auditoría dual, una
+# relación de contexto SOLO se carga si trae `source_url:` (https) y, si consta,
+# `source_date:`. Las filas sin fuente se quedan aquí como backlog («documentar o
+# retirar») pero el loader las salta y las cuenta
+# (`context_skip_rel_unsourced` / `context_relations_unsourced_skipped`): las 49
+# aristas sin fuente retiradas del grafo por Path A no pueden resucitar en el
+# siguiente `make context`. Ejemplo:
+#   - {source: "Fulana de Tal", target: "PSOE", type: MEMBER_OF,
+#      source_url: "https://www.boe.es/…", source_date: '2024-01-02'}
+
+entities:
+  # --- State / public bodies ---
+  - {name: "Gobierno de España",                                  type: Organization, role: "Poder ejecutivo del Reino de España"}
+  - {name: "Ministerio de Transportes, Movilidad y Agenda Urbana", type: Organization, role: "Ministerio del Gobierno de España responsable de transportes e infraestructuras"}
+  - {name: "Ministerio de Fomento",                               type: Organization, role: "Denominación anterior (hasta 2020) del Ministerio de Transportes"}
+  - {name: "ADIF",                                                type: Organization, role: "Administrador de Infraestructuras Ferroviarias (entidad pública empresarial)"}
+  - {name: "Puertos del Estado",                                  type: Organization, role: "Organismo público que coordina las Autoridades Portuarias (Mº de Transportes)"}
+  - {name: "Guardia Civil",                                       type: Organization, role: "Instituto armado de naturaleza militar con funciones de seguridad pública"}
+  - {name: "Unidad Central Operativa",                            type: Organization, role: "Unidad Central Operativa de la Guardia Civil (UCO)"}
+  # (dedup 2026-08-03) La entity «Fiscalía» se retira: el nodo Organization:fiscalia se
+  # fusionó en Organization:ministerio-fiscal; re-crearla aquí resucitaría el huérfano
+  # (gotcha context_isolated_nodes).
+  - {name: "SEPBLAC",                                             type: Organization, role: "Servicio de prevención del blanqueo de capitales del Banco de España"}
+  - {name: "Agencia Tributaria",                                  type: Organization, role: "Agencia Estatal de Administración Tributaria (AEAT)"}
+  - {name: "Tribunal de Cuentas",                                 type: Organization, role: "Órgano fiscalizador supremo de las cuentas del sector público"}
+  - {name: "Congreso de los Diputados",                           type: Organization, role: "Cámara baja de las Cortes Generales de España"}
+  - {name: "SEPI",                                                type: Organization, role: "Sociedad Estatal de Participaciones Industriales"}
+  - {name: "Correos",                                             type: Organization, role: "Sociedad Estatal Correos y Telégrafos, S.A. — operador postal público de España (Grupo SEPI)"}
+  - {name: "Ministerio de Defensa",                               type: Organization, role: "Ministerio del Gobierno de España responsable de las Fuerzas Armadas"}
+  - {name: "Diputación de Badajoz",                               type: Organization, role: "Administración provincial de Badajoz"}
+  - {name: "IB-Salut",                                            type: Organization, role: "Servicio de Salud de las Illes Balears"}
+  - {name: "Universidad Complutense de Madrid",                   type: Organization, role: "Universidad pública de Madrid"}
+
+  # --- Political parties ---
+  - {name: "PSOE",                                                type: Organization, role: "Partido Socialista Obrero Español (PSOE), centro-izquierda"}
+  - {name: "Partido Popular",                                     type: Organization, role: "Principal partido de la oposición (centro-derecha)"}
+  - {name: "PNV",                                                 type: Organization, role: "Partido Nacionalista Vasco (Euzko Alderdi Jeltzalea-EAJ/PNV); partido nacionalista vasco de centro-derecha, con representación en las Cortes Generales y el Gobierno vasco"}
+
+  # --- Aviation / travel group (public) ---
+  - {name: "Globalia",                                            type: Organization, role: "Grupo turístico español, matriz de Air Europa"}
+  - {name: "Air Europa",                                          type: Organization, role: "Aerolínea española del Grupo Globalia"}
+
+  # --- Companies (public descriptions) ---
+  - {name: "Acciona",                                             type: Company, role: "Grupo español de infraestructuras, construcción y energías renovables"}
+  - {name: "Ferrovial",                                           type: Company, role: "Multinacional española de infraestructuras"}
+  - {name: "Telefónica",                                          type: Company, role: "Multinacional española de telecomunicaciones"}
+  - {name: "Indra",                                               type: Company, role: "Empresa española de tecnología, defensa y consultoría"}
+  - {name: "Plus Ultra",                                          type: Company, role: "Aerolínea española"}
+  - {name: "Grupo Barrabés",                                      type: Organization, role: "Grupo empresarial de consultoría e innovación fundado por Juan Carlos Barrabés"}
+  - {name: "Tubos Reunidos",                                      type: Company, role: "Grupo industrial alavés (Amurrio) fabricante de tubos de acero sin soldadura; rescatado por la SEPI en 2021 con 112,8 M€ a través del Fondo de Apoyo a la Solvencia de Empresas Estratégicas (Fasee)"}
+
+  # --- Courts ---
+  - {name: "Tribunal Supremo",                                    type: Court, role: "Máximo órgano jurisdiccional de España"}
+  - {name: "Audiencia Nacional",                                  type: Court, role: "Órgano judicial con jurisdicción nacional (delitos económicos, corrupción, etc.)"}
+  - {name: "Juzgado Central de Instrucción número 2",             type: Court, role: "Juzgado de instrucción de la Audiencia Nacional"}
+
+  # --- Organizaciones/empresas/tribunales enriquecidos (enriquecimiento swarm 2026-05-30) ---
+  - {name: "Dirección General de Carreteras", type: Organization, role: "Dirección General de Carreteras, órgano del Ministerio de Transportes (antes MITMA/Fomento) responsable de la red estatal de carreteras."}
+  - {name: "Soluciones de Gestión", type: Company, role: "Soluciones de Gestión y Ayuda a las Empresas SL: mercantil adjudicataria en 2020 de contratos de emergencia de mascarillas en el 'caso Koldo'."}
+  - {name: "Innova Next SLU", type: Company, aliases: ["Innova Next", "Innova Next SL", "INNOVA NEXT SL"], role: "Sociedad mercantil de consultoría tecnológica del grupo del empresario Juan Carlos Barrabés; implicada en el caso Begoña Gómez."}
+  - {name: "Whathefav SL", type: Company, role: "Sociedad de comunicación administrada por las hijas de José Luis Rodríguez Zapatero (Alba y Laura Rodríguez Espinosa); señalada por la UDEF en el 'caso Plus Ultra' (DP 77/2024) como presunto 'elemento finalista' del flujo de fondos."}
+  - {name: "Softgestor", type: Company, role: "Sociedad mercantil señalada en el 'caso Plus Ultra' (DP 77/2024) como instrumento para canalizar fondos; el sumario atribuye su control real a Francisco Flores."}
+  - {name: "Ayuntamiento de Madrid", type: Organization, role: "Administración local del municipio de Madrid; órgano de contratación pública (incluida el Área de Gobierno de Economía, Innovación y Empleo)."}
+  - {name: "Noran Coop", type: Organization, role: "Sociedad cooperativa vasca (Noran S. Coop. Pequeña), con sede en Donostia/San Sebastián, vinculada a Antxon Alonso (Servinabar) y Koldo García."}
+  # Split matriz/filial (s86, 2026-08-27 — cierre nh 0f976823): la agencia de viajes
+  # tiene nodo PROPIO (Company:globalia-corporate-travel, abajo) porque además salió del
+  # perímetro del grupo en 2020-21 (Deneb→Ávoris, BORME-A-2021-18-07). Los alias SEKAI
+  # (decisión spec 055) viven ahora en el nodo filial; el drop de la matriz es durable
+  # vía alias_deny (relations.yaml). El role de la matriz vive también en
+  # roles_enriched.yaml (carga después) — mantener AMBOS en sincronía.
+  - {name: "Globalia", type: Company, role: "Grupo turístico español (Globalia Corporación Empresarial), de la familia Hidalgo; matriz de la aerolínea Air Europa y de Halcón Viajes. Su antigua filial de viajes Globalia Corporate Travel S.L.U. (hoy Sekai, fuera del grupo desde 2020-21) tiene ficha propia"}
+  - {name: "Globalia Corporate Travel", type: Company, role: "Agencia de viajes corporativos (Globalia Corporate Travel S.L.U., NIF B57986846, R.M. Palma hoja PM-79779): nacida en el grupo Globalia, transmitida a Gestión de Viajes Deneb en 2020 y a Ávoris Corporación Empresarial en 2021, y renombrada SEKAI Corporate Travel S.L.U. en 2022 con el mismo NIF. Adjudicataria recurrente de contratación pública (contratos menores y licitaciones); contratar con la administración es legal",
+     aliases: ["GLOBALIA CORPORATE TRAVEL S.L.U.", "SEKAI CORPORATE TRAVEL S.L.U.", "Sekai Corporate Travel", "Sekai"]}
+  - {name: "Inteligencia Prospectiva", type: Company, role: "Sociedad mercantil española (Inteligencia Prospectiva, S.L.) participada por los hermanos venezolanos Guillermo Alfredo Amaro Chacón (62%) y Domingo Arnaldo Amaro Chacón (38%); señalada por la UDEF como presunta sociedad instrumental en la causa por el rescate público de Plus Ultra que instruye la Audiencia Nacional (caso Zapatero)."}
+  - {name: "Air Europa", type: Company, role: "Aerolínea española del Grupo Globalia (familia Hidalgo); receptora en noviembre de 2020 de un rescate público de 475 millones de euros vía el fondo (FASEE) de la SEPI."}
+  - {name: "Wakalua", type: Organization, role: "Wakalua Innovation Hub: primer hub global de innovación en turismo, vinculado al Grupo Globalia, lanzado en enero de 2019 (FITUR) en colaboración con la Organización Mundial del Turismo (OMT/UNWTO)."}
+  - {name: "SWIFT", type: Organization, role: "Cooperativa internacional de mensajería financiera interbancaria (Society for Worldwide Interbank Financial Telecommunication), con sede en Bélgica."}
+  - {name: "Red.es", type: Organization, role: "Entidad Pública Empresarial Red.es, M.P.: organismo público español de impulso de la transformación digital."}
+  - {name: "GEOALCALI", type: Company, role: "Geoalcali S.L., filial española de la minera cotizada Highfield Resources (matriz australiana); titular del proyecto de potasa Mina Muga (Navarra/Aragón)."}
+  - {name: "Análisis Relevante", type: Company, role: "Sociedad de consultoría (Análisis Relevante S.L.), administrada por el empresario Julio Martínez Martínez; señalada por la UDEF como 'pieza instrumental' en la investigación de la rama Zapatero/Plus Ultra por presunto blanqueo y tráfico de influencias."}
+  - {name: "Departamento de Investigación Económica y Anticorrupción", type: Organization, role: "Departamento de la UCO (Unidad Central Operativa de la Guardia Civil) especializado en delincuencia económica y anticorrupción, cuya jefatura ostenta el teniente coronel Antonio Balas."}
+  - {name: "Barrabes Ski Montana S.L.U.", type: Company, role: "Sociedad del grupo empresarial de la familia Barrabes (sede en Benasque, Huesca) dedicada al comercio de material de montana y esqui; vinculada a Juan Carlos Barrabes y, junto con Innova Next SL, investigada en la pieza del 'caso Begona Gomez'."}
+  - {name: "Servinabar", type: Company, role: "Servinabar 2000 S.L.U., sociedad navarra (reconvertida en constructora/consultora de prevención de riesgos) de Joseba Antxon Alonso Egurrola; pieza central del informe de la UCO en la causa que investiga a Santos Cerdán."}
+  - {name: "IE África Center", type: Organization, role: "Centro de IE University (Instituto de Empresa) dedicado a África, dirigido por Begoña Gómez (aprox. 2018-2022); aparece en la investigación judicial sobre Begoña Gómez."}
+  - {name: "Consejo de Ministros", type: Organization, role: "Órgano colegiado del Gobierno de España (gabinete/poder ejecutivo) presidido por el presidente del Gobierno."}
+  - {name: "Obras Públicas y Regadíos", type: Company, role: "Constructora de ingeniería civil (OPR, Obras Públicas y Regadíos S.A.); señalada por la UCO entre las empresas analizadas en la causa de Santos Cerdán/Ábalos."}
+  - {name: "Grupo Barrabés", type: Company, role: "Grupo empresarial aragonés de consultoría e innovación fundado por Carlos Barrabés; sus sociedades están investigadas/procesadas en la causa del caso Begoña Gómez por adjudicaciones de Red.es (presunción de inocencia)."}
+  - {name: "Barrabes Internet Sl", type: Company, role: "Sociedad del Grupo Barrabés (Barrabes Internet, S.L./S.L.U.) dedicada a servicios de internet, consultoría y comercio electrónico."}
+  - {name: "Construcciones Perez Jimenez", type: Company, role: "Constructora granadina de obra civil (carreteras y autovias, CNAE 4211), Construcciones Perez Jimenez S.L. (NIF B18077867), constituida en 1987; aparece en el informe de la UCO de la trama de obra publica del caso Koldo."}
+  - {name: "Levantina Ingeniería y Construcción", type: Company, role: "Constructora española (Levantina, Ingeniería y Construcción SL, 'LIC'), vinculada a José Ruz; mencionada en la instrucción del caso Koldo/Cerdán por presunto amaño de obra pública."}
+  - {name: "Gate Center", type: Organization, role: "Entidad (think tank) con sedes en Madrid y Pekín, fundada en abril de 2022 y gestionada en el entorno de Thinking Heads; el expresidente José Luis Rodríguez Zapatero figura como presidente de su comité asesor. Aparece en la investigación judicial (juez Calama) sobre el entramado societario en torno a Zapatero."}
+  - {name: "Confederación Hidrográfica del Tajo", type: Organization, role: "Organismo autónomo de cuenca dependiente del Ministerio para la Transición Ecológica y el Reto Demográfico (CIF Q2817005H), encargado de la gestión del agua en la demarcación del río Tajo."}
+  - {name: "Tribunal del Jurado", type: Court, role: "Órgano judicial español de participación ciudadana en la administración de justicia penal, regulado por la Ley Orgánica 5/1995 del Tribunal del Jurado"}
+  - {name: "LIC", type: Company, role: "Levantina, Ingenieria y Construccion (LIC SL), constructora valenciana (Alberic) investigada en la rama valenciana del caso Koldo"}
+  - {name: "Renfe", type: Organization, role: "Renfe-Operadora, entidad publica empresarial espanola de transporte ferroviario adscrita al Ministerio de Transportes"}
+  - {name: "Sacyr", type: Company, role: "Sacyr, grupo espanol de construccion, concesiones e infraestructuras"}
+  - {name: "Llitarrada Innova Sl", type: Company, role: "Sociedad holding espanola (CIF B86684032, constituida el 4-3-2013, sede en Madrid), cabecera del entramado societario del empresario Juan Carlos (Carlos) Barrabes"}
+  - {name: "AZVI", type: Company, role: "Grupo Azvi: constructora andaluza de obra civil y ferroviaria, con sede en Sevilla, presidida por Manuel Contreras Caro"}
+  - {name: "Caletón Consultores SL", type: Company, role: "Sociedad de consultoria identificada en las diligencias previas 77/2024 (caso Plus Ultra / auto Zapatero) como sociedad instrumental del entramado, controlada de facto por Santiago Fernandez Lena"}
+  - {name: "FIADELSO", type: Organization, role: "Fundación de cooperación al desarrollo (ONGD) fundada por José Luis Ábalos; cerrada/inactiva desde 2023 y en proceso de liquidación judicial ordenado por la Generalitat Valenciana; línea de investigación patrimonial del caso Koldo"}
+  - {name: "OTRI", type: Organization, role: "Oficina de Transferencia de Resultados de Investigación (hoy Oficina de Transferencia de Conocimiento) de la Universidad Complutense de Madrid: gestiona la propiedad intelectual/industrial y el registro de los resultados de investigación de la universidad."}
+  - {name: "Tribunal Central de Instancia", type: Court, role: "Órgano judicial de ámbito nacional (sede en Madrid) creado por la Ley Orgánica 1/2025; desde el 31 de diciembre de 2025 sus Secciones (entre ellas Instrucción) asumieron las competencias de los antiguos Juzgados Centrales de la Audiencia Nacional"}
+  - {name: "Sala de lo Penal", type: Court, role: "Sala de lo Penal (Sala Segunda) del Tribunal Supremo, competente para instruir y enjuiciar a aforados; tramita la Causa Especial 20775/2020 (Ábalos/Koldo/Cerdán)"}
+  - {name: "Contratación del Estado", type: Organization, role: "Junta Consultiva de Contratación Pública del Estado: órgano colegiado consultivo en materia de contratación del sector público, adscrito al Ministerio de Hacienda"}
+  - {name: "Subsecretaría", type: Organization, role: "Subsecretaría del Ministerio de Transportes (incl. su Unidad temporal PRTR): órgano de servicios comunes y gestión administrativa del ministerio"}
+  - {name: "AENA", type: Organization, role: "Aena S.M.E., S.A.: gestor aeroportuario espanol (sociedad mercantil estatal cotizada, mayoria publica del Estado via Enaire) adscrito al Ministerio de Transportes; opera la red de aeropuertos de interes general."}
+  - {name: "Banco Caminos", type: Organization, role: "Entidad de credito espanola nacida en 1977 ligada al colectivo de ingenieros de Caminos; banco desde 2008; integrada (con Bancofar) bajo la marca CBNK hacia 2023."}
+  - {name: "Aridos Anfersa SL", type: Company, role: "Empresa espanola del sector de los aridos y la explotacion de canteras (representada, segun el corpus, por Francisco Coca Sanchez), citada en la causa Koldo en relacion con contratos de Adif."}
+
+
+  # --- Organizaciones/empresas/tribunales enriquecidos (enriquecimiento swarm 2026-05-30) ---
+  - {name: "Plus Ultra Líneas Aéreas", type: Company, role: "Aerolínea española (Plus Ultra Líneas Aéreas S.A.) rescatada con 53 millones de euros del fondo gestionado por la SEPI en marzo de 2021."}
+  - {name: "FASEE", type: Organization, role: "Fondo de Apoyo a la Solvencia de Empresas Estratégicas, creado en julio de 2020 y gestionado por la SEPI para reforzar la solvencia de empresas estratégicas afectadas por la pandemia."}
+  - {name: "Deloitte", type: Organization, role: "Firma multinacional de servicios profesionales (consultoría, auditoría y asesoría legal); aparece en dos causas distintas: asesora jurídica de la SEPI en el rescate de Plus Ultra y adjudicataria del software de la cátedra de Begoña Gómez en la UCM. No figura imputada en ninguna de las dos."}
+  - {name: "Voli Analítica", type: Company, role: "Sociedad española (Voli Analítica SL), propiedad de Julio Martínez Martínez, señalada en el caso Plus Ultra como una de las mercantiles interpuestas que facturaron a la aerolínea por presuntos servicios sin causa económica real."}
+  - {name: "Landside Dubai Fzco", type: Company, role: "Sociedad vinculada a Dubái (FZCO) que, según el auto del juez Calama, habría sido participada al 100% por Idella Consulenza Strategica; investigada en el caso Plus Ultra (auto Zapatero)."}
+  - {name: "Grupo Aldesa", type: Company, role: "Grupo constructor español (Aldesa Construcciones); su nombre figura en una nota hallada en el teléfono de Koldo García junto a otras constructoras (caso Koldo / informes UCO)."}
+  - {name: "Tesorería General de la Seguridad Social", type: Organization, role: "Organismo público (TGSS), servicio común de la Seguridad Social española encargado de la gestión de recursos económicos y cotizaciones."}
+  - {name: "Vox", type: Organization, role: "Partido político español de extrema derecha (fundado en 2013); ejerce como acusación popular en varias causas de corrupción."}
+  - {name: "Ministerio Fiscal", type: Organization, role: "Ministerio Fiscal (Fiscalía): órgano constitucional que promueve la acción de la justicia en defensa de la legalidad y del interés público; parte acusadora en las causas penales."}
+  - {name: "ONIF", type: Organization, role: "Oficina Nacional de Investigación del Fraude (ONIF): unidad de la Agencia Tributaria (AEAT), dentro del Departamento de Inspección Financiera y Tributaria, especializada en investigar el fraude fiscal de alcance nacional."}
+  - {name: "Brigada Central de Investigación de Blanqueo de Capitales y Anticorrupción", type: Organization, role: "Brigada de la UDEF (Policía Nacional, Comisaría General de Policía Judicial) especializada en blanqueo de capitales y anticorrupción."}
+  - {name: "Manos Limpias", type: Organization, role: "Pseudosindicato/asociación de ultraderecha (fundado 1995, liderado por Miguel Bernad Remón); ejerce la acusación popular en numerosas causas mediáticas."}
+  - {name: "Acciona Construcción", type: Company, role: "Filial de construcción del grupo Acciona; constructora española de obra civil y edificación."}
+  - {name: "IOT Domotic Europe", type: Company, aliases: ["Lot Domotic Europe", "IOT Domotic Europe SL", "lot Domotic Europe"], role: "Sociedad mercantil del entorno de Julio Martínez Martínez (antes 'Aplicaciones Portuarias SL'); receptora de pagos de Plus Ultra (caso Plus Ultra)."}
+  - {name: "Instituto de Crédito Oficial", type: Organization, role: "Banco público español (entidad de crédito adscrita al Ministerio de Economía); vía de financiación tanteada en el caso Plus Ultra."}
+  - {name: "Thinking Heads", type: Company, role: "Consultora/'think tank' de conferencias y consultoría estratégica (Thinking Heads Group SL y su filial Thinking Heads Americas LLC) que prestó servicios a José Luis Rodríguez Zapatero desde 2014."}
+  - {name: "Daiwa Corporate Advisory", type: Company, role: "Asesora financiera en la que se apoyó la SEPI para evaluar la solicitud de rescate de Plus Ultra (el análisis legal corrió a cargo de Deloitte)."}
+  - {name: "Grupo Zapatero", type: Organization, role: "Etiqueta usada por la Policía/instrucción del caso Plus Ultra para designar la presunta estructura jerárquica de influencia en torno al expresidente Zapatero (no es una sociedad mercantil registrada)."}
+  - {name: "Alva Skies And Wings SL", type: Company, role: "Sociedad española titular del 9,46% de Plus Ultra Líneas Aéreas; su administrador único fue Julio Martínez Sola, fundador y presidente de Plus Ultra. Mencionada en el 'auto Zapatero'."}
+  - {name: "Finance Boutique", type: Organization, role: "Expresión (\"finance boutique\") con la que la UDEF describe el presunto entramado de sociedades en torno a J.L. Rodríguez Zapatero en el caso Plus Ultra (no es una mercantil registrada con ese nombre)."}
+  - {name: "Panacorp Casa de Valores", type: Company, role: "Casa de valores panameña (PANACORP CASA DE VALORES S.A., hoy Avanza Casa de Valores) que, según la investigación del caso Plus Ultra, concedió a la aerolínea un préstamo participativo cuestionado por el juez."}
+  - {name: "Asociación de Abogados Demócratas por Europa", type: Organization, role: "Asociación de juristas (ADADE) que ejerció la acusación popular en el caso Koldo ante la Audiencia Nacional y, posteriormente, en la causa especial del Tribunal Supremo."}
+  - {name: "Presidencia del Gobierno", type: Organization, role: "Órgano que asiste al presidente del Gobierno de España; en la trama, empleador público de la asesora de Begoña Gómez."}
+  - {name: "Apamate Corporate And Trust", type: Company, role: "Sociedad mercantil cuyo administrador único es Carlos Alberto Parra Delgado; señalada por la UDEF en la investigación de la trama Plus Ultra / financiación del entorno de Zapatero."}
+  - {name: "Dirección General de Aviación Civil", type: Organization, role: "Órgano del Ministerio de Transportes (DGAC) responsable de la política y ordenación del transporte aéreo en España."}
+  - {name: "Reale Seguros", type: Organization, role: "Compañía aseguradora (grupo italiano Reale Group); patrocinadora/financiadora de la cátedra extraordinaria de Begoña Gómez en la Universidad Complutense."}
+  - {name: "Policía Nacional", type: Organization, role: "Cuerpo Nacional de Policía de España (Dirección General de la Policía, Ministerio del Interior)."}
+  - {name: "Instituto Nacional de Aeronáutica Civil de Venezuela", type: Organization, role: "Autoridad de aviación civil de Venezuela (INAC)."}
+  - {name: "Landside Holding Ltd", type: Company, role: "Sociedad offshore radicada en las Islas Vírgenes Británicas (Tortola) presidida y representada por Julio Martínez Martínez (investigado)."}
+  - {name: "boutique financiera", type: Organization, role: "Etiqueta de la UDEF para la presunta estructura societaria ('finance boutique'/'boutique') montada para canalizar las comisiones del rescate de Plus Ultra."}
+  - {name: "Aerovip", type: Company, role: "Grupo de empresas venezolanas (Administradora Aerovip C.A. / Aerovip GSA C.A.), estrecho colaborador comercial de Plus Ultra."}
+  - {name: "CaixaBank", type: Company, role: "Entidad bancaria española (CaixaBank S.A., CIF A08663619); aparece como tercero en los expedientes judiciales."}
+  - {name: "ICO", type: Organization, role: "Instituto de Crédito Oficial: banco público español adscrito al Ministerio de Economía (entidad financiera del Estado)"}
+  - {name: "Tribunal Constitucional", type: Court, role: "Tribunal Constitucional de España: órgano constitucional intérprete supremo de la Constitución, independiente del Poder Judicial ordinario"}
+  - {name: "Audiencia Provincial de Madrid", type: Court, role: "Órgano judicial colegiado de segunda instancia de la provincia de Madrid; su Sección 23ª (penal) resuelve recursos de apelación, entre ellos los del 'caso Begoña Gómez' instruido por el Juzgado de Instrucción nº 41 de Madrid (juez Peinado)."}
+
+  # --- Organizaciones/empresas/tribunales enriquecidos (enriquecimiento swarm 2026-05-30) ---
+  - {name: "Banco Santander", type: Company, role: "Entidad bancaria espanola (Banco Santander, S.A.), uno de los mayores grupos financieros de Espana y de la eurozona."}
+  - {name: "Summer Wind", type: Company, role: "Summerwind SL: mercantil de intermediacion aeronautica (broker/alquiler de aviones), mencionada en la instruccion del caso Plus Ultra por operaciones con Plus Ultra Lineas Aereas."}
+  # 2026-08-03 (residual triaje QA pass2 cierre, unit 8d4e3fc5): el role ya no nombra a
+  # Afitta Capital SLU — es OTRA sociedad BORME (hoja A124910, nodo propio) y nombrarla
+  # aquí re-fundía en la ficha lo que el alias_deny separó.
+  - {name: "Afitta SL", type: Company, role: "Afitta SL (hoja registral A124034): sociedad atribuida en la instruccion del caso Plus Ultra a Julio Martinez Martinez, dentro de la red societaria investigada; receptora del pago de 213.202 euros (auto del TCI 18-05-2026). No confundir con Afitta Capital SLU (hoja A124910), sociedad distinta de la misma red."}
+  - {name: "Direccion General del Agua", type: Organization, role: "Direccion General del Agua, organo del Ministerio para la Transicion Ecologica y el Reto Demografico (Secretaria de Estado de Medio Ambiente) competente en la politica y gestion del dominio publico hidraulico."}
+  - {name: "UDEF", type: Organization, role: "Unidad de Delincuencia Economica y Fiscal del Cuerpo Nacional de Policia (Comisaria General de Policia Judicial); investiga corrupcion, blanqueo y fraude."}
+  - {name: "Raminatrans", type: Company, role: "Empresa de transporte/transitaria (Raminatrans S.L.), presidida por Rafael Milla"}
+  - {name: "Seguridad Social", type: Organization, role: "Sistema público de Seguridad Social de España (Tesorería General de la Seguridad Social, Servicios Comunes)"}
+  - {name: "Autoridad de Auditoría", type: Organization, role: "Nombre genérico del equipo/actuación de auditoría interna del Ministerio de Transportes sobre la compra de mascarillas (encargada en 2024 por el ministro Óscar Puente)"}
+  - {name: "VILLAFUEL", type: Company, role: "Mercantil operadora mayorista de hidrocarburos (Villafuel SL), pieza central de la presunta trama del fraude del IVA de los carburantes vinculada a Víctor de Aldama"}
+  - {name: "DGC", type: Organization, role: "Dirección General de Carreteras, organismo del Ministerio de Transportes (entonces Mitma) competente en la licitación y adjudicación de obra pública de carreteras"}
+  - {name: "Estado Mayor del Ejército de Tierra", type: Organization, role: "Órgano de mando del Ejército de Tierra español, dependiente del Ministerio de Defensa; bajo este nodo el grafo agrupa también unidades económico-logísticas como la Jefatura de Asuntos Económicos del Mando de Apoyo Logístico"}
+  - {name: "Deluxe Fortune SL", type: Company, role: "Sociedad mercantil del entramado de Victor de Aldama, vinculada al 'caso Koldo'/mascarillas."}
+  - {name: "Dirección General de Organización e Inspección", type: Organization, role: "Direccion General de la Subsecretaria del Ministerio de Transportes responsable de la auditoria interna sobre la compra de mascarillas (informe de 19/08/2024)."}
+  - {name: "JCI número 2", type: Court, role: "Juzgado Central de Instruccion numero 2 de la Audiencia Nacional (Madrid)."}
+  - {name: "Plataforma de Contratación del Sector Público", type: Organization, role: "Portal electrónico oficial de licitación pública del Estado (PLACSP/PLACE), gestionado por la Dirección General del Patrimonio del Estado (Ministerio de Hacienda y Función Pública)."}
+  - {name: "The Valley", type: Company, role: "The Valley Digital Business School, S.L. — escuela de negocios digitales; socia en UTE con Innova Next (de Juan Carlos Barrabés) en contratos públicos del 'caso Begoña Gómez'."}
+  - {name: "Transforma TSC, S.L.", type: Company, role: "Sociedad mercantil (Transforma TSC, S.L.) constituida y administrada por Begoña Gómez (nov. 2023), homónima de la marca/cátedra TSC de la UCM."}
+  - {name: "Transformatsc.org", type: Organization, role: "Dominio web (transformatsc.org) de la plataforma/software \"Transforma TSC\" vinculada a la Cátedra Extraordinaria de Transformación Social Competitiva de Begoña Gómez en la UCM; dado de alta el 21 de septiembre de 2022."}
+  - {name: "Juez Central de Instrucción número 5", type: Court, role: "Órgano judicial de la Audiencia Nacional (Madrid); titular en 2024-2026: el magistrado Santiago Pedraz."}
+
+
+  # --- Organizaciones/empresas/tribunales enriquecidos (enriquecimiento swarm 2026-06-01 ronda 2) ---
+  - {name: "BOE", type: Organization, role: "Boletín Oficial del Estado: diario oficial del Estado español donde se publican leyes, reales decretos, órdenes ministeriales y demás disposiciones y anuncios oficiales."}
+  - {name: "Fuerzas y Cuerpos de Seguridad del Estado", type: Organization, role: "Concepto institucional que engloba a Policía Nacional y Guardia Civil (y cuerpos autonómicos/locales) según la LO 2/1986"}
+  - {name: "TRAGSATEC", type: Organization, role: "Tecnologías y Servicios Agrarios SA: empresa pública filial del Grupo Tragsa (medio propio del Estado, participado mayoritariamente por SEPI), dedicada a consultoría e ingeniería"}
+  - {name: "Unión Europea", type: Organization, role: "Organización supranacional de integración política y económica de 27 Estados miembros; sus instituciones (Comisión Europea, DOUE) y fondos (NextGenerationEU/PRTR, Fondo de Solidaridad)"}
+  - {name: "Injoo Technology", type: Company, role: "Empresa (Injoo Technology SL / Innjoo Technology; en liquidación según Moncloa.com, 04-11-2024) proveedora de material sanitario durante la pandemia, situada por la prensa en la órbita de la trama de mascarillas del caso Koldo"}
+  - {name: "Unidad Militar de Emergencias", type: Organization, role: "Unidad de las Fuerzas Armadas españolas (Ministerio de Defensa) creada en 2005 para intervenir en emergencias; siglas UME."}
+  - {name: "Asch Infraestructuras y Servicios Sa", type: Company, role: "Constructora española de obra civil e infraestructuras (NIF A73998346); CNAE 4213, construcción de puentes y túneles."}
+  - {name: "Boletín Oficial del Estado", type: Organization, role: "Diario oficial del Estado español (BOE); organismo público dependiente del Ministerio de la Presidencia que publica leyes y disposiciones."}
+  - {name: "Dirección General de Transporte Terrestre", type: Organization, role: "Dirección General del Ministerio de Transportes (MITMA), órgano competente del sector del transporte terrestre; encargada de canalizar la distribución de mascarillas COVID-19 prevista en la Orden TMA/263/2020."}
+  - {name: "Grupo Empresarial Inmark", type: Company, role: "Consultora española de marketing e investigación de mercados; antigua empleadora de Begoña Gómez (1999-2018), a través de su filial Task Force."}
+  - {name: "Have Got Time", type: Company, role: "Sociedad mercantil (Have Got Time, SL), titular del chalet de La Alcaidesa (Cádiz) presuntamente controlada de forma indirecta por el empresario Claudio Rivas; pieza del caso Koldo/Ábalos sobre el uso de inmuebles."}
+  - {name: "Ixorigue Technologies", type: Company, role: "Empresa tecnológica (ganadería de precisión / IoT) del grupo de Juan Carlos Barrabés; figura entre las sociedades examinadas en el caso Begoña Gómez."}
+  - {name: "Zaño Sociedad Consultora SL", type: Company, role: "Consultora (ya disuelta) del exdirigente socialista Gaspar Zarrías, a través de la cual habría pagado a Leire Díez; en el foco de la pieza sobre presunta financiación irregular del PSOE."}
+  - {name: "Fundación la Caixa", type: Organization, role: "Fundación Bancaria 'la Caixa', obra social vinculada a CaixaBank."}
+  - {name: "Google", type: Company, role: "Google (filial de Alphabet Inc.), multinacional tecnológica estadounidense."}
+  - {name: "Kpmg Asesores Sl", type: Company, role: "KPMG Asesores S.L., firma española de consultoría/auditoría (red KPMG)."}
+  - {name: "Lopera Activa SL", type: Company, role: "Sociedad mercantil del empresario constructor valenciano José Ruz (titular también de Levantina, Ingeniería y Construcción SL)."}
+  - {name: "Policía Judicial", type: Organization, role: "Policía Judicial: unidades policiales (Guardia Civil/Policía Nacional) que auxilian a jueces y fiscales en la investigación de delitos"}
+  - {name: "Policía Local", type: Organization, role: "Policía Local de Badajoz: cuerpo de policía municipal del Ayuntamiento de Badajoz"}
+  - {name: "ASCH", type: Company, role: "ASCH Infraestructuras y Servicios S.A. — constructora española adjudicataria de obra pública investigada en el caso Koldo."}
+  - {name: "Aquaterra Servicios Infraestructuras SL", type: Company, role: "Aquaterra Servicios Infraestructuras S.L. — constructora que concurrió en UTE con Acciona Construcción a obra pública investigada en el caso Koldo."}
+  - {name: "Comunidad Foral de Navarra", type: Organization, role: "Comunidad autónoma uniprovincial del norte de España, con régimen foral propio."}
+  - {name: "Jefatura de la Sección Económico-Administrativa 26 - Base Aérea de Zaragoza", type: Organization, role: "Órgano de contratación del Ejército del Aire (Ministerio de Defensa) en la Base Aérea de Zaragoza"}
+  - {name: "Oficialía Mayor", type: Organization, role: "Unidad administrativa (Oficialía Mayor) del Ministerio de Transportes encargada de servicios internos y de la gestión/custodia de medios materiales."}
+  - {name: "Oficina de Artes Escénicas", type: Organization, role: "Puesto/unidad de la Diputación de Badajoz cuya jefatura ocupó David Sánchez, hermano de Pedro Sánchez (causa por presunta prevaricación y tráfico de influencias)."}
+  - {name: "Presupuestos Generales del Estado", type: Organization, role: "Ley anual de ingresos y gastos del Estado español (PGE); no es una entidad de la trama."}
+  - {name: "Asociación Liberum", type: Organization, role: "Asociación que ejerce la acusación popular en el caso Koldo (compraventa de mascarillas, José Luis Ábalos) ante el Tribunal Supremo"}
+  - {name: "Caixa de C. dels Enginyers – CC Ingeniers SCC", type: Organization, role: "Caixa de Crèdit dels Enginyers (Caja de Crédito de los Ingenieros), cooperativa de crédito española con sede en Barcelona; entidad financiera mencionada en una investigación patrimonial de la UCO"}
+  - {name: "FORMIGUERO BARRABES SL", type: Company, role: "Sociedad mercantil (NIF B87825402) del grupo de empresas de Juan Carlos Barrabés, citada en la investigación del caso Begoña Gómez / Barrabés"}
+  - {name: "Hirurok", type: Organization, role: "Presunta estructura ('Hirurok', euskera 'nosotros tres') atribuida por la instrucción a Leire Díez, Vicente Fernández Guerrero y Joseba Antxon Alonso, vinculada a Cerdán/Servinabar"}
+  - {name: "Organización Mundial del Turismo", type: Organization, role: "Organismo especializado de las Naciones Unidas para el turismo (OMT / UNWTO / ONU Turismo), con sede en Madrid; secretario general Zurab Pololikashvili (desde enero de 2018)"}
+  - {name: "TASK FORCE SA", type: Company, role: "Sociedad del Grupo Empresarial Inmark (Madrid), absorbida por Inmark Europa S.A. en 2014; consultora en la que Begoña Gómez fue directiva/consejera hasta 2018."}
+  - {name: "Vicepresidencia del Gobierno de Navarra", type: Organization, role: "Órgano del Gobierno foral de Navarra; figura como interlocutor administrativo solicitado en gestiones en torno al proyecto Mina Muga, según el informe de la UCO."}
+  - {name: "Administrador de Infraestructuras Ferroviarias", type: Organization, role: "ADIF — entidad pública empresarial gestora de la red ferroviaria española, adscrita al Ministerio de Transportes."}
+  - {name: "Conservatorio Superior", type: Organization, role: "Conservatorio Superior de Música 'Bonifacio Gil' de Badajoz, centro dependiente de la Diputación de Badajoz"}
+  - {name: "Departament d'Interior", type: Organization, role: "Departamento de Interior y Seguridad Pública de la Generalitat de Catalunya (consejería autonómica catalana)"}
+  - {name: "ENAIRE", type: Organization, role: "Entidad pública empresarial gestora de la navegación aérea en España, adscrita al Ministerio de Transportes; accionista mayoritario (51%) de Aena S.A."}
+  - {name: "Gabinete del Ministro", type: Organization, role: "Denominación genérica del gabinete del ministro (estructura de asesores del titular ministerial), en este contexto el Ministerio de Transportes de José Luis Ábalos."}
+  - {name: "Generalitat Valenciana", type: Organization, role: "Administración autonómica de la Comunitat Valenciana (Gobierno valenciano); en el caso aparece a través de la Conselleria de Innovación y del programa Distrito Digital."}
+  - {name: "Grupo Cueto", type: Company, role: "Conglomerado empresarial de Juan Carlos Cueto; señalado por la UCO como motor económico de Soluciones de Gestión en la trama de las mascarillas. Investigación judicial en curso."}
+  - {name: "IFEMA", type: Organization, role: "Institución Ferial de Madrid (Feria de Madrid), consorcio organizador de ferias y congresos; aparece en el caso Begoña Gómez como sede y coorganizador de eventos."}
+  - {name: "Instituto Navarro de Deporte y Juventud", type: Organization, role: "Organismo autónomo del Gobierno de Navarra encargado de la política de deporte y juventud (INDJ)."}
+  - {name: "MTM 180 Capital SL", type: Company, role: "Sociedad mercantil vinculada a Víctor de Aldama, señalada por la Agencia Tributaria como entidad interpuesta en la presunta trama de las mascarillas (caso Koldo)."}
+  - {name: "Making Science Group", type: Company, role: "Empresa española de tecnología y marketing digital (Making Science Group, S.A.), proveedora de software para la cátedra de Begoña Gómez en la UCM."}
+  - {name: "Marco Infraestructuras y Medio Ambiente SA", type: Company, role: "Constructora aragonesa (Grupo Marco; CIF A99498255), con sede en Zaragoza, dedicada a obra civil, carreteras y conservación de infraestructuras"}
+  - {name: "Ortiz Construcciones y Proyectos SA", type: Company, role: "Constructora española (grupo Ortiz) dedicada a obra civil e infraestructuras, adjudicataria de obra pública estatal"}
+  - {name: "TRACK GLOBE SL", type: Company, role: "Sociedad del entorno empresarial de Juan Carlos Barrabés (grupo Barrabés); aparece en la investigación sobre contratos públicos vinculados a Begoña Gómez."}
+
+  # --- Andalucía: gobierno autonómico y caso de los ERE (registro público; contexto del 'caso Leire Díez') ---
+  - {name: "Junta de Andalucía", type: Organization, role: "Gobierno y administración autónoma de la comunidad autónoma de Andalucía (Junta de Andalucía); su Consejo de Gobierno es el órgano colegiado del Ejecutivo andaluz."}
+  - {name: "caso de los ERE de Andalucía", type: LegalCase, role: "Causa por el fraude de los expedientes de regulación de empleo (ERE) de la Junta de Andalucía: concesión irregular de ayudas sociolaborales y a empresas en crisis por unos 680 millones de euros durante una década. La Audiencia Provincial de Sevilla condenó en 2019 a una decena de excargos de la Junta por prevaricación (y, algunos, malversación); el Tribunal Supremo confirmó las condenas en 2022 y el Tribunal Constitucional las anuló a partir de abril de 2024 por vulneración del derecho a la legalidad penal, ordenando dictar nuevas sentencias."}
+
+
+  # --- Enriquecimiento swarm 2026-06-20 (actores grado>=7, verificados) ---
+  - {name: "Step One", type: Company, role: "Sociedad (Step One Ventures, S.L.) del entorno empresarial de Juan Carlos Barrabés (caso Begoña Gómez)"}
+  - {name: "Talking Press Sl", type: Company, role: "Sociedad del entorno empresarial de Juan Carlos Barrabés (caso Begoña Gómez)"}
+  - {name: "Thinking Heads Group SL", type: Company, role: "Agencia de conferenciantes y eventos (fundador/administrador Daniel Romero-Abreu Kaup); en el foco de la pieza que investiga el entramado societario de Zapatero"}
+  - {name: "Torscámara y Cía. de Obras SA", type: Company, role: "Constructora valenciana (Torrescámara y Cía. de Obras, S.A.); integrante de la UTE adjudicataria de un tramo de la A-12 citado en el informe de la UCO del caso Cerdán/Koldo"}
+  - {name: "Área de Cultura", type: Organization, role: "Área de Cultura de la Diputación de Badajoz"}
+  - {name: "Agropecuaria Lucena", type: Company, role: "Sociedad mercantil vinculada a Julio Martínez Martínez, señalada en la investigación del caso Zapatero/Plus Ultra (2026)"}
+  - {name: "Asociación Hazteoir.org", type: Organization, role: "Asociación ultraconservadora española (HazteOír.org) personada como acusación popular en causas del caso Koldo/Ábalos, Plus Ultra y la causa contra el fiscal general"}
+  - {name: "Avintia", type: Company, role: "Grupo constructor español (Grupo Avintia), adjudicatario de obra pública del Ministerio de Fomento citado en el caso Koldo/Aldama"}
+  - {name: "COPASA", type: Company, role: "Constructora gallega (Construcciones, Obras y Proyectos S.A.), con sede en Ourense, dedicada a obra civil"}
+  - {name: "Consejo Superior de Deportes", type: Organization, role: "Organismo autónomo del Gobierno de España adscrito al Ministerio de Educación, FP y Deportes, responsable de la política deportiva estatal (CSD)"}
+  - {name: "Conservatorios", type: Organization, role: "Conservatorios de música dependientes de la Diputación de Badajoz (centro de trabajo de la plaza ocupada por David Sánchez)"}
+  - {name: "Corpoestructura", type: Company, role: "Sociedad mercantil (CORPOESTRUCTURA S.L.) constituida en julio de 2018, vinculada a la trama del rescate de Plus Ultra investigada en el auto Zapatero"}
+  - {name: "Freyssinet SAU", type: Company, role: "Empresa española de ingeniería civil especializada en pretensado y refuerzo de estructuras; filial del grupo Soletanche Freyssinet."}
+  - {name: "Fundación IE", type: Organization, role: "Fundación vinculada al IE University / Instituto de Empresa que creó y albergó el IE Africa Center, dirigido por Begoña Gómez entre agosto de 2018 y junio de 2022."}
+  - {name: "Hedima Dn Formación S.L.U.", type: Organization, role: "Empresa madrileña de formación (HEDIMA D N FORMACION SL, NIF B82651514); licitadora en un concurso público analizado en el caso Begoña Gómez."}
+  - {name: "Instalibero District SL", type: Company, role: "Sociedad mercantil administrada por Manuel Sallés (imputado); vinculada a la trama de los Hidrocarburos del caso Koldo."}
+  - {name: "Kutxabank S.A.", type: Organization, role: "Entidad bancaria española (grupo financiero de origen vasco, fusión de BBK, Kutxa y Vital)."}
+  - {name: "PRISMCHAIN SL", type: Company, role: "Sociedad mercantil española (CIF B87463980), parte de la estructura societaria del grupo Barrabés (controlada vía el holding Llitarrada) analizada por la UCO en el caso Begoña Gómez/Barrabés"}
+  - {name: "PSN", type: Organization, role: "Partido Socialista de Navarra (PSN-PSOE), federación navarra del PSOE."}
+  - {name: "Pilot Real Estate", type: Company, role: "Sociedad inmobiliaria (PILOT REAL ESTATE S.L.) vinculada a Víctor de Aldama."}
+  - {name: "Premier Plus Reward Program, S.L", type: Company, role: "Sociedad asociada al programa de fidelización \"Premier Plus\" de Plus Ultra Líneas Aéreas, lanzado en 2019."}
+  - {name: "Registro Mercantil", type: Organization, role: "Registro público oficial donde se inscriben las sociedades mercantiles españolas (institución, no parte del caso)."}
+
+  # --- Enriquecidas (enriquecimiento swarm 2026-06-21 — auto Peinado juicio oral Begoña) ---
+  - {name: "Cátedra Extraordinaria de Transformación Social Competitiva", type: Organization, role: "Cátedra extraordinaria de la Universidad Complutense de Madrid (UCM) codirigida por Begoña Gómez (2020-2024); no renovada/rescindida en septiembre de 2024."}
+  - {name: "Lefebvre-El Derecho, S.A.", type: Company, role: "Editorial jurídica y proveedora de servicios; requerida por el juzgado en el caso Begoña Gómez."}
+  - {name: "Oficina de Transferencia de Resultados de Investigación", type: Organization, role: "Unidad de la Universidad Complutense de Madrid (OTRI) encargada de la transferencia y protección de resultados de investigación (patentes, contratos de I+D, registro de software)"}
+  - {name: "Tribunal de Instancia de Madrid", type: Court, role: "Órgano judicial de instancia de Madrid (Ley Orgánica 1/2025); sus Secciones de Instrucción (plazas) instruyen las causas de Begoña Gómez y del auto Zapatero."}
+  - {name: "Iustitia Europa", type: Organization, role: "Partido político / plataforma de la sociedad civil que ejerce la acusación popular en varias causas (caso de David Sánchez en Badajoz; Causa Especial 20775/2020 del Tribunal Supremo)."}
+  - {name: "Tribunal Superior de Justicia", type: Court, role: "Órgano judicial que culmina la organización judicial de una comunidad autónoma (referencia institucional genérica, sin TSJ concreto especificado)."}
+
+
+  # --- Organizaciones/empresas/tribunales enriquecidos (ingesta informe-udef-2910-focus-social, 2026-06-25) ---
+  - {name: "Grupo Gloria", type: Company, role: "Conglomerado empresarial peruano con sede en Lima (alimentación, cemento, transporte, agroindustria) de la familia Rodríguez; matriz de la cementera boliviana SOBOCE."}
+  - {name: "SOBOCE", type: Company, role: "Sociedad Boliviana de Cementos, filial cementera del Grupo Gloria en Bolivia."}
+  - {name: "Focus Social Research SAC", type: Company, role: "Empresa peruana de marketing/consultoría; emisora formal de los pagos a Zapatero y considerada sociedad interpuesta por la UDEF."}
+  - {name: "Procuraduría General del Estado", type: Organization, role: "Órgano del Estado boliviano encargado de la defensa jurídica de los intereses del Estado; dirigido por el Procurador General del Estado."}
+  - {name: "FANCESA", type: Company, role: "Fábrica Nacional de Cementos S.A., cementera de mayoría estatal boliviana (Sucre)."}
+  - {name: "Kreab Bolivia", type: Company, role: "Filial boliviana de la consultora internacional de comunicación y asuntos públicos Kreab."}
+  - {name: "Tribunal Supremo de Justicia", type: Court, role: "Tribunal Supremo de Justicia de Bolivia (TSJ), con sede en Sucre; su Sala Civil resuelve los recursos de casación del país."}
+  - {name: "Tribunal Departamental de Justicia de La Paz", type: Court, role: "Tribunal Departamental de Justicia de La Paz (Bolivia); en concreto su Sala Constitucional Segunda, órgano de amparo constitucional del departamento de La Paz."}
+
+  # --- Organizaciones/empresas/tribunales enriquecidos (swarm diarios Senado SEPI, 2026-06-12) ---
+  # Saneado 2026-07-09: el lote original quedó por error bajo `relations:` (mismo gotcha que
+  # figures.yaml) y nunca se cargó. Se movieron aquí solo las 2 entradas con nodo vivo en el grafo;
+  # las 5 sin nodo (Martín Molina Abogados, Comisión Europea, Grupo Parl. Socialista, Duro Felguera
+  # como Company, IGAE corto) se retiraron para no crear nodos aislados.
+  - {name: "Juzgado Número 15 de Madrid", type: Court, role: "Juzgado de Instrucción nº 15 de Madrid (titular: Esperanza Collazos); instruyó la primera causa sobre el rescate de Plus Ultra (2021-2023)."}
+  - {name: "Agencia Estatal de Seguridad Aérea", type: Organization, role: "AESA: organismo público supervisor de la aviación civil en España, adscrito al Ministerio de Transportes"}
+
+  # --- Ingesta diarios Senado (PR #240) — enrich 2026-07-14 ---
+  - {name: "Adentro Construimos", type: Company, role: "Constructora navarra de Carlos Vidaurre; adjudicataria de obras del Gobierno de Navarra y autora de la reforma de la sede del PSN y del piso de Alzórriz"}
+
+  # --- Keep-alive comisión covid del Congreso (s86, 2026-08-27) ---
+  # Tras borrar sus 6 INVOLVES artefacto (migración s86), el Event quedaba con 0 aristas
+  # de entidad y menciones SOLO en DSCD-15-CI-8.pdf (transcripción) — el perfil exacto que
+  # borra _delete_transcript_orphans en la próxima ingesta. Esta arista de contexto (veraz:
+  # el objeto declarado de la comisión son los contratos de material sanitario) lo ancla.
+  # Ambos Events se declaran con role SIEMPRE (el on-match pisa role con '' si falta).
+  - {name: "Comisión de Investigación sobre los contratos públicos durante la pandemia de covid-19", type: Event, role: "Comisión de Investigación del Congreso de los Diputados sobre los hechos, responsabilidades y enseñanzas en torno a los procesos de contratación para la adquisición de material sanitario durante la crisis del covid-19 (XV Legislatura, presidencia de Alejandro Soler Mur). Debate parlamentario y control político, no prueba judicial"}
+  - {name: "mascarillas", type: Event, role: "Mascarillas y material sanitario: objeto de los contratos de emergencia de la pandemia investigados en el caso Koldo"}
+
+relations:
+  # Public corporate ownership
+  - {source: "Globalia", target: "Air Europa", type: CONTROLS, note: "Air Europa es la aerolínea del Grupo Globalia."}
+  # Filial histórica, NO pertenencia actual: la agencia salió del perímetro Globalia en
+  # 2020-21 (Deneb→Ávoris) — por eso ASSOCIATED_WITH con nota y no SUBSIDIARY_OF (s86).
+  - {source: "Globalia Corporate Travel", target: "Globalia", type: ASSOCIATED_WITH, note: "Agencia de viajes nacida en el grupo Globalia; socio único transferido a Gestión de Viajes Deneb (2020) y a Ávoris Corporación Empresarial (2021), renombrada SEKAI en 2022 con el mismo NIF B57986846."}
+  # Keep-alive s86 (ver bloque de entities): objeto declarado de la comisión del Congreso.
+  - {source: "Comisión de Investigación sobre los contratos públicos durante la pandemia de covid-19", target: "mascarillas", type: INVOLVES, note: "Objeto declarado de la comisión: los procesos de contratación para la adquisición de material sanitario durante la crisis del covid-19."}
+
+  # Organizational hierarchy (filial/child -> matriz/parent). SUBSIDIARY_OF makes the
+  # parent/subsidiary structure queryable instead of buried in `role` prose.
+  - {source: "Air Europa", target: "Globalia", type: SUBSIDIARY_OF, note: "Air Europa es filial del Grupo Globalia."}
+  - {source: "ADIF", target: "Ministerio de Transportes, Movilidad y Agenda Urbana", type: SUBSIDIARY_OF, note: "Entidad pública empresarial adscrita al Ministerio de Transportes."}
+  - {source: "Puertos del Estado", target: "Ministerio de Transportes, Movilidad y Agenda Urbana", type: SUBSIDIARY_OF, note: "Organismo público dependiente del Ministerio de Transportes."}
+  - {source: "Unidad Central Operativa", target: "Guardia Civil", type: SUBSIDIARY_OF, note: "La UCO es la unidad de policía judicial de la Guardia Civil."}

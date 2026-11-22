@@ -1,0 +1,122 @@
+name: checks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  # Spec 076: the weekly and the manual run include the slow tier of the long step, whatever the last change was.
+  schedule:
+    - cron: '17 3 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  # Pipeline tests stay local (torch, MLX, sentence-transformers, Apple Vision OCR), except the spec 070 ones at the
+  # end: they guard the public pseudonym policy and only need the API environment plus two light pipeline deps.
+  data-and-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    # actions is read by the scope step alone (spec 073): the result of this workflow on the previous commit of main.
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 2
+      # Spec 073: the long pipeline step below only runs when the change can affect what it tests. Any doubt
+      # resolves to running it.
+      - name: Alcance
+        id: alcance
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          # Set to `true` only in a repository whose main is a copy of this one (the private mailbox of the watcher).
+          CI_MIRROR: ${{ vars.CI_MIRROR }}
+        run: python3 .github/scripts/ci_scope.py
+      # Spec 076: what the long step does (`omitir`, `rapido`, `completo`), from the exact words of the scope step.
+      # If this step fails or writes nothing, the long step runs whole.
+      - name: Nivel del paso largo
+        id: nivel
+        continue-on-error: true
+        env:
+          ALCANCE: ${{ steps.alcance.outcome }}
+          PESADO: ${{ steps.alcance.outputs.pesado }}
+          LENTO: ${{ steps.alcance.outputs.lento }}
+        run: python3 .github/scripts/ci_nivel.py
+      - uses: astral-sh/setup-uv@v6
+      - name: Feed de última hora
+        working-directory: api
+        run: uv run python -c "from app.ultima_hora_feed import load_feed; print(len(load_feed()), 'items')"
+      - name: Patrones
+        working-directory: api
+        run: uv run python -m app.patrones
+      # Spec 069: one controlled vocabulary — derived artifacts fresh, no literal copies, no bool() on LLM output.
+      - name: Ontología controlada
+        working-directory: api
+        run: uv run python ../pipeline/scripts/ontologia_check.py
+      - name: Tests API
+        working-directory: api
+        run: PYTHONPATH=. uv run --with pytest pytest -q tests
+      # The public tree must not carry a single personal identifier, fixtures included (stdlib only).
+      - name: PII del árbol entero
+        run: python3 pipeline/scripts/pii_tree_scan.py
+      # No rule or register row pairs a court pseudonym with a withdrawn company/body or alias (spec 070).
+      - name: Seudónimos judiciales
+        run: uv run --project api python pipeline/scripts/seudonimos_check.py
+      # Allowlist, loader policy, 063 apply and register (spec 070); versions pinned to pipeline/uv.lock.
+      # SM_FACTOR_DE_CPU (spec 070 AC334-AC336): the absolute time caps of the cost tests (and their controls) are written
+      # for sm-dev; a GitHub runner is slower (measured 1.0-1.34 s against a 1 s cap), so they are doubled here and only here.
+      # igraph (pinned to pipeline/uv.lock) lets test_network_metrics import and run here; test_seudonimos imports every
+      # test module in a fresh interpreter and fails on any import error outside its closed table.
+      # Spec 073: the long step runs on a checkout of its own, so no file the steps above left in this one (they run
+      # code of the change) reaches it. The job environment (GITHUB_ENV, GITHUB_PATH, the uv cache) is still shared.
+      - uses: actions/checkout@v4
+        if: steps.nivel.outcome != 'success' || steps.nivel.outputs.nivel != 'omitir'
+        with:
+          persist-credentials: false
+          path: limpio
+      - name: Tests del pipeline (seudónimos y apply 063)
+        if: steps.nivel.outcome != 'success' || steps.nivel.outputs.nivel != 'omitir'
+        working-directory: limpio
+        # Spec 076: the tests marked `@lento` skip themselves only when SM_NIVEL is the exact word `rapido`, which the
+        # step «Nivel del paso largo» writes only for a change of data. The command is the same in both tiers.
+        env:
+          SM_FACTOR_DE_CPU: "2"
+          SM_NIVEL: ${{ steps.nivel.outcome == 'success' && steps.nivel.outputs.nivel || 'completo' }}
+        run: >-
+          PYTHONPATH=pipeline:pipeline/tests
+          uv run --project api --with dateparser==1.4.0 --with rapidfuzz==3.14.5 --with igraph==1.0.0
+          python -m unittest test_network_metrics test_seudonimos test_qa_esc_apply
+      - name: Retirar el checkout del paso largo
+        if: always()
+        run: rm -rf limpio
+      # Every row of the public corrections register is well formed: unique id, all fields, closed vocabulary. The tests
+      # run with rapidfuzz (pinned as above) so the ones that prepare the private rules can import the pipeline loader
+      # instead of skipping; `--tree` keeps the lean API environment.
+      - name: Registro de rectificaciones
+        run: |
+          uv run --project api python pipeline/scripts/registro_check.py --tree
+          uv run --project api --with rapidfuzz==3.14.5 python -m unittest pipeline.tests.test_registro_check -v
+
+  # Tipos y build de producción de la web; la suite e2e no corre aquí porque necesita la API y el grafo.
+  web-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - name: Dependencias de la web
+        working-directory: web
+        run: npm ci
+      - name: Build de la web
+        working-directory: web
+        run: NEXT_PUBLIC_API_BASE=/api npm run build

@@ -1,0 +1,86 @@
+# Neutral, attributed enrichment facts for public institutions.
+# Encyclopedic, presumption-of-innocence respecting. Every relation backed by a
+# verbatim fetched source quote. No scandal/allegation framing.
+
+entities:
+  # Institutions in this batch
+  - {name: "Dirección General de Carreteras", type: Organization}
+  - {name: "Ministerio de Fomento", type: Organization}
+  - {name: "Guardia Civil", type: Organization}
+  - {name: "Partido Popular", type: Organization}
+  - {name: "IB-Salut", type: Organization}
+  # Endpoints (parents / owners / containers)
+  - {name: "Ministerio de Transportes, Movilidad y Agenda Urbana", type: Organization}
+  - {name: "Gobierno de España", type: Organization}
+  - {name: "Comunidad Autónoma de las Islas Baleares", type: Organization}
+  - {name: "Alianza Popular", type: Organization}
+  - {name: "Islas Baleares", type: Location}
+
+relations:
+  # --- Dirección General de Carreteras ---
+  - source: "Ministerio de Transportes, Movilidad y Agenda Urbana"
+    target: "Dirección General de Carreteras"
+    type: CONTROLS
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Direcci%C3%B3n_General_de_Carreteras"
+    quote: "La Dirección General de Carreteras (DGC) de España es el órgano directivo del Ministerio de Transportes y Movilidad Sostenible, adscrito a la Secretaría General de Transporte Terrestre, cuyo ámbito de actuación es la Red de Carreteras del Estado."
+    note: "Órgano directivo del Ministerio de Transportes y Movilidad Sostenible, adscrito a la Secretaría General de Transporte Terrestre. Sus orígenes se remontan a 1785."
+  - source: "Dirección General de Carreteras"
+    target: "Ministerio de Transportes, Movilidad y Agenda Urbana"
+    type: MEMBER_OF
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Direcci%C3%B3n_General_de_Carreteras"
+    quote: "La Dirección General de Carreteras (DGC) de España es el órgano directivo del Ministerio de Transportes y Movilidad Sostenible, adscrito a la Secretaría General de Transporte Terrestre, cuyo ámbito de actuación es la Red de Carreteras del Estado."
+    note: "La DGC forma parte (es órgano directivo) del Ministerio de Transportes."
+
+  # --- Ministerio de Transportes, Movilidad y Agenda Urbana ---
+  - source: "Gobierno de España"
+    target: "Ministerio de Transportes, Movilidad y Agenda Urbana"
+    type: CONTROLS
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Ministerio_de_Transportes,_Movilidad_y_Agenda_Urbana"
+    quote: "El Ministerio de Transportes y Movilidad Sostenible de España [...] es el departamento de la Administración General del Estado encargado de la propuesta y ejecución de la política del Gobierno de la Nación en los ámbitos de las infraestructuras de transporte terrestre, aéreo y marítimo."
+    note: "Departamento de la Administración General del Estado (Gobierno de España). Su origen como departamento se remonta al Real Decreto de 28 de enero de 1847."
+
+  # --- Ministerio de Fomento ---
+  - source: "Ministerio de Fomento"
+    target: "Ministerio de Transportes, Movilidad y Agenda Urbana"
+    type: ASSOCIATED_WITH
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Ministerio_de_Transportes,_Movilidad_y_Agenda_Urbana"
+    quote: "El Ministerio de Transportes y Movilidad Sostenible de España, conocido en otras etapas como Ministerio de Fomento [...] El Departamento se creó bajo el título de Secretaría de Estado y del Despacho de Comercio, Instrucción y Obras Públicas por Real Decreto de 28 de enero de 1847."
+    note: "Ministerio de Fomento es una denominación histórica del mismo departamento hoy llamado Ministerio de Transportes y Movilidad Sostenible. Origen: Real Decreto de 28 de enero de 1847."
+
+  # --- Guardia Civil ---
+  - source: "Guardia Civil"
+    target: "Gobierno de España"
+    type: ASSOCIATED_WITH
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Guardia_Civil"
+    quote: "La Guardia Civil (GC) es un instituto armado español y una de las dos fuerzas de seguridad de ámbito nacional, junto con el Cuerpo Nacional de Policía."
+    note: "Instituto armado español; una de las dos fuerzas de seguridad de ámbito nacional. Creada el 28 de marzo de 1844 mediante real decreto."
+
+  # --- Partido Popular ---
+  - source: "Alianza Popular"
+    target: "Partido Popular"
+    type: ASSOCIATED_WITH
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Partido_Popular"
+    quote: "Fue fundado el 20 de enero de 1989 en sustitución de la antigua Alianza Popular (AP)."
+    note: "El Partido Popular, partido político español de centroderecha, fue fundado el 20 de enero de 1989 en sustitución de Alianza Popular."
+
+  # --- IB-Salut ---
+  - source: "Comunidad Autónoma de las Islas Baleares"
+    target: "IB-Salut"
+    type: CONTROLS
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Servicio_de_Salud_de_las_Islas_Baleares"
+    quote: "El Servicio de Salud de las Islas Baleares (en catalán, Servei de Salut de les Illes Balears) o IB-Salut es el organismo encargado del sistema de prestaciones sanitarias públicas en la comunidad autónoma española de Islas Baleares."
+    note: "Organismo del sistema sanitario público de la comunidad autónoma de las Islas Baleares. Creado en 1986; sustituyó al Insalud."
+  - source: "IB-Salut"
+    target: "Islas Baleares"
+    type: ASSOCIATED_WITH
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Servicio_de_Salud_de_las_Islas_Baleares"
+    quote: "El Servicio de Salud de las Islas Baleares (en catalán, Servei de Salut de les Illes Balears) o IB-Salut es el organismo encargado del sistema de prestaciones sanitarias públicas en la comunidad autónoma española de Islas Baleares."
+    note: "Servicio público de salud de las Islas Baleares."

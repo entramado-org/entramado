@@ -1,0 +1,889 @@
+# Curated de-duplication. The document extractor sometimes creates two nodes for
+# the SAME real entity when their surface forms aren't fuzzy-similar (an acronym
+# vs its full name, a short name vs the official one). Each group folds the
+# `duplicates` into the `canonical` node (relationships combined, duplicate names
+# kept as aliases). Duplicates inherit the canonical's type unless given as
+# {name, type}. Applied by `make context` (idempotent — once merged, the
+# duplicate id no longer exists, so re-running is a no-op).
+#
+# Only list entities you are CERTAIN are the same. When in doubt, leave them split.
+
+merges:
+  # Enriquecimiento swarm 2026-06-20 (verificados): acrónimo y holding familiar.
+  - canonical: {name: "Organización Mundial del Turismo", type: Organization}
+    duplicates: ["UNWTO"]
+
+  - canonical: {name: "Grupo Barrabés", type: Company}
+    duplicates: [{name: "Grupo Barrabés Consul SL", type: Company}]
+
+  - canonical: {name: "PSOE", type: Organization}
+    duplicates: ["Partido Socialista"]
+
+  - canonical: {name: "Unidad Central Operativa", type: Organization}
+    duplicates: ["UCO"]
+
+  - canonical: {name: "Universidad Complutense de Madrid", type: Organization}
+    duplicates: ["UCM"]
+
+  - canonical: {name: "Puertos del Estado", type: Organization}
+    duplicates: ["PdE"]
+
+  - canonical: {name: "Ministerio de Transportes, Movilidad y Agenda Urbana", type: Organization}
+    duplicates: ["MITMA"]
+
+  # José Ruz Martínez (empresario, constructora Levantina) — el extractor dejó un
+  # nodo aparte "Pepe Ruz Levantina" para la misma persona (ya figura como alias
+  # del nodo canónico). Es un empresario de la trama, no un magistrado.
+  - canonical: {name: "José Ruz", type: Person}
+    duplicates: ["Pepe Ruz Levantina"]
+
+  # Patricia Úriz, esposa de Koldo García — el grafo tiene un nodo "Patricia"
+  # (menciones del informe UCO: "su mujer PATRICIA") separado del nodo de prensa
+  # con su nombre completo. Misma persona.
+  - canonical: {name: "Patricia Úriz", type: Person}
+    duplicates: ["Patricia"]
+
+  # ---------------------------------------------------------------------------
+  # Lote 2026-05-30 (sesión 3): barrido sistemático de duplicados en la BD viva.
+  # El extractor parte el mismo ente en varios nodos cuando las formas no son
+  # fuzzy-similares: variante de puntuación / sufijo legal (SAU vs S.A.U.),
+  # acrónimo vs nombre oficial, o truncamiento de OCR. Canónico = el de mayor
+  # grado o el nombre oficial. (grado de cada nodo anotado al margen)
+  # ---------------------------------------------------------------------------
+
+  # --- Empresas: variante de puntuación / sufijo societario ---
+  - canonical: {name: "Freyssinet SAU", type: Company}            # 6
+    duplicates: ["FREYSSINET S.A.U."]                             # 4
+  - canonical: {name: "Maestre Bikes SL", type: Company}          # 3
+    duplicates: ["Maestre Bikes, S.L."]                           # 2
+  - canonical: {name: "MTM 180 Capital SL", type: Company}        # 7
+    duplicates: ["MTM 180 Capital, S.L"]                          # 1
+  - canonical: {name: "Tecade SA", type: Company}                 # 5
+    duplicates: ["TECADE S.A."]                                   # 4
+  - canonical: {name: "Transforma TSC, S.L.", type: Company}      # 17
+    duplicates: ["Transforma TSC SL"]                             # 0
+  - canonical: {name: "TUCA DEL MONT SL", type: Company}          # 4
+    duplicates: ["TUCA Del Mont, S.L."]                           # 1
+  - canonical: {name: "Construcciones Pérez Jiménez", type: Company}   # 32
+    duplicates: ["Construcciones Pérez Jiménez SL"]                    # 2
+  - canonical: {name: "Áridos Anfersa SL", type: Company}         # 23
+    duplicates: ["Áridos Anfersa"]                                # 1
+
+  # Servinabar (empresa de Antxon Alonso, trama Cerdán) — "Servinabar 2000" es
+  # el mismo ente (Servinabar 2000 S.L.); verificado por sus relaciones (Acciona,
+  # UTE, Pabellón Navarra Arena).
+  - canonical: {name: "Servinabar", type: Company}                # 53
+    duplicates: ["Servinabar 2000"]                               # 15
+
+  # Soluciones de Gestión y Apoyo a Empresas S.L. (empresa de Aldama, mascarillas
+  # COVID). El extractor dejó 4 nodos: el corto, dos variantes del nombre largo y
+  # un nodo Organization "Soluciones" (cross-label) que conecta con Aldama/Koldo/
+  # Ábalos/IB-Salut/mascarillas. Mismo ente.
+  - canonical: {name: "Soluciones de Gestión", type: Company}     # 181
+    duplicates:
+      - "Soluciones de Gestión y Apoyo a Empresas"                # 17
+      - "Soluciones de Gestión y Ayuda a las Empresas, S.L."      # 2
+      - {name: "Soluciones", type: Organization}                  # 23 (cross-label)
+
+  # Thinking Heads (empresa de Juan Carlos Barrabés). "Inking Heads" es un
+  # truncamiento de OCR del mismo ente; verificado: PAID Juan Carlos Barrabés.
+  - canonical: {name: "Thinking Heads Group SL", type: Company}   # 5
+    duplicates: ["Inking Heads"]                                  # 3
+
+  # LIC = Levantina, Ingeniería y Construcción SL (constructora de Alberic, gerente
+  # y socio José Ruz). El extractor dejó un nodo Organization "LIC" homónimo
+  # (cross-label, grado 6: PAID→Koldo + INVOLVES→organización criminal): mismo ente.
+  - canonical: {name: "LIC", type: Company}                       # 23
+    duplicates:
+      - {name: "LIC", type: Organization}                         # 6 (cross-label)
+
+  # --- Organizaciones: acrónimo ↔ nombre oficial ---
+  - canonical: {name: "ADIF", type: Organization}                 # 390
+    duplicates: ["A.D.I.F."]                                      # 2
+  - canonical: {name: "AEAT", type: Organization}                 # 2
+    duplicates: ["A.E.A.T."]                                      # 4
+  - canonical: {name: "Congreso de los Diputados", type: Organization}  # 54
+    duplicates: ["Congreso"]                                            # 5
+  - canonical: {name: "Bankinter SA", type: Organization}         # 3
+    duplicates: ["BANKINTER"]                                     # 2
+
+  # EMFESA = Enajenaciones de Materiales Ferroviarios SA (filial de ADIF). Cuatro
+  # nodos para el mismo ente: el nombre oficial, el acrónimo, una variante con un
+  # número de nota pegado ("EMFESA445") y un nodo Company homónimo (cross-label).
+  - canonical: {name: "Enajenaciones de Materiales Ferroviarios SA", type: Organization}  # 4
+    duplicates:
+      - "EMFESA"                                                  # 5
+      - "EMFESA445"                                               # 7
+      - {name: "EMFESA", type: Company}                           # 0 (cross-label)
+
+  # --- Personas: nombre completo ↔ forma corta / con cargo ---
+  - canonical: {name: "Joseba García Izaguirre", type: Person}    # 12
+    duplicates: ["Joseba García"]                                 # 3
+  - canonical: {name: "Nicoleta Neacsu", type: Person}            # 13
+    duplicates: ["Nicoleta Neacsu Duloiu"]                        # 6
+  - canonical: {name: "Camino Arce", type: Person}                # 23
+    duplicates: ["Subdirectora General de Construcción Camino Arce Blanco"]  # 1
+  # Truncamientos de OCR verificados por relaciones (MañanaEmpiezaHoy = proyecto de Barrabés).
+  - canonical: {name: "Juan Carlos Barrabés", type: Person}       # 282
+    duplicates: ["Carlos Barr"]                                   # 2
+  # 2026-10-07: RETIRADA la fusión «Pedro Antonio» → «Pedro Antonio Rodríguez Fernández». «don Pedro Antonio»
+  # es un seudónimo CENDOJ (ATS_15039_2024, ATS_8919_2025, CE 20775/2020): persona real distinta del civil
+  # homónimo. Escindido por by_doc en relations.yaml y declarado en pseudonyms.yaml. NO volver a fusionar.
+
+  # --- Eventos ---
+  - canonical: {name: "Bypass de Valencia", type: Event}          # 6
+    duplicates: ["by-pass de Valencia"]                           # 8
+
+  # --- MoneyAmount: SOLO los de valor idéntico (variante de separador de miles).
+  # NO se fusionan los falsos positivos de la clave normalizada (200,00 vs 20000,
+  # 25% vs 2,5€, 300000 vs 3.000,00, 40.000 vs 400,00, 7.000,00 vs 700000): son
+  # cantidades realmente distintas. ---
+  - canonical: {name: "10.000 euros", type: MoneyAmount}          # 10
+    duplicates: ["10000 euros"]                                   # 1
+  - canonical: {name: "2.149.200 euros", type: MoneyAmount}       # 4
+    duplicates: ["2149200 euros"]                                 # 3
+  - canonical: {name: "550.000 euros", type: MoneyAmount}         # 43
+    duplicates: ["550000 euros"]                                  # 30
+  - canonical: {name: "72.600 euros", type: MoneyAmount}          # 14
+    duplicates: ["72600 euros"]                                   # 2
+  - canonical: {name: "2.902.189,10 €", type: MoneyAmount}        # 1
+    duplicates: ["2.902189,10"]                                   # 1
+
+  # ===========================================================================
+  # Lote 2 (cross-label): el MISMO ente real extraído bajo etiquetas distintas
+  # (Organization vs Company vs Event/Court/Person). Solo entidades REALES e
+  # identificables; el ruido cross-label (IBANs, teléfonos @s.whatsapp.net,
+  # códigos de carretera A-2/N-340, .zip forenses, conceptos genéricos) NO se
+  # toca aquí. Etiqueta canónica por naturaleza: firma privada→Company, organismo
+  # público/institución/banco→Organization, operación/comisión→Event. El nodo
+  # canónico fija la etiqueta final (los demás labels se quitan en el merge).
+  # ===========================================================================
+
+  # --- Firmas privadas → Company ---
+  - canonical: {name: "Servinabar", type: Company}                # Company 42
+    duplicates: [{name: "SERVINABAR", type: Organization}]        # Org 97
+  - canonical: {name: "Análisis Relevante", type: Company}        # Company 35
+    duplicates: [{name: "Análisis Relevante", type: Organization}]   # Org 79
+  - canonical: {name: "Plus Ultra", type: Company}                # Company 45
+    duplicates:
+      - {name: "Plus Ultra", type: Organization}                  # Org 114
+      - {name: "Plus Ultra", type: Event}                         # Event 115
+  - canonical: {name: "Globalia", type: Company}                  # Company 5
+    duplicates:
+      - {name: "Globalia", type: Organization}                    # Org 59
+      # s86: dup extraído de calificacion-fiscal p.10 + sentencia TS («su accionista
+      # único GLOBALIA CORPORACIÓN SA») — es la MATRIZ, no la filial de viajes.
+      - {name: "GLOBALIA CORPORACIÓN S.A.", type: Company}
+  - canonical: {name: "Air Europa", type: Company}                # Company 22
+    duplicates: [{name: "Air Europa", type: Organization}]        # Org 54
+  - canonical: {name: "Iberia", type: Company}                    # Company 1
+    duplicates: [{name: "Iberia", type: Organization}]            # Org 3
+  - canonical: {name: "Inteligencia Prospectiva", type: Company}  # Company 30
+    duplicates: [{name: "Inteligencia Prospectiva", type: Organization}]  # Org 47
+  - canonical: {name: "Grupo Barrabés", type: Company}            # Company 4
+    duplicates: [{name: "Grupo Barrabés", type: Organization}]    # Org 29
+  - canonical: {name: "Grupo Cueto", type: Company}               # Company 2
+    duplicates: [{name: "Grupo Cueto", type: Organization}]       # Org 9
+  - canonical: {name: "AZVI", type: Company}                      # Company 10
+    duplicates:
+      - {name: "Azvi", type: Person}                              # Person 23 (mal etiquetado)
+      - {name: "Azvi", type: Organization}                        # Org 14
+  - canonical: {name: "Ortiz Construcciones y Proyectos SA", type: Company}  # Company 6
+    duplicates: [{name: "Ortiz Construcciones y Proyectos SA", type: Organization}]  # Org 6
+
+  # --- Organismos públicos / instituciones / bancos → Organization ---
+  - canonical: {name: "ADIF", type: Organization}                 # Org 334
+    duplicates: [{name: "Adif", type: Company}]
+  - canonical: {name: "Administrador de Infraestructuras Ferroviarias", type: Organization}
+    duplicates: [{name: "Administrador de Infraestructuras Ferroviarias", type: Company}]
+  - canonical: {name: "AENA", type: Organization}
+    duplicates: [{name: "AENA", type: Company}]
+  - canonical: {name: "Correos", type: Organization}
+    duplicates: [{name: "Correos", type: Company}]
+  - canonical: {name: "Renfe", type: Organization}
+    duplicates: [{name: "Renfe", type: Company}]
+  - canonical: {name: "Renfe Mercancías", type: Organization}
+    duplicates: [{name: "Renfe Mercancías", type: Company}]
+  - canonical: {name: "INECO", type: Organization}
+    duplicates: [{name: "INECO", type: Company}]
+  - canonical: {name: "TRAGSATEC", type: Organization}
+    duplicates: [{name: "TRAGSATEC", type: Company}]
+  - canonical: {name: "Puertos del Estado", type: Organization}   # 196
+    duplicates: [{name: "Puertos del Estado", type: Company}]
+  - canonical: {name: "Congreso de los Diputados", type: Organization}  # 53 (Court mal etiquetado)
+    duplicates: [{name: "Congreso de los Diputados", type: Court}]
+  - canonical: {name: "Senado", type: Organization}
+    duplicates: [{name: "Senado", type: Court}]
+  - canonical: {name: "Tribunal de Cuentas", type: Organization}
+    duplicates: [{name: "Tribunal de Cuentas", type: Court}]
+  - canonical: {name: "Red.es", type: Organization}               # 79
+    duplicates: [{name: "Red.es", type: Event}]
+  - canonical: {name: "Consejo de Ministros", type: Organization}  # 39
+    duplicates: [{name: "Consejo de Ministros", type: Event}]
+  - canonical: {name: "BBVA", type: Organization}
+    duplicates: [{name: "BBVA", type: Company}]
+  - canonical: {name: "Banco Sabadell S.A.", type: Organization}
+    duplicates: [{name: "Banco Sabadell S.A.", type: Company}]
+  - canonical: {name: "Banca Pueyo S.A.", type: Organization}
+    duplicates: [{name: "Banca Pueyo SA", type: Company}]
+  # Consultoras/auditoras y otras firmas con nodo Company casi vacío: se conserva
+  # el nodo dominante (Organization) y se pliega el Company duplicado.
+  - canonical: {name: "Deloitte", type: Organization}
+    duplicates: [{name: "Deloitte", type: Company}]
+  # PwC: el extractor dejó el acrónimo (Org), la marca completa (Company) y la
+  # razón social española "Asesores de Negocios, S.L." (Company) como nodos
+  # distintos — son la misma firma. Se pliegan en el nodo canónico "PwC" (Org).
+  - canonical: {name: "PwC", type: Organization}
+    duplicates:
+      - {name: "PWC", type: Company}
+      - {name: "PricewaterhouseCoopers", type: Company}
+      - {name: "PricewaterhouseCoopers Asesores de Negocios", type: Company}
+  - canonical: {name: "Everis Spain S.L.", type: Organization}
+    duplicates: [{name: "Everis Spain S.L.", type: Company}]
+  - canonical: {name: "Altia Consultores S.A.", type: Organization}
+    duplicates: [{name: "Altia Consultores S.A.", type: Company}]
+  - canonical: {name: "Dxc Technology Servicios España S.L.U.", type: Organization}
+    duplicates: [{name: "Dxc Technology Servicios España S.L.U.", type: Company}]
+  - canonical: {name: "Santillana Formación S.L.", type: Organization}
+    duplicates: [{name: "Santillana Formación S.L.", type: Company}]
+  - canonical: {name: "Devoteam Dragó", type: Organization}
+    duplicates: [{name: "Devoteam Drago", type: Company}]
+  - canonical: {name: "Hedima Dn Formación S.L.U.", type: Organization}
+    duplicates: [{name: "HEDIMA DN FORMACIÓN S.L.U.", type: Company}]
+  - canonical: {name: "Oca Inspección, Control y Prevención S.A.", type: Organization}
+    duplicates: [{name: "OCA INSPECCIÓN, CONTROL Y PREVENCIÓN S.A.", type: Company}]
+  - canonical: {name: "Experis Manpowergroup S.L.U.", type: Organization}
+    duplicates: [{name: "EXPERIS MANPOWERGROUP S.L.U.", type: Company}]
+  - canonical: {name: "Formalba S.L.", type: Organization}
+    duplicates: [{name: "FORMALBA S.L.", type: Company}]
+  - canonical: {name: "NT For Learning S.L.", type: Organization}
+    duplicates: [{name: "NT For Learning S.L", type: Company}]
+  - canonical: {name: "Gestión del Conocimiento S.A.", type: Organization}
+    duplicates: [{name: "Gestión del Conocimiento S.A.", type: Company}]
+  - canonical: {name: "One Telecom", type: Organization}
+    duplicates: [{name: "One Telecom", type: Company}]
+  - canonical: {name: "LOGIRAIL", type: Organization}
+    duplicates: [{name: "LOGIRAIL", type: Company}]
+  - canonical: {name: "Reale Seguros", type: Organization}
+    duplicates: [{name: "Reale Seguros", type: Company}]
+  - canonical: {name: "Carrefour", type: Organization}
+    duplicates: [{name: "Carrefour", type: Company}]
+  - canonical: {name: "Orange", type: Organization}
+    duplicates: [{name: "Orange", type: Company}]
+  - canonical: {name: "Noran Coop", type: Organization}           # 66
+    # + s85 (2026-08-27): stub creado por la capa de prensa con el nombre largo (2 OWNS
+    # prensa Koldo/Antxon); press_a_trama.yaml ya re-keyado al canónico. load_merges
+    # cosecha el nombre como alias del canónico.
+    duplicates: [{name: "Noran Coop", type: Company},
+                 {name: "Noran Sociedad Cooperativa", type: Company}]
+  - canonical: {name: "Gate Center", type: Organization}          # 33
+    duplicates: [{name: "Gate Center", type: Company}]
+  - canonical: {name: "OPR", type: Organization}                  # 91
+    duplicates: [{name: "OPR", type: Company}]
+  # Entes mixtos org/evento de la trama (firmas y fondos), canónico Organization:
+  - canonical: {name: "FASEE", type: Organization}                # 17
+    duplicates: [{name: "FASEE", type: Event}]
+  - canonical: {name: "Fondo de Apoyo a la Solvencia de Empresas Estratégicas", type: Organization}
+    duplicates: [{name: "Fondo de apoyo a la solvencia de empresas estratégicas", type: Event}]
+  - canonical: {name: "Hirurok", type: Organization}              # 9
+    duplicates: [{name: "Hirurok", type: Event}]
+  - canonical: {name: "Finance Boutique", type: Organization}     # 7
+    duplicates: [{name: "finance boutique", type: Event}]
+  - canonical: {name: "Wakalua", type: Organization}              # 52
+    duplicates:
+      - {name: "Wakalua", type: Location}                         # 51
+      - {name: "Wakalua", type: Company}                          # 4
+  - canonical: {name: "IFEMA", type: Organization}                # 8
+    duplicates: [{name: "IFEMA", type: Location}]                 # 8
+
+  # --- Operaciones / comisiones (inherentemente eventos) → Event ---
+  - canonical: {name: "Operación Delorme", type: Event}           # 98
+    duplicates: [{name: "Operación Delorme", type: LegalCase}]
+  - canonical: {name: "Comisión de Investigación sobre los contratos públicos durante la pandemia de covid-19", type: Event}  # 278
+    duplicates: [{name: "Comisión de Investigación sobre los contratos públicos durante la pandemia de covid-19", type: LegalCase}]
+
+  # --- Lote enriquecimiento swarm (2026-05-30): duplicados verificados en grafo ---
+  # (OPR omitido: el nodo "Obras Publicas y Regadios" no existe; "OPR" ya es único.)
+  - canonical: {name: "Causa Especial 20775/2020", type: LegalCase}  # 152
+    duplicates: ["Causa"]                                            # 25
+  - canonical: {name: "Whathefav SL", type: Company}                 # 40
+    duplicates: [{name: "Whathefav", type: Organization}]            # 22 (cross-label)
+  - canonical: {name: "Santos Cerdán", type: Person}                 # 1349
+    duplicates: ["Santos psoe"]                                      # 40
+
+  # --- Revisión swarm (2026-05-31): verificados 1×1 contra el grafo ---
+  - canonical: {name: "Marga Prohens", type: Person}                 # 11
+    duplicates: ["Prohens Rigo"]                                     # 40 (su nombre completo: Margalida Prohens Rigo)
+  # "K" (alias "K. (voz)") es la etiqueta del hablante Koldo García en las
+  # transcripciones de la UCO (habla de comisiones "para mi jefe", cohecho, pagos).
+  - canonical: {name: "Koldo García", type: Person}                  # 2282
+    duplicates: ["K"]                                                # 23 (voz en transcripciones UCO)
+
+  # --- Duplicados verificados por el enrich swarm (Plus Ultra/UDEF, 2026-05-31) ---
+  - canonical: {name: "Caletón Consultores", type: Company}
+    duplicates: ['Caletón Consultores SL']
+  - canonical: {name: "Banco Santander", type: Company}
+    duplicates: [{name: "Banco Santander", type: Organization}, {name: "Banco Santander SA", type: Company}]
+  - canonical: {name: "Whathefav SL", type: Company}
+    duplicates: ['Whathefav']
+  # El nodo real del nombre completo es Company (no Organization), así que la
+  # forma de cadena no resolvía el entity_id y la fusión era un no-op (ver nota
+  # cross-label más abajo). Fijado a type Company (spec 010, 2026-06-15).
+  - canonical: {name: "SEPI", type: Organization}
+    duplicates: [{name: "Sociedad Estatal de Participaciones Industriales", type: Company}]
+  - canonical: {name: "Afitta SL", type: Company}
+    duplicates: ['Afitta S.L.']
+  - canonical: {name: "Summer Wind", type: Company}
+    duplicates: ['Summer Wind S.L.']
+  - canonical: {name: "Federico Lledo Soria", type: Person}
+    duplicates: ['Federico Lledó']
+  - canonical: {name: "Servinabar", type: Company}
+    duplicates: ['Servinabar 2000, S.L.U.']
+  - canonical: {name: "María Cristina Álvarez Rodríguez", type: Person}
+    duplicates: ['Cristina Álvarez']
+  - canonical: {name: "UDEF", type: Organization}
+    duplicates: ['UDEF-BBCA']
+  - canonical: {name: "INAC", type: Organization}
+    duplicates: ['Instituto Nacional de Aeronáutica Civil de Venezuela']
+  - canonical: {name: "Contrato Idella-Plus Ultra 19/01/2021", type: Contract}
+    duplicates: ['Contrato de prestación de servicios IDELLA-PLUS ULTRA']
+
+  # --- Dedup sweep 2 (Plus Ultra split + cross-label same-entity, 2026-05-31) ---
+  # Cross-label/same-name merges: dup type MUST match the real node's label or the
+  # entity_id won't resolve (the reason an earlier Banco Santander rule no-op'd).
+  - canonical: {name: "Plus Ultra Líneas Aéreas", type: Company}
+    duplicates: [{name: "Plus Ultra", type: Company}]
+  - canonical: {name: "Levantina Ingeniería y Construcción", type: Company}
+    duplicates: [{name: "Levantina, Ingeniería y Construcción SL", type: Organization}]
+  - canonical: {name: "Barrabes Internet Sl", type: Company}
+    duplicates: [{name: "Barrabes Internet", type: Organization}]
+  - canonical: {name: "Bar Franky", type: Organization}
+    duplicates: [{name: "Bar Franky", type: Person}, {name: "Bar Franky", type: Company}]
+  - canonical: {name: "FIADELSO", type: Organization}
+    duplicates: [{name: "Fiadelso", type: Company}]
+  - canonical: {name: "JCI número 2", type: Court}
+    duplicates: [{name: "JCI número 2", type: Organization}, {name: "JCI número 2", type: LegalCase}]
+  - canonical: {name: "Villafuel", type: Company}
+    duplicates:
+      - {name: "Villafuel", type: Person}
+      - {name: "VILLAFUEL SL", type: Company}      # Company:villafuel-sl  (variante OCR/extracción del mismo nodo)
+      - {name: "Villafuel, S.L.", type: Company}   # Company:villafuel-s-l (idem)
+  - canonical: {name: "Thinking Heads", type: Company}
+    duplicates: [{name: "Thinking Heads", type: Organization}]
+  - canonical: {name: "Deluxe Fortune SL", type: Company}       # Company:deluxe-fortune-sl (mercantil M543192: ADMINISTRA Bocata, LIC PAID)
+    duplicates:
+      - {name: "Deluxe Fortune", type: Company}
+      - {name: "Deluxe Fortune S.L.", type: Company}            # Company:deluxe-fortune-s-l (judicial: Aldama OWNS, RECEIVED 6,6M€) — dim3/spec032, misma empresa partida
+  - canonical: {name: "Consell Consultiu", type: Organization}
+    duplicates: [{name: "Consell Consultiu", type: Court}]
+  - canonical: {name: "CaixaBank", type: Company}
+    duplicates: [{name: "CAIXABANK SA", type: Organization}]
+  - canonical: {name: "TASK FORCE SA", type: Company}
+    duplicates: [{name: "TASK FORCE", type: Organization}]
+  - canonical: {name: "Fiscalía Especial Contra la Corrupción y la Criminalidad Organizada", type: Organization}
+    duplicates: [{name: "Fiscalía Especial contra la Corrupción y la Criminalidad Organizada", type: Court}]
+  - canonical: {name: "Grupo Crónica Libre SL", type: Company}
+    duplicates: [{name: "Cronica Libre", type: Organization}]
+  - canonical: {name: "Teliz", type: Person}
+    duplicates: [{name: "Teliz", type: Organization}]
+  - canonical: {name: "TDE Consultores", type: Company}
+    duplicates: [{name: "TDE Consultores SL", type: Company}]
+  - canonical: {name: "Beatriz Biedma", type: Person}
+    duplicates: [{name: "Beatriz Biedma", type: Court}]
+  - canonical: {name: "Andersen", type: Organization}
+    duplicates: [{name: "Andersen", type: Company}]
+  - canonical: {name: "Banco de Sabadell", type: Company}
+    duplicates: [{name: "Banco de Sabadell", type: Organization}]
+  - canonical: {name: "Swissoil Trading", type: Company}
+    duplicates: [{name: "Swissoil Trading SA", type: Company}]
+  - canonical: {name: "CBNK Banco Colectivos SA", type: Company}
+    duplicates: [{name: "CBNK Banco Colectivos", type: Company}]
+  - canonical: {name: "Fiscalía Europea", type: Organization}
+    duplicates: [{name: "Fiscalía Europea", type: Court}]
+  - canonical: {name: "Snip Aviation SL", type: Company}
+    duplicates: [{name: "Snip Aviation", type: Company}]
+  # Duro Felguera: el extractor la etiquetó LegalCase; relabel a Company el 2026-07-10
+  # (manual_fix_duro_felguera_relabel_20260710.cypher). Regla durable: si un re-ingest
+  # resucita la variante LegalCase desde la caché de facts, se pliega en la Company.
+  - canonical: {name: "Duro Felguera", type: Company}
+    duplicates: [{name: "Duro Felguera", type: LegalCase}]
+
+  # --- Enriquecimiento swarm 2026-06-01 (nodos sin revisar): acrónimos/variantes ---
+  # SSTS ("Sentencias del Tribunal Supremo") y "Corte Suprema" son formas del mismo órgano.
+  - canonical: {name: "Tribunal Supremo", type: Court}
+    duplicates: [{name: "SSTS", type: Court}, {name: "Corte Suprema", type: Court}]
+  # LCSP = Ley de Contratos del Sector Público = Ley 9/2017.
+  - canonical: {name: "Ley 9/2017, de 8 de noviembre, de contratos del sector público", type: LegalCase}
+    duplicates: [{name: "LCSP", type: LegalCase}]
+  # "caso PSOEKoldo" es la misma causa que "caso Koldo".
+  - canonical: {name: "caso Koldo", type: LegalCase}
+    duplicates: [{name: "caso PSOEKoldo", type: LegalCase}]
+
+  # --- Lote swarm diarios Senado SEPI (2026-06-12): duplicados verificados en grafo ---
+  - canonical: {name: "Fondo de Apoyo a la Solvencia de Empresas Estratégicas", type: Organization}
+    duplicates: ["Fondo de solvencia"]
+
+  - canonical: {name: "SEPI", type: Organization}
+    duplicates: ["Sociedad Estatal de Participaciones Industriales"]
+
+  - canonical: {name: "Panacorp Casa de Valores", type: Company}
+    duplicates: ["Panacorp"]
+
+  - canonical: {name: "María Jesús Montero", type: Person}
+    duplicates: ["Montero"]
+
+  - canonical: {name: "Daiwa Corporate Advisory", type: Company}
+    duplicates: ["DC Advisory"]
+
+  # --- Cross-label: apellido mal tipado como Organization = la persona real ---
+  # (autoentradaferraz.pdf p.6, entorno Leire Díez / Cerdán). Verificado en grafo:
+  # ambos Organization tenían solo INVOLVES de Ana María Fuentes Pacheco + 1 mención.
+  - canonical: {name: "Gaspar Carlos Zarrías Arévalo", type: Person}
+    duplicates: [{name: "Zarrías", type: Organization}]
+  - canonical: {name: "Ismael Oliver", type: Person}
+    duplicates: [{name: "Oliver", type: Organization}]
+
+  - canonical: {name: "Agencia Estatal de Seguridad Aérea", type: Organization}
+    duplicates: ["AESA"]
+
+  - canonical: {name: "Fiscalía Especial Contra la Corrupción y la Criminalidad Organizada", type: Organization}
+    duplicates: ["Fiscalía Anticorrupción"]
+
+  - canonical: {name: "Bartolomé Lora Toro", type: Person}
+    duplicates: ["Lora Toro"]
+
+  # --- Corrección de errata OCR (2026-06-25): el apellido correcto es TEIJELO ---
+  # El extractor/contexto fijó el nodo como "Jacobo Teijejo" (variante OCR de algún
+  # documento) pese a que los autos dicen "JACOBO TEIJELO CASANOVA". Se renombra el
+  # canónico a "Jacobo Teijelo" (figures.yaml ya actualizado) y se funde aquí el nodo
+  # mal escrito; "Jacobo Teijejo" queda como alias (tolerancia de búsqueda). NO es un
+  # homónimo: es la MISMA persona con el apellido bien transcrito.
+  - canonical: {name: "Jacobo Teijelo", type: Person}
+    duplicates: [{name: "Jacobo Teijejo", type: Person}]
+
+  - canonical: {name: "María Belén Gualda González", type: Person}
+    duplicates: ["Gualda", "Belen Gualda"]
+
+  - canonical: {name: "José Blanco", type: Person}
+    duplicates: ["Pepiño Blanco", "Pepe Blanco"]
+
+  - canonical: {name: "Caballero Martínez", type: Person}
+    duplicates: ["señora Caballero"]
+
+  - canonical: {name: "Ministerio de Hacienda", type: Organization}
+    duplicates: ["Hacienda", "Ministerio de Hacienda y Función Pública"]
+
+  # --- Resolución de entidades (sesión 30): nombres de pila / apellidos famélicos --
+  # Fusiones verificadas con evidencia documental (swarm de triaje + verificación
+  # adversarial). El canónico SOBREVIVIENTE conserva su curación (role/summary); el
+  # duplicado famélico se absorbe. Ver findings/resolucion-entidades-2026-06-15.
+  - canonical: {name: "Antxón", type: Person}          # Person:antxon (120 conex, curado)
+    duplicates:
+      - "Antxon Alonso"                                 # Person:antxon-alonso (vacío)
+      # Sesión 49 (2026-06-23): la ingesta de la sentencia TS (PR #95) dejó el nombre
+      # civil completo "Joseba Antxon Alonso Egurrola" como nodo aparte (1 mención,
+      # sentencia-ts-abalos-koldo-aldama p.6; sin relaciones entidad-entidad). Misma
+      # persona — el socio de Servinabar de la trama Cerdán. Se absorbe en el hub curado.
+      - "Joseba Antxon Alonso Egurrola"                 # Person:joseba-antxon-alonso-egurrola
+  - canonical: {name: "Miguel Palomero", type: Person}  # Person:miguel-palomero (172)
+    duplicates: ["Palomero"]                            # Person:palomero (29)
+  - canonical: {name: "José Ángel Partearroyo", type: Person}  # Person:jose-angel-partearroyo (47)
+    duplicates: ["Partearroyo"]                         # Person:partearroyo (6)
+  - canonical: {name: "Juan Carlos Barrabés", type: Person}    # Person:juan-carlos-barrabes (222)
+    duplicates: ["Barrabés"]                            # Person:barrabes (2)
+
+  # --- Auditoría nodo Gertrudis (sesión 38, run 20260619-112446) ---
+  # El verificador+árbitro confirmaron que Person:cristobal-cano (auto-zapatero, "en
+  # coordinación con Cristóbal Cano") es el MISMO Cristóbal Cano Quiles del entramado
+  # Plus Ultra (informe-udef), partido en dos por la curación. Sobrevive el nombre
+  # completo (más conexo: 41 vs 32); los datos distintivos del dup (offshore Dubái,
+  # admin. Análisis Relevante SL, desambiguación Guardia Civil) se funden en su resumen.
+  - canonical: {name: "Cristóbal Cano Quiles", type: Person}   # Person:cristobal-cano-quiles
+    duplicates: ["Cristóbal Cano"]                      # Person:cristobal-cano
+
+  # Enriquecimiento swarm 2026-06-21 (auto Peinado): el extractor dejó "Cátedra TSC"
+  # (acrónimo) como nodo aparte de la cátedra completa. Misma cátedra de la UCM
+  # codirigida por Begoña Gómez. Sobrevive el nombre completo (más conexo: 117 vs 41).
+  - canonical: {name: "Cátedra Extraordinaria de Transformación Social Competitiva", type: Organization}
+    duplicates: [{name: "Cátedra TSC", type: Organization}]
+
+  # QA 2026-06-21 (auto Peinado, re-lectura de la fuente): el extractor dejó "Ruano"
+  # (apellido suelto) aparte del nombre completo. El auto p.34 nombra "don José Manuel
+  # Ruano" como codirector de la Cátedra; p.61/64/69/72/74 = "Sr./codirector Ruano" =
+  # misma persona. Sobrevive el nombre completo (José Manuel Ruano de la Fuente, prof. UCM).
+  - canonical: {name: "José Manuel Ruano", type: Person}
+    duplicates: [{name: "Ruano", type: Person}]
+
+  # QA 2026-06-22 (run 20260622-123406): verif+árbitro coincidieron en que la arista
+  # Ábalos→ASCH está bien, pero "ASCH" (Company, 10 conex) duplica el nombre completo
+  # "Asch Infraestructuras y Servicios Sa" (Company, 12 conex). Sobrevive el nombre completo.
+  - canonical: {name: "Asch Infraestructuras y Servicios Sa", type: Company}
+    duplicates: [{name: "ASCH", type: Company}]
+
+  # --- Ingesta informe-udef-2910-focus-social.pdf (2026-06-25): el doc judicial creó
+  # nodos con el nombre completo que duplican entidades ya presentes (la trama
+  # Bolivia/Grupo Gloria entró como ÚLTIMA-HORA en la sesión 56, sin PDF; ahora hay
+  # fuente judicial). Sobrevive el nombre completo/correcto; las aristas del dup se
+  # recablean al canónico. Verificado por homónimos en el grafo (mismo referente real).
+  - canonical: {name: "María Gertrudis Alcázar Jiménez", type: Person}  # secretaria de Zapatero (ya con resumen)
+    duplicates: [{name: "Gertrudis Alcázar", type: Person}]             # nuevo, deg 95 → se funde
+  - canonical: {name: "Luis Alberto Arce Catacora", type: Person}       # presidente de Bolivia
+    duplicates: [{name: "Luis Arce", type: Person}]                     # stub última-hora s56, deg 1
+  - canonical: {name: "Focus Social Research SAC", type: Company}       # razón social peruana (pantalla del contrato simulado)
+    duplicates: [{name: "Focus Social Research", type: Company}]        # nuevo, deg 35
+  # Dedup detectado en el enriquecimiento (verificador) + revisión: el extractor
+  # creó nombre completo y forma corta/acrónimo del MISMO ente. Sobrevive el más
+  # establecido/conexo; el dup se recablea.
+  - canonical: {name: "SOBOCE", type: Company}                          # Sociedad Boliviana de Cementos (acrónimo, deg 33)
+    duplicates: [{name: "Sociedad Boliviana de Cementos", type: Company}]   # nombre completo (deg 14)
+  - canonical: {name: "FANCESA", type: Company}                         # Fábrica Nacional de Cementos SA (acrónimo, deg 9)
+    duplicates: [{name: "Fábrica Nacional de Cementos", type: Company}]     # nombre completo (deg 8)
+  - canonical: {name: "Contrato de asesoría Focus Social", type: Contract}
+    duplicates: [{name: "Contrato de asesoramiento Focus Social Research-Zapatero", type: Contract}]
+
+  # --- QA sesión 68 (2026-06-25): CONFLACIÓN bucket A. El dominio transformatsc.org de
+  # Begoña Gómez existe como 3 nodos (Organization + Location + Event) + un placeholder
+  # genérico "Dominio" (Event); y "sociedad mercantil TSC" duplica a la empresa real.
+  # Inspeccionado en :7688: cada duplicado tiene UNA sola arista real, del mismo referente.
+  # Sobrevive el canónico (Organization para el dominio; la S.L. para la empresa).
+  - canonical: {name: "Transformatsc.org", type: Organization}
+    duplicates:
+      - {name: "transformatsc.org", type: Location}
+      - {name: "transformatsc.org", type: Event}
+      - {name: "Dominio", type: Event}
+  - canonical: {name: "Transforma TSC, S.L.", type: Company}
+    duplicates: [{name: "sociedad mercantil TSC", type: Company}]
+
+  # --- QA sesión 69 (2026-06-26): CONFLACIÓN bucket B (lo que la s68 difirió como
+  # "4 splits"). Tras inspeccionar los nodos en el grafo vivo (MCP) NO son splits sino
+  # DUPLICADOS: el extractor creó nodos mal etiquetados que conviven con el canónico ya
+  # correcto. Hay DOS inmuebles reales distintos (el piso fiduciario del Paseo de la
+  # Castellana, propiedad de Aldama, contrato 24-abr-2019 750.000 € opción de compra;
+  # y el chalé de la Urbanización La Alcaidesa, de Have Got Time, en La Línea). El chalé
+  # ya tiene su nodo limpio (Location:la-alcaidesa, 20 conex) — NO se toca.
+  #
+  # (1) El nodo Contract "…La Alcaidesa" está MAL NOMBRADO: sus 6 aristas (Ábalos ×3,
+  # Aldama ×2, Leonor María González ×1 PARTY_TO) son TODAS el contrato del piso de la
+  # Castellana, no del chalé. Se funde en el contrato correctamente nombrado, que ya
+  # existe con sus propias aristas (Ábalos/Aldama PARTY_TO). Resuelve NH [04][06][07].
+  - canonical: {name: "Contrato de arrendamiento con opción de compra del piso del Paseo de la Castellana", type: Contract}
+    duplicates: [{name: "Contrato de arrendamiento con opción de compra La Alcaidesa", type: Contract}]
+  # (2) [retirado 063, 2026-10-04] El merge del nodo Location genérico de la vía en el nodo
+  # del piso quedó inerte: el tramo 6 (2026-10-03) borró el nodo-domicilio del grafo.
+
+  # --- QA sesión 81 (2026-06-29): MERGE de nodos duplicados (triaje needs-human, Bucket D).
+  # Confirmado por REST contra el grafo vivo (degrees + nombres). Aplicado también en vivo por
+  # cypher-shell (manual_nh_final_s81); aquí queda el registro durable para un rebuild desde cero.
+  #
+  # (A) La Cátedra TSC coexistía como TRES nodos del mismo referente: el canónico con nombre completo
+  # + dos cortos ("Cátedra" como Organization y como Event). Funde los dos cortos en el canónico.
+  # Resuelve NH e64b5e2 (UCM PARTY_TO Organization:catedra) + b004b16 (UCM PARTY_TO Event:catedra).
+  - canonical: {name: "Cátedra Extraordinaria de Transformación Social Competitiva", type: Organization}
+    duplicates: [{name: "Cátedra", type: Organization}, {name: "Cátedra", type: Event}]
+  # (B) "Barrabés Growth Space" (una sede/centro) coexistía como Location (tipo correcto) y como Event.
+  # Funde el Event en el Location. Resuelve NH 95865fc (Barrabés CONTROLS Event:barrabes-growth-space).
+  - canonical: {name: "Barrabés Growth Space", type: Location}
+    duplicates: [{name: "Barrabés Growth Space", type: Event}]
+
+  # Dedup cross-label (2026-06-30): junto a la Company real de la empresa quedó un
+  # nodo Organization casi vacío del mismo nombre. Son empresas → el canónico es la
+  # Company; mergeNodes une aristas y deja solo la label Company. NB: ENISA
+  # (Organization:enisa) es OTRA entidad (Empresa Nacional de Innovación) — NO se toca.
+  - canonical: {name: "Acciona", type: Company}            # Company:acciona (nodo real, 255 aristas)
+    duplicates: [{name: "Acciona", type: Organization}]    # Organization:acciona (1 arista, del overlay última-hora)
+  - canonical: {name: "ENUSA", type: Company}              # Company:enusa (3 aristas)
+    duplicates: [{name: "ENUSA", type: Organization}]      # Organization:enusa (1 arista, extracción judicial)
+
+  # María del Carmen Pano Sánchez (2026-06-30): el extractor dejó dos nodos Person
+  # para la MISMA persona — el corto "Carmen Pano" (Person:carmen-pano, 15 aristas,
+  # de la sentencia TS Ábalos/Koldo/Aldama: asociada de Aldama/Claudio Rivas) y el
+  # del nombre completo (Person:maria-del-carmen-pano-sanchez, 2 aristas, del
+  # autoentradaferraz.pdf). Canónico = el nombre completo; "Carmen Pano" queda como
+  # alias. OJO: NO confundir con su hija Leonor María González (apellido Pano),
+  # que es OTRA persona ya identificada en el grafo — no se toca.
+  - canonical: {name: "María del Carmen Pano Sánchez", type: Person}
+    duplicates: ["Carmen Pano"]
+
+  # QA needs-human triaje s82 (2026-07-03): dos duplicados verificados por la re-lectura
+  # del árbitro (mismo referente, sin fusión de homónimos). Aplicados al vivo por el flujo
+  # de merge (cypher-shell dentro de sm_neo4j + reverse-seed; el efímero-sobre-virtiofs NO
+  # commitea merges). Canónico = el nodo mejor conectado; el otro nombre queda como alias.
+  - canonical: {name: "Manuel Aaron Fajardo García", type: Person}   # 53 aristas (Plus Ultra)
+    duplicates: [{name: "Manuel Fajardo", type: Person}]             # 11 aristas, mismo Fajardo
+  - canonical: {name: "FASEE", type: Organization}                   # 68 aristas (fondo SEPI RD-ley 25/2020)
+    duplicates: [{name: "Fondo de Apoyo a la Solvencia de Empresas Estratégicas", type: Organization}]  # 41
+
+  # QA needs-human triaje s82d (2026-07-03): 4 duplicados verificados (verif+árbitro
+  # releyeron la fuente). Canónico = nodo mejor conectado; el otro nombre → alias.
+  # Aplicados al vivo (mergeNodes properties:'discard' + re-colapso bidir) + reverse-seed.
+  # NB: Person:jose-ruz es el EMPRESARIO José 'Pepe' Ruz (dueño de LIC, caso Koldo), no
+  # el juez; 'Pepe Lic' es su apodo (mote de las siglas LIC) — verificado en el vivo.
+  - canonical: {name: "José Ruz", type: Person}                      # jose-ruz deg192 (empresario LIC)
+    duplicates: [{name: "Pepe Lic", type: Person}]                   # pepe-lic deg50, apodo del mismo José Ruz
+  - canonical: {name: "Juan Carlos Barrabés", type: Person}          # juan-carlos-barrabes deg209
+    duplicates: [{name: "Juan Carlos Barrabés Cónsul", type: Person}]  # deg50, mismo empresario (caso Begoña)
+  - canonical: {name: "IB-Salut", type: Organization}                # ib-salut deg45 (Servei de Salut balear)
+    duplicates: [{name: "Servicio de Salud", type: Organization}]    # deg34, mismo ente (rama balear mascarillas)
+  - canonical: {name: "José Ángel Partearroyo", type: Person}        # partearroyo deg37 (mejor conectado)
+    duplicates: [{name: "José Ángel Partearroyo Martín", type: Person}]  # deg7, misma persona (SEPI/Plus Ultra)
+
+  # Ferrovial (2026-07-06): la búsqueda devolvía 3 nodos de la MISMA constructora.
+  # Canónico = Company:ferrovial (deg13, resumen UCO/Cerdán obra pública, ya con alias
+  # FERROVIAL AGROMAN). Los otros dos son artefactos de extracción/OCR: "Ferroviál
+  # Construcción SA" (su única arista sale de la misma escucha ya atribuida a Ferrovial)
+  # y "FERRIOVIAL AGROMAN SA" (mal escrito; el propio swarm anotó en relations_swarm.yaml
+  # que es un "cambio de denominación" de Ferrovial). Ferrovial NO está imputada; el merge
+  # de duplicados no altera eso. Aplicado al vivo (mergeNodes properties:'discard' +
+  # re-colapso bidir) + reverse-seed.
+  - canonical: {name: "Ferrovial", type: Company}                    # ferrovial deg13 (constructora, obra pública)
+    duplicates:
+      - {name: "FERRIOVIAL AGROMAN SA", type: Company}               # ferriovial-agroman-sa deg1, misma empresa (mal escrito)
+      - {name: "Ferroviál Construcción SA", type: Company}           # ferrovial-construccion-sa deg3, misma escucha
+
+  # Juanma Serrano (2026-07-09): el extractor dejó dos nodos para la MISMA persona —
+  # Juan Manuel Serrano Quintana, presidente de Correos 2018-2023 y antes jefe de
+  # gabinete de Pedro Sánchez en el PSOE. Canónico = el nombre completo del auto de
+  # entrada en Ferraz (autoentradaferraz.pdf p.41); el duplicado "Juanma Serrano" viene
+  # de las escuchas del informe UCO ("JUANMA SERRANO, el de correos", p.366 — la propia
+  # cita lo desambigua de Juanfran Serrano, el diputado). NO es Juanfran Serrano.
+  - canonical: {name: "Juan Manuel Serrano Quintana", type: Person}  # juan-manuel-serrano-quintana deg5
+    duplicates: [{name: "Juanma Serrano", type: Person}]             # juanma-serrano deg4, misma persona (escuchas UCO)
+
+  # Correos (2026-07-09): "Correos y Telégrafos" (deg1) es el nombre oficial largo del
+  # mismo operador postal público que ya existe como Organization:correos (deg43).
+  - canonical: {name: "Correos", type: Organization}                 # correos deg43
+    duplicates: [{name: "Correos y Telégrafos", type: Organization}] # correos-y-telegrafos deg1, mismo ente
+
+  # Jésica Rodríguez García (barrido badges/fichas 2026-07-10): TRES nodos para la
+  # MISMA persona — la expareja de Ábalos contratada por Ineco/Tragsatec sin trabajo
+  # efectivo (sentencia TS 22-jun-2026; citada como investigada por Ismael Moreno el
+  # 3-jul-2026). Canónico = la grafía registral del DNI verificada por la UDEF
+  # ("JESICA RODRÍGUEZ GARCÍA", con DNI, informe-udef-1907 p.40). "Jéssica…" nació
+  # del enrich swarm (prensa) y "Jessica Rodríguez" de la sentencia del TS.
+  - canonical: {name: "Jesica Rodríguez García", type: Person}       # jesica-rodriguez-garcia deg12
+    duplicates:
+      - {name: "Jéssica Rodríguez García", type: Person}             # jessica-rodriguez-garcia deg34
+      - {name: "Jessica Rodríguez", type: Person}                    # jessica-rodriguez deg56
+
+  # Aurora López López (barrido 2026-07-10): copropietaria real de Plus Ultra según la
+  # UDEF (pareja de Rodolfo Reyes; Snip Aviation). El nodo fino "María Aurora López
+  # López" (1 mención, auto-zapatero p.42) es la MISMA persona — los alias se solapan
+  # (la ficha del nodo rico incluye "María Aurora LÓPEZ LÓPEZ"; udef-1908 p.4 la llama
+  # así como esposa de Reyes). Canónico = el nodo rico.
+  - canonical: {name: "Aurora López López", type: Person}            # aurora-lopez-lopez deg7
+    duplicates: [{name: "María Aurora López López", type: Person}]   # maria-aurora-lopez-lopez deg1
+
+  # Emilia Parejo Gala (barrido 2026-07-10): exdirectora del Área de Cultura de la
+  # Diputación de Badajoz, acusada en el juicio del caso David Sánchez. "EMILIO PAREJA
+  # GALA" es una variante OCR del ESCRITO-DE-ACUSACION_fdo (p.29; la p.26 del mismo
+  # escrito la llama "EMILIA PAREJO") con los mismos delitos y coacusados (Calderón
+  # Zazo, Martos) — mismo sujeto. El nodo variante lleva las aristas ACCUSED_OF del
+  # corpus (tráfico de influencias + prevaricación), que el canónico hereda al fusionar
+  # (y con ellas el badge "acusado", correcto: juicio visto para sentencia 09-jun-2026).
+  - canonical: {name: "Emilia Parejo Gala", type: Person}            # emilia-parejo-gala deg12
+    duplicates: [{name: "Emilio Pareja Gala", type: Person}]         # emilio-pareja-gala deg3 (OCR del escrito de acusación)
+
+  # Thinking Heads (recon BDNS 2026-07-11, spec 041/042): el barrido de la BDNS casó el
+  # MISMO NIF B83220475 para los nodos thinking-heads y thinking-heads-group-sl — misma
+  # sociedad (la agencia de conferenciantes de la órbita Begoña/Moncloa). Canónico = el
+  # nodo rico (deg 13). OJO: thinking-heads-americas-llc es otra entidad legal (filial
+  # estadounidense) y NO se fusiona.
+  - canonical: {name: "Thinking Heads", type: Company}               # thinking-heads deg13
+    duplicates: [{name: "Thinking Heads Group SL", type: Company}]   # thinking-heads-group-sl deg7 (mismo NIF B83220475)
+
+  # Pilot Real Estate (dedup 2026-07-11): la sentencia TS escribe "PILOT REAL STATE S.L."
+  # (errata de la propia sentencia) y el extractor creó un segundo nodo. Misma sociedad de
+  # Aldama (CIF B87323051, hoja BORME M605483 "PILOT REAL ESTATE SL", Leganés 2015 →
+  # Córdoba 2024): mismos hechos (aplazamiento de deuda tributaria vía Koldo/Carlos Moreno).
+  - canonical: {name: "Pilot Real Estate", type: Company}            # pilot-real-estate deg9 (rol+resumen+mercantil)
+    duplicates: [{name: "PILOT REAL STATE SL", type: Company}]       # pilot-real-state-sl deg7 (sentencia TS)
+
+  # Iñigo Rotaeche (dedup 2026-07-11): "Rotaecho" = OCR de la portada de la exposición
+  # razonada de Ábalos (p.1); su propio alias ya dice "Iñigo Rotaecho Lachiondo". Misma persona.
+  - canonical: {name: "Iñigo ROTAECHE LACHIONDO", type: Person}      # inigo-rotaeche-lachiondo deg12
+    duplicates: [{name: "Iñigo Rotaecho", type: Person}]             # inigo-rotaecho deg2 (OCR)
+
+  # ---------------------------------------------------------------------------
+  # Lote 2026-07-16 (spec 049, pre-paso del overlay BOE): 8 pares de duplicados
+  # revelados por el cruce del recon BOE (spec 048) — cada par verificado 1:1
+  # contra el grafo vivo (aliases, relaciones, docs de mención) antes de entrar.
+  # Canónico = el nodo con bloque curado en context si existe (Carlos Moreno);
+  # si no, el del nombre oficial completo. 2 pares RECHAZADOS: Person:alejandro
+  # y Person:eduardo son nodos SOBRE-FUSIONADOS (mezclan varias personas — el
+  # summary de Person:alejandro lo documenta); fusionarlos misatribuiría
+  # evidencia ajena al nodo limpio → candidatos a split by_quote (QA aparte).
+  # ---------------------------------------------------------------------------
+  - canonical: {name: "Carlos Moreno", type: Person}                 # carlos-moreno deg10 (figures role + summary curados)
+    duplicates: [{name: "Carlos Moreno Medina", type: Person}]       # carlos-moreno-medina deg11 (sentencia TS; alias "Carlos Moreno")
+  - canonical: {name: "Nadia Calviño Santamaría", type: Person}      # nadia-calvino-santamaria deg4 (nombre oficial)
+    duplicates: [{name: "Nadia Calviño", type: Person}]              # nadia-calvino deg2 (sentencia TS "Sra. Calviño")
+  - canonical: {name: "Isaías Taboas Suárez", type: Person}          # isaias-taboas-suarez deg2 (nombre oficial)
+    duplicates: [{name: "Isaías Taboas", type: Person}]              # isaias-taboas deg4 (informes UCO; ambos WORKS_FOR renfe)
+  - canonical: {name: "Félix Bolaños García", type: Person}          # felix-bolanos-garcia deg3 (role ministro curado)
+    duplicates: [{name: "Félix Bolaños", type: Person}]              # felix-bolanos deg2 (auto Peinado)
+  - canonical: {name: "Julián Sánchez Melgar", type: Person}         # julian-sanchez-melgar deg1 (nombre oficial)
+    duplicates: [{name: "Sánchez Melgar", type: Person}]             # sanchez-melgar deg3 (autos Begoña "Ponente Sr. Sánchez Melgar")
+  - canonical: {name: "Antonio del Moral García", type: Person}      # antonio-del-moral-garcia deg1 (nombre oficial)
+    duplicates: [{name: "Antonio del Moral", type: Person}]          # antonio-del-moral deg2 (auto Peinado; ambos TS Sala Segunda)
+
+  # QA pase 2, familia C (2026-07-17): el auto Zapatero (p.49) y el informe UDEF 1907
+  # (p.172) equiparan "The Global Analysis & Trends In Emerging Regions" (GATE) con
+  # Gate Center; el nodo Company duplicaba el pago de 352.980 EUR a Zapatero ya colgado
+  # de gate-center. Merge aplicado también en vivo por qa_migration_20260717-familiaC.
+  - canonical: {name: "Gate Center", type: Organization}
+    duplicates: [{name: "The Global Analysis & Trends In Emerging Regions", type: Company}]
+
+  # Triaje QA pass2b (2026-07-29, hallazgo del ciclo vigía 27→29-jul): TRES nodos
+  # homónimos de la misma asociación (acusación popular en DP 965/2024, CE 20775/2020
+  # y JCI-2/DP 65-2023). Canónico = el que tiene summary curada (summaries.yaml).
+  - canonical: {name: "Asociación Hazteoir.org", type: Organization}  # asociacion-hazteoir-org deg8, summary curada
+    duplicates: ["Hazte Oír", "Hazteoir.org"]                         # hazte-oir deg6 · hazteoir-org deg6
+
+  # Triaje QA pass2 cierre (2026-08-03, R33 unit 192891c4, verif+árbitro DE ACUERDO):
+  # TRES nodos-fragmento de la misma persona — Luis Alberto Escolano Marín, socio de
+  # Aldama y arrendatario de su piso de Madrid (exposición razonada p.26,
+  # sentencia TS p.76). La arista RECEIVED duplicada del fragmento (mismo chunk
+  # e57bc4be) se elimina en el cypher manual del ship 2026-08-03 ANTES del merge.
+  - canonical: {name: "Alberto Escolano Marín", type: Person}   # alberto-escolano-marin (RECEIVED Home Select + alias ESCOLANO)
+    duplicates: ["Escolano", "Luis Alberto Escolano"]           # escolano deg1 · luis-alberto-escolano deg1 (ASSOCIATED_WITH Aldama)
+
+  # Dedup estructural Fiscalía (2026-08-03): tras mover las aristas de Anticorrupción
+  # al nodo propio (split en relations.yaml) y re-apuntar los nombramientos BOE por
+  # etapa (boe.yaml), el remanente de `Organization:fiscalia` es EXACTAMENTE el
+  # Ministerio Fiscal genérico (citas «la Fiscalía» + menciones documentales) — el
+  # mismo ente que `Organization:ministerio-fiscal`, que ya tiene summary curada.
+  # ORDEN: make relations (split) ANTES de make context (este merge).
+  - canonical: {name: "Ministerio Fiscal", type: Organization}
+    duplicates: ["Fiscalía"]
+
+  # Ingesta verificada 20557/2024 + 20775 + Senado (2026-08-10, REVIEW-PASADA4):
+  # dos ids vivos INALCANZABLES por slug del nombre extraído. OJO: load_merges
+  # localiza el canónico por entity_id(type, slug(name)) — el name de abajo existe
+  # SOLO para que la slug calce con el id vivo (gonzalez-fernandez / tecol-balas);
+  # el nodo vivo conserva su propio name. El duplicado (nodo recién ingestado, con
+  # grado) se re-apunta 1:1 y su nombre queda como alias.
+  - canonical: {name: "González Fernández", type: Person}   # → Person:gonzalez-fernandez (Mercedes González Fernández, directora general GC)
+    duplicates: ["Mercedes González Fernández"]
+  - canonical: {name: "Tecol Balas", type: Person}          # → Person:tecol-balas (teniente coronel Balas, seudónimo institucional — no se de-anonimiza)
+    duplicates: ["Balas (teniente coronel)"]
+
+  # QA pase 3 R17 (2026-08-28, triage fable-nh): «Torscámara» = errata OCR que duplica
+  # a Torrescámara (constructora UTE A-12; el canónico lleva las anclas PLACSP 046/055).
+  # El summary curado del dup se RE-KEYA al canónico en summaries.yaml en el mismo PR
+  # (gotcha context_isolated_nodes: nunca dejar bloque de summary keyado a un fusionado).
+  - canonical: {name: "Torrescámara y Cía. de Obras S.A.", type: Company}
+    duplicates: [{name: "Torscámara y Cía. de Obras SA", type: Company}]
+
+  # Pasada de contexto s88 (2026-08-28) — dedup semántico de Crimes + org + persona:
+  #  - «Fraud» (inglés, stub 0 aristas) = fraude.
+  #  - «corrupción en el sector privado» (stub, 1 mención en la MISMA frase del auto
+  #    Peinado que corrupción-en-los-negocios: «CORRUPCIÓN EN LOS NEGOCIOS EN EL
+  #    SECTOR PRIVADO ENTRE PARTICULARES») = corrupción en los negocios.
+  #  - «delito contra la Hacienda Pública» = defraudación tributaria (art. 305 CP,
+  #    misma categoría penal; canónico el usado por accusations.yaml y los docs
+  #    judiciales). Anclas de ultima_hora.yaml re-apuntadas en el mismo PR.
+  #  - AEAT = Agencia Tributaria (mismo organismo; anclas boe.yaml re-apuntadas y
+  #    entrada organizaciones.yaml podada en el mismo PR — el context loader la
+  #    recrearía). Su bloque summaries.yaml se poda (el canónico tiene el suyo).
+  #  - «Berta Carrero Franch» = errata del propio auto TS 29-07-2025 por Berta
+  #    Ferrero, periodista de El País (una de los 4 testigos; verificado en prensa:
+  #    Romero/Gómez/Peinado/Ferrero — «Carrero Franch» no existe en el registro
+  #    público).
+  - canonical: {name: "fraude", type: Crime}
+    duplicates: ["Fraud"]
+  - canonical: {name: "corrupción en los negocios", type: Crime}
+    duplicates: ["corrupción en el sector privado"]
+  - canonical: {name: "defraudación tributaria", type: Crime}
+    duplicates: ["delito contra la Hacienda Pública"]
+  - canonical: {name: "Agencia Tributaria", type: Organization}
+    duplicates: ["AEAT"]
+  - canonical: {name: "Berta Ferrero", type: Person}
+    duplicates: ["Berta Carrero Franch"]
+
+  # QA pase 4 node-identity (2026-09-01, dossier review_20260831-pase4.md): «Víctor Firma»
+  # = artefacto OCR del bloque de firmas de Aldama (mismo patrón que «Plus FIRMA»).
+  - canonical: {name: "Víctor de Aldama", type: Person}
+    duplicates: [{name: "Víctor Firma", type: Person}]
+
+  # Pase de SPLITS s91 (2026-08-31, dossier data/audit/runs/triage_20260901-splits.md):
+  #  - DGC = Dirección General de Carreteras (mismo órgano; el dup tenía 4 aristas
+  #    reales que el re-point traslada; su bloque summaries.yaml se poda en el mismo PR).
+  #  - «Cesación de Javier Herrero» = «cese de Javier Herrero» (mismo cese 25/10/2022).
+  #  - «54.567/19» = el expediente 12-LO-5440 («expediente 12-LO-5440; 54.567/19», UCO
+  #    f.191) — canónico ya rekeyado a Contract:12-lo-5440 y renombrado en la migración.
+  #  - Familia TSC: «Master Transformación Social Competitiva» (LegalCase) y
+  #    «Transformación Social Competitiva» (Event) = el Máster TSC de la UCM (curso
+  #    2020-21), canónico Organization:master-en-transformacion-social; y
+  #    «TSC Transformación Social Competitiva» (Company stub) = Transforma TSC, S.L.
+  #  - «Máster de Fundraising Público y Privado» (LegalCase stub tras el repoint de la
+  #    migración) = el Máster Propio de fundraising (Event canónico).
+  #  - «línea 750 Gijón Sanz Crespo - Pravia» = «Gijón Sanz Crespo - Pravia» (misma
+  #    línea de ancho métrico del expediente 3.20/27507.0207).
+  - canonical: {name: "Dirección General de Carreteras", type: Organization}
+    duplicates: [{name: "DGC", type: Organization}]
+  - canonical: {name: "cese de Javier Herrero", type: Event}
+    duplicates: [{name: "Cesación de Javier Herrero", type: Event}]
+  - canonical: {name: "12-LO-5440", type: Contract}  # slug == Contract:12-lo-5440 (rekey de la migración; el display name del nodo es «Expediente 12-LO-5440; 54.567/19»)
+    duplicates: [{name: "54.567/19", type: LegalCase}]
+  - canonical: {name: "Master en Transformación Social", type: Organization}
+    duplicates: [{name: "Master Transformación Social Competitiva", type: LegalCase},
+                 {name: "Transformación Social Competitiva", type: Event}]
+  - canonical: {name: "Transforma TSC, S.L.", type: Company}
+    duplicates: [{name: "TSC Transformación Social Competitiva", type: Company}]
+  - canonical: {name: "Máster Propio en Dirección de Fundraising Público y Privado en Organizaciones sin Ánimo de Lucro", type: Event}
+    duplicates: [{name: "Máster de Fundraising Público y Privado", type: LegalCase}]
+  - canonical: {name: "Gijón Sanz Crespo - Pravia", type: Location}
+    duplicates: [{name: "línea 750 Gijón Sanz Crespo - Pravia", type: Location}]
+  # Triaje pase 5 (s92, 02-sep-2026): etiquetas de agenda, fragmentos OCR y dups
+  # registrales con referente único verificado (dossier runs/triage_20260902-pase5.md).
+  - canonical: {name: "Fernando Merino", type: Person}
+    duplicates: [{name: "Fernando Codobes", type: Person}]  # agenda (número retirado)
+  - canonical: {name: "Daniel Fernández Menéndez", type: Person}
+    duplicates: [{name: "Daniel206", type: Person},           # «Daniel» + nota 206 (OCR)
+                 {name: "Dani Opr Fernandez Menendez", type: Person}]  # etiqueta de agenda telefónica (número redactado)
+  - canonical: {name: "Santos Cerdán", type: Person}
+    duplicates: [{name: "Santos jefe psoe", type: Person}]   # etiqueta de agenda
+  - canonical: {name: "Levantina Ingeniería y Construcción", type: Company}
+    duplicates: [{name: "Levantina, Ingeniería y Construcciones", type: Company}]
+  - canonical: {name: "Juan Carlos Cueto Martín", type: Person}
+    duplicates: [{name: "Cueto", type: Person}]              # todos sus alias = J.C. Cueto
+  - canonical: {name: "Cristian Abel Corvillo Aguilar", type: Person}
+    duplicates: [{name: "Cristian", type: Person}]           # alias cruzados, misma persona
+
+  # --- T1 061 (2026-09-16, Fable, dueño) ---------------------------------------
+  # Claudio Rivas Ruiz Capillas: tres nodos para la misma persona (exposición razonada
+  # 23-10-2024 pp.20-24 «Claudio RIVAS RUIZ CAPILLAS»; sentencia TS 22-06-2026 p.43/p.142;
+  # calificación fiscal p.12). Canónico = nombre civil completo de la sentencia. El
+  # seudónimo «don Claudio» del ATS 15039/2024 se escinde ANTES en relations.yaml.
+  - canonical: {name: "Claudio Rivas Ruiz Capillas", type: Person}
+    duplicates: ["Claudio Rivas"]
+
+  # Innova Next SLU (NIF B86413689): el extractor dejó «Innova Next» aparte (19 aristas)
+  # frente al canónico con 110; contratación/subvenciones/feed re-keyados en T1.
+  - canonical: {name: "Innova Next SLU", type: Company}
+    duplicates: ["Innova Next"]
+
+  # IOT Domotic Europe SL: «Lot Domotic Europe» es la grafía OCR del auto Zapatero
+  # (p.37-38; summaries_qa061 ya lo documentaba como la misma sociedad).
+  - canonical: {name: "IOT Domotic Europe", type: Company}
+    duplicates: ["Lot Domotic Europe"]
+
+  # 061 T1b (2026-09-16): la UDEF (Policía Nacional) tenía dos nodos — el acrónimo (31 aristas,
+  # informes UDEF 1907/1908/2910, auto Zapatero, DSCD) y el nombre completo (6 aristas, organigrama
+  # de los informes 1907/2910). El grupo «Delincuencia Económica» de la UCO (Guardia Civil) es
+  # OTRO cuerpo y NO se funde (alias_deny en relations.yaml).
+  - canonical: {name: "UDEF", type: Organization}
+    duplicates: ["Unidad Central de Delincuencia Económica y Fiscal"]
+
+  # 061 T1b (2026-09-16): la STS de 22-06-2026 dejó un stub «INJOO TECHNOLOGY S.L» (2 aristas, sin
+  # summary) aparte del canónico con 13 aristas y ficha (aliases INNJOO/Injoo). Misma sociedad.
+  - canonical: {name: "Injoo Technology", type: Company}
+    duplicates: ["INJOO TECHNOLOGY S.L"]
+
+  # 067 (2026-10-07): el mismo exsecretario general de Puertos del Estado (caso Koldo, mascarillas) tenía
+  # dos nodos — el apellido solo (19 menciones en seis documentos: DS Senado 233, exposición razonada,
+  # escrito de acusación, informe UCO…) y el nombre completo (5 menciones: calificación fiscal y STS
+  # 22-06-2026). Ninguno con aristas de dominio. Se conserva el id de la ficha pública y el nombre
+  # completo pasa a alias.
+  - canonical: {name: "Sánchez Manzanares", type: Person}
+    duplicates: ["Álvaro Sánchez Manzanares"]

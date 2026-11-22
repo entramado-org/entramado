@@ -1,0 +1,341 @@
+# Seudónimos de anonimización judicial — cargado por `make context`
+# (context_loader.load_pseudonyms → SET n.is_pseudonym=true, n.pseudonym_note).
+#
+# Los autos del Tribunal Supremo (ficheros ATS_*.pdf) sustituyen el nombre real de
+# cada investigado por un nombre de pila ficticio de un roster fijo (Paulino, Romulo,
+# Roman, Alejo, Desiderio…). Cada uno es una PERSONA REAL DISTINTA: no se fusionan ni
+# se les atribuye nombre civil (la fuente no lo da). Se marcan para que la UI/MCP los
+# distingan y NO se lean como hubs reales ni se confundan con homónimos.
+#
+# Algunos nodos (felix, jaime, tomas, yolanda, mercedes, fatima) eran CONFLACIONES:
+# el seudónimo + una persona real con nombre. La persona real se separa en
+# relations.yaml (splits); el REMANENTE de cada uno es el seudónimo, marcado aquí.
+# Orden de aplicación: `make relations` (splits) ANTES de `make context` (este flag),
+# para que el flag caiga sobre el nodo ya limpio. Ver
+# findings/resolucion-entidades-2026-06-15.
+#
+# Verificado por swarm de triaje + verificación adversarial (sesión 30).
+# 2026-09-09 (spec 061, Fase 1): retiradas del fichero las entradas de 33 seudónimos que no tenían ninguna
+# arista de dominio (solo menciones) y fueron borrados del grafo como huérfanas (diario retiradas-20260908T231139Z.json).
+# Si una ingesta futura los recrea, volver a declararlos aquí ANTES de `make context` (guard F1).
+# 2026-09-09 (spec 061 F1): `note` es AHORA un texto neutro fijo (sin cargo, sin descripción de conducta) porque
+# la API/MCP lo sirven como pseudonym_note y un cargo identifica. La curación original (splits, triaje,
+# referencias) se conserva en `curacion:` — el loader NO la lee.
+pseudonyms:
+- id: Person:jose-pedro
+  note: 'Seudónimo de anonimización judicial (ATS_7320_2025, Causa Especial 20775/2020). Nombre de pila ficticio del roster
+    del CENDOJ: persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: '2026-09-15 (spec 061, revisión humana T0d, L13): «don Jose Pedro» del ATS_7320_2025.pdf (p.1-2, solicitante con
+    procuradora; registro domiciliario y audios). Su summary era meta-texto editorial sobre la anonimización → retirado (AC8);
+    la explicación la da esta nota. No fusionar ni atribuir nombre.'
+- id: Person:lucas
+  note: 'Seudónimo de anonimización judicial (ATS_10280_2025, Causa Especial 20775/2020). Nombre de pila ficticio del roster
+    del CENDOJ: persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: '2026-09-15 (spec 061, revisión humana T0d, L07): «don Lucas» del ATS_10280_2025.pdf (p.2-5). El nodo estaba
+    CONFLADO con la biografía de un homónimo civil: summary/role retirados y su alias civil deniado en relations.yaml; el
+    split del civil queda para T1. No fusionar ni atribuir nombre.'
+- id: Person:paulino
+  note: 'Seudónimo de anonimización judicial (ATS_10280_2025, Causa Especial 20775/2020). Nombre de pila ficticio del roster
+    del CENDOJ: persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: Seudónimo del Tribunal Supremo en ATS_10280_2025.pdf (Causa Especial 20775/2020). Persona real distinta; no fusionar
+    ni atribuir nombre.
+- id: Person:romulo
+  note: 'Seudónimo de anonimización judicial (ATS_10280_2025, CE 20775/2020). Nombre de pila ficticio del roster del CENDOJ:
+    persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: Seudónimo del Tribunal Supremo en ATS_10280_2025.pdf (CE 20775/2020), investigado. Persona real distinta.
+- id: Person:roman
+  note: 'Seudónimo de anonimización judicial (ATS_10280_2025, CE 20775/2020). Nombre de pila ficticio del roster del CENDOJ:
+    persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: Seudónimo del Tribunal Supremo en ATS_10280_2025.pdf (CE 20775/2020), investigado. Persona real distinta.
+- id: Person:alejo
+  note: 'Seudónimo de anonimización judicial (ATS_8611_2025, ATS_8919_2025, CE 20775/2020). Nombre de pila ficticio del roster
+    del CENDOJ: persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: Seudónimo del Tribunal Supremo (ATS_8611_2025 + ATS_8919_2025, misma CE 20775/2020). Persona real distinta.
+- id: Person:david
+  note: 'Seudónimo de anonimización judicial (ATS_8611_2025, CE 20775/2020). Nombre de pila ficticio del roster del CENDOJ:
+    persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: 'Seudónimo del Tribunal Supremo en ATS_8611_2025.pdf (CE 20775/2020). Persona real distinta; NO confundir
+    con los homónimos civiles (nodos propios).'
+- id: Person:desiderio
+  note: 'Seudónimo de anonimización judicial (ATS_8919_2025, CE 20775/2020). Nombre de pila ficticio del roster del CENDOJ:
+    persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: Seudónimo del Tribunal Supremo en ATS_8919_2025.pdf (CE 20775/2020), investigado. Persona real distinta.
+- id: Person:benito
+  note: 'Seudónimo de anonimización judicial (ATS_9905_2025, CE 20775/2020). Nombre de pila ficticio del roster
+    del CENDOJ: persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: Seudónimo del Tribunal Supremo en ATS_9905_2025 (CE 20775/2020). En ATS_8919_2025 «Benito» designa a otra
+    persona (testigo) y no pertenece a este nodo (tanda del dueño 2026-09-26). Persona real distinta.
+- id: Person:fermin
+  note: 'Seudónimo de anonimización judicial (ATS_8919_2025, CE 20775/2020). Nombre de pila ficticio del roster del CENDOJ:
+    persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: Seudónimo del Tribunal Supremo en ATS_8919_2025.pdf (CE 20775/2020). Persona real distinta.
+- id: Person:nicolasa
+  note: 'Seudónimo de anonimización judicial (ATS_10280_2025). Nombre de pila ficticio del roster del CENDOJ: persona real
+    distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: Seudónimo del Tribunal Supremo en ATS_10280_2025.pdf. Identidad civil no recuperable de la
+    fuente.
+- id: Person:ezequias
+  note: 'Seudónimo de anonimización judicial (ATS_10280_2025). Nombre de pila ficticio del roster del CENDOJ: persona real
+    distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: Seudónimo del Tribunal Supremo en ATS_10280_2025.pdf. Persona real concreta anonimizada.
+- id: Person:basilio
+  note: 'Seudónimo de anonimización judicial (ATS_10280_2025). Nombre de pila ficticio del roster del CENDOJ: persona real
+    distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: Seudónimo del Tribunal Supremo (don Basilio) en ATS_10280_2025.pdf, roster fijo de anonimización. Persona real
+    distinta.
+- id: Person:everardo
+  note: 'Seudónimo de anonimización judicial (ATS_10789_2025, CE 20775/2020). Nombre de pila ficticio del roster del CENDOJ:
+    persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: Seudónimo del Tribunal Supremo en ATS_10789_2025.pdf (CE 20775/2020). Persona real distinta.
+- id: Person:higinio
+  note: 'Seudónimo de anonimización judicial (ATS_9905_2025). Nombre de pila ficticio del roster del CENDOJ: persona real
+    distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: Seudónimo del Tribunal Supremo en ATS_9905_2025.pdf (el auto usa el mismo seudónimo para otra persona, que no
+    pertenece a este nodo). Persona real distinta.
+- id: Person:leocadia
+  note: 'Seudónimo de anonimización judicial (ATS_10280_2025). Nombre de pila ficticio del roster del CENDOJ: persona real
+    distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: Seudónimo del Tribunal Supremo en ATS_10280_2025.pdf. Persona real anonimizada.
+- id: Person:magdalena
+  note: 'Seudónimo de anonimización judicial (ATS_10280_2025). Nombre de pila ficticio del roster del CENDOJ: persona real
+    distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: Seudónimo del Tribunal Supremo en ATS_10280_2025.pdf, testigo real anonimizada.
+- id: Person:segismundo
+  note: 'Seudónimo de anonimización judicial (ATS_8919_2025, ATS_10788_2025, CE 20775/2020). Nombre de pila ficticio del roster
+    del CENDOJ: persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: Seudónimo del Tribunal Supremo (ATS_8919_2025 + ATS_10788_2025, CE 20775/2020). Persona real distinta; la fuente
+    NO la nombra (no atribuir nominalmente).
+- id: Person:felix
+  note: 'Seudónimo de anonimización judicial (ATS_10789_2025, CE 20775/2020). Nombre de pila ficticio del roster del CENDOJ:
+    persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: 'Tras separar al nodo civil homónimo, el remanente es el seudónimo del Tribunal Supremo en
+    ATS_10789_2025.pdf (CE 20775/2020). Persona real distinta.'
+- id: Person:jaime
+  note: 'Seudónimo de anonimización judicial (ATS_8919_2025, CE 20775/2020). Nombre de pila ficticio del roster del CENDOJ:
+    persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: 'Tras separar a los homónimos civiles, el remanente es el seudónimo ''don Jaime'' del Tribunal Supremo
+    (ATS_8919_2025, CE 20775/2020).'
+- id: Person:tomas
+  note: 'Seudónimo de anonimización judicial (ATS_10280_2025). Nombre de pila ficticio del roster del CENDOJ: persona real
+    distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: 'Tras separar al nodo civil homónimo, el remanente es el seudónimo del Tribunal Supremo en
+    ATS_10280_2025.pdf. Persona real distinta.'
+- id: Person:yolanda
+  note: 'Seudónimo de anonimización judicial (ATS_10280_2025). Nombre de pila ficticio del roster del CENDOJ: persona real
+    distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: 'Tras separar al nodo civil homónimo, el remanente es el seudónimo del Tribunal Supremo en
+    ATS_10280_2025.pdf. Persona real distinta.'
+- id: Person:mercedes
+  note: 'Seudónimo de anonimización judicial (ATS_10280_2025). Nombre de pila ficticio del roster del CENDOJ: persona real
+    distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: 'Tras separar a los homónimos civiles, el remanente es el seudónimo ''doña Mercedes'' del Tribunal Supremo
+    (ATS_10280_2025).'
+- id: Person:fatima
+  note: 'Seudónimo de anonimización judicial (ATS_11406_2025). Nombre de pila ficticio del roster del CENDOJ: persona real
+    distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: 'Tras separar al nodo civil homónimo, el remanente es el seudónimo del Tribunal Supremo en
+    ATS_11406_2025.pdf. Persona real distinta.'
+- id: Person:alejandro
+  note: 'Seudónimo de anonimización judicial (ATS_10280_2025). Nombre de pila ficticio del roster del CENDOJ: persona real
+    distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: 'Tras separar a los homónimos civiles (splits 2026-07-16, enmienda spec 049), el remanente es el seudónimo
+    ''don Alejandro'' del Tribunal Supremo en ATS_10280_2025.pdf, testigo de la causa. No atribuir nombre civil.'
+- id: Person:eduardo
+  note: 'Seudónimo de anonimización judicial (ATS_10280_2025). Nombre de pila ficticio del roster del CENDOJ: persona real
+    distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: 'Tras separar a los homónimos civiles (nodos propios), el remanente es el seudónimo ''don Eduardo'' del
+    Tribunal Supremo en ATS_10280_2025.pdf, investigado citado a declarar. Persona real distinta; no atribuir nombre
+    civil.'
+- id: Person:juan-miguel
+  note: 'Seudónimo de anonimización judicial (ATS_8611_2025, CE 20775/2020). Nombre de pila ficticio del roster del CENDOJ:
+    persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: Seudónimo/nombre anonimizado del Tribunal Supremo en ATS_8611_2025.pdf (CE 20775/2020). No atribuir a
+    persona civil concreta.
+- id: Person:gaspar
+  note: 'Seudónimo de anonimización judicial (ATS_8611_2025, CE 20775/2020). Nombre de pila ficticio del roster del CENDOJ:
+    persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: Nombre de fantasía (don Gaspar/Sr. Gaspar) del Tribunal Supremo en ATS_8611_2025.pdf (CE 20775/2020).
+    La fuente no da nombre civil; cualquier identificación es inferencia no confirmada.
+- id: Person:jose-ignacio
+  note: 'Seudónimo de anonimización judicial (ATS_8611_2025, CE 20775/2020). Nombre de pila ficticio del roster del CENDOJ:
+    persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: 'Seudónimo del Tribunal Supremo en ATS_8611_2025.pdf (CE 20775/2020). La fuente judicial NO lo nombra: no
+    atribuir nombre civil (misma regla que ''Adriano'').'
+- id: Person:daniel-seudonimo-ts
+  note: 'Seudónimo de anonimización judicial (ATS_10280_2025, CE 20775/2020). Nombre de pila ficticio del roster del CENDOJ:
+    persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: 'Seudónimo «don Daniel» del Tribunal Supremo en ATS_10280_2025.pdf (CE 20775/2020), citado como testigo.
+    Separado del nodo civil homónimo (triaje pass2b). No atribuir nombre civil.'
+- id: Person:alfonso
+  note: 'Seudónimo de anonimización judicial (resoluciones judiciales publicadas (CENDOJ)). Nombre de pila ficticio del roster
+    del CENDOJ: persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: '«ALFONSO» de los audios de la UCO (informe-uco p.347; informe-uco-cerdan-301-400 p.53) — referente sin
+    identificar, NO es un seudónimo del roster del TS sino un nombre de pila real sin apellidos en la fuente. Tras
+    separar a los homónimos civiles y la trayectoria BOE de uno de ellos, el remanente es solo este referente. No
+    atribuir nombre civil.'
+- id: Person:placido
+  note: 'Seudónimo de anonimización judicial (ATS_8919_2025, ATS_10280_2025, CE 20775/2020). Nombre de pila ficticio del roster
+    del CENDOJ: persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: Seudónimo del Tribunal Supremo (ATS_8919_2025.pdf + ATS_10280_2025.pdf, CE 20775/2020). Persona real distinta;
+    no atribuir nombre civil.
+- id: Person:celestino
+  note: 'Seudónimo de anonimización judicial (ATS_8919_2025, CE 20775/2020). Nombre de pila ficticio del roster del CENDOJ:
+    persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: Seudónimo del Tribunal Supremo (ATS_8919_2025.pdf, CE 20775/2020). Persona real distinta; no atribuir nombre civil.
+- id: Person:justa
+  note: 'Seudónimo de anonimización judicial (ATS_8919_2025, CE 20775/2020). Nombre de pila ficticio del roster del CENDOJ:
+    persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: Seudónimo del Tribunal Supremo (ATS_8919_2025.pdf, CE 20775/2020). Persona real distinta; no atribuir nombre civil.
+- id: Person:eloy
+  note: 'Seudónimo de anonimización judicial (ATS_8919_2025, ATS_10280_2025, CE 20775/2020). Nombre de pila ficticio del roster
+    del CENDOJ: persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: Seudónimo del Tribunal Supremo (ATS_8919_2025.pdf + ATS_10280_2025.pdf, CE 20775/2020). Persona real distinta;
+    no atribuir nombre civil.
+- id: Person:gabino
+  note: 'Seudónimo de anonimización judicial (ATS_10789_2025, CE 20775/2020). Nombre de pila ficticio del roster del CENDOJ:
+    persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: Seudónimo del Tribunal Supremo (ATS_10789_2025.pdf, CE 20775/2020). Persona real distinta; no atribuir nombre
+    civil.
+- id: Person:elias
+  note: 'Seudónimo de anonimización judicial (ATS_8919_2025, ATS_10280_2025, CE 20775/2020). Nombre de pila ficticio del roster
+    del CENDOJ: persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: Seudónimo del Tribunal Supremo (ATS_8919_2025.pdf + ATS_10280_2025.pdf, CE 20775/2020). Persona real distinta;
+    no atribuir nombre civil.
+- id: Person:isidro
+  note: 'Seudónimo de anonimización judicial (ATS_9905_2025, CE 20775/2020). Nombre de pila ficticio del roster del CENDOJ:
+    persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: Seudónimo del Tribunal Supremo (ATS_9905_2025.pdf, CE 20775/2020). Persona real distinta; no atribuir nombre civil.
+- id: Person:casimiro
+  note: 'Seudónimo de anonimización judicial (ATS_8919_2025, CE 20775/2020). Nombre de pila ficticio del roster del CENDOJ:
+    persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: Seudónimo del Tribunal Supremo (ATS_8919_2025.pdf, CE 20775/2020). Persona real distinta; no atribuir nombre civil.
+- id: Person:nemesio
+  note: 'Seudónimo de anonimización judicial (ATS_8919_2025, CE 20775/2020). Nombre de pila ficticio del roster del CENDOJ:
+    persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: Seudónimo del Tribunal Supremo (ATS_8919_2025.pdf, CE 20775/2020). Persona real distinta; no atribuir nombre civil.
+- id: Person:agapito
+  note: 'Seudónimo de anonimización judicial (ATS_8919_2025, CE 20775/2020). Nombre de pila ficticio del roster del CENDOJ:
+    persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: Seudónimo del Tribunal Supremo (ATS_8919_2025.pdf, CE 20775/2020). Persona real distinta; no atribuir nombre civil.
+- id: Person:apolonia
+  note: 'Seudónimo de anonimización judicial (ATS_10280_2025, CE 20775/2020). Nombre de pila ficticio del roster del CENDOJ:
+    persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: Seudónimo del Tribunal Supremo (ATS_10280_2025.pdf, CE 20775/2020). Persona real distinta; no atribuir nombre
+    civil.
+- id: Person:blas
+  note: 'Seudónimo de anonimización judicial (ATS_10280_2025, CE 20775/2020). Nombre de pila ficticio del roster del CENDOJ:
+    persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: Seudónimo del Tribunal Supremo (ATS_10280_2025.pdf, CE 20775/2020). Persona real distinta; no atribuir nombre
+    civil.
+- id: Person:penelope
+  note: 'Seudónimo de anonimización judicial (ATS_9905_2025, CE 20775/2020). Nombre de pila ficticio del roster del CENDOJ:
+    persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: Seudónimo del Tribunal Supremo (ATS_9905_2025.pdf, CE 20775/2020). Persona real distinta; no atribuir nombre civil.
+- id: Person:pablo
+  note: 'Seudónimo de anonimización judicial (ATS_8919_2025, CE 20775/2020). Nombre de pila ficticio del roster del CENDOJ:
+    persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: 'Seudónimo del Tribunal Supremo (ATS_8919_2025.pdf, CE 20775/2020). Persona real distinta; no atribuir nombre civil.
+    2026-10-07: recibe por split (by_doc) las menciones del ATS_8919_2025 que estaban en un nodo civil homónimo.'
+- id: Person:eloisa
+  note: 'Seudónimo de anonimización judicial (ATS_10280_2025, CE 20775/2020). Nombre de pila ficticio del roster del CENDOJ:
+    persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: Seudónimo del Tribunal Supremo (ATS_10280_2025.pdf, CE 20775/2020). Persona real distinta; no atribuir nombre
+    civil.
+- id: Person:bienvenido
+  note: 'Seudónimo de anonimización judicial (ATS_10280_2025, CE 20775/2020). Nombre de pila ficticio del roster del CENDOJ:
+    persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: Seudónimo del Tribunal Supremo (ATS_10280_2025.pdf, CE 20775/2020). Persona real distinta; no atribuir nombre
+    civil.
+- id: Person:cecilio
+  note: 'Seudónimo de anonimización judicial (ATS_10280_2025, CE 20775/2020). Nombre de pila ficticio del roster del CENDOJ:
+    persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: Seudónimo del Tribunal Supremo (ATS_10280_2025.pdf, CE 20775/2020). Persona real distinta; no atribuir nombre
+    civil.
+- id: Person:carla
+  note: 'Seudónimo de anonimización judicial (ATS_9928_2025, CE 20775/2020). Nombre de pila ficticio del roster del CENDOJ:
+    persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: Seudónimo del Tribunal Supremo (ATS_9928_2025.pdf, CE 20775/2020). Persona real distinta; no atribuir nombre civil.
+- id: Person:andrea
+  note: 'Seudónimo de anonimización judicial (ATS_9928_2025, CE 20775/2020). Nombre de pila ficticio del roster del CENDOJ:
+    persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: Seudónimo del Tribunal Supremo (ATS_9928_2025.pdf, CE 20775/2020). Persona real distinta; no atribuir nombre civil.
+- id: Person:adriano
+  note: 'Seudónimo de anonimización judicial (ATS_15039_2024, CE 20775/2020). Nombre de pila ficticio del roster del CENDOJ:
+    persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: Seudónimo del Tribunal Supremo (ATS_15039_2024.pdf, CE 20775/2020). Persona real distinta; no atribuir nombre
+    civil.
+- id: Person:landelino
+  note: 'Seudónimo de anonimización judicial (ATS_242_2026, CE 20775/2020). Nombre de pila ficticio del roster del CENDOJ:
+    persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: Seudónimo del Tribunal Supremo (ATS_242_2026.pdf, CE 20775/2020). Persona real distinta; no atribuir nombre civil.
+- id: Person:gonzalo
+  note: 'Seudónimo de anonimización judicial (ATS_242_2026, CE 20775/2020). Nombre de pila ficticio del roster del CENDOJ:
+    persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: Seudónimo del Tribunal Supremo (ATS_242_2026.pdf, CE 20775/2020). Persona real distinta; no atribuir nombre civil.
+- id: Person:justiniano
+  note: 'Seudónimo de anonimización judicial (ATS_8611_2025, CE 20775/2020). Nombre de pila ficticio del roster del CENDOJ:
+    persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: Seudónimo del Tribunal Supremo (ATS_8611_2025.pdf, CE 20775/2020). Persona real distinta; no atribuir nombre civil.
+- id: Person:evaristo-ats-9905-2025
+  note: 'Seudónimo de anonimización judicial (ATS_9905_2025, Causa Especial 20775/2020). Nombre de pila ficticio del roster
+    del CENDOJ: persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: '2026-09-16 (spec 061, T1): «don Evaristo» del ATS_9905_2025.pdf (p.2). Nodo escindido por by_doc
+    (relations.yaml) de un nodo civil homónimo. La declaración T0d sobre el civil fue un falso positivo del aviso D5
+    (nombre de pila): revertida en T1. No fusionar ni atribuir nombre.'
+- id: Person:ruben-ats-9905-2025
+  note: 'Seudónimo de anonimización judicial (ATS_9905_2025, Causa Especial 20775/2020). Nombre de pila ficticio del roster
+    del CENDOJ: persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: '2026-09-29 (063 L24): «don Rubén» del ATS_9905_2025.pdf (p.2). Escindido por by_doc de un nodo civil
+    homónimo, con el que el resolver lo había fundido por el nombre de pila. No fusionar ni atribuir nombre.'
+- id: Person:pedro-antonio-seudonimo-ts
+  note: 'Seudónimo de anonimización judicial (ATS_15039_2024 y ATS_8919_2025, Causa Especial 20775/2020). Nombre de pila
+    ficticio del roster del CENDOJ: persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: '2026-10-07 (barrido 067 v2): «don Pedro Antonio» del ATS_15039_2024.pdf (p.1-2) y del ATS_8919_2025.pdf (p.3, 6, 9).
+    Una fusión de merges.yaml lo unía a un nodo civil homónimo (fusión retirada); menciones escindidas por by_doc en
+    relations.yaml. No fusionar ni atribuir nombre.'
+- id: Person:claudio-seudonimo-ts
+  note: 'Seudónimo de anonimización judicial (ATS_15039_2024, Causa Especial 20775/2020). Nombre de pila ficticio del roster
+    del CENDOJ: persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: '2026-09-16 (spec 061, T1): «don Claudio» del ATS_15039_2024.pdf (p.3). Escindido por by_doc del nodo civil
+    homónimo, con el que el resolver lo había fundido por el nombre de pila. No fusionar ni atribuir nombre.'
+- id: Person:jesus-luis
+  note: 'Seudónimo de anonimización judicial (ATS_242_2026, Causa Especial 20775/2020). Nombre de pila ficticio del roster
+    del CENDOJ: persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: '2026-10-02 (063 tramo 4): «don Jesús Luis» del ATS_242_2026.pdf (p.2), uno de los tres investigados cuyos
+    productos financieros se requieren. No estaba marcado como seudónimo. No fusionar ni atribuir nombre.'
+- id: Person:pablo-jesus
+  note: 'Seudónimo de anonimización judicial (ATS_15039_2024, Causa Especial 20775/2020). Nombre de pila ficticio del roster
+    del CENDOJ: persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: '2026-10-02 (063 tramo 3-4): «don Pablo Jesús» del ATS_15039_2024.pdf (p.2), citado como investigado. No estaba
+    marcado como seudónimo. No fusionar ni atribuir nombre.'
+- id: Person:carlos-francisco
+  note: 'Seudónimo de anonimización judicial (ATS_8611_2025, Causa Especial 20775/2020). Nombre de pila ficticio del roster
+    del CENDOJ: persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: '2026-10-03 (063 tramo 5): «Sr. Carlos Francisco» del ATS_8611_2025.pdf (pp.2-3 y 7), cuyas declaraciones invoca
+    la defensa del Sr. David. No estaba marcado como seudónimo. No fusionar ni atribuir nombre.'
+- id: Person:luis-miguel
+  note: 'Seudónimo de anonimización judicial (ATS_7320_2025, Causa Especial 20775/2020). Nombre de pila ficticio del roster
+    del CENDOJ: persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: '2026-10-03 (063 tramo 5): «don Luis Miguel» del ATS_7320_2025.pdf (p.2), investigado. No estaba marcado
+    como seudónimo. No confundir con un homónimo civil (nodo propio). No fusionar ni atribuir nombre.'
+- id: Person:benito-ats-8919-2025
+  name: Benito (ATS 8919/2025)
+  note: 'Seudónimo de anonimización judicial (ATS_8919_2025, Causa Especial 20775/2020). Nombre de pila ficticio del roster
+    del CENDOJ: persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: '2026-10-03 (063 tramo 6, revisión Codex del PR #86): «don Benito» del ATS_8919_2025.pdf, separado de Person:benito
+    (ATS_9905_2025) en s82d. Estaba marcado en el grafo con una pseudonym_note identificativa; sin entrada aquí, `make
+    context` no la neutralizaba. Persona real distinta; no fusionar ni atribuir nombre. 2026-10-04 (063 pendientes): id y
+    nombre neutralizados a «Benito (ATS 8919/2025)» por migración Path A; retirado después el rename_from ya aplicado.'
+- id: Person:anibal
+  note: 'Seudónimo de anonimización judicial (ATS_10280_2025, Causa Especial 20775/2020). Nombre de pila ficticio del roster
+    del CENDOJ: persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: '2026-10-04 (063 pendientes): «don Anibal» del ATS_10280_2025.pdf. No estaba declarado y su summary narraba su
+    relación con otros seudónimos; se retira el summary (summaries_qa061 remove) y lo sustituye esta nota. No fusionar ni
+    atribuir nombre.'
+- id: Person:adrian
+  note: 'Seudónimo de anonimización judicial (ATS_9928_2025, CE 20775/2020). Nombre de pila ficticio del roster del CENDOJ:
+    persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo.'
+  curacion: 'Seudónimo del Tribunal Supremo (ATS_9928_2025.pdf, CE 20775/2020: «don Adrian», «el Sr. Adrian»). Persona real
+    distinta; no atribuir nombre civil. 2026-10-07 (spec 070): declarado al revisar el registro; su única arista de dominio
+    en el seed 20261007-qa067b (ATS_9928_2025 p.4, conservada por la 063) entra en seudonimos_permitidos.yaml como estado
+    publicado; la mención del informe UCO (p.363) no contiene el nombre en el texto, se considera espuria.'

@@ -1,0 +1,93 @@
+# Render variant of the root Caddyfile. Same role: single public entry, path
+# routing, per-IP rate limit (Render has no platform rate limiting — only DDoS).
+# Differences vs root:
+# - Upstreams are env vars (Render internal hostnames, set in render.yaml) —
+#   verify against Connect → Internal after the first deploy.
+# - Access log goes to stdout (Render captures it); no Promtail/Loki here.
+# - App metrics are scraped from OUTSIDE (Grafana Cloud, spec 057): /metrics/api
+#   and /metrics/mcp proxy the internal /metrics endpoints behind basic auth.
+#   The API's own /metrics is NOT reachable as /api/metrics (explicit 404).
+#
+# trusted_proxies: behind Cloudflare → Render's edge → Caddy, the immediate peer
+# is Render's internal proxy. private_ranges should cover it so
+# {http.request.client_ip} resolves from X-Forwarded-For to the REAL client IP —
+# ⚠️ VERIFY at deploy (two curls from different IPs must land in different rate
+# buckets); if the peer isn't a private address, widen trusted_proxies.
+{
+	servers {
+		trusted_proxies static private_ranges
+		client_ip_headers X-Forwarded-For
+	}
+	order rate_limit before encode
+}
+
+{$SITE_HOST} {
+	# Per-IP rate limit — same ceiling as prod (600 req/min ≈ generous for a
+	# real human burst; throttles scrapers/abuse). Keyed on the real client IP.
+	rate_limit {
+		zone porip {
+			key {http.request.client_ip}
+			events 600
+			window 1m
+		}
+	}
+
+	log {
+		output stdout
+		format json
+	}
+
+	encode zstd gzip
+
+	header {
+		X-Content-Type-Options nosniff
+		X-Frame-Options SAMEORIGIN
+		Referrer-Policy strict-origin-when-cross-origin
+		Strict-Transport-Security "max-age=31536000"
+	}
+
+	# /metrics/{api,mcp} — Grafana Cloud scrape (spec 057), basic auth. The hash
+	# is bcrypt (`caddy hash-password`), set as env vars in the Render dashboard.
+	# handle blocks are evaluated in order → these must precede /api/* and /mcp*.
+	handle /metrics/api {
+		basic_auth {
+			{$METRICS_USER} {$METRICS_PASSWORD_HASH}
+		}
+		rewrite * /metrics
+		reverse_proxy {$API_UPSTREAM}
+	}
+
+	handle /metrics/mcp {
+		basic_auth {
+			{$METRICS_USER} {$METRICS_PASSWORD_HASH}
+		}
+		rewrite * /metrics
+		reverse_proxy {$MCP_UPSTREAM}
+	}
+
+	# handle_path /api/* would otherwise expose the API's internal /metrics
+	# unauthenticated (it did until spec 057).
+	handle /api/metrics {
+		respond 404
+	}
+
+	handle /mcp* {
+		reverse_proxy {$MCP_UPSTREAM}
+	}
+
+	handle_path /api/* {
+		reverse_proxy {$API_UPSTREAM}
+	}
+
+	# The site never uses next/image, so Next's image optimizer endpoint is pure
+	# attack surface (GHSA-2xp9-vwfh-vxw4: RCE via AVIF in sharp/libheif, Next <
+	# 15.5.24). Closed at the only public ingress; next.config.mjs also sets
+	# images.unoptimized.
+	handle /_next/image* {
+		respond 404
+	}
+
+	handle {
+		reverse_proxy {$WEB_UPSTREAM}
+	}
+}

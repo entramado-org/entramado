@@ -1,0 +1,26 @@
+[project]
+name = "entramado-api"
+version = "0.1.0"
+description = "FastAPI: graph search, ego-graph expansion, provenance, briefings"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.30.0",
+    "neo4j>=5.26.0",
+    "pydantic>=2.7.0",
+    "structlog>=24.1.0",
+    "python-dotenv>=1.0.0",
+    "mcp>=1.12,<2",  # 2.0 elimina mcp.server.fastmcp; migrar a 2.x antes de subir el techo
+    "prometheus-client>=0.20.0",
+    "prometheus-fastapi-instrumentator>=7.0.0",
+    "pyyaml>=6.0",
+]
+
+[tool.uv]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["app"]

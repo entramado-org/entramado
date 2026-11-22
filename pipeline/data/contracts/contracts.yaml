@@ -1,0 +1,82 @@
+# Curated CONTRACTS overlay (reified public-procurement awards).
+# Loaded by `make contracts` (src/contracts_loader.py) as source_kind='contrato'.
+#
+#   (awarding_body) -[AWARDED_CONTRACT]-> (Contract) -[CONTRACT_AWARDED_TO]-> (awardee)
+#
+# Each award is a DOCUMENTED FACT (the adjudication happened), grounded in a corpus
+# doc + verbatim quote. Any alleged irregularity (amaño, sobreprecio) is a separate
+# accusation and is NOT asserted here — `note` stays descriptive. Presunción de
+# inocencia. Amounts in EUR unless `currency` given. To extend: add an entry, `make contracts`.
+
+contracts:
+  # ── Mascarillas (compra de emergencia COVID-19, 2020) ───────────────────────
+  # Adjudicaciones directas de emergencia a Soluciones de Gestión (sociedad
+  # vinculada a Víctor de Aldama), canalizadas vía Koldo García / MITMA.
+  - contract: "Suministro de mascarillas — Puertos del Estado (2020)"
+    awarding_body: "Puertos del Estado"
+    body_type: Organization
+    awardee: "Soluciones de Gestión"
+    awardee_type: Company
+    amount: 20000000
+    currency: EUR
+    date: "2020"
+    object: "8 millones de mascarillas a 2,5 €/unidad (adjudicación directa de emergencia)"
+    doc: "20240819_informe_audit_ejec_om_adquis_mascarillas_an.pdf"
+    page: 31
+    quote: "Se comprueba que la oferta es para suministrar 8 millones de mascarillas, a un precio de 2,5 € por unidad"
+
+  - contract: "Suministro de mascarillas — ADIF (2020)"
+    awarding_body: "ADIF"
+    body_type: Organization
+    awardee: "Soluciones de Gestión"
+    awardee_type: Company
+    object: "5 millones de mascarillas adquiridas y distribuidas por Adif"
+    date: "2020"
+    doc: "20240819_informe_audit_ejec_om_adquis_mascarillas_an.pdf"
+    page: 10
+    quote: "informe sobre el procedimiento seguido por Adif para determinar las entidades destinatarias finales de las mascarillas"
+    note: "Parte del suministro global ~54 M€ a Soluciones de Gestión (Exposición razonada Ábalos)."
+
+  # ── Obras ferroviarias adjudicadas a Acciona (caso Cerdán/UCO) ──────────────
+  # Obras donde el informe UCO señala que Acciona resultó "invariablemente
+  # favorecida en la valoración subjetiva de la oferta" (indicios en investigación;
+  # la adjudicación es un hecho, el presunto amaño es una acusación bajo instrucción).
+  # 063 (2026-09-28) [e9bba591]: el órgano adjudicador NO es ADIF (la auditoría lo atribuye a la Dirección General de
+  # Carreteras) → sin `awarding_body` el loader salta la fila y no resucita la arista ADIF→contrato denegada. El
+  # contrato y su adjudicataria ya están en el grafo.
+  - contract: "Obra ferroviaria — Logroño"
+    body_type: Organization
+    awardee: "Acciona"
+    awardee_type: Company
+    amount: 92416975.61
+    currency: EUR
+    object: "Obra de infraestructura ferroviaria (Logroño)"
+    doc: "informe-uco.pdf"
+    quote: "invariablemente favorecida en el marco de la decisiva valoración subjetiva de la oferta (Logroño, Sevilla, San Feliú de Llobregat, El Mayor y Murcia"
+    note: "Adjudicación señalada en el informe UCO; presunto amaño bajo investigación (presunción de inocencia)."
+
+  # 063 (2026-09-28) [d805b528]: el órgano adjudicador NO es ADIF (la auditoría lo atribuye a la Dirección General de
+  # Carreteras) → sin `awarding_body` el loader salta la fila y no resucita la arista ADIF→contrato denegada. El
+  # contrato y su adjudicataria ya están en el grafo.
+  - contract: "Obra ferroviaria — Sevilla"
+    body_type: Organization
+    awardee: "Acciona"
+    awardee_type: Company
+    amount: 102829873.28
+    currency: EUR
+    object: "Obra de infraestructura ferroviaria (Sevilla)"
+    doc: "informe-uco.pdf"
+    quote: "invariablemente favorecida en el marco de la decisiva valoración subjetiva de la oferta (Logroño, Sevilla, San Feliú de Llobregat, El Mayor y Murcia"
+    note: "Adjudicación señalada en el informe UCO; presunto amaño bajo investigación (presunción de inocencia)."
+
+  - contract: "Obra ferroviaria — Sant Feliú de Llobregat"
+    awarding_body: "ADIF"
+    body_type: Organization
+    awardee: "Acciona"
+    awardee_type: Company
+    amount: 62026420.15
+    currency: EUR
+    object: "Obra de infraestructura ferroviaria (Sant Feliú de Llobregat)"
+    doc: "informe-uco.pdf"
+    quote: "invariablemente favorecida en el marco de la decisiva valoración subjetiva de la oferta (Logroño, Sevilla, San Feliú de Llobregat, El Mayor y Murcia"
+    note: "Adjudicación señalada en el informe UCO; presunto amaño bajo investigación (presunción de inocencia)."

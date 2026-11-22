@@ -1,0 +1,24 @@
+{
+  "clase": {
+    "type": "choice",
+    "instructions": "El campo `texto` es un fragmento (con su fichero y líneas) de un fichero de datos de un proyecto periodístico PÚBLICO sobre los casos de corrupción que rodean al Gobierno de España: un grafo de conocimiento construido desde documentos judiciales y oficiales. Decide qué tipo de DATO PERSONAL DE RIESGO contiene el fragmento, si contiene alguno. Reglas: (1) solo cuentan datos sobre PERSONAS FÍSICAS; cargos públicos, partidos, empresas y organismos no son datos personales de riesgo. (2) Los nombres de personas investigadas, acusadas o condenadas, sus cargos, sus relaciones profesionales o empresariales, los hechos procesales y las cifras de contratos, subvenciones o pagos NO son de riesgo por sí mismos: son el objeto del proyecto. (3) Si el fragmento solo contiene identificadores técnicos (ids tipo `Person:nombre-apellido`, `Company:…`, fechas, rutas, claves YAML) sin datos de riesgo, es `ninguno`. (4) Si hay varios tipos, elige el MÁS GRAVE según el orden de las opciones (la última es la más grave).",
+    "criteria": {
+      "ninguno": "No hay dato personal de riesgo: solo cargos, empresas, organismos, hechos procesales, cifras públicas, nombres de investigados en su papel público o identificadores técnicos.",
+      "sede_oficial_o_empresa": "Dirección o datos de contacto de la sede de un organismo público, partido, despacho profesional o empresa (no de una vivienda).",
+      "bien_personal": "Descripción de bienes de una persona física (vivienda, vehículo, joyas, cuentas, hipoteca, patrimonio) que la identifica o la localiza y que NO es el propio objeto de la acusación.",
+      "domicilio_particular": "Dirección, urbanización, edificio, piso o localización precisa de la VIVIENDA de una persona física, aunque no lleve número.",
+      "familiar_o_menor": "Nombra o describe a un familiar (pareja, hijos, padres, hermanos) o a un menor de edad de una persona investigada, salvo que ese familiar sea a su vez investigado o acusado por su nombre.",
+      "dato_sensible": "Salud, orientación sexual, religión, origen étnico, vida íntima, adicciones o antecedentes sin relación con el caso.",
+      "identificador": "DNI/NIE/pasaporte, teléfono, correo personal, matrícula, IBAN, referencia catastral, usuario de mensajería u otro identificador directo de una persona física.",
+      "reidentifica_seudonimo": "Vincula un seudónimo judicial (nombre de pila ficticio que un auto del Tribunal Supremo usa en vez del nombre real: «David», «Benito», «Felix», «Anibal», «Jaime»…) con una persona real, un cargo concreto, una empresa o un dato que permita saber quién es."
+    }
+  },
+  "exceso": {
+    "type": "noul",
+    "instructions": "¿Publicar `texto` tal cual revela sobre alguna persona física algo que NO hace falta para informar de los hechos del caso: su vivienda, sus bienes, su familia, su salud, un identificador directo, o quién se esconde tras un seudónimo judicial? Responde sí solo si el dato SOBRA para entender el hecho. Responde no si el dato es el propio objeto de la acusación (p. ej. una vivienda o un vehículo pagados con sobornos, un regalo investigado), si es un dato público del cargo, o si el fragmento no contiene datos de personas físicas.",
+    "criteria": {
+      "true": "Sí: el fragmento revela sobre una persona física un dato que sobra para entender los hechos (vivienda, bienes ajenos a la acusación, familia, salud, identificador, identidad de un seudónimo).",
+      "false": "No: el fragmento solo contiene datos necesarios para los hechos, datos públicos del cargo, el propio objeto de la acusación, o no habla de personas físicas."
+    }
+  }
+}

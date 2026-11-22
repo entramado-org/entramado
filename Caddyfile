@@ -1,0 +1,95 @@
+# Reverse proxy. TLS terminates at the edge (Tailscale Funnel / Cloudflare for
+# entramado.org); Caddy serves plain :80 behind it. The site is PUBLIC (no Basic
+# Auth) — abuse is bounded by a per-IP rate limit (mholt/caddy-ratelimit, compiled
+# in via infra/caddy/Dockerfile). Caddy is the ONLY publicly exposed service;
+# web/api/neo4j stay on the compose net.
+
+# Global options (spec 017 observability). The admin endpoint also serves Caddy's
+# Prometheus metrics; we bind it to :2019 on the compose network so Prometheus can
+# scrape `caddy:2019/metrics`. It is NEVER published to the host or the Funnel —
+# only the compose port 80 is. `servers { metrics }` turns on per-handler request
+# counters + latency histograms.
+#
+# trusted_proxies + client_ip_headers: behind {Funnel,Cloudflare}→…→socat→Caddy the
+# immediate peer is loopback/private, so {http.request.client_ip} would collapse to
+# 127.0.0.1 and the rate limiter would bucket EVERYONE together. Trusting the
+# private/loopback ranges makes Caddy read the real client IP from X-Forwarded-For
+# (the same IP the MCP limiter and the geo dashboards use — see spec 018).
+#
+# `order rate_limit before encode` places the limiter early in the directive chain
+# (it is a plugin, so it has no default order).
+{
+	admin 0.0.0.0:2019
+	servers {
+		metrics
+		trusted_proxies static private_ranges
+		client_ip_headers X-Forwarded-For
+	}
+	order rate_limit before encode
+}
+
+{$SITE_HOST} {
+	# PUBLIC since 2026-06-25: the site is open to anyone (no Basic Auth). The
+	# read-only graph explorer + the public MCP connector (/mcp, spec 009) were
+	# always meant to be shareable. BASIC_AUTH_USER/HASH in .env are now unused
+	# (kept for an easy rollback: re-add the @protegido + basicauth block below).
+	# Baseline abuse protection comes from the Cloudflare edge (entramado.org) and
+	# the app's own per-IP limit on /mcp, PLUS this Caddy-level per-IP rate limit.
+
+	# Per-IP rate limit. A normal page load fans out into a handful of /api calls
+	# plus the multi-MB overview, so the ceiling is generous (600 req/min/IP ≈ a
+	# real human burst stays well under it) and only throttles scrapers / abuse.
+	# Keyed on the REAL client IP (resolved via trusted_proxies in the global
+	# block). /mcp is included but has its own app-level limiter too (mcp_ratelimit.py).
+	rate_limit {
+		zone porip {
+			key {http.request.client_ip}
+			events 600
+			window 1m
+		}
+	}
+
+	# JSON access log (spec 017). Promtail tails this file into Loki, giving the
+	# per-request / per-IP drill-down the metrics deliberately omit (remote_ip,
+	# uri, status, duration, User-Agent). Written to a volume shared with Promtail.
+	log {
+		output file /var/log/caddy/access.log {
+			roll_size 50MiB
+			roll_keep 5
+		}
+		format json
+	}
+
+	# Compress responses — the graph overview JSON is multi-MB uncompressed.
+	encode zstd gzip
+
+	# Baseline security headers. CSP is skipped on purpose (Next.js inline scripts).
+	# HSTS: Caddy serves plain :80, but the browser-facing hop is always HTTPS
+	# (Cloudflare edge for entramado.org / Tailscale Funnel), which forwards this
+	# origin header to the client, so the directive takes effect. max-age 1y; no
+	# includeSubDomains (subdomain HTTPS coverage unverified) and no preload (hard to
+	# undo). Browsers ignore HSTS over plain HTTP, so the internal :80 hop is moot.
+	header {
+		X-Content-Type-Options nosniff
+		X-Frame-Options SAMEORIGIN
+		Referrer-Policy strict-origin-when-cross-origin
+		Strict-Transport-Security "max-age=31536000"
+	}
+
+	# Public MCP connector (Streamable HTTP, stateless JSON). No prefix strip:
+	# the MCP app serves /mcp itself.
+	handle /mcp* {
+		reverse_proxy mcp:8008
+	}
+
+	# Browser calls to /api/* are proxied to the FastAPI service, same-origin.
+	# handle_path strips the /api prefix so /api/search -> api's /search.
+	handle_path /api/* {
+		reverse_proxy api:8000
+	}
+
+	# Everything else is the Next.js app.
+	handle {
+		reverse_proxy web:3000
+	}
+}

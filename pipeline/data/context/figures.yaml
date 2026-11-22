@@ -1,0 +1,320 @@
+# Curated context layer — PEOPLE: public roles, family ties and party/office links.
+#
+# GROUND RULES (keep the presumption-of-innocence model intact):
+#   - Only well-known, verifiable PUBLIC facts (offices held, party membership,
+#     family relationships, founding/ownership of a company). NEVER alleged
+#     wrongdoing — that belongs to the documents, with their own provenance.
+#   - `name` must match the canonical name already in the graph so it MERGEs.
+#   - Optional `aliases: [..]` on an entity: curated extra names (e.g. the BOE
+#     registral name of a public figure). ADDITIVE union onto n.aliases, deduped,
+#     never subtracts. Add entries INSIDE this `entities:` section — an entity
+#     appended at the end of the file lands under `relations:` and is silently lost.
+#   - Org/company endpoints used in relations here are declared in
+#     organizaciones.yaml (all context files are loaded together).
+#
+# ⚠️ FUENTE OBLIGATORIA EN `relations:` (spec 061) — desde la auditoría dual, una
+# relación de contexto SOLO se carga si trae `source_url:` (https) y, si consta,
+# `source_date:`. Las filas sin fuente se quedan aquí como backlog («documentar o
+# retirar») pero el loader las salta y las cuenta
+# (`context_skip_rel_unsourced` / `context_relations_unsourced_skipped`): las 49
+# aristas sin fuente retiradas del grafo por Path A no pueden resucitar en el
+# siguiente `make context`. Ejemplo:
+#   - {source: "Fulana de Tal", target: "PSOE", type: MEMBER_OF,
+#      source_url: "https://www.boe.es/…", source_date: '2024-01-02'}
+#
+# Re-run `make context` after editing (idempotent).
+
+entities:
+  - {name: "Pedro Sánchez",                  type: Person, role: "Presidente del Gobierno de España; secretario general del PSOE"}
+  - {name: "Begoña Gómez",                   type: Person, role: "Esposa del presidente Pedro Sánchez; directora de posgrado en la Universidad Complutense"}
+  - {name: "David Sánchez",                  type: Person, role: "Hermano de Pedro Sánchez; músico; exjefe de la Oficina de Artes Escénicas de la Diputación de Badajoz; condenado (NO firme) por la sentencia 152/2026 de la AP de Badajoz (14-jul-2026) como cooperador necesario de prevaricación a 9 años de inhabilitación; absuelto de tráfico de influencias; recurrible ante el TSJ de Extremadura"}
+  - {name: "José Luis Ábalos",               type: Person, role: "Exministro de Transportes (2018–2021); exsecretario de Organización del PSOE; exdiputado"}
+  - {name: "Santos Cerdán",                  type: Person, role: "Exsecretario de Organización del PSOE; exdiputado por Navarra"}
+  - {name: "Koldo García",                   type: Person, role: "Exasesor de José Luis Ábalos en el Ministerio de Transportes"}
+  - {name: "Víctor de Aldama",               type: Person, role: "Empresario; expresidente del Zamora CF"}
+  - {name: "José Luis Rodríguez Zapatero",   type: Person, role: "Expresidente del Gobierno de España (2004–2011); PSOE"}
+  - {name: "Delcy Rodríguez",                type: Person, role: "Vicepresidenta de Venezuela"}
+  - {name: "Juan Carlos Barrabés",           type: Person, role: "Empresario; fundador del Grupo Barrabés"}
+  - {name: "Isabel Pardo de Vera",           type: Person, role: "Expresidenta de ADIF (2018–2021) y exsecretaria de Estado de Transportes"}
+  - {name: "José Luis Álvarez Trujillo",     type: Person, role: "Directivo de Plus Ultra Líneas Aéreas («ALVA» en los informes policiales); interlocutor en los chats del caso Plus Ultra",
+     aliases: ["ALVA", "Alva"]}
+  - {name: "Miguel Ángel Gallardo",          type: Person, role: "Expresidente de la Diputación de Badajoz; dirigente del PSOE en Extremadura; condenado (NO firme) por la sentencia 152/2026 de la AP de Badajoz (14-jul-2026) como autor de dos delitos de prevaricación a sendas penas de 9 años de inhabilitación; absuelto de tráfico de influencias; recurrible ante el TSJ de Extremadura"}
+  - {name: "Armengol",                       type: Person, role: "Francina Armengol: presidenta del Congreso de los Diputados; expresidenta de las Illes Balears (PSOE)",
+     aliases: ["Francina Armengol", "Francesca Lluch Armengol i Socias"]}
+  - {name: "Nadia Calviño Santamaría",       type: Person, role: "Exvicepresidenta primera del Gobierno y exministra de Economía (2018-2023); presidenta del Banco Europeo de Inversiones desde enero de 2024",
+     aliases: ["Nadia Calviño", "Nadia María Calviño Santamaría"]}
+  - {name: "María Cristina Álvarez Rodríguez", type: Person, role: "Cristina Álvarez: asesora de Begoña Gómez en el Gabinete de la Presidencia del Gobierno"}
+  - {name: "Antxón",                         type: Person, role: "Antxon Alonso: empresario; socio de Servinabar, sociedad vinculada a Santos Cerdán"}
+  - {name: "Alberto González Amador",        type: Person, role: "Empresario (Maxwell Cremona S.L.); pareja de Isabel Díaz Ayuso, presidenta de la Comunidad de Madrid; acusado de presuntos delitos contra la Hacienda Pública y falsedad documental (JI nº 19 de Madrid, juicio oral abierto y pendiente de señalamiento); acusación particular en la causa que condenó al fiscal general García Ortiz"}
+  - {name: "Isabel Díaz Ayuso",              type: Person, role: "Presidenta de la Comunidad de Madrid (PP) desde 2019. No consta investigada en estas causas."}  # 063 L24 2026-09-29: cargo público (pareja de González Amador; sentencia TS García Ortiz p.190)
+
+  # --- Figuras enriquecidas (enriquecimiento swarm 2026-05-30) ---
+  # (la entrada "Jéssica Rodríguez García" se podó en el barrido 2026-07-10: era la
+  #  MISMA persona que "Jesica Rodríguez García" — grafía registral del DNI, informe
+  #  udef-1907 p.40 — fusionada vía merges.yaml; la entrada canónica sigue más abajo)
+  - {name: "Javier Hidalgo", type: Person, role: "Empresario; exconsejero delegado de Globalia (matriz de Air Europa); hijo del fundador Juan José Hidalgo."}
+  - {name: "Óscar Puente", type: Person, role: "Ministro de Transportes y Movilidad Sostenible de España (desde el 21-nov-2023); exalcalde de Valladolid (2015-2023); PSOE."}
+  - {name: "Rodolfo Reyes", type: Person, role: "Empresario de origen venezolano, considerado por la investigación principal accionista de Plus Ultra Líneas Aéreas; investigado y con orden internacional de detención en el 'caso Plus Ultra'."}
+  - {name: "Roberto Roselli", type: Person, role: "Empresario de origen venezolano, consejero delegado (CEO) de Plus Ultra Líneas Aéreas; detenido en diciembre de 2025 e investigado en el 'caso Plus Ultra'."}
+  - {name: "Antonio Fernández Menéndez", type: Person, role: "Empresario granadino vinculado a Obras Públicas y Regadíos (OPR); representante/apoderado de OPR; investigado en el caso Koldo por presuntas mordidas a cambio de obra pública; hermano de Daniel Fernández Menéndez."}
+  - {name: "Leire Díez", type: Person, role: "Exmilitante del PSOE, exdirectiva de empresas públicas (ENUSA, jefa de comunicación 2018-2021; Correos, directora de Relaciones Institucionales 2022-2023); apodada por la prensa 'la fontanera del PSOE'; detenida e investigada por presuntos delitos de cohecho y tráfico de influencias."}
+  - {name: "Daniel Fernandez Menendez", type: Person, role: "Administrador (mancomunado) de la mercantil Obras Publicas y Regadios (OPR); hermano de Antonio Fernandez Menendez (apoderado de OPR). Investigado en la pieza de obra publica del caso Koldo por presuntos amanos de adjudicaciones."}
+  - {name: "Patricia Úriz", type: Person, role: "Patricia Úriz Iriarte, pareja/exmujer de Koldo García; contratada como auxiliar administrativa en el Ministerio de Transportes (Ábalos) y exvocal de Bienestar Social del PSN. Investigada en el caso Koldo."}
+  - {name: "Juan Carlos Etero", type: Person, role: "Empresario (Juan Carlos Etero Martínez) que, según el informe de la UCO en el caso Koldo, habría simulado la contratación de Koldo García: le dio de alta en la Seguridad Social y le abonó una nómina mensual que después le compensaba LIC (Levantina Ingeniería y Construcción)."}
+  - {name: "Miguel Moreno Purroy", type: Person, role: "Titular/gestor del bar-restaurante Franky de Pamplona; vinculado por la UCO a la emisión de facturas a nombre de Acciona en el entorno de Koldo García."}
+  - {name: "Fernando Merino", type: Person, role: "Exdirectivo de Acciona (Fernando Agustín Merino Vera); exdelegado en Navarra y La Rioja; investigado en el 'caso Cerdán/Koldo' por el Tribunal Supremo."}
+  - {name: "Javier Herrero", type: Person, role: "Francisco Javier Herrero Lizano, exdirector general de Carreteras del Ministerio de Fomento/Transportes (desde junio de 2018); investigado en el 'caso Koldo'."}
+  # "Cristóbal Cano" (corto) fusionado en "Cristóbal Cano Quiles" (l.86) — auditoría sesión 38, ver merges.yaml.
+  - {name: "Domingo Arnaldo Amaro Chacón", type: Person, role: "Empresario de origen venezolano vinculado al sector petrolero (PDVSA); junto a su hermano controla la consultora Inteligencia Prospectiva, investigada en la pieza del caso Plus Ultra / entorno de Zapatero (presunción de inocencia)."}
+  - {name: "Jose Luis Calama Teixeira", type: Person, role: "Magistrado del Juzgado Central de Instrucción nº 4 de la Audiencia Nacional; juez instructor del caso Plus Ultra (imputación de Zapatero). Autoridad judicial, NO investigado."}
+  - {name: "María Gertrudis Alcázar Jiménez", type: Person, role: "Secretaria personal de José Luis Rodríguez Zapatero durante cerca de dos décadas; señalada por el juez instructor en el 'caso Plus Ultra' (auto relativo al entorno de Zapatero)."}
+  - {name: "Pedro Saura", type: Person, role: "Economista y político del PSOE; secretario de Estado de Infraestructuras, Transporte y Vivienda con José Luis Ábalos (2018-2021); después presidente de Paradores (2021-2023) y de Correos (desde dic. 2023); exdiputado por Murcia."}
+  - {name: "Ismael Oliver", type: Person, role: "Abogado penalista, socio director de Oliver & Abogados; fue defensor de Koldo García; imputado por el juez Pedraz en la pieza de las 'cloacas'/Leire Díez (causa abierta)"}
+  - {name: "Juana Cinta Calderón Zazo", type: Person, role: "Exdirectora del Área de RRHH de la Diputación de Badajoz (2016-2023); concejala/teniente de alcalde en Olivenza (PSOE); condenada (NO firme) por la sentencia 152/2026 de la AP de Badajoz como cooperadora necesaria de prevaricación (Bloque B) a 9 años de inhabilitación; absuelta del resto; recurrible ante el TSJ de Extremadura"}
+  - {name: "Luis Prieto Cuerdo", type: Person, role: "Director de Economía Digital de Red.es; imputado por la Fiscalía Europea (EPPO) en los contratos a Barrabés vinculados al caso Begoña Gómez (causa abierta)"}
+  - {name: "Ana María Fuentes Pacheco", type: Person, role: "Gerente federal del PSOE (desde 2021) y exresponsable de la Oficina de Cumplimiento (2018-2021); imputada por el juez Pedraz en el caso 'cloacas'/Leire Díez (causa abierta)"}
+  - {name: "Elisa Moriano Morales", type: Person, role: "Exdirectora del Area de Cultura y Accion Ciudadana de la Diputacion de Badajoz (2016-2019); condenada (NO firme) por la sentencia 152/2026 de la AP de Badajoz como cooperadora necesaria de prevaricación (Bloque A) a 9 años de inhabilitación; absuelta del resto; recurrible ante el TSJ de Extremadura"}
+  - {name: "Francisco Martos Ortiz", type: Person, role: "Politico del PSOE en la provincia de Badajoz; exalcalde de Castuera y exdiputado provincial (Delegado del Area de Cultura) de la Diputacion de Badajoz; condenado (NO firme) por la sentencia 152/2026 de la AP de Badajoz como cooperador necesario de prevaricación (Bloque B) a 9 años de inhabilitación; absuelto del resto; recurrible ante el TSJ de Extremadura"}
+  - {name: "Sánchez Manzanares", type: Person, role: "Alvaro Sanchez Manzanares (n. 1972): exsecretario general de Puertos del Estado, cesado en marzo de 2024; investigado en el caso Koldo por la compra de mascarillas"}
+  - {name: "Leopoldo Puente Segura", type: Person, role: "Magistrado de la Sala Segunda (de lo Penal) del Tribunal Supremo desde noviembre de 2020; juez instructor de la causa especial del caso Koldo/Ábalos (autoridad judicial, NO investigado)"}
+  - {name: "Luis Antonio Martín Bernardos", type: Person, role: "Economista/exadministrador solidario de Innova Next SL (sociedad del grupo Barrabés, órbita del caso Begoña Gómez) hasta 2022; declaró como testigo, no investigado"}
+  - {name: "Santiago Fernández Lena", type: Person, role: "Abogado mercantilista (exsocio del despacho Andersen) y secretario del consejo de administración de Plus Ultra; investigado en el caso Plus Ultra/Zapatero (presunción de inocencia)"}
+  - {name: "Palomero", type: Person, role: "Miguel Palomero: abogado de Madrid con relación profesional directa con Rodolfo Reyes (accionista mayoritario/de facto de Plus Ultra); figura en el caso Plus Ultra/Zapatero (auto-zapatero) como presunto intermediario. Causa en instrucción."}
+  - {name: "Ignacio Espejo-Saavedra Hernández", type: Person, role: "Directivo de Red.es (área de Asesoría/Subdirección Jurídica; vicesecretario general y del Consejo); ha presidido mesas de contratación de Red.es, organismo cuyos contratos de 2021 a la UTE Innova Next-The Valley están bajo investigación (caso Begoña Gómez / entorno del caso Koldo)"}
+  - {name: "Salvador Illa", type: Person, role: "Presidente de la Generalitat de Cataluña (desde agosto de 2024, PSC); ex ministro de Sanidad del Gobierno de España (enero 2020-enero 2021) durante la pandemia de COVID-19"}
+  - {name: "Ángel Contreras", type: Person, role: "Ingeniero de caminos (Torrent, 1975); director general de Conservación y Mantenimiento de ADIF (2018-2023) y presidente de Adif y Adif Alta Velocidad (diciembre 2023-septiembre 2024)"}
+  - {name: "Vicente Calzado Téllez", type: Person, role: "Director (gerente) de EMFESA (Enajenación de Materiales Ferroviarios S.A.), sociedad pública del ámbito ferroviario; compareció en el Senado por el caso Koldo como persona de interés/testigo"}
+  - {name: "Camino Arce", type: Person, role: "Camino Arce Blanco, ingeniera de Caminos; alto cargo de la Direccion General de Carreteras del Ministerio de Transportes (Subdireccion General de Construccion) durante la etapa de Abalos; posteriormente directiva en la publica SEITTSA."}
+  - {name: "Javier Perez Dolset", type: Person, role: "Empresario tecnologico espanol; fundador de Zed Worldwide y cofundador de Pyro Studios (saga Commandos); citado en el corpus en la causa de Leire Diez ('fontaneros del PSOE')."}
+
+  # --- Revisión swarm (2026-05-31): entes reales retenidos por flag homónimo/dup, verificados ---
+  - {name: "Marga Prohens", type: Person, role: "Margalida (Marga) Prohens Rigo (n. 1982): presidenta del Govern de les Illes Balears desde julio de 2023 y presidenta del PP de Baleares (desde 2021)."}
+  - {name: "Luis Carrero", type: Person, role: "Luis María Carrero Pérez: exasesor de Moncloa (Unidad de Mensaje, 2020-2023); condenado (NO firme) por la sentencia 152/2026 de la AP de Badajoz como cooperador necesario de prevaricación (Bloque C, su plaza en la Diputación) a 9 años de inhabilitación; absuelto de tráfico de influencias; recurrible ante el TSJ de Extremadura."}
+  # Seudónimo CENDOJ; se le da role/resumen y se ancla al cluster Koldo (clustering.ts
+  # ANCHOR_CASE) para que aparezca junto a Ábalos, sin fusionarlo (anonimización).
+  - {name: "Segismundo", type: Person, role: "Seudónimo de anonimización del CENDOJ en autos del Tribunal Supremo (Causa Especial 20775/2020). Nombre ficticio: la fuente no da el nombre real. Presunción de inocencia."}
+
+
+  # --- Figuras enriquecidas (enriquecimiento swarm 2026-05-30) ---
+  - {name: "Miguel Palomero", type: Person, role: "Abogado madrileño investigado en el caso Plus Ultra como presunto intermediario de la trama del rescate (entorno de Rodolfo Reyes)."}
+  - {name: "José Ángel Partearroyo", type: Person, role: "Exdirector de empresas participadas de la SEPI; figura citada en la instrucción del rescate de Plus Ultra (compareció en el Senado)."}
+  - {name: "Manuel Aaron Fajardo García", type: Person, role: "Empresario canario afincado en Venezuela; citado en la instrucción del caso Plus Ultra como presunto 'hombre de Zapatero en Venezuela'."}
+  - {name: "Camilo Ibrahim Issa", type: Person, role: "Empresario venezolano, socio histórico de Plus Ultra Líneas Aéreas; señalado en la instrucción del caso Plus Ultra (DP 77/2024, Audiencia Nacional, juez Calama) — no consta citación formal como investigado a jul-2026."}
+  - {name: "Cristóbal Cano Quiles", type: Person, role: "Gestor societario investigado en el caso Plus Ultra; descrito por el instructor como hombre de confianza de Julio 'Julito' Martínez Martínez en un 'tercer nivel' operativo, encargado de la gestión diaria y la cobertura documental del entramado de sociedades."}
+  - {name: "Felipe Baca", type: Person, role: "Empresario de origen peruano afincado en Suiza (Luis Felipe Baca Arbulu); investigado en el caso Plus Ultra como presunto 'facilitador' de entregas de efectivo y articulador de estructuras financieras internacionales."}
+  - {name: "Alejandro Delgado Crego", type: Person, role: "Directivo de Plus Ultra Líneas Aéreas, identificado como director financiero (de origen venezolano, ex presidente de Santa Bárbara Airlines); figura investigada en el caso Plus Ultra (auto Zapatero)."}
+  - {name: "Juan Manuel Teixeira Díaz", type: Person, role: "Mayor general venezolano vinculado al chavismo; presidió el Instituto Nacional de Aeronáutica Civil (INAC) de Venezuela (2020-2023) y después la Sociedad de Bienes Recuperados (SBR); figura en el caso Plus Ultra."}
+  - {name: "Ramón Gordils", type: Person, role: "Político/diplomático venezolano, exviceministro de Cooperación del gobierno de Maduro; señalado como intermediario en el caso Plus Ultra."}
+  - {name: "Sergio Sánchez", type: Person, role: "Sergio Sánchez Benítez: exdirector de Comunicación del CNI y exdirectivo de Movistar+/Telefónica; socio (25%) de Análisis Relevante, sociedad administrada por Julio Martínez Martínez; vinculado al caso Plus Ultra."}
+  - {name: "María Dolores De Haro Lopez-Villalta", type: Person, role: "Letrada de la Administración de Justicia de la Sala de lo Penal (Sala Segunda) del Tribunal Supremo."}
+  - {name: "Evaristo", type: Person, aliases: ["Evaristo Valentí", "Evaristo Valentí López"], role: "Evaristo Valentí López, exdirector del Conservatorio Superior de Música de Badajoz (Diputación de Badajoz); testigo en la causa de David Sánchez (sentencia AP Badajoz 152/2026). Testigo, no investigado."}
+  - {name: "Raif El Arigie", type: Person, role: "Consejero de Plus Ultra Líneas Aéreas; figura en el caso Plus Ultra (Juzgado Central de Instrucción nº 2)."}
+  - {name: "Antonio Caldeiro Téllez", type: Person, role: "Administrador de ALVA Skies and Wings SL, sociedad accionista de Plus Ultra (~9,46% del capital); figura en el caso Plus Ultra."}
+  - {name: "Guillermo Alfredo Amaro Chacón", type: Person, role: "Empresario venezolano, administrador de la consultora Inteligencia Prospectiva SL; figura en el caso Plus Ultra/Zapatero."}
+  - {name: "Carlos Alberto Parra Delgado", type: Person, role: "Empresario hispano-venezolano; administrador de Softgestor SL y administrador único de Apamate Corporate and Trust SL (caso Plus Ultra)."}
+  - {name: "Francisco Enrique Flores Suárez", type: Person, role: "Empresario y banquero venezolano vinculado al chavismo; fallecido a los 55 años a comienzos de 2026 (caso Plus Ultra)."}
+  - {name: "Laura Rodríguez Espinosa", type: Person, role: "Hija de José Luis Rodríguez Zapatero; fundadora y administradora de la agencia de marketing Whathefav SL (junto a su hermana Alba); investigada en el caso Plus Ultra."}
+  - {name: "Pedro Antonio Rodríguez Fernández", type: Person, role: "Exdirectivo de Geoalcali SL (filial de la minera australiana Highfield Resources), responsable del proyecto Mina Muga en Navarra hacia 2011-2016."}
+  - {name: "Juan Manuel Cendoya", type: Person, role: "Vicepresidente de Santander España y director general de Comunicación, Marketing Corporativo y Estudios de Banco Santander (DG Comunicación desde 2001; vicepresidente desde 2016)."}
+  - {name: "Jesica Rodríguez García", type: Person, role: "Expareja del exministro José Luis Ábalos; exazafata de imagen y dentista colegiada; contratada por Ineco y Tragsatec (2019-2021) sin desempeñar trabajo efectivo, según la sentencia del TS de 22-jun-2026 (que condenó a Ábalos y Koldo, no a ella); citada como investigada por el juez Ismael Moreno (AN, caso Koldo) el 3-jul-2026 por presuntos tráfico de influencias y malversación."}
+  - {name: "Basiliso Gil Carrasquero", type: Person, role: "Administrador único nominal de Caletón Consultores SL (desde junio 2022); presunto testaferro en la trama Plus Ultra, según la UDEF."}
+  - {name: "Daniel Romero-Abreu Kaup", type: Person, role: "Empresario y lobbista gaditano; fundador y presidente de Thinking Heads y de Gate Center (think tank pro-China cuyo consejo asesor preside Zapatero)."}
+  - {name: "Aurora López López", type: Person, role: "Empresaria venezolana; según la UDEF y el juez de la Audiencia Nacional, copropietaria real de Plus Ultra junto a su pareja Rodolfo Reyes Rojas (vía sociedad Snip Aviation); investigada en el caso Plus Ultra con orden internacional de detención."}
+  - {name: "Alba Rodríguez Espinosa", type: Person, role: "Hija del expresidente José Luis Rodríguez Zapatero; coadministradora (con su hermana Laura) de la sociedad Whathefav S.L.; investigada en el caso Plus Ultra (citada como investigada por el juez Calama el 18 de junio de 2026, junto a su hermana Laura)."}
+  - {name: "Claudio Rivas Ruiz Capillas", type: Person, aliases: ["Claudio Rivas", "Claudio Rivas Ruiz-Capillas"], role: "Claudio Rivas Ruiz-Capillas, empresario leonés del sector de hidrocarburos, principal socio de Víctor de Aldama; investigado en la pieza del fraude de hidrocarburos / caso Koldo."}
+  - {name: "María Sonsoles Espinosa Díaz", type: Person, role: "Profesora y música; esposa del expresidente del Gobierno José Luis Rodríguez Zapatero."}
+  - {name: "Tomás Guerrero Blanco", type: Person, role: "Empresario vinculado al sector 'halal' citado en el 'caso Plus Ultra' / trama Zapatero como presunto enlace para la creación de una sociedad en Dubái (Landside Dubai FZCO) — su rol está documentado en los documentos analizados, pero no consta citación formal como investigado a jul-2026."}
+  - {name: "Jaime Ribes", type: Person, role: "Director de la agencia / ejecutivo de empresas de Banco Santander que atendió la solicitud de financiación de Plus Ultra (junio de 2020)."}
+  - {name: "Raúl Medina", type: Person, role: "Raúl Medina Caballero, Director General de Aviación Civil de España y presidente de AESA (2015-2022); desde el 1 de enero de 2023, director general de EUROCONTROL."}
+  - {name: "Francisco Martín Aguirre", type: Person, role: "Delegado del Gobierno en la Comunidad de Madrid (desde 2023, PSOE); exsecretario general de la Presidencia del Gobierno (2021-2023)"}
+  - {name: "José Luis Escrivá Belmonte", type: Person, role: "Gobernador del Banco de España (desde 2024); exministro de Inclusión, Seguridad Social y Migraciones (2020-2023) y de Transformación Digital y Función Pública (2023-2024)"}
+  - {name: "Julián Mateos", type: Person, role: "Julián Mateos-Aparicio: director del fondo de rescate (FASEE) de la SEPI; nombrado en agosto de 2021"}
+  - {name: "María del Pilar Hidalgo López", type: Person, role: "Procuradora de los Tribunales (Colegio de Madrid); representa al partido VOX como acusación popular en el caso Begoña Gómez"}
+  - {name: "Philippe Apikian", type: Person, role: "Empresario suizo, presidente de la trader de hidrocarburos Swissoil Trading S.A.; figura en la lista de sanciones de la OFAC (programa Venezuela, EO 13850)"}
+  - {name: "Rubén Eladio López Martínez", type: Person, role: "Inspector de la Policía Nacional; director de la Unidad de Emergencias, Coordinación y Gestión de Crisis del Ministerio de Transportes (MITMA) durante la etapa de José Luis Ábalos; descrito como policía de su confianza"}
+  - {name: "Álvaro Gutiérrez Molano", type: Person, role: "Apoderado de Caleton Consultores y socio constituyente de Orbe Consulting SLLP; vinculado profesionalmente a Santiago Fernández Lena"}
+
+  # --- Figuras enriquecidas (enriquecimiento swarm 2026-05-30) ---
+  - {name: "Federico Lledo Soria", type: Person, role: "Exapoderado solidario de Summer Wind SL (hasta 2023); persona vinculada al flujo de fondos en la pieza Plus Ultra del auto que investiga a Zapatero."}
+  - {name: "Manuel Candalija Valle", type: Person, role: "Director del Area de Cultura de la Diputacion de Badajoz; condenado (NO firme) por la sentencia 152/2026 de la AP de Badajoz como cooperador necesario de prevaricación (Bloque C) a 9 años de inhabilitación; absuelto del resto; recurrible ante el TSJ de Extremadura."}
+  - {name: "Gaspar Carlos Zarrías Arévalo", type: Person, role: "Historico dirigente socialista andaluz; exconsejero de Presidencia de la Junta de Andalucia y exsecretario de Estado de Cooperacion Territorial; investigado/imputado en el 'caso Leire Diez'."}
+  - {name: "Jacobo Teijelo", type: Person, role: "Abogado penalista; defensor de Santos Cerdán en el 'caso Koldo' y participante en los audios de Leire Díez."}
+  - {name: "Rubén Villalba Carnero", type: Person, role: "Comandante de la Guardia Civil; investigado en el 'caso Koldo' por presunta protección a la trama de Koldo García y Víctor de Aldama."}
+  - {name: "Zurab Pololikashvili", type: Person, role: "Secretario General de la Organización Mundial del Turismo (OMT / ONU Turismo) desde enero de 2018; exministro de Desarrollo Económico de Georgia (2009-2010) y exembajador de Georgia en España (2006-2009)."}
+  - {name: "Vicente Fernández", type: Person, role: "Expresidente de la SEPI (junio 2018-octubre 2019); letrado de la Junta de Andalucía; después asesor de Servinabar; investigado en la causa de Pedraz sobre presuntos amaños de contratos (entorno Leire Díez)."}
+  - {name: "Ángel Víctor Torres", type: Person, role: "Ministro de Política Territorial y Memoria Democrática (desde 2023) y expresidente del Gobierno de Canarias (2019-2023); PSOE."}
+  - {name: "Joseba García Izaguirre", type: Person, role: "Hermano de Koldo García Izaguirre; citado como investigado por el juez Ismael Moreno (AN, caso Koldo) el 3-jul-2026 por presuntos tráfico de influencias y malversación en la contratación de Jésica Rodríguez en Ineco/Tragsatec (según la instrucción, firmaba sus partes de trabajo)."}
+  - {name: "Ignacio Zaldívar de la Rica", type: Person, role: "Exdirector de Gestión Administrativa de ADIF; según la sentencia del TS de 22-jun-2026 gestionó la contratación de Jésica Rodríguez (expareja de Ábalos) en Ineco y su traslado a Tragsatec; citado como investigado por el juez Ismael Moreno (AN, caso Koldo) el 3-jul-2026 por presuntos tráfico de influencias y malversación."}
+  - {name: "Nicoleta Neacsu", type: Person, role: "Ciudadana de origen rumano, contratada hacia 2022 por la entidad publica EMFESA (Enajenacion de Materiales Ferroviarios, vinculada a ADIF); su contratacion figura en el informe de la UCO sobre la trama Cerdan/Koldo (caso Koldo)."}
+  - {name: "Ruben Goñi Urroz", type: Person, role: "Exdirector gerente del Instituto Navarro de Deporte y Juventud (INDJ); el organismo, bajo su gestion, fue el organo contratante de la obra del Navarra Arena adjudicada en 2017."}
+  - {name: "David Cierco Jiménez de Parga", type: Person, role: "Director general de Red.es de julio de 2018 a mayo de 2021; antes consejero delegado de Truphone; firmante de pliegos de los contratos de formacion analizados por la UCO."}
+  - {name: "Emilia Parejo Gala", type: Person, role: "Exdirectora del Area de Cultura de la Diputacion de Badajoz; condenada (NO firme) por la sentencia 152/2026 de la AP de Badajoz como cooperadora necesaria de prevaricación (Bloque B) a 9 años de inhabilitación; absuelta del resto; recurrible ante el TSJ de Extremadura."}
+  - {name: "Cristina Núñez Fernández", type: Person, role: "Exdiputada de Cultura de la Diputación de Badajoz (2016-2017); condenada (NO firme) por la sentencia 152/2026 de la AP de Badajoz como cooperadora necesaria de prevaricación (Bloque A, creación del puesto de coordinador de conservatorios) a 9 años de inhabilitación; absuelta del resto; recurrible ante el TSJ de Extremadura."}
+  - {name: "Félix González Márquez", type: Person, role: "Jefe de Servicio de Gestión de RRHH de la Diputación de Badajoz; condenado (NO firme) por la sentencia 152/2026 de la AP de Badajoz como cooperador necesario de prevaricación (Bloque A) a 9 años de inhabilitación; absuelto del resto; recurrible ante el TSJ de Extremadura. No confundir con el 'Félix' de las transcripciones del caso Koldo ni con el expresidente Felipe González."}
+  - {name: "David Lucas Parrón", type: Person, aliases: ["Francisco David Lucas Parrón", "David LUCAS PARRÓN"], role: "Francisco David Lucas Parrón (PSOE): exsecretario de Estado de Transportes, Movilidad y Agenda Urbana (feb-nov 2023) y posteriormente secretario de Estado de Vivienda y Agenda Urbana (desde nov 2023)"}
+
+
+  # --- Figuras enriquecidas (enriquecimiento swarm 2026-06-01 ronda 2) ---
+  - {name: "Carlos Moreno", type: Person, role: "Carlos Moreno Medina (Sevilla, 1977), jefe/director de Gabinete de la vicepresidenta primera y ministra de Hacienda María Jesús Montero"}
+  - {name: "Cristian", type: Person, role: "Cristian Abel Corvillo Aguilar: exchófer de Pedro Sánchez en Andalucía (primarias del PSOE de 2017) y exmilitante socialista; señalado por la UCO en el caso Koldo"}
+  - {name: "González Fernández", type: Person, role: "Mercedes González Fernández, diputada del PSOE por Madrid (XV legislatura); secretaria primera de la Comisión de Investigación del Congreso sobre la compra de material sanitario durante la pandemia (caso Koldo). Dejó su escaño en septiembre de 2024 para reincorporarse como directora general de la Guardia Civil. Investigada desde el 2 de julio de 2026 en la causa Leire/'cloacas' (DP 150/2025, juez Pedraz); sigue en el cargo y rige la presunción de inocencia."}
+  - {name: "Jesús Manuel Gómez García", type: Person, role: "Exsubsecretario del Ministerio de Transportes, Movilidad y Agenda Urbana (etapa de José Luis Ábalos); cesado en 2024 por el ministro Óscar Puente. Investigado en el caso Koldo."}
+  - {name: "Tatiana Ábalos", type: Person, role: "Hija de José Luis Ábalos (exministro de Transportes); dirigía de facto la fundación FIADELSO del exministro."}
+  - {name: "Arturo Barrabés Consul", type: Person, role: "Empresario aragonés; hermano de Juan Carlos (Carlos) Barrabés Cónsul y apoderado de varias de sus empresas (grupo Barrabés)."}
+  - {name: "Director General Financiero y de Control de Gestión", type: Person, role: "Cargo de Adif identificado con Manuel Fresno Castro, director general financiero y de control de gestión de Adif durante la compra de mascarillas de 2020."}
+  - {name: "Felicia Appenteng", type: Person, role: "Fundadora y presidenta (founding Chair) del IE Africa Center de la IE University"}
+  - {name: "Francisco Flores", type: Person, role: "Empresario venezolano (vinculado al chavismo) señalado en el caso Plus Ultra como controlador de Softgestor; fue investigado en la pieza sobre presunta financiación irregular del PSOE. Falleció el 6-feb-2026 (Libertad Digital), lo que extingue la responsabilidad penal (art. 130.1 CP)."}
+  - {name: "José Cristóbal Barrabés Consul", type: Person, role: "Hermano y coaccionista (en torno al 32,5%) del grupo empresarial Barrabés (Cónsul); hermano de Juan Carlos Barrabés Cónsul, empresario investigado en el caso Begoña Gómez"}
+  - {name: "José Manuel Ruano", type: Person, role: "José Manuel Ruano de la Fuente, profesor titular de Ciencia Política y de la Administración de la Universidad Complutense de Madrid (UCM); codirector de un máster/cátedra vinculado a Begoña Gómez"}
+  - {name: "Juan Guaidó", type: Person, role: "Político venezolano; presidente de la Asamblea Nacional de Venezuela (2019) y reconocido por España y otros países como 'presidente encargado' de Venezuela (2019-2023)"}
+  - {name: "Juan Sánchez Yepes", type: Person, role: "Capitán de la Guardia Civil; exmando de la Unidad Central Operativa (UCO); investigado en el 'caso Leire' por la Audiencia Nacional"}
+  - {name: "Pablo Llarena Conde", type: Person, role: "Magistrado de la Sala Segunda (de lo Penal) del Tribunal Supremo desde enero de 2016; instructor de la causa especial del 'procés'"}
+  - {name: "Francisco Javier Lorente", type: Person, role: "Gestor/dueño del bar Franky (Pamplona); señalado por la UCO como posible pieza del circuito de facturación con ACCIONA. No figura como investigado en la causa judicial."}
+  - {name: "Ion Fernando Antolín Llorente", type: Person, role: "Periodista (Villalón de Campos, 1977); exdirector de Comunicación del PSOE y brevemente secretario de Estado de Comunicación en diciembre de 2024, cargo del que dimitió a los pocos días."}
+  - {name: "Ketty Garat", type: Person, role: "Periodista de investigación de The Objective; premiada por la APM como mejor periodista de 2025 por sus investigaciones sobre el caso Ábalos."}
+  - {name: "Magdalena", type: Person, role: "Seudónimo de anonimización judicial (auto del Tribunal Supremo, Causa Especial 20775/2020). Persona real distinta de cualquier homónimo con nombre civil; no atribuir identidad ni cargo."}
+  - {name: "Teofilo Serrano", type: Person, role: "Expresidente de Renfe (2009-2011) y ex secretario general del PSOE de Madrid (FSM); ingeniero de Caminos y alto cargo con Felipe González. Fallecido en agosto de 2024."}
+  - {name: "Víctor Ábalos", type: Person, role: "Empresario, hijo del exministro de Transportes José Luis Ábalos; investigado/citado como testigo en el caso Koldo."}
+
+  # --- Figuras enriquecidas (swarm diarios Senado SEPI, 2026-06-12) ---
+  - {name: "Bartolomé Lora Toro", type: Person, role: "Vicepresidente de la SEPI; presidente en funciones de la SEPI en noviembre de 2020, cuando el Consejo Gestor aprobó el rescate de Air Europa"}
+  - {name: "María Belén Gualda González", type: Person, role: "Belén Gualda González, presidenta de la SEPI desde el 30 de marzo de 2021 (antes presidenta de Navantia, 2019-2021)."}
+  - {name: "José Blanco", type: Person, role: "Exministro de Fomento (2009-2011); exsecretario de Organización del PSOE (2000-2008); fundador del lobby Acento"}
+
+  # --- Etapa andaluza (caso de los ERE; contexto del 'caso Leire Díez', 2026-06-18) ---
+  - {name: "María Jesús Montero", type: Person, role: "Vicepresidenta primera del Gobierno y ministra de Hacienda (PSOE); secretaria general del PSOE de Andalucía y candidata a la Junta. Antes, consejera de la Junta de Andalucía (Salud 2004–2013; Hacienda 2013–2018)."}
+  - {name: "Manuel Chaves", type: Person, role: "Manuel Chaves González: expresidente de la Junta de Andalucía (1990–2009), expresidente del PSOE (2000–2012) y, después, vicepresidente tercero del Gobierno y ministro de Política Territorial con Zapatero (2009–2011). Condenado en el caso de los ERE por prevaricación (inhabilitación); el Tribunal Constitucional anuló la condena en 2024."}
+  - {name: "José Antonio Griñán", type: Person, role: "José Antonio Griñán Martínez: expresidente de la Junta de Andalucía (2009–2013), exministro de Sanidad y de Trabajo con Felipe González y exsecretario general del PSOE-A. Condenado en el caso de los ERE a seis años de prisión por prevaricación y malversación; el Tribunal Constitucional anuló/ordenó revisar la condena en 2024."}
+
+
+  # --- Enriquecimiento swarm 2026-06-20 (actores grado>=7, verificados) ---
+  - {name: "Yolanda Sánchez Baltasar", type: Person, role: "Directora del Conservatorio Profesional de Música Juan Vázquez de Badajoz; testigo en el caso David Sánchez (Diputación de Badajoz)"}
+  - {name: "Blanca de Juan", type: Person, role: "Coordinadora de la Cátedra Extraordinaria de Transformación Social Competitiva de Begoña Gómez en la Universidad Complutense de Madrid (UCM)"}
+  - {name: "Eudoro Antonio González Dellán", type: Person, role: "Abogado y exdiputado venezolano de la oposición (MUD); colaborador de José Luis Rodríguez Zapatero, citado en el auto de Plus Ultra como intermediario entre Caracas y Madrid"}
+  - {name: "Juan Carlos Peinado García", type: Person, role: "Magistrado; fue titular del Juzgado de Instrucción n.º 41 de Madrid e instructor del 'caso Begoña Gómez'. Jubilado por edad con efectos de 27-09-2026 (según BOE)."}
+  - {name: "Manuel Martínez", type: Person, role: "Empresario; hermano de Julio Martínez Martínez (presunto testaferro de Zapatero en el caso Plus Ultra), señalado en la causa como copartícipe de la estructura societaria familiar"}
+  - {name: "Manuel Salles Carceller", type: Person, role: "Empresario; administrador/propietario de Instalibero District SL, vinculado al caso Hidrocarburos (obtención del título de operador para Villafuel)"}
+  - {name: "Mariano Moreno Pavón", type: Person, role: "Exgerente del PSOE (2017-2021) durante la etapa de Ábalos como secretario de Organización; posteriormente presidente de Enusa"}
+
+  # --- Figuras enriquecidas (enriquecimiento swarm 2026-06-21 — auto Peinado juicio oral Begoña) ---
+  - {name: "Juan Carlos Doadrio", type: Person, role: "Exvicerrector de la Universidad Complutense de Madrid; testigo/declarante en el caso Begoña Gómez."}
+  - {name: "Joaquín Goyache", type: Person, role: "Rector de la Universidad Complutense de Madrid; imputado y luego desimputado en el caso Begoña Gómez."}
+  - {name: "Miguel Escassi", type: Person, role: "Responsable de relaciones institucionales y políticas públicas de Google en España; testigo en el caso Begoña Gómez"}
+  - {name: "Marc Murtra", type: Person, role: "Presidente ejecutivo de Telefónica (desde enero de 2025); expresidente de Indra Sistemas (2021-2025)"}
+  - {name: "José María Álvarez Pallete", type: Person, role: "Expresidente ejecutivo de Telefónica (2016-enero 2025)"}
+  - {name: "Ignacio Mariscal", type: Person, role: "Consejero delegado de Reale Seguros (Reale Group, España); testigo en el caso Begoña Gómez."}
+
+  # --- Trama PNV / rescate de Tubos Reunidos (informe UCO, jun-2026) ---
+  - {name: "Andoni Ortuzar", type: Person, role: "Expresidente del Euzkadi Buru Batzar (EBB), órgano de dirección del PNV (2013-2025)"}
+  - {name: "Joseba Aurrekoetxea", type: Person, role: "Responsable de Organización del PNV y senador"}
+  - {name: "Carlos López de las Heras", type: Person, role: "Consejero delegado de Tubos Reunidos"}
+
+
+  # --- Figuras enriquecidas (ingesta informe-udef-2910-focus-social, 2026-06-25) ---
+  - {name: "Carmen Almendras", type: Person, role: "Exembajadora de Bolivia en España (2007-2015); Senior Advisor de la consultora Kreab Bolivia."}
+  - {name: "Ana María Ospina", type: Person, role: "Directora de Asuntos Corporativos y Relaciones Institucionales del Grupo Gloria."}
+  - {name: "Luis Alberto Arce Catacora", type: Person, role: "Presidente del Estado Plurinacional de Bolivia (2020-2025); economista y exministro de Economía."}
+  - {name: "Fabiola Salazar Calle", type: Person, role: "Jefa de Gabinete de la Presidencia de Bolivia con Luis Arce (Gobierno del MAS)"}
+  - {name: "Francisco Shwortshik", type: Person, role: "CEO / consejero delegado de la Sociedad Boliviana de Cemento (SOBOCE), filial del Grupo Gloria"}
+  - {name: "Luis Díaz Olivero", type: Person, role: "Vicepresidente de la División de Cementos del Grupo Gloria (conglomerado empresarial peruano)"}
+  - {name: "César Adalid Siles Bazán", type: Person, role: "Ministro de Justicia de Bolivia (26-sep-2024 a jun-2025); antes Procurador General del Estado (desde 6-sep-2023)"}
+  - {name: "María Nela Prada Tejada", type: Person, role: "Ministra de la Presidencia de Bolivia (desde 9-nov-2020), gobierno de Luis Arce (MAS)"}
+  - {name: "Marcelo Montenegro Gómez García", type: Person, role: "Exministro de Economía y Finanzas Públicas de Bolivia (Gobierno de Luis Arce); economista boliviano."}
+  - {name: "Claudio Rodríguez Huaco", type: Person, role: "Presidente ejecutivo / CEO del Grupo Gloria (conglomerado industrial peruano), matriz de la cementera boliviana SOBOCE."}
+
+  # María del Carmen Pano Sánchez — testigo clave (entregas de efectivo en Ferraz);
+  # nodo canónico tras fusionar el alias "Carmen Pano" (ver merges.yaml, 2026-06-30).
+  - {name: "María del Carmen Pano Sánchez", type: Person, role: "Empresaria conocida públicamente como 'Carmen Pano'; persona de confianza de Víctor de Aldama. Testigo en la causa de las 'cloacas'/Leire Díez (DP 150/2025, juez Pedraz): declaró haber entregado dinero en efectivo en la sede del PSOE (calle Ferraz) por orden de Aldama y haber sido objeto de un presunto intento de soborno para que cambiara su testimonio. Comparece como TESTIGO; no está investigada ni imputada."}
+
+  # Joaquín Parra Páez — figura en la lista de investigados del auto de entrada y registro
+  # de Ferraz (autoentradaferraz.pdf, p.41); testigo ante Pedraz en el caso Leire (8-jul-2026).
+  - {name: "Joaquín Parra Páez", type: Person, role: "Empresario y expresidente del CD Badajoz; investigado desde 2021 en una causa por presunto fraude de IVA superior a 12 millones de euros. Figura en la lista de investigados del auto de entrada y registro de la sede del PSOE en Ferraz (autoentradaferraz.pdf, p.41). El 8-jul-2026 declaró como testigo ante el juez Santiago Pedraz (Audiencia Nacional, DP 150/2025) en el 'caso Leire', donde afirmó que Leire Díez habría intentado captarle en nombre del Gobierno. Presunción de inocencia."}
+
+  # Juan Manuel Serrano Quintana ('Juanma Serrano') — canónico tras fusionar el nodo
+  # "Juanma Serrano" de las escuchas UCO (ver merges.yaml, 2026-07-09). Aparece en la
+  # tabla de personas del auto de entrada en Ferraz (autoentradaferraz.pdf, p.41).
+  # 10-jul-2026: Pedraz acordó su imputación (condición de investigado) a petición de
+  # Anticorrupción, con volcado del móvil autorizado.
+  - {name: "Juan Manuel Serrano Quintana", type: Person, role: "Presidente de la Sociedad Estatal Correos y Telégrafos (2018-2023); antes jefe de gabinete de Pedro Sánchez en la secretaría general del PSOE (2014-2018). Su gestión dejó a Correos con pérdidas récord y un deterioro patrimonial que la prensa cifró en un 'agujero' de en torno a 1.000 millones de euros (The Objective; Vozpópuli lo eleva a 1.200 M€). Un informe de la UCO de 8-jul-2026 remitido al juez Pedraz (caso Leire, DP 150/2025) le atribuye un papel «preeminente» en la presunta trama y haber facilitado la contratación de Leire Díez en Correos; el 10-jul-2026 Pedraz acordó su imputación (condición de investigado) a petición de la Fiscalía Anticorrupción y autorizó el volcado de su teléfono móvil. Presunción de inocencia."}
+
+  # Leticia de la Hoz Calvo — abogada de Koldo García; el nodo ya existía (auto de entrada
+  # en Ferraz, deg 1). Su badge procesal sale de la ACCUSED_OF de ultima_hora.yaml.
+  - {name: "Leticia de la Hoz Calvo", type: Person, role: "Abogada vinculada al PSOE; letrada de Koldo García. Imputada (condición de investigada) por el juez Pedraz en el caso Leire (DP 150/2025, pieza principal 'cloacas') como presunta intermediaria del ofrecimiento de 50.000 euros a la testigo Carmen Pano para que modificara su declaración sobre las entregas de efectivo en Ferraz; citada a declarar el 14-jul-2026. Ella lo niega categóricamente y sostiene que fue Pano quien le pidió dinero. Presunción de inocencia."}
+
+  # --- Ingesta diarios Senado 727/744/745 (PR #240) — roles curados con fuentes web (enrich 2026-07-14) ---
+  - {name: "Ramón Alzórriz Goñi",         type: Person, role: "Exvicesecretario general y exsecretario de Organización del PSN-PSOE, exportavoz socialista y parlamentario foral de Navarra (dimitió de los cargos orgánicos el 18-jun-2025)"}
+  - {name: "Fernando Grande-Marlaska",    type: Person, role: "Ministro del Interior de España (desde junio de 2018); exjuez de la Audiencia Nacional y exvocal del CGPJ"}
+  - {name: "Jesús María Gómez Martín",    type: Person, role: "Comisario de la Policía Nacional, jefe superior de Policía de Canarias; excomisario jefe del aeropuerto Adolfo Suárez Madrid-Barajas"}
+  - {name: "María Chivite",               type: Person, role: "Presidenta del Gobierno de Navarra (desde agosto de 2019); secretaria general del PSN-PSOE (desde 2014)"}
+  - {name: "Leonardo Marcos",             type: Person, role: "Exdirector general de la Guardia Civil (jun-2023 a sep-2024); antes director general de Protección Civil y Emergencias (2020-2023); funcionario del Cuerpo Superior de Administradores Civiles del Estado"}
+  - {name: "Carlos Vidaurre",             type: Person, role: "Empresario constructor navarro, dueño de Adentro Construimos SL; investigado en el 'caso Sendaviva' por presunto cohecho y tráfico de influencias"}
+  - {name: "Martín Vidaurre",             type: Person, role: "Asistente parlamentario del grupo socialista (PSN) en el Parlamento de Navarra; hijo del constructor Carlos Vidaurre"}
+  - {name: "Rafael Pérez Ruiz",           type: Person, role: "Exsecretario de Estado de Seguridad (ene-2020 a jun-2025), 'número dos' de Grande-Marlaska en Interior; magistrado de carrera"}
+  - {name: "Eugenio Pereiro Blanco",      type: Person, role: "Excomisario general de Información de la Policía Nacional (2018-2024); director general de Coordinación y Estudios de Interior (desde sep-2025)"}
+  - {name: "Yuste",                       type: Person, role: "Rafael Yuste Arenillas, exjefe de la UCO de la Guardia Civil (jun-2023 a dic-2025), coronel al mando; ascendido a general de brigada en dic-2025 y destinado a la Jefatura de Servicios Técnicos"}
+
+  # --- Figuras de última hora sin nodo (2026-07-23): el feed ya referenciaba
+  # Person:ismael-moreno (8 ítems) y los ítems de Narbona iban sin entity_id; la web
+  # filtra entidades sin nodo. Precedente de jueces como Person: Pedraz, Peinado.
+  # NB: el name debe ser exactamente "Ismael Moreno" (slug == ismael-moreno, el id
+  # que usa el feed); el nombre completo va en aliases.
+  - {name: "Ismael Moreno", type: Person, aliases: ["Ismael Moreno Chamarro"], role: "Magistrado titular del Juzgado Central de Instrucción nº 2 de la Audiencia Nacional; instructor de la pieza principal del caso Koldo (mascarillas) desde que el Tribunal Supremo le asignó la competencia en julio de 2024, y de sus piezas derivadas (obra pública, contrataciones de Jésica Rodríguez). Órgano instructor: no es parte investigada ni acusada en las causas."}
+  - {name: "Cristina Narbona", type: Person, aliases: ["Cristina Narbona Ruiz"], role: "Presidenta del PSOE (desde 2017), eurodiputada y exministra de Medio Ambiente (2004-2008). En el caso Leire comparece como TESTIGO, no investigada: declaró ante el juez Pedraz el 15-jul-2026 y ante la comisión Koldo del Senado el 22-jul-2026."}
+
+relations:
+  # --- Family ties ---
+  - {source: "Begoña Gómez", target: "Pedro Sánchez", type: FAMILY_OF, kind: "esposa", note: "Matrimonio (cónyuges)."}
+  - {source: "David Sánchez", target: "Pedro Sánchez", type: FAMILY_OF, kind: "hermano", note: "Hermanos."}
+
+  # --- Party affiliation (PSOE) ---
+  - {source: "Pedro Sánchez",                target: "PSOE", type: MEMBER_OF, note: "Secretario general del PSOE."}
+  - {source: "José Luis Ábalos",             target: "PSOE", type: MEMBER_OF, note: "Exsecretario de Organización del PSOE."}
+  - {source: "Santos Cerdán",                target: "PSOE", type: MEMBER_OF, note: "Exsecretario de Organización del PSOE."}
+  - {source: "José Luis Rodríguez Zapatero", target: "PSOE", type: MEMBER_OF, note: "Militante histórico; expresidente."}
+  - {source: "Miguel Ángel Gallardo",        target: "PSOE", type: MEMBER_OF, note: "Secretario general del PSOE de Badajoz."}
+  - {source: "Armengol",                     target: "PSOE", type: MEMBER_OF, note: "Dirigente del PSOE."}
+  - {source: "Cristina Narbona",             target: "PSOE", type: MEMBER_OF, note: "Presidenta del PSOE (desde 2017)."}
+
+  # --- Other party affiliations ---
+  - {source: "Andoni Ortuzar",      target: "PNV", type: MEMBER_OF, note: "Presidente del PNV (EBB) entre 2013 y 2025."}
+  - {source: "Joseba Aurrekoetxea", target: "PNV", type: MEMBER_OF, note: "Responsable de Organización del PNV y senador."}
+
+  # --- Cargo corporativo ---
+  - {source: "Carlos López de las Heras", target: "Tubos Reunidos", type: WORKS_FOR, note: "Consejero delegado de Tubos Reunidos."}
+
+  # --- Offices / employment ---
+  - {source: "Pedro Sánchez",        target: "Gobierno de España",                              type: WORKS_FOR, note: "Presidente del Gobierno."}
+  - {source: "José Luis Ábalos",     target: "Gobierno de España",                              type: WORKS_FOR, note: "Ministro (2018–2021)."}
+  - {source: "José Luis Ábalos",     target: "Ministerio de Transportes, Movilidad y Agenda Urbana", type: WORKS_FOR, note: "Ministro de Transportes (2018–2021)."}
+  - {source: "Koldo García",         target: "José Luis Ábalos",                                type: WORKS_FOR, note: "Asesor del entonces ministro."}
+  - {source: "Koldo García",         target: "Puertos del Estado",                              type: WORKS_FOR, note: "Asesor en el organismo público."}
+  - {source: "Isabel Pardo de Vera", target: "ADIF",                                            type: WORKS_FOR, note: "Presidenta de ADIF (2018–2021)."}
+  - {source: "Juan Manuel Serrano Quintana", target: "Correos",                                 type: WORKS_FOR, note: "Presidente de la Sociedad Estatal Correos y Telégrafos (2018–2023)."}
+  - {source: "David Sánchez",        target: "Diputación de Badajoz",                           type: WORKS_FOR, note: "Plaza en la Diputación de Badajoz."}
+  - {source: "Miguel Ángel Gallardo", target: "Diputación de Badajoz",                          type: WORKS_FOR, note: "Presidente de la Diputación."}
+  - {source: "Begoña Gómez",         target: "Universidad Complutense de Madrid",               type: WORKS_FOR, note: "Dirección de posgrado / cátedra extraordinaria."}
+  - {source: "Ismael Moreno",        target: "Juzgado Central de Instrucción número 2",         type: WORKS_FOR, note: "Magistrado titular del JCI nº 2 (Audiencia Nacional); instructor del caso Koldo."}
+
+  # --- Company founding / ownership (public) ---
+  - {source: "Juan Carlos Barrabés", target: "Grupo Barrabés", type: OWNS, note: "Fundador del grupo."}
+  - {source: "Juan Carlos Barrabés", target: "Banco Santander", type: MEMBER_OF, note: "Consejero externo de Banco Santander (nombrado en 2024; conocido públicamente como Carlos Barrabés). El banco lo mantiene en el consejo pese a su procesamiento y el BCE evalúa su idoneidad (2026). Sustituye a la arista judicial d8 podada en QA pase 4 (slug de URL en pie del informe GC)."}
+
+  # --- Junta de Andalucía: Consejo de Gobierno (co-pertenencia) y caso de los ERE ---
+  # Hechos de registro público; las condenas del ERE fueron anuladas por el TC en 2024
+  # (se reflejan con su anulación, sin afirmar culpabilidad vigente).
+  - {source: "María Jesús Montero",             target: "Junta de Andalucía", type: WORKS_FOR, note: "Consejera de la Junta de Andalucía: viceconsejera de Economía y Hacienda (2002–2004), consejera de Salud (2004–2013) y consejera de Hacienda y Administración Pública (2013–2018)."}
+  - {source: "Gaspar Carlos Zarrías Arévalo",   target: "Junta de Andalucía", type: WORKS_FOR, note: "Consejero de Gobernación y de Presidencia y portavoz del Consejo de Gobierno; vicepresidente primero y presidente en funciones tras la dimisión de Manuel Chaves (abril de 2009)."}
+  - {source: "Manuel Chaves",                   target: "Junta de Andalucía", type: WORKS_FOR, note: "Presidente de la Junta de Andalucía (1990–2009)."}
+  - {source: "José Antonio Griñán",             target: "Junta de Andalucía", type: WORKS_FOR, note: "Presidente de la Junta de Andalucía (2009–2013)."}
+  - {source: "María Jesús Montero",             target: "Gaspar Carlos Zarrías Arévalo", type: ASSOCIATED_WITH, note: "Compañeros en el Consejo de Gobierno de la Junta de Andalucía durante la etapa de Manuel Chaves (coincidieron en la segunda mitad de los 2000)."}
+  - {source: "Manuel Chaves",                   target: "PSOE", type: MEMBER_OF, note: "Expresidente del PSOE (2000–2012)."}
+  - {source: "José Antonio Griñán",             target: "PSOE", type: MEMBER_OF, note: "Exsecretario general del PSOE de Andalucía."}
+  - {source: "Gaspar Carlos Zarrías Arévalo",   target: "Gobierno de España", type: WORKS_FOR, note: "Secretario de Estado de Cooperación Territorial (Ministerio de Política Territorial) con José Luis Rodríguez Zapatero (2009–2011)."}
+  - {source: "Manuel Chaves",                   target: "Gobierno de España", type: WORKS_FOR, note: "Vicepresidente tercero del Gobierno y ministro de Política Territorial con Zapatero (2009–2011)."}
+
+  - {source: "Gaspar Carlos Zarrías Arévalo",   target: "caso de los ERE de Andalucía", type: PARTY_TO, status: condena_anulada, note: "Condenado por la Audiencia Provincial de Sevilla a nueve años de inhabilitación por prevaricación; el Tribunal Constitucional amparó parcialmente su recurso el 17 de julio de 2024 por vulneración del derecho a la legalidad penal y ordenó a la Audiencia dictar un nuevo fallo (sin condena vigente).", source_url: "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2024-17483", source_date: "2024-07-17"}
+  - {source: "Manuel Chaves",                   target: "caso de los ERE de Andalucía", type: PARTY_TO, status: condena_anulada, note: "Condenado por la Audiencia de Sevilla a nueve años de inhabilitación por prevaricación; el Tribunal Constitucional anuló la condena el 16 de julio de 2024 por vulneración del derecho a la legalidad penal (sin condena vigente).", source_url: "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2024-17480", source_date: "2024-07-16"}
+  - {source: "José Antonio Griñán",             target: "caso de los ERE de Andalucía", type: PARTY_TO, status: condena_anulada, note: "Condenado por la Audiencia de Sevilla a seis años de prisión y quince de inhabilitación absoluta por prevaricación y malversación; el Tribunal Constitucional revocó el 16 de julio de 2024 la sentencia del Supremo por vulneración de la legalidad penal y de la presunción de inocencia y ordenó a la Audiencia dictar nueva sentencia.", source_url: "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2024-17481", source_date: "2024-07-16"}
+
+  # --- Zaño: contratación de Leire Díez (jun–oct 2024; cf. caso Leire Díez / autoentradaferraz.pdf) ---
+  - {source: "Leire Díez",                      target: "Zaño Sociedad Consultora SL", type: WORKS_FOR, note: "Contratada por la consultora de Gaspar Zarrías entre junio y octubre de 2024 para labores de 'investigación documental' (16.000 €, según reconoció el propio Zarrías ante el juez)."}

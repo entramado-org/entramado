@@ -1,0 +1,25 @@
+# Víctor de Aldama — neutral structural enrichment (press / open sources).
+# NEUTRAL facts only; allegations live in the judicial documents.
+
+entities:
+  - {name: "Víctor de Aldama", type: Person}            # MERGE onto existing node
+  - {name: "Grupo Vivir",      type: Company, role: "Sociedad de Víctor de Aldama (inversión inmobiliaria, publicidad y tecnología)"}
+  - {name: "Zamora CF",        type: Organization}       # MERGE onto existing node
+
+relations:
+  - source: "Víctor de Aldama"
+    target: "Grupo Vivir"
+    type: ASSOCIATED_WITH   # 063 tramo 2 (01-oct): era CONTROLS — retype [7bb52576], la fuente acredita vinculación, no control societario
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Víctor_de_Aldama"
+    quote: "De Aldama ha desarrollado su carrera en sectores como la inversión inmobiliaria, la publicidad y la tecnología."
+    note: "Vinculado al Grupo Vivir, vehículo con el que adquirió el Zamora CF, según la prensa."
+
+  - source: "Grupo Vivir"
+    target: "Zamora CF"
+    type: OWNS
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Víctor_de_Aldama"
+    date: "2018"
+    quote: "En 2018, a través del Grupo Vivir, adquirió el Zamora Club de Fútbol."
+    note: "Adquisición del Zamora Club de Fútbol en 2018."

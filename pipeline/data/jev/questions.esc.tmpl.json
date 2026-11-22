@@ -1,0 +1,120 @@
+{
+ "_doc": "Preguntas tipadas de la spec 063 para Jev (TypeSafe System One, formato `decide`). Tres grupos, cada uno se lanza como un mapa plano nombre→pregunta con `decide run` o con `JevClient.system_one`. El estado es un JSON corto construido por qa_esc_jev.build_items (nunca fuentes ni citas de sumario). Los flags calculados por reglas viajan en el estado y son verdad: Jev solo decide donde las reglas no llegan. NUNCA se pregunta por identidad, aliases ni seudónimos. Spec 069: PLANTILLA. Las preguntas siguen las reglas de redacción de la skill `decide` (un predicado, sin negaciones, término definido dentro de la pregunta, mismos sustantivos en las opciones); los marcadores de doble llave «escalera» y «definiciones:SECCION[:términos]» los rellena pipeline/scripts/ontologia_gen.py desde la ontología controlada y escribe questions.esc.json (no lo edites a mano).",
+ "entidad": {
+  "clase_persona": {
+   "type": "choice",
+   "instructions": "Estado JSON de una entidad publicada en entramado.org (grafo público de casos de corrupción en España). Campos: `entidad` (id, tipo, nombre, aliases), `flags` calculados por reglas y que son verdad (figura_publica, investigado_encausado, seudonimo, anonimizado, familiar_sin_acusacion, solo_mencionado, autoridad_judicial), `role` y `summary` publicados, `aristas` (conteos por tipo × procedencia × estado), `registro` (fila de estado procesal vigente o null) y `feed` (titulares recientes). Decide la clase de persona donde los flags no bastan. Las clases se excluyen por PRECEDENCIA: elige la PRIMERA de esta lista que se cumple: no_aplica, autoridad_judicial_fiscal, investigado_encausado, figura_publica, empresario_con_papel_propio, familiar_no_investigado, testigo, particular_mencionado. Criterio del dueño: un particular tiene «papel propio» solo si una fuente judicial o policial le atribuye una función concreta en los hechos (administrador, apoderado, receptor de pagos, contratista, intermediario); el parentesco, el contacto o la mera mención no son papel propio.",
+   "criteria": {
+    "figura_publica": "Cargo público, electo, alto cargo, dirigente de partido o persona con proyección pública según role/flags.",
+    "investigado_encausado": "flags.investigado_encausado es verdadero o el registro tiene estado procesal.",
+    "empresario_con_papel_propio": "Sin acusación registrada, pero role/summary/aristas le dan una función concreta en los hechos investigados.",
+    "particular_mencionado": "Persona física sin cargo público, sin acusación y sin función propia: aparece por mención, parentesco o contacto.",
+    "familiar_no_investigado": "flags.familiar_sin_acusacion es verdadero o el texto lo define solo por parentesco con otra persona.",
+    "testigo": "Role o summary lo presentan como testigo, declarante o «no investigado» en un procedimiento.",
+    "autoridad_judicial_fiscal": "Juez, magistrado, fiscal, instructor, letrado de la Administración de Justicia.",
+    "no_aplica": "No es una persona física (empresa, organismo, causa, evento) o los datos no permiten decidir."
+   }
+  },
+  "riesgo_entidad": {
+   "type": "score",
+   "instructions": "Mismo estado JSON. Riesgo de reclamación por honor, intimidad o presunción de inocencia si una frase publicada sobre esta persona fuera falsa o desactualizada. Pondera: clase (particular y familiar > empresario > investigado con registro > cargo público), acusaciones sin registro (`aristas` con ACCUSED_OF y estado nulo), texto con verbos de conducta sin «presuntamente / habría / según <fuente>», y actividad reciente en el feed.",
+   "criteria": [
+    "bajo: cargo público, autoridad o entidad jurídica; el texto no atribuye conducta o la atribuye modalizada y con fuente",
+    "medio: investigado o encausado con registro y texto atribuido; o empresario con papel propio sin acusación",
+    "alto: conducta atribuida sin registro o sin atribución; particular o empresario con acusación; acusaciones con estado nulo",
+    "critico: familiar sin acusación, menor, víctima o seudónimo con texto que identifica o atribuye conducta"
+   ]
+  },
+  "menor": {
+   "type": "noul",
+   "instructions": "Mismo estado JSON. ¿`role` o `summary` presentan a la persona como menor de edad (menos de 18 años en la fecha de los hechos)?",
+   "criteria": {
+    "true": "`role` o `summary` la presentan como menor de edad.",
+    "false": "`role` o `summary` la presentan como mayor de edad o no dicen su edad."
+   }
+  },
+  "victima": {
+   "type": "noul",
+   "instructions": "Mismo estado JSON. ¿`role` o `summary` presentan a la persona como víctima o perjudicada de un delito? Víctima = quien sufre el delito; el autor, el investigado o el testigo no son víctimas.",
+   "criteria": {
+    "true": "`role` o `summary` la presentan como víctima o perjudicada de un delito.",
+    "false": "`role` o `summary` la presentan con otro papel (autora, investigada, testigo, cargo) o sin papel en un delito."
+   }
+  }
+ },
+ "unidad": {
+  "mas_alla_del_registro": {
+   "type": "noul",
+   "instructions": "Mismo estado. `registro.status` es el estado procesal vigente de la persona en la escalera {{escalera}} (null = como mucho investigado; absuelto y archivado son cierres). ¿`unidad.texto` usa un término procesal más avanzado que el registro, o da por probado lo que el registro deja abierto («condenado» sin firmeza, «acusado» sin acto acusatorio, «culpable», «delincuente»)?",
+   "criteria": {
+    "true": "El texto va más allá del estado registrado o da por probado lo abierto.",
+    "false": "Coincide con el registro, es más leve, o no habla de estado procesal."
+   }
+  },
+  "dato_biografico": {
+   "type": "noul",
+   "instructions": "Mismo estado. ¿`unidad.texto` contiene un dato personal no procesal sobre la persona? Dato personal no procesal = nacimiento, edad, origen, nacionalidad, apodo, domicilio, patrimonio personal, salud, familia o ideología.",
+   "criteria": {
+    "true": "Contiene al menos un dato personal no procesal.",
+    "false": "No contiene datos personales no procesales."
+   }
+  },
+  "nombra_tercero": {
+   "type": "noul",
+   "instructions": "Mismo estado. ¿`unidad.texto` nombra a otra persona física, con su nombre propio, en relación con los hechos del caso? Otra persona física = una persona distinta de la entidad de la unidad; un cargo genérico («el ministro») o una institución no cuentan como persona nombrada.",
+   "criteria": {
+    "true": "Nombra a otra persona física con su nombre propio en relación con los hechos.",
+    "false": "Solo nombra a la propia entidad, a cargos genéricos o a instituciones."
+   }
+  },
+  "riesgo_unidad": {
+   "type": "score",
+   "instructions": "Mismo estado. Daño si ESTA unidad fuera falsa o desactualizada, dada `entidad.clase` y `entidad.riesgo`.",
+   "criteria": [
+    "bajo: dato estructural, cargo público o salvaguarda",
+    "medio: cifra, fecha o relación sin conducta atribuida, sobre investigado o cargo público",
+    "alto: conducta o estado procesal sobre un investigado o encausado; arista acusatoria o de dinero",
+    "critico: conducta, estado o dato personal sobre un particular, familiar, menor, víctima o seudónimo"
+   ]
+  },
+  "conducta": {
+   "type": "choice",
+   "instructions": "Estado JSON: `entidad` (clase, riesgo, flags), `unidad` (tier, kind, campo y `texto`, o `arista` con tipo/estado/procedencia/importe/fecha/etiqueta pública), `registro` (estado procesal vigente o null), `lints` y `vigencia`. ¿Cómo presenta `unidad.texto` (o la arista) una conducta de la persona? Conducta = una acción delictiva o irregular: cobrar, pagar, amañar, blanquear, ocultar, mediar, adjudicar a cambio de algo. Marca de modalidad = «presuntamente», «habría», «según <medio o documento con nombre>», o una cita entre comillas atribuida a una fuente con nombre.",
+   "criteria": {
+    "sin_conducta": "`unidad.texto` no atribuye ninguna conducta a la persona.",
+    "conducta_modalizada": "`unidad.texto` atribuye una conducta a la persona con una marca de modalidad.",
+    "conducta_afirmada": "`unidad.texto` atribuye una conducta a la persona como hecho, sin marca de modalidad."
+   }
+  },
+  "valoracion": {
+   "type": "choice",
+   "instructions": "Mismo estado. ¿Cómo usa `unidad.texto` una valoración sobre la persona o su empresa? Valoración = una etiqueta política, un calificativo o un superlativo («vinculado al chavismo», «testaferro», «fontanera», «empresa fantasma», «principal», «mayor», «cerebro»). Valoración atribuida = va entre comillas y atribuida a un medio o documento con nombre.",
+   "criteria": {
+    "sin_valoracion": "`unidad.texto` no contiene ninguna valoración.",
+    "valoracion_atribuida": "`unidad.texto` contiene valoraciones y todas son valoraciones atribuidas.",
+    "valoracion_propia": "`unidad.texto` contiene al menos una valoración sin comillas o sin fuente con nombre."
+   }
+  },
+  "apoyo": {
+   "type": "choice",
+   "instructions": "Mismo estado. Hecho judicial o policial = un auto, una imputación, un informe, una declaración, un registro o una condena. ¿Qué sostiene el hecho judicial o policial que `unidad.texto` presenta, según `unidad.fuentes_citadas` y `arista.source_kind`? Capas: {{definiciones:capas:judicial,acusacion,prensa,ultima_hora,contexto}}",
+   "criteria": {
+    "sin_hecho_judicial": "`unidad.texto` no presenta ningún hecho judicial o policial.",
+    "fuente_judicial_u_oficial": "Una fuente judicial u oficial (capa judicial o acusacion, o un documento oficial citado) sostiene el hecho.",
+    "atribuido_a_medio": "El texto atribuye el hecho a un medio con nombre («según <medio>») y lo sostiene una fuente de prensa.",
+    "solo_prensa_o_sin_fuente": "Solo la prensa (capa prensa o ultima_hora) o ninguna fuente sostiene el hecho, y el texto lo presenta como hecho."
+   }
+  }
+ },
+ "ruta": {
+  "ruta": {
+   "type": "choice",
+   "instructions": "Estado JSON: `entidad` (clase, riesgo), `unidad` (tier, kind, flags de regla y juicios previos), `opus` (decisión del lector fuerte: `verdict`, `label` en ok|cita|atrib|reescrita|retirada|alias|estado|arista, `confianza`, `accion` de entidad o arista, `busquedas`, `evidencia` {tipo corpus|web|feed|ninguna, texto}, `cero_apariciones`, `notes`) y `regla.ruta_baseline`. Las reglas fijas YA se aplican en código y no debes repetirlas: riesgo alto o crítico, seudónimo, familiar, menor, identidad, arista acusatoria y fila de estado van a dual o al dueño siempre. Tú decides solo en la zona media y baja y solo puedes ENDURECER la ruta (cerrar → escalar → dueño), nunca aflojarla. Cerrar exige: veredicto y etiqueta coherentes con la evidencia (una retirada necesita `cero_apariciones` tras búsqueda; una atribución necesita medio y fecha; un ok necesita evidencia de tipo corpus, web o feed), `notes` vacío, sin tercero nuevo nombrado y confianza alta.",
+   "criteria": {
+    "cerrar": "Decisión de bajo daño con evidencia concreta y coherente, confianza alta y sin dudas del lector.",
+    "escalar": "Cambia hechos (reescrita o retirada) o estado, o la evidencia es débil, indirecta o incoherente con la etiqueta: que lo lean dos lectores a ciegas.",
+    "dueno": "Toca criterio editorial del dueño (particular, familiar, etiqueta política, alias, fila de estado, tercero nuevo) o el lector deja notas o dudas."
+   }
+  }
+ }
+}

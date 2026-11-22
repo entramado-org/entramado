@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  El Entramado — Cloudflare Tunnel for entramado.org (spec 020).
+  Runs cloudflared.sh (cloudflared tunnel run → entramado.org → localhost:8080)
+  and keeps it alive. This is a SECOND ingress alongside the Tailscale Funnel,
+  which stays up as a fallback; both share the socat forwarder on :8080.
+
+  KeepAlive restarts cloudflared if it exits; cloudflared itself handles
+  reconnecting to the Cloudflare edge, so no IP-drift watchdog is needed (it
+  targets the stable loopback :8080). ThrottleInterval avoids a tight loop if
+  cloudflared can't start (e.g. config/creds missing before tunnel setup).
+
+  ProgramArguments runs the wrapper from ~/Library/Application Support/, NOT the
+  repo under ~/Documents — macOS TCC blocks launchd-spawned access to Documents.
+  Install via infra/launchd/install.sh.
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.entramado.cloudflared</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>$HOME/Library/Application Support/entramado/cloudflared.sh</string>
+  </array>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+  </dict>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <true/>
+  <key>ThrottleInterval</key>
+  <integer>10</integer>
+  <key>StandardOutPath</key>
+  <string>/tmp/sm_cloudflared.launchd.log</string>
+  <key>StandardErrorPath</key>
+  <string>/tmp/sm_cloudflared.launchd.log</string>
+</dict>
+</plist>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  El Entramado — loopback forwarder for the prod cutover.
+  Runs forwarder.sh (socat 127.0.0.1:8080 → <sm-prod-ip>:80) and keeps it alive.
+  KeepAlive is what makes the IP-drift gate pass: when sm-prod restarts (new
+  vmnet IP), socat exits and launchd restarts the wrapper, which RE-RESOLVES the
+  current machine IP before re-binding. ThrottleInterval avoids a tight loop
+  while the machine is still booting (forwarder.sh exits 1 if no IP yet).
+
+  ProgramArguments runs the wrapper from ~/Library/Application Support/, NOT the
+  repo under ~/Documents — macOS TCC blocks launchd-spawned access to Documents.
+  Install via infra/launchd/install.sh.
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.entramado.prod-forwarder</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>$HOME/Library/Application Support/entramado/forwarder.sh</string>
+  </array>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+  </dict>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <true/>
+  <key>ThrottleInterval</key>
+  <integer>10</integer>
+  <key>StandardOutPath</key>
+  <string>/tmp/sm_prod_forwarder.launchd.log</string>
+  <key>StandardErrorPath</key>
+  <string>/tmp/sm_prod_forwarder.launchd.log</string>
+</dict>
+</plist>

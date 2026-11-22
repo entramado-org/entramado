@@ -1,0 +1,168 @@
+# Neutral, attributed enrichment facts for public institutions & companies.
+# Encyclopedic, presumption-of-innocence respecting. Every relation backed by a
+# verbatim fetched source quote. No scandal/allegation framing.
+
+entities:
+  # Institutions / companies in this batch
+  - {name: "ADIF", type: Organization}
+  - {name: "Unidad Central Operativa", type: Organization}
+  - {name: "SEPI", type: Organization}
+  - {name: "Puertos del Estado", type: Organization}
+  - {name: "Universidad Complutense de Madrid", type: Organization}
+  - {name: "Telefónica", type: Company}
+  - {name: "GEOALCALI", type: Company}
+  - {name: "Levantina Ingeniería y Construcción", type: Company}
+  # Endpoints (parents / owners / leaders / locations)
+  - {name: "Ministerio de Transportes, Movilidad y Agenda Urbana", type: Organization}
+  - {name: "Guardia Civil", type: Organization}
+  - {name: "Ministerio de Hacienda", type: Organization}
+  - {name: "Navantia", type: Company}
+  - {name: "Correos", type: Company}
+  - {name: "RTVE", type: Company}
+  - {name: "Agencia EFE", type: Company}
+  - {name: "Hunosa", type: Company}
+  - {name: "Highfield Resources", type: Company}
+  - {name: "Luis Pedro Marco de la Peña", type: Person}
+  - {name: "María Belén Gualda González", type: Person}
+  - {name: "Gustavo Santana Hernández", type: Person}
+  - {name: "Joaquín Goyache", type: Person}
+  - {name: "Marc Murtra", type: Person}
+  - {name: "Madrid", type: Location}
+  - {name: "Navarra", type: Location}
+  - {name: "Alberic", type: Location}
+
+relations:
+  # --- ADIF ---
+  - source: "Ministerio de Transportes, Movilidad y Agenda Urbana"
+    target: "ADIF"
+    type: CONTROLS
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Adif"
+    quote: "Adif, acrónimo de Administrador de Infraestructuras Ferroviarias, es una entidad pública empresarial española dependiente del Ministerio de Transportes y Movilidad Sostenible que tiene como objetivo la construcción de líneas de ferrocarril y la gestión de su explotación."
+    note: "ADIF es entidad pública empresarial dependiente del ministerio de Transportes. Fundada el 1 de enero de 2005."
+  - source: "Luis Pedro Marco de la Peña"
+    target: "ADIF"
+    type: WORKS_FOR
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Adif"
+    quote: "Adif, acrónimo de Administrador de Infraestructuras Ferroviarias, es una entidad pública empresarial española dependiente del Ministerio de Transportes y Movilidad Sostenible."
+    note: "Presidente de ADIF desde el 17 de septiembre de 2024 (rol; cargo público)."
+
+  # --- Unidad Central Operativa (UCO) ---
+  - source: "Unidad Central Operativa"
+    target: "Guardia Civil"
+    type: MEMBER_OF
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Unidad_Central_Operativa"
+    quote: "La Unidad Central Operativa (UCO) es el órgano central del servicio de Policía Judicial de la Guardia Civil de España, encargado de la investigación y persecución de las formas más graves de delincuencia y crimen organizado, ya sea nacional o internacional."
+    note: "Órgano central del servicio de Policía Judicial de la Guardia Civil. Activa desde 1987."
+
+  # --- SEPI ---
+  - source: "Ministerio de Hacienda"
+    target: "SEPI"
+    type: CONTROLS
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Sociedad_Estatal_de_Participaciones_Industriales"
+    quote: "SEPI es una entidad de Derecho Público, cuyas actividades se ajustan al ordenamiento jurídico privado, adscrita al Ministerio de Hacienda."
+    note: "SEPI, holding público creado por el Real Decreto-Ley 5/1995, adscrito al Ministerio de Hacienda."
+  - source: "SEPI"
+    target: "Correos"
+    type: OWNS
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Sociedad_Estatal_de_Participaciones_Industriales"
+    quote: "Correos | Servicio postal | 100 %"
+    note: "SEPI posee el 100 % de Correos (servicio postal)."
+  - source: "SEPI"
+    target: "Agencia EFE"
+    type: OWNS
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Sociedad_Estatal_de_Participaciones_Industriales"
+    quote: "Agencia EFE | Comunicación | 100 %"
+    note: "SEPI posee el 100 % de la Agencia EFE (comunicación)."
+  - source: "SEPI"
+    target: "Hunosa"
+    type: OWNS
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Sociedad_Estatal_de_Participaciones_Industriales"
+    quote: "Hunosa | Minería | 100 %"
+    note: "SEPI posee el 100 % de Hunosa (minería)."
+  - source: "María Belén Gualda González"
+    target: "SEPI"
+    type: WORKS_FOR
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Sociedad_Estatal_de_Participaciones_Industriales"
+    quote: "La Sociedad Estatal de Participaciones Industriales (SEPI) es una empresa pública española que actúa como holding de las participaciones empresariales de titularidad pública nacional."
+    note: "Presidenta de SEPI (rol; cargo público)."
+
+  # --- Puertos del Estado ---
+  - source: "Ministerio de Transportes, Movilidad y Agenda Urbana"
+    target: "Puertos del Estado"
+    type: CONTROLS
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Puertos_del_Estado"
+    quote: "Puertos del Estado es un organismo público español, dependiente del ministerio competente en la materia, con responsabilidades globales sobre el conjunto del sistema portuario de titularidad estatal."
+    note: "Organismo público dependiente del ministerio de Transportes; fundado el 24 de noviembre de 1992."
+  - source: "Gustavo Santana Hernández"
+    target: "Puertos del Estado"
+    type: WORKS_FOR
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Puertos_del_Estado"
+    quote: "Puertos del Estado es un organismo público español, dependiente del ministerio competente en la materia."
+    note: "Presidente de Puertos del Estado (rol; cargo público)."
+
+  # --- Universidad Complutense de Madrid ---
+  - source: "Universidad Complutense de Madrid"
+    target: "Madrid"
+    type: ASSOCIATED_WITH
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Universidad_Complutense_de_Madrid"
+    quote: "La Universidad Complutense de Madrid (UCM), anteriormente denominada Universidad Central y Universidad de Madrid, y conocida de forma oficiosa como «la Docta» es la universidad pública más antigua de Madrid."
+    note: "Universidad pública situada en Madrid, fundada en 1822."
+  - source: "Joaquín Goyache"
+    target: "Universidad Complutense de Madrid"
+    type: WORKS_FOR
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Universidad_Complutense_de_Madrid"
+    quote: "La Universidad Complutense de Madrid (UCM) [...] es la universidad pública más antigua de Madrid, considerada una de las universidades más importantes y prestigiosas de España y del mundo hispanohablante."
+    note: "Rector de la Universidad Complutense de Madrid (rol)."
+
+  # --- Telefónica ---
+  - source: "Telefónica"
+    target: "Madrid"
+    type: ASSOCIATED_WITH
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Telef%C3%B3nica"
+    quote: "Telefónica, S. A. es una empresa multinacional española de telecomunicaciones con participación estatal, cuya sede central se encuentra en Madrid."
+    note: "Multinacional española de telecomunicaciones con participación estatal; sede central en Madrid. Fundada el 19 de abril de 1924."
+  - source: "Marc Murtra"
+    target: "Telefónica"
+    type: WORKS_FOR
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Telef%C3%B3nica"
+    quote: "Telefónica, S. A. es una empresa multinacional española de telecomunicaciones con participación estatal, cuya sede central se encuentra en Madrid."
+    note: "Presidente de Telefónica (rol)."
+
+  # --- GEOALCALI ---
+  - source: "Highfield Resources"
+    target: "GEOALCALI"
+    type: OWNS
+    outlet: "Geoalcali"
+    url: "https://www.geoalcali.com/mina-muga-firma-con-socios-estrategicos/"
+    quote: "filial de Highfield Resources Ltd"
+    note: "Geoalcali S.L.U. es filial de Highfield Resources Ltd."
+  - source: "GEOALCALI"
+    target: "Navarra"
+    type: ASSOCIATED_WITH
+    outlet: "Geoalcali"
+    url: "https://www.geoalcali.com/mina-muga-firma-con-socios-estrategicos/"
+    quote: "proyecto minero de extracción de potasa, ubicado en los términos municipales de Sangüesa y Javier (Navarra) y Undués de Lerda (Aragón)"
+    note: "Geoalcali promueve el proyecto Mina Muga (potasa) en Navarra y Aragón."
+
+  # --- Levantina Ingeniería y Construcción ---
+  - source: "Levantina Ingeniería y Construcción"
+    target: "Alberic"
+    type: ASSOCIATED_WITH
+    outlet: "Levantina Ingeniería y Construcción (web corporativa)"
+    url: "https://lic-sl.com/"
+    quote: "Nuestra empresa LIC, nace en Alberic (Valencia) en el año 2000."
+    note: "Constructora de obra civil fundada en Alberic (Valencia) en el año 2000."

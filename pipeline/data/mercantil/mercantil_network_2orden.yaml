@@ -1,0 +1,141 @@
+# Overlay MERCANTIL — Fase 2, TANDA 3 (2º ORDEN): co-administradores/testaferros de la red Aldama.
+# spec 028. Cargado por `make mercantil` (load_network en mercantil_loader.py, mismo `network:` key).
+#
+# Cada co-admin es una Person NUEVA que cuelga por ADMINISTRA de un vehículo de Aldama que YA es nodo
+# (creado en tanda 2). El gate ≤1 salto del loader sigue valiendo literal: el vehículo (target,
+# exists:true) es el ancla MATCHeada; ausente → fila descartada, nunca crea huérfanos. La Person nueva
+# es el `source` (rama new_is_source del loader). Idempotente. `anchor:` es documental (el loader lo ignora).
+#
+# source_kind='mercantil'; datos oficiales BORME citados por hoja/borme_id. BORME capta ADMINISTRADORES
+# REGISTRALES, no la titularidad real ni conducta delictiva alguna → estructura societaria, NO imputación.
+# Presunción de inocencia. Fuente: findings/nearius-mercantil-recon.md + matches.candidate.yaml:187-214.
+#
+# NÚCLEO HUMANO REAL de la red Aldama (normalizado por tamaño de cartera; cartera pequeña = señal genuina):
+#   Corredera (~40, solapan 10) · Ramos García (4/3) · De Castro (26/3) · Sánchez Aguilar (16/3) · Ruiz Plaza (43/4).
+# EXCLUIDOS (mass admins = ruido): Triguero 3323 / Cerdá Sanjuan 4863 / Durán Mesas 3774.
+# EXCLUIDO también: el negocio propio de Corredera (urbanismo Leganés con Ángel González) = actividad ordinaria.
+# Anti-homónimo verificado (2026-07-06): ninguno de los 5 existe ya como Person en el grafo vivo.
+# Regla durable (auditoría 2026-07-08): toda arista mercantil nueva lleva vigencia (prop `desde`
+# y/o fechas en la note) o el marcador "(histórico, cesado)".
+
+network:
+  # ============ Cristóbal Cipriano Corredera Espinosa de los Monteros (asociado principal) ============
+  # Cartera ~40; 9 vehículos solapan con Aldama (findings/nearius-mercantil-recon.md:127-133); anclas
+  # confirmadas 1:1 contra entramado.org/api (2026-07-06). Sub-clústeres 'Pilot' y '180 Capital'.
+  - anchor: "Company:araf-grupovivir-sl"
+    rel: ADMINISTRA
+    source: { type: Person, name: "Cristóbal Cipriano Corredera Espinosa de los Monteros", provincia: "MADRID" }
+    target: { id: "Company:araf-grupovivir-sl", exists: true }
+    edge: { rol: "co-administrador registral", note: "Co-administrador registral (BORME, hoja M683397). Núcleo verificado de la red Aldama (cartera acotada ~40). Estructura societaria, no imputación." }
+  - anchor: "Company:boreal-sinergias-sl"
+    rel: ADMINISTRA
+    source: { type: Person, name: "Cristóbal Cipriano Corredera Espinosa de los Monteros", provincia: "MADRID" }
+    target: { id: "Company:boreal-sinergias-sl", exists: true }
+    edge: { rol: "co-administrador registral", note: "Co-administrador registral (BORME, hoja M636817). Adm. solidario junto a Aldama 2017-02, cesó 2017-12 (sucesión hacia Grupo Avintia). Estructura societaria, no imputación." }
+  - anchor: "Company:businesstar-international-21-sl"
+    rel: ADMINISTRA
+    source: { type: Person, name: "Cristóbal Cipriano Corredera Espinosa de los Monteros", provincia: "MADRID" }
+    target: { id: "Company:businesstar-international-21-sl", exists: true }
+    edge: { rol: "co-administrador registral", note: "Co-administrador registral (BORME, hoja M611179). Núcleo verificado de la red Aldama. Estructura societaria, no imputación." }
+  - anchor: "Company:future-factory-sl"
+    rel: ADMINISTRA
+    source: { type: Person, name: "Cristóbal Cipriano Corredera Espinosa de los Monteros", provincia: "MADRID" }
+    target: { id: "Company:future-factory-sl", exists: true }
+    edge: { rol: "co-administrador registral", note: "Co-administrador registral (BORME, hoja M585737). Núcleo verificado de la red Aldama. Estructura societaria, no imputación." }
+  - anchor: "Company:original-london-sl"
+    rel: ADMINISTRA
+    source: { type: Person, name: "Cristóbal Cipriano Corredera Espinosa de los Monteros", provincia: "MADRID" }
+    target: { id: "Company:original-london-sl", exists: true }
+    edge: { rol: "co-administrador registral", note: "Co-administrador registral (BORME, hoja M569567). Núcleo verificado de la red Aldama. Estructura societaria, no imputación." }
+  - anchor: "Company:pilot-club-natacion-de-sevilla"
+    rel: ADMINISTRA
+    source: { type: Person, name: "Cristóbal Cipriano Corredera Espinosa de los Monteros", provincia: "MADRID" }
+    target: { id: "Company:pilot-club-natacion-de-sevilla", exists: true }
+    edge: { rol: "co-administrador registral", note: "Co-administrador registral (BORME, hoja M646101). Clúster 'Pilot'. Estructura societaria, no imputación." }
+  - anchor: "Company:pilot-real-estate"
+    rel: ADMINISTRA
+    source: { type: Person, name: "Cristóbal Cipriano Corredera Espinosa de los Monteros", provincia: "MADRID" }
+    target: { id: "Company:pilot-real-estate", exists: true }
+    edge: { rol: "co-administrador registral", note: "Co-administrador registral (BORME, hoja M605483). Clúster 'Pilot'. Estructura societaria, no imputación." }
+  - anchor: "Company:pilot-valdeon-sl"
+    rel: ADMINISTRA
+    source: { type: Person, name: "Cristóbal Cipriano Corredera Espinosa de los Monteros", provincia: "MADRID" }
+    target: { id: "Company:pilot-valdeon-sl", exists: true }
+    edge: { rol: "co-administrador registral", note: "Co-administrador registral (BORME, hoja M655411). Clúster 'Pilot'. Estructura societaria, no imputación." }
+  - anchor: "Company:soum-endell-investments-sl"
+    rel: ADMINISTRA
+    source: { type: Person, name: "Cristóbal Cipriano Corredera Espinosa de los Monteros", provincia: "MADRID" }
+    target: { id: "Company:soum-endell-investments-sl", exists: true }
+    edge: { rol: "co-administrador registral", note: "Co-administrador registral (BORME, hoja M650629). Núcleo verificado de la red Aldama. Estructura societaria, no imputación." }
+
+  # ============ Alfredo Ruiz Plaza (gestor del sub-clúster '180 Capital') ============
+  # Cartera 43; 4 solapan con Aldama = el trío '180 Capital' (ERR/MTM/RRP) que opera + (MTM ya lo administra
+  # Aldama). Anclas confirmadas 1:1 contra entramado.org/api (2026-07-06).
+  - anchor: "Company:err-180-capital-sl"
+    rel: ADMINISTRA
+    source: { type: Person, name: "Alfredo Ruiz Plaza", provincia: "MADRID" }
+    target: { id: "Company:err-180-capital-sl", exists: true }
+    edge: { rol: "co-administrador registral", note: "Co-administrador registral (BORME, hoja M706187). Sub-clúster '180 Capital' (cartera acotada 43). Estructura societaria, no imputación." }
+  - anchor: "Company:mtm-180-capital-sl"
+    rel: ADMINISTRA
+    source: { type: Person, name: "Alfredo Ruiz Plaza", provincia: "MADRID" }
+    target: { id: "Company:mtm-180-capital-sl", exists: true }
+    edge: { rol: "co-administrador registral", note: "Co-administrador registral (BORME, hoja M700468). Sub-clúster '180 Capital'. Estructura societaria, no imputación." }
+  - anchor: "Company:rrp-180-capital-sl"
+    rel: ADMINISTRA
+    source: { type: Person, name: "Alfredo Ruiz Plaza", provincia: "MADRID" }
+    target: { id: "Company:rrp-180-capital-sl", exists: true }
+    edge: { rol: "co-administrador registral", note: "Co-administrador registral (BORME, hoja M700469). Sub-clúster '180 Capital'. Estructura societaria, no imputación." }
+
+  # ============ Patricia Ramos García (co-admin con solape ×3) ============
+  # Los 3 vehículos que solapan con Aldama, enumerados en Nearius 2026-07-08 (antes solo se tenía el conteo).
+  # Anti-homónimo verificado 2026-07-08 (buscar_entidades: sin resultados → Person nueva). Anclas 1:1 vivas.
+  - anchor: "Company:businesscity-sl"
+    rel: ADMINISTRA
+    source: { type: Person, name: "Patricia Ramos García", provincia: "MADRID" }
+    target: { id: "Company:businesscity-sl", exists: true }
+    edge: { rol: "co-administrador registral", note: "Co-administrador registral (BORME, hoja M497518). Núcleo verificado de la red Aldama (cartera acotada 4). Estructura societaria, no imputación." }
+  - anchor: "Company:deluxe-fortune-sl"
+    rel: ADMINISTRA
+    source: { type: Person, name: "Patricia Ramos García", provincia: "MADRID" }
+    target: { id: "Company:deluxe-fortune-sl", exists: true }
+    edge: { rol: "administradora única registral (histórico)", desde: "2012-09", note: "Administradora única 2012-09 → cesó 2013-03 al entrar Aldama como Adm. Único (BORME, hoja M543192). Histórico, cesado — no hubo co-administración simultánea con Aldama. Núcleo verificado de la red Aldama (cartera acotada 4). Estructura societaria, no imputación." }
+  - anchor: "Company:original-london-sl"
+    rel: ADMINISTRA
+    source: { type: Person, name: "Patricia Ramos García", provincia: "MADRID" }
+    target: { id: "Company:original-london-sl", exists: true }
+    edge: { rol: "co-administrador registral", note: "Co-administrador registral (BORME, hoja M569567). Núcleo verificado de la red Aldama (cartera acotada 4). Estructura societaria, no imputación." }
+
+  # ============ Dunia María Sánchez Aguilar (co-admin con solape ×3) ============
+  - anchor: "Company:businesscity-sl"
+    rel: ADMINISTRA
+    source: { type: Person, name: "Dunia María Sánchez Aguilar", provincia: "MADRID" }
+    target: { id: "Company:businesscity-sl", exists: true }
+    edge: { rol: "co-administrador registral", note: "Co-administrador registral (BORME, hoja M497518). Núcleo verificado de la red Aldama (cartera acotada 16). Estructura societaria, no imputación." }
+  - anchor: "Company:bocata-food-sl"
+    rel: ADMINISTRA
+    source: { type: Person, name: "Dunia María Sánchez Aguilar", provincia: "MADRID" }
+    target: { id: "Company:bocata-food-sl", exists: true }
+    edge: { rol: "co-administrador registral", note: "Co-administrador registral (BORME, hoja M536682). Núcleo verificado de la red Aldama (cartera acotada 16). Estructura societaria, no imputación." }
+  - anchor: "Company:original-london-sl"
+    rel: ADMINISTRA
+    source: { type: Person, name: "Dunia María Sánchez Aguilar", provincia: "MADRID" }
+    target: { id: "Company:original-london-sl", exists: true }
+    edge: { rol: "co-administrador registral", note: "Co-administrador registral (BORME, hoja M569567). Núcleo verificado de la red Aldama (cartera acotada 16). Estructura societaria, no imputación." }
+
+  # ============ Luis Pablo de Castro (co-admin con solape ×3) ============
+  - anchor: "Company:telefarmacia-app-sl"
+    rel: ADMINISTRA
+    source: { type: Person, name: "Luis Pablo de Castro", provincia: "MADRID" }
+    target: { id: "Company:telefarmacia-app-sl", exists: true }
+    edge: { rol: "co-administrador registral", note: "Co-administrador registral (BORME, hoja M682829). Núcleo verificado de la red Aldama (cartera acotada 26). Estructura societaria, no imputación." }
+  - anchor: "Company:alburfoto-2020-sl"
+    rel: ADMINISTRA
+    source: { type: Person, name: "Luis Pablo de Castro", provincia: "MADRID" }
+    target: { id: "Company:alburfoto-2020-sl", exists: true }
+    edge: { rol: "co-administrador registral", note: "Co-administrador registral (BORME, hoja M694486). Núcleo verificado de la red Aldama (cartera acotada 26). Estructura societaria, no imputación." }
+  - anchor: "Company:batarse-y-asociados-sl"
+    rel: ADMINISTRA
+    source: { type: Person, name: "Luis Pablo de Castro", provincia: "MADRID" }
+    target: { id: "Company:batarse-y-asociados-sl", exists: true }
+    edge: { rol: "co-administrador registral", note: "Co-administrador registral (BORME, hoja M607590). Núcleo verificado de la red Aldama (cartera acotada 26). Estructura societaria, no imputación." }

@@ -1,0 +1,28 @@
+name: entramado
+# PROD override for running the production stack inside the Apple `container`
+# machine `sm-prod` (see prod-machine.sh and the `migrate-to-container-machine`
+# skill). Use WITH the prod file:
+#
+#   docker compose -f docker-compose.prod.yml -f docker-compose.prod-machine.yml up -d --build
+#
+# Why this exists: the cutover moves the LIVE prod Neo4j off Docker Desktop into a
+# dedicated VM. A 24/7 database over the cross-VM home-mount (virtiofs) is the
+# riskiest option for perf/durability, so prod Neo4j gets its own VM-local store
+# under /var/lib/sm-prod-neo4j (native ext4 inside the machine), seeded ONCE from
+# the live ./neo4j/data with the Docker Desktop prod stopped (single-writer →
+# consistent). `!override` REPLACES the base volume list rather than appending
+# (which would double-mount /data). api/mcp keep their ./sm-vault:ro bind mount from
+# the prod file — it resolves via the machine's home-mount. Everything else
+# (Caddy ports 80:80 internal to the machine, web NEXT_PUBLIC_API_BASE=/api,
+# .env) is byte-identical to docker-compose.prod.yml.
+#
+# CANONICAL STORE AFTER CUTOVER: /var/lib/sm-prod-neo4j inside sm-prod.
+# ./neo4j/data on the Mac is the seed source and becomes stale post-cutover —
+# future content ships must re-seed (see DEPLOY.md, private ops runbook).
+services:
+  neo4j:
+    volumes: !override
+      - /var/lib/sm-prod-neo4j/data:/data
+      - /var/lib/sm-prod-neo4j/logs:/logs
+      - /var/lib/sm-prod-neo4j/plugins:/plugins
+      - /var/lib/sm-prod-neo4j/import:/var/lib/neo4j/import

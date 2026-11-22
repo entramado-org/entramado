@@ -1,0 +1,730 @@
+# Overlay CONTRATACIÓN AMPLIADA (spec 055) — data file CURADO.
+# Cargado por `make contratacion-ampliada` (contratacion_ampliada_loader.py). Claves
+# top-level con namespace PROPIO (ampliada_*): ningún loader puede parsear el fichero
+# del otro (el 046 colecciona adjudicatarias:/organos:/sin_menores:). Vive además en
+# su SUBDIRECTORIO (ampliada/) y el loader aborta si se le apunta fuera — cinturón y
+# tirantes.
+#
+# SEMÁNTICA DE CARGA: curated-overwrite sobre el namespace amp_* (este YAML MANDA:
+# una corrección curada propaga en el siguiente run/Path A; lección BOE 050 — con
+# fill-only las enmiendas jamás llegaban al vivo). Borrar una clave del YAML NO la
+# borra del grafo (strip manual). name/summary/role/source_kind y los placsp_* del
+# 046 no se tocan jamás.
+#
+# Reglas (spec/plan 055 + decisiones dueño 2026-07-20, gate en decisions.md):
+#   * AGREGADOS, nunca contrato a contrato: una arista CONTRACTOR_OF por
+#     (adjudicataria, órgano destacado curado por el dueño — 34 pares aprobados), clave de
+#     MERGE {source_kind:'contratacion', placsp_key:"<ambito>|<organo_entity_id>"} con
+#     ambito ∈ {lic, agr, ccaa_andalucia, ccaa_euskadi, ccaa_galicia}. El NIF es ATRIBUTO.
+#   * Señales de licitación como props (n_emergencia, n_negociado_sp, via_ute,
+#     presupuesto_total_eur); total_eur NUNCA se llama amount y rango NUNCA date_* → la
+#     capa queda FUERA de /flujos y de la cronología por construcción.
+#   * Totales por ámbito de la adjudicataria → props del nodo (amp_<ambito>_*, curated-overwrite).
+#   * `adjudicataria` SIEMPRE debe existir (gate ≤1 salto); stubs de `organos:` solo si
+#     faltan y los referencia una arista con adjudicataria viva.
+#   * sin_adjudicaciones: negativos informativos (0 adjudicaciones DIRECTAS en el barrido
+#     2012→2026-07) — solo props (amp_sin_adjudicaciones + amp_nota).
+#   * ⚠️ IVA: importes de contratosdegalicia.gal vienen C/IVA en la fuente → aquí van
+#     NORMALIZADOS s/IVA (/1,21) y anotados. Euskadi (awardAmount) y Andalucía s/IVA;
+#     PLACSP PayableAmount en general s/IVA.
+#   * Los totales de adjudicatarias too_generic (cap 200 hits/dataset del recon) son
+#     SUELO, no total — anotado en su nota.
+#   * Adjudicarse una licitación o un menor es LEGAL: la señal editorial es el cruce con
+#     el reparto del caso y las señales de procedimiento (emergencia, negociado sin
+#     publicidad, vía UTE, % del tope), nunca la adjudicación en sí. Presunción de
+#     inocencia.
+#
+# Fuentes: PLACSP sindicaciones 643 (licitaciones 2012→2026-07, 3.965.649 resultados) y
+# 1044 (plataformas agregadas 2016→2026-07, 1.636.035), datos abiertos de menores de la
+# Junta de Andalucía (CKAN 2018→2026Q1), api.euskadi.eus (menores) y
+# contratosdegalicia.gal (menores, barrido de alta señal 25 organismos, SERGAS excluido).
+# Agregados por par recomputados desde _cruce_lic|_agr|_ccaa_* (gitignored,
+# re-derivables con _placsp_recon_sweep.py y los adaptadores _ccaa_*_fetch.py; dedup por
+# (entry-id, adjudicatario) con NIF de la semilla, gotcha «NIF con ; final» corregido).
+# Semillas matches*.candidate.yaml = registro del recon, JAMÁS se cargan.
+
+ampliada_organos:   # stubs — creados solo si no existen (los 9 verificados ausentes del vivo
+           # 2026-07-20; DGC/ADIF/Puertos del Estado/S.Canario/IB-Salut/Mº Interior/
+           # Renfe/Correos/ICEX/Navantia/Guardia Civil/Junta de Andalucía/UPV-EHU ya son
+           # nodos y NO van aquí).
+  - id: "Organization:ayuntamiento-de-vigo"
+    name: "Ayuntamiento de Vigo"
+    role: "Ayuntamiento de Vigo; su Junta de Gobierno consta en las plataformas oficiales de contratación como órgano adjudicador de obra pública (cluster local de Civis Global)"
+  - id: "Organization:autoridad-portuaria-de-vigo"
+    name: "Autoridad Portuaria de Vigo"
+    role: "Autoridad Portuaria de Vigo (Puertos del Estado); órgano de contratación de obra portuaria en PLACSP — citada además en los documentos del caso Aldama como cliente de Civis Global"
+  - id: "Organization:diputacion-de-granada"
+    name: "Diputación Provincial de Granada"
+    role: "Diputación Provincial de Granada; órgano de contratación de conservación de carreteras provinciales en PLACSP"
+  - id: "Organization:junta-de-contratacion-centralizada"
+    name: "Junta de Contratación Centralizada (AGE)"
+    role: "Dirección General de Racionalización y Centralización de la Contratación (Mº de Hacienda): adjudica los contratos centralizados de la Administración General del Estado, entre ellos el servicio de agencia de viajes"
+  - id: "Organization:fundacion-eoi"
+    name: "Fundación EOI (Escuela de Organización Industrial)"
+    role: "Fundación pública estatal adscrita al Mº de Industria; órgano de contratación en PLACSP y sede de las cátedras/programas del caso Begoña Gómez"
+  - id: "Organization:nasuvinsa"
+    name: "NASUVINSA (Navarra de Suelo y Vivienda, S.A.)"
+    role: "Empresa pública foral de suelo y vivienda del Gobierno de Navarra; órgano de contratación en el Portal de Contratación de Navarra (sindicado a PLACSP)"
+  - id: "Organization:xunta-de-galicia"
+    name: "Xunta de Galicia"
+    role: "Administración autonómica gallega; paraguas de sus órganos y entes de contratación (AXI, IGVS, Augas de Galicia, SPI, XESTUR, SOGAMA, consellerías) — el órgano concreto de cada relación va en el detalle"
+  - id: "Organization:axencia-turismo-de-galicia"
+    name: "Axencia Turismo de Galicia"
+    role: "Axencia pública da Xunta de Galicia para el turismo; órgano de contratación de las obras de conservación del Camiño de Santiago en contratosdegalicia.gal"
+  - id: "Organization:servicio-andaluz-de-salud"
+    name: "Servicio Andaluz de Salud (SAS)"
+    role: "Servicio público de salud de la Junta de Andalucía; concentra ~3/4 de los contratos menores publicados en el portal de datos abiertos de la Junta"
+
+ampliada_adjudicatarias:
+  # ============ núcleo del caso ============
+  - adjudicataria: "Company:soluciones-de-gestion"
+    nif: "B50760123"
+    denominacion: "Soluciones de Gestión y Apoyo a Empresas, S.L."
+    nota: "Los 9 contratos ESTRUCTURADOS del caso mascarillas (Koldo): 56,3M en mar-jun
+      2020, TODOS por procedimiento negociado sin publicidad Y tramitación de emergencia.
+      Confirma el negativo del 045 (0 menores en 8,5 años): su negocio fue la
+      adjudicación grande de emergencia. 0 hits en plataformas agregadas y 0 menores
+      gallegos (coherente). Homónimos con NIF distinto rechazados en el recon (System
+      Ars, cluster APF, SdG Empresarial vasca)."
+    ambitos:
+      lic: { n: 9, total_eur: 56255150, rango: "2020-03-21..2020-06-19" }
+    organos_destacados:
+      - organo: "Organization:puertos-del-estado"
+        ambito: "lic"
+        fuente: "PLACSP — licitaciones (sindicación 643)"
+        organo_detalle: "Presidencia del Organismo Público Puertos del Estado"
+        n_contratos: 1
+        total_eur: 24200000
+        rango: "2020-03-21"
+        n_emergencia: 1
+        n_negociado_sp: 1
+        presupuesto_total_eur: 20000000
+        ejemplo_link: "https://contrataciondelestado.es/wps/poc?uri=deeplink:detalle_licitacion&idEvl=8TkeYAT6V9xvYnTkQN0%2FZA%3D%3D"
+        ejemplo_titulo: "Suministro de mascarillas profilácticas a efectos de prevención del contagio del COVID-19 (24,2M €, adjudicado por encima del presupuesto de 20M)"
+        note: "El mayor contrato del caso mascarillas: emergencia + negociado sin publicidad."
+      - organo: "Organization:adif"
+        ambito: "lic"
+        fuente: "PLACSP — licitaciones (sindicación 643)"
+        organo_detalle: "ADIF — Consejo de Administración"
+        n_contratos: 1
+        total_eur: 12500000
+        rango: "2020-03-27"
+        n_emergencia: 1
+        n_negociado_sp: 1
+        ejemplo_link: "https://contrataciondelestado.es/wps/poc?uri=deeplink:detalle_licitacion&idEvl=GEltZOXTZtNvYnTkQN0%2FZA%3D%3D"
+        ejemplo_titulo: "Suministro de 5.000.000 de mascarillas FFP2 (12,5M €, 2020-03-27)"
+      - organo: "Organization:servicio-canario-de-salud"
+        ambito: "lic"
+        fuente: "PLACSP — licitaciones (sindicación 643)"
+        organo_detalle: "D.G. de Recursos Económicos del Servicio Canario de la Salud"
+        n_contratos: 4
+        total_eur: 12317580
+        rango: "2020-04-22..2020-06-05"
+        n_emergencia: 4
+        n_negociado_sp: 4
+        ejemplo_link: "https://contrataciondelestado.es/wps/poc?uri=deeplink:detalle_licitacion&idEvl=WgwzoT671AuiEJrVRqloyA%3D%3D"
+        ejemplo_titulo: "Suministro de dos millones de mascarillas protectoras KN95 (5M €, 2020)"
+      - organo: "Organization:ib-salut"
+        ambito: "lic"
+        fuente: "PLACSP — licitaciones (sindicación 643)"
+        organo_detalle: "Servicio de Salud de las Illes Balears"
+        n_contratos: 2
+        total_eur: 3758215
+        rango: "2020-05-08..2020-06-19"
+        n_emergencia: 2
+        n_negociado_sp: 2
+        ejemplo_link: "https://contrataciondelestado.es/wps/poc?uri=deeplink:detalle_licitacion&idEvl=S%2FrPUe4XPbcSugstABGr5A%3D%3D"
+        ejemplo_titulo: "Suministro material COVID19: mascarillas FFP2 (3,7M €)"
+      - organo: "Organization:ministerio-del-interior"
+        ambito: "lic"
+        fuente: "PLACSP — licitaciones (sindicación 643)"
+        organo_detalle: "Subdirección General de Gestión Económica y Patrimonial (Mº del Interior)"
+        n_contratos: 1
+        total_eur: 3479355
+        rango: "2020-04-20"
+        n_emergencia: 1
+        n_negociado_sp: 1
+        ejemplo_link: "https://contrataciondelestado.es/wps/poc?uri=deeplink:detalle_licitacion&idEvl=Qec2BTygBQN7h85%2Fpmmsfw%3D%3D"
+        ejemplo_titulo: "Adquisición de material de protección para el personal (3,5M €, 2020-04-20)"
+
+  - adjudicataria: "Company:aquaterra-servicios-infraestructuras-sl"
+    nif: "B04783338"
+    nota: "El salto desde los 30 menores/1,27M del patrón /patrones: 207,5M en
+      licitaciones estatales (11 por NIF + 5 UTEs con Acciona/Rubau) + 52M vía
+      plataformas agregadas (Canal de Isabel II, Puertos de Andalucía, Generalitat).
+      2 contratos estatales en emergencia. 0 menores gallegos (su señal Xunta es solo
+      de licitaciones)."
+    ambitos:
+      lic: { n: 24, total_eur: 207524860, rango: "2019-06-18..2026-06-02" }
+      agr: { n: 10, total_eur: 51947267 }
+      ccaa_andalucia: { n: 1, total_eur: 29311, rango: "2019-12-27" }
+    organos_destacados:
+      - organo: "Organization:direccion-general-de-carreteras"
+        ambito: "lic"
+        fuente: "PLACSP — licitaciones (sindicación 643)"
+        n_contratos: 6
+        total_eur: 164017097
+        rango: "2019-08-01..2024-11-06"
+        via_ute: "2 de 6 vía UTE (Acciona/Rubau), incluida la mayor"
+        presupuesto_total_eur: 181321073
+        ejemplo_link: "https://contrataciondelestado.es/wps/poc?uri=deeplink:detalle_licitacion&idEvl=MKgnJtfLzGamq21uxhbaVQ%3D%3D"
+        ejemplo_titulo: "Autovía A-68, tramo Arrúbal-Navarrete (La Rioja) — 111,8M €, 2019, en UTE con Acciona"
+        note: "Misma familia de obra riojana que la Variante de Logroño del patrón publicado en /patrones."
+
+  - adjudicataria: "Company:civis-global-sl"
+    nif: "B36684157"
+    nota: "573M en licitaciones estatales (97 por NIF + 37 UTE; 14 en emergencia) + 75M
+      vía Xunta + menores que clavan el tope en su TERCERA administración (Turismo de
+      Galicia/Camiño). Ancla del caso: 15.000 € a Cerdán vía Aldama [aldama-movil]."
+    ambitos:
+      lic: { n: 147, total_eur: 573419415, rango: "2015-09-18..2026-07-16" }
+      agr: { n: 30, total_eur: 75426735 }
+      ccaa_galicia: { n: 23, total_eur: 747808, rango: "2019-05-20..2025-07-02",
+                      nota: "904.848 € c/IVA en la fuente; normalizado s/IVA (/1,21)" }
+    organos_destacados:
+      - organo: "Organization:direccion-general-de-carreteras"
+        ambito: "lic"
+        fuente: "PLACSP — licitaciones (sindicación 643)"
+        n_contratos: 11
+        total_eur: 214762887
+        rango: "2019-10-16..2024-11-06"
+        via_ute: "9 de 11 vía UTE"
+        presupuesto_total_eur: 217877627
+        ejemplo_link: "https://contrataciondelestado.es/wps/poc?uri=deeplink:detalle_licitacion&idEvl=TeD003nw3nBvYnTkQN0%2FZA%3D%3D"
+        ejemplo_titulo: "Adecuación de los túneles de la Autopista AP-66 (68,1M €, en UTE)"
+      - organo: "Organization:ayuntamiento-de-vigo"
+        ambito: "lic"
+        fuente: "PLACSP — licitaciones (sindicación 643)"
+        organo_detalle: "Junta de Gobierno / Alcaldía del Ayuntamiento de Vigo"
+        n_contratos: 23
+        total_eur: 53985822
+        rango: "2018-11-29..2026-05-15"
+        n_emergencia: 1
+        n_negociado_sp: 1
+        presupuesto_total_eur: 70089649
+        ejemplo_link: "https://contrataciondelestado.es/wps/poc?uri=deeplink:detalle_licitacion&idEvl=WL42n%2BMxAFMuf4aBO%2BvQlQ%3D%3D"
+        ejemplo_titulo: "Soterramiento del tráfico rodado de la Puerta del Sol (13,5M €)"
+        note: "El cluster local vigués de la constructora."
+      - organo: "Organization:autoridad-portuaria-de-vigo"
+        ambito: "lic"
+        fuente: "PLACSP — licitaciones (sindicación 643)"
+        n_contratos: 7
+        total_eur: 42843895
+        rango: "2017-08-24..2025-12-19"
+        via_ute: "2 de 7 vía UTE"
+        ejemplo_link: "https://contrataciondelestado.es/wps/poc?uri=deeplink:detalle_licitacion&idEvl=HjVaUjc6cxEuf4aBO%2BvQlQ%3D%3D"
+        ejemplo_titulo: "Apartadero ferroviario en la plataforma logístico-industrial Salvaterra de Miño (33,4M €)"
+        note: "La relación Civis↔AP Vigo consta además en los documentos del caso [aldama-movil pp.25-26]: aquí el agregado oficial completo."
+      - organo: "Organization:xunta-de-galicia"
+        ambito: "agr"
+        fuente: "PLACSP agregadas — contratosdegalicia.gal (Xunta)"
+        organo_detalle: "AXI (6), Augas de Galicia (5), Turismo de Galicia (5), SOGAMA (3), SPI (3), XESTUR, IGVS"
+        n_contratos: 24
+        total_eur: 66930587
+        rango: "2018-01-23..2025-12-19"
+        n_emergencia: 1
+        via_ute: "5 de 24 vía UTE"
+        ejemplo_link: "https://www.contratosdegalicia.gal/licitacion?N=824447"
+        ejemplo_titulo: "Edificio para 70 viviendas de promoción pública — IGVS (12,2M €, 2025)"
+      - organo: "Organization:axencia-turismo-de-galicia"
+        ambito: "ccaa_galicia"
+        fuente: "contratosdegalicia.gal (menores; importes de la fuente c/IVA, cargados s/IVA)"
+        n_contratos: 22
+        total_eur: 722496
+        rango: "2021-01-05..2025-07-02"
+        ejemplo_link: "https://www.contratosdegalicia.gal/licitacion?N=CM1008927&lang=es"
+        ejemplo_titulo: "Sustitución de pasarela de madera sobre a Ponte das Febres (48.356 € c/IVA = 39.964 s/IVA, el 99,9 % del tope del menor de obras)"
+        note: "TODOS obras del Camiño de Santiago; 10 de los 23 menores gallegos al ≥95 % del tope del menor de obras (40.000 € s/IVA) — el patrón «clava el tope» de /patrones en su tercera administración (fuente c/IVA, importes cargados s/IVA)."
+
+  - adjudicataria: "Company:construcciones-perez-jimenez"
+    nif: "B18077867"
+    nota: "La empresa del patrón «clava el tope» (/patrones) en su perímetro completo:
+      56,4M en licitaciones estatales (Granada/Almería), 79,5M en licitaciones de la
+      Junta de Andalucía y 15 menores de la Junta que también clavan el tope (media
+      ~36.360 € sobre 40.000). 0 menores gallegos."
+    ambitos:
+      lic: { n: 78, total_eur: 56421734, rango: "2018-03-08..2026-05-18" }
+      agr: { n: 27, total_eur: 79571799 }
+      ccaa_andalucia: { n: 15, total_eur: 545410, rango: "2018-02-23..2025-11-19" }
+    organos_destacados:
+      - organo: "Organization:diputacion-de-granada"
+        ambito: "lic"
+        fuente: "PLACSP — licitaciones (sindicación 643)"
+        n_contratos: 14
+        total_eur: 6690787
+        rango: "2020-10-09..2026-05-15"
+        n_emergencia: 2
+        n_negociado_sp: 3
+        presupuesto_total_eur: 12944801
+        ejemplo_link: "https://contrataciondelestado.es/wps/poc?uri=deeplink:detalle_licitacion&idEvl=ZwnO%2BW8eCGyiEJrVRqloyA%3D%3D"
+        ejemplo_titulo: "Servicio para la conservación de carreteras de la Diputación de Granada (1,4M €)"
+      - organo: "Organization:junta-de-andalucia"
+        ambito: "agr"
+        fuente: "PLACSP agregadas — juntadeandalucia.es"
+        organo_detalle: "D.G. de Infraestructuras del Agua (12) y Consejerías de Fomento (8), AOPJA"
+        n_contratos: 26
+        total_eur: 78401913
+        rango: "2020-02-20..2026-05-15"
+        n_negociado_sp: 1
+        via_ute: "10 de 26 vía UTE"
+        presupuesto_total_eur: 307557703
+        ejemplo_link: "http://www.juntadeandalucia.es/temas/contratacion-publica/perfiles-licitaciones/detalle/000000270795"
+        ejemplo_titulo: "Conexión del Depósito de Pipa Alta de San Cristóbal, Almería (9,3M €)"
+      - organo: "Organization:junta-de-andalucia"
+        ambito: "ccaa_andalucia"
+        fuente: "datos abiertos Junta de Andalucía (menores, CKAN)"
+        organo_detalle: "Delegaciones Territoriales de Fomento (Granada/Almería/Huelva/Córdoba)"
+        n_contratos: 15
+        total_eur: 545410
+        rango: "2018-02-23..2025-11-19"
+        note: "Media ~36.360 € por contrato sobre un tope de 40.000 s/IVA — extiende el patrón «clava el tope» de /patrones al canal autonómico andaluz."
+
+  - adjudicataria: "Company:obras-publicas-y-regadios"
+    nif: "A13395264"
+    denominacion: "OBRAS PUBLICAS Y REGADIOS S.A."
+    nota: "OPR (en concurso desde 2025, mercantil.yaml): su cartera de licitaciones —
+      152M estatales, 6 en emergencia — es la contraparte del negativo de menores del
+      045 y de la señal de consecuencia del overlay 046."
+    ambitos:
+      lic: { n: 74, total_eur: 152176313, rango: "2015-12-01..2025-03-13" }
+      ccaa_andalucia: { n: 4, total_eur: 152750, rango: "2018-12-12..2023-11-02" }
+    organos_destacados:
+      - organo: "Organization:direccion-general-de-carreteras"
+        ambito: "lic"
+        fuente: "PLACSP — licitaciones (sindicación 643)"
+        n_contratos: 9
+        total_eur: 36389377
+        rango: "2012-10-08..2025-01-14"
+        n_negociado_sp: 3
+        via_ute: "6 de 9 vía UTE"
+        ejemplo_link: "https://contrataciondelestado.es/wps/poc?uri=deeplink:detalle_licitacion&idEvl=mgQWhEKTJV%2BXQV0WE7lYPw%3D%3D"
+        ejemplo_titulo: "Conservación y explotación de carreteras 51-GR-0306, Granada (10M €)"
+
+  - adjudicataria: "Company:levantina-ingenieria-y-construccion"
+    nif: "B97016125"
+    denominacion: "Levantina, Ingeniería y Construcción S.L. (LIC)"
+    nota: "LIC (admin Pepe Ruz, en liquidación 2025): 405,7M adjudicados hasta 2024,
+      118,9M de ellos de la D.G. de Carreteras."
+    ambitos:
+      lic: { n: 134, total_eur: 405723823, rango: "2018..2024-02-12" }
+    organos_destacados:
+      - organo: "Organization:direccion-general-de-carreteras"
+        ambito: "lic"
+        fuente: "PLACSP — licitaciones (sindicación 643)"
+        n_contratos: 9
+        total_eur: 118931373
+        rango: "2019-12-11..2024-02-12"
+        via_ute: "4 de 9 vía UTE"
+        ejemplo_link: "https://contrataciondelestado.es/wps/poc?uri=deeplink:detalle_licitacion&idEvl=z1Kyw0JdA1Kmq21uxhbaVQ%3D%3D"
+        ejemplo_titulo: "Autovía A-12 del Camino de Santiago, tramo Santo Domingo (72,4M €, en UTE con Torrescámara)"
+
+  # s86 (2026-08-27): ancla re-apuntada de Company:globalia al nodo propio de la filial
+  # (la dueña real del NIF B57986846; la matriz ya no lleva capa de contratación).
+  - adjudicataria: "Company:globalia-corporate-travel"
+    nif: "B57986846"
+    denominacion: "GLOBALIA CORPORATE TRAVEL S.L.U. (opera también como SEKAI CORPORATE TRAVEL S.L.U.)"
+    nota: "La agencia del grupo en su perímetro completo: el contrato centralizado de
+      viajes de la AGE (62,4M, 2018), Renfe e IB-Salut en licitaciones (10 en
+      emergencia, repatriaciones COVID), la Xunta (Emigración/Emprego) en agregadas, y
+      los menores autonómicos donde CONTINÚA como «SEKAI CORPORATE TRAVEL S.L.U.» con el
+      MISMO NIF B57986846 (rebranding 2024-25, tres canales verificados: Euskadi,
+      agregadas y Xunta/Turismo). too_generic en licitaciones (cap 200): sus totales
+      estatales son SUELO. NO confundir con los homónimos Globalia Urbanismo/Artes
+      Gráficas (rechazados con evidencia registral)."
+    ambitos:
+      lic: { n: 122, rango: "2016-12..2021-11",
+             nota: "cap too_generic: n y total (sin consolidar) son SUELO" }
+      agr: { n: 83, total_eur: 10231111 }
+      ccaa_andalucia: { n: 14, total_eur: 162854, rango: "2018-07-01..2025-06-11" }
+      ccaa_euskadi: { n: 200, total_eur: 1220516, rango: "2021-02-04..2026-06-24",
+                      nota: "TODOS bajo el nombre SEKAI CORPORATE TRAVEL (cap too_generic)" }
+      ccaa_galicia: { n: 10, total_eur: 62078, rango: "2023-03-09..2026-03-23",
+                      nota: "75.114 € c/IVA en la fuente; TODOS bajo el nombre SEKAI" }
+    organos_destacados:
+      - organo: "Organization:junta-de-contratacion-centralizada"
+        ambito: "lic"
+        fuente: "PLACSP — licitaciones (sindicación 643)"
+        n_contratos: 1
+        total_eur: 62400000
+        rango: "2018-03-08"
+        ejemplo_link: "https://contrataciondelestado.es/wps/poc?uri=deeplink:detalle_licitacion&idEvl=Y0r8XyhXFgoQK2TEfXGy%2BA%3D%3D"
+        ejemplo_titulo: "Contrato centralizado de servicio de agencia de viajes de la Administración General del Estado (62,4M €, 2018)"
+        note: "La agencia del grupo como proveedora centralizada de viajes de la AGE."
+      - organo: "Organization:renfe"
+        ambito: "lic"
+        fuente: "PLACSP — licitaciones (sindicación 643)"
+        organo_detalle: "Renfe Viajeros (13), Renfe Mercancías y resto del grupo"
+        n_contratos: 22
+        total_eur: 2464823
+        rango: "2018-11-27..2021-04-27"
+        presupuesto_total_eur: 10496795
+        ejemplo_link: "https://contrataciondelestado.es/wps/poc?uri=deeplink:detalle_licitacion&idEvl=49eGCNAS1%2B2iEJrVRqloyA%3D%3D"
+        ejemplo_titulo: "Alojamiento y restauración del personal operativo de Renfe Viajeros (945.319 €)"
+      - organo: "Organization:xunta-de-galicia"
+        ambito: "agr"
+        fuente: "PLACSP agregadas — contratosdegalicia.gal (Xunta)"
+        organo_detalle: "Secretaría Xeral de Emigración (18) y Consellería de Emprego, Comercio e Emigración (12)"
+        n_contratos: 30
+        total_eur: 3957553
+        rango: "2019-06-04..2026-06-18"
+        ejemplo_link: "https://www.contratosdegalicia.gal/licitacion?N=827917"
+        ejemplo_titulo: "Desplazamiento de participantes en programas de la Consellería de Emprego (334.000 €, 2026)"
+        note: "Los contratos 2024-26 ya se publican bajo la denominación SEKAI CORPORATE TRAVEL (mismo NIF)."
+      - organo: "Organization:axencia-turismo-de-galicia"
+        ambito: "ccaa_galicia"
+        fuente: "contratosdegalicia.gal (menores; importes de la fuente c/IVA, cargados s/IVA)"
+        n_contratos: 10
+        total_eur: 62078
+        rango: "2023-03-09..2026-03-23"
+        ejemplo_link: "https://www.contratosdegalicia.gal/licitacion?N=CM1531610&lang=es"
+        ejemplo_titulo: "Organización do XIII Congreso Internacional de Estudos Xacobeos — secretaría técnica (18.124 € c/IVA)"
+        note: "Los 10 bajo la denominación SEKAI CORPORATE TRAVEL, S.L.U. — tercer canal del rebranding con el NIF de Globalia Corporate Travel."
+      - organo: "Organization:universidad-del-pais-vasco"
+        ambito: "ccaa_euskadi"
+        fuente: "api.euskadi.eus — contratación (menores)"
+        organo_detalle: "Rectora de la UPV/EHU (órganos resueltos por referencia contra la API vasca)"
+        n_contratos: 92
+        total_eur: 86391
+        rango: "2025-01-02..2026-06-24"
+        ejemplo_link: "https://www.contratacion.euskadi.eus/webkpe00-kpeperfi/es/contenidos/anuncio_contratacion/expcm488675/es_doc/index.html"
+        ejemplo_titulo: "«Reserva para futuros viajes contratados a esta agencia a lo largo de 2025» (10.000 €)"
+        note: "La continuación 2025-26 del patrón Globalia-UPV/EHU publicado en /patrones (521 microcontratos en PLACSP hasta 2026-02): mismos microcontratos-bolsa de viajes, ahora en la plataforma vasca y bajo el nombre SEKAI."
+
+  - adjudicataria: "Company:erri-berri"
+    nif: "B31258346"
+    denominacion: "CONSTRUCCIONES Y EXCAVACIONES ERRI-BERRI SL"
+    nota: "Constructora navarra (Olite/Erriberri) vinculada en el grafo a la pieza de
+      amaños del caso Leire; licita por toda la península (22,2M estatal: puertos,
+      Navantia, Zona Franca de Cádiz) y en órganos navarros vía agregadas (9,8M)."
+    ambitos:
+      lic: { n: 44, total_eur: 22170531, rango: "2015-09-03..2026-07-03" }
+      agr: { n: 36, total_eur: 9817413 }
+    organos_destacados:
+      - organo: "Company:navantia"
+        ambito: "lic"
+        fuente: "PLACSP — licitaciones (sindicación 643)"
+        organo_detalle: "Comité Central de Compras de Navantia S.A., S.M.E."
+        n_contratos: 3
+        total_eur: 3058996
+        rango: "2020-06-16..2023-11-03"
+        ejemplo_link: "https://contrataciondelestado.es/wps/poc?uri=deeplink:detalle_licitacion&idEvl=ULVd%2BgEBWoKiEJrVRqloyA%3D%3D"
+        ejemplo_titulo: "Actuaciones en gradas para adaptación (1,5M €)"
+
+  # ============ órbita Barrabés / Begoña Gómez ============
+  - adjudicataria: "Company:innova-next-slu"
+    nif: "B86413689"
+    nota: "La empresa de Juan Carlos Barrabés: 12,1M en licitaciones estatales. La
+      órbita Correos/ICEX/EOI es exactamente la investigada en el caso Begoña Gómez —
+      aquí con importes y fechas estructurados; en Andalucía repite el perfil
+      (Andalucía Emprende/EXTENDA)."
+    ambitos:
+      lic: { n: 19, total_eur: 12089053, rango: "2017-11-28..2026-02-18" }
+      ccaa_andalucia: { n: 3, total_eur: 42081, rango: "2019-11-18..2021-04-20" }
+      ccaa_euskadi: { n: 1, total_eur: 10000, rango: "2017-03-20" }
+    organos_destacados:
+      - organo: "Organization:correos"
+        ambito: "lic"
+        fuente: "PLACSP — licitaciones (sindicación 643)"
+        organo_detalle: "Subdirección de Compras de la Sociedad Estatal Correos y Telégrafos"
+        n_contratos: 2
+        total_eur: 296876
+        rango: "2017-11-28..2019-12-10"
+        ejemplo_link: "https://contrataciondelestado.es/wps/poc?uri=deeplink:detalle_licitacion&idEvl=YKrOymXghECmq21uxhbaVQ%3D%3D"
+        ejemplo_titulo: "Programa formativo Transformación Digital: Filosofía Agile en Correos (199.650 €)"
+      - organo: "Organization:icex-espana-exportacion-e-inversiones"
+        ambito: "lic"
+        fuente: "PLACSP — licitaciones (sindicación 643)"
+        n_contratos: 3
+        total_eur: 361165
+        rango: "2020-01-07..2022-05-13"
+        presupuesto_total_eur: 1736080
+        ejemplo_link: "https://contrataciondelestado.es/wps/poc?uri=deeplink:detalle_licitacion&idEvl=SNkf1o4jlBWrz3GQd5r6SQ%3D%3D"
+        ejemplo_titulo: "Consultoría del Programa de Apoyo Personalizado (169.303 €)"
+      - organo: "Organization:fundacion-eoi"
+        ambito: "lic"
+        fuente: "PLACSP — licitaciones (sindicación 643)"
+        n_contratos: 1
+        total_eur: 56749
+        rango: "2019-03-07"
+        ejemplo_link: "https://contrataciondelestado.es/wps/poc?uri=deeplink:detalle_licitacion&idEvl=ifXq3oFh5kKXQV0WE7lYPw%3D%3D"
+        ejemplo_titulo: "Planificación y ejecución de servicio formativo (56.749 €, 2019)"
+
+  - adjudicataria: "Company:barrabes-internet-sl"
+    nif: "B22240089"
+    nota: "6 licitaciones estatales por ~1M (Correos ×2, EOI, RTVE, ICEX) 2015-2022 —
+      la misma órbita de órganos que Innova Next, con importes menores."
+    ambitos:
+      lic: { n: 6, total_eur: 997154, rango: "2015-11-02..2022-03-03" }
+
+  - adjudicataria: "Company:barrabes-ski-montana-s-l-u"
+    nif: "B22167480"
+    nota: "La rama retail/montaña del grupo Barrabés vende a FFAA, Guardia Civil y
+      órganos autonómicos de interior/emergencias; sin señal editorial por sí sola, se
+      carga por completitud del grupo del investigado."
+    ambitos:
+      lic: { n: 28, total_eur: 3272985, rango: "2015-09-21..2026-05-22" }
+      agr: { n: 9, total_eur: 439846 }
+      ccaa_euskadi: { n: 16, total_eur: 84042, rango: "2016-10-13..2026-06-01" }
+    organos_destacados:
+      - organo: "Organization:guardia-civil"
+        ambito: "lic"
+        fuente: "PLACSP — licitaciones (sindicación 643)"
+        organo_detalle: "Jefatura de Asuntos Económicos de la Guardia Civil"
+        n_contratos: 7
+        total_eur: 1245130
+        rango: "2015-09-21..2025-08-21"
+        presupuesto_total_eur: 10226167
+        ejemplo_link: "https://contrataciondelestado.es/wps/poc?uri=deeplink:detalle_licitacion&idEvl=0ZrOrDGtujSrz3GQd5r6SQ%3D%3D"
+        ejemplo_titulo: "Adquisición de vestuario y equipamiento de montaña (460.405 €)"
+        note: "El grupo del investigado como proveedor recurrente del cuerpo cuya UCO instruye el caso — contratación legal; se registra el cruce."
+
+  # ============ foral / UTE Acciona–Servinabar ============
+  - adjudicataria: "Company:servinabar"
+    nif: null
+    denominacion: "Servinabar 2000, S.L."
+    nota: "0 adjudicaciones DIRECTAS en TODO el barrido (menores 045 + licitaciones +
+      agregadas + CCAA, 2012→2026-07): toda su obra pública visible es vía UTE con
+      Acciona — coherente con el patrón del informe UCO (Variante de Logroño). La única
+      huella adjudicataria es la UTE Acciona–Servinabar en NASUVINSA."
+    ambitos:
+      agr: { n: 2, total_eur: 14610701,
+             nota: "las 2 vía UTE ACCIONA CONSTRUCCION, S.A. – SERVINABAR 2000, S.L." }
+    organos_destacados:
+      - organo: "Organization:nasuvinsa"
+        ambito: "agr"
+        fuente: "PLACSP agregadas — hacienda.navarra.es (Portal de Contratación de Navarra)"
+        n_contratos: 2
+        total_eur: 14610701
+        rango: "2020-02-06..2023-01-31"
+        via_ute: "UTE ACCIONA CONSTRUCCION, S.A. – SERVINABAR 2000, S.L. (ambas adjudicaciones)"
+        presupuesto_total_eur: 32778604
+        ejemplo_link: "https://hacienda.navarra.es/sicpportal/ctaDatosAdjudicacion.aspx?cod=2012&Ticket=230131094546C9170643"
+        ejemplo_titulo: "Obras de construcción de 93 VPO en régimen de alquiler (7,8M €, 2023) + concurso de obras (6,8M €, 2020)"
+        note: "El tándem Acciona–Servinabar del informe UCO también adjudicatario de la empresa pública de vivienda foral — no estaba en el grafo ni en los datasets estatales."
+
+  # ============ constructoras de la órbita DGC (extras del gate) ============
+  - adjudicataria: "Company:acciona-construccion"
+    nif: "A81638108"
+    nota: "Gigante generalista: volumen esperable en una gran constructora — sin valor
+      de señal editorial por sí solo; el interés es el cruce con la trama de amaños
+      (UTEs con Servinabar y Aquaterra, recogidas en sus bloques). too_generic en
+      licitaciones (cap 200): 1.134M SOLO en la muestra capada — el total es SUELO."
+    ambitos:
+      lic: { n: 200, rango: "2014-09-17..2020-08-04",
+             nota: "cap too_generic: n y rango del cap; total (1.134M en la muestra) es SUELO" }
+      ccaa_galicia: { n: 9, total_eur: 233610, rango: "2021-03-25..2024-01-09",
+                      nota: "282.668 € c/IVA en la fuente; normalizado s/IVA" }
+    organos_destacados:
+      - organo: "Organization:direccion-general-de-carreteras"
+        ambito: "lic"
+        fuente: "PLACSP — licitaciones (sindicación 643)"
+        n_contratos: 11
+        total_eur: 295783484
+        rango: "2012-09-18..2019-09-11"
+        n_negociado_sp: 4
+        via_ute: "2 de 11 vía UTE (incluida la A-68 con Aquaterra)"
+        presupuesto_total_eur: 345022262
+        ejemplo_link: "https://contrataciondelestado.es/wps/poc?uri=deeplink:detalle_licitacion&idEvl=MKgnJtfLzGamq21uxhbaVQ%3D%3D"
+        ejemplo_titulo: "Autovía A-68, tramo Arrúbal-Navarrete (111,8M €, 2019, UTE Acciona–Aquaterra)"
+
+  - adjudicataria: "Company:asch-infraestructuras-y-servicios-sa"
+    nif: "A73998346"
+    nota: "1.010M en licitaciones estatales 2018-2026 (EMVS Madrid, Ejército del Aire,
+      UCM, ADIF, ENAIRE; 3 en emergencia); 234M de la D.G. de Carreteras."
+    ambitos:
+      lic: { n: 158, total_eur: 1010359152, rango: "2018-11-19..2026-07-13" }
+    organos_destacados:
+      - organo: "Organization:direccion-general-de-carreteras"
+        ambito: "lic"
+        fuente: "PLACSP — licitaciones (sindicación 643)"
+        n_contratos: 7
+        total_eur: 234380692
+        rango: "2019-09-23..2025-04-10"
+        via_ute: "2 de 7 vía UTE"
+        ejemplo_link: "https://contrataciondelestado.es/wps/poc?uri=deeplink:detalle_licitacion&idEvl=KsWHxn%2B5SXNQFSeKCRun4Q%3D%3D"
+        ejemplo_titulo: "Autovía del Duero A-11, variante de Langa de Duero (180,8M €)"
+
+  - adjudicataria: "Company:torrescamara-y-cia-de-obras-s-a"
+    nif: "A46298220"
+    nota: "460M en licitaciones estatales; 16 en emergencia — el mayor ratio de
+      emergencia del reparto tras SdG."
+    ambitos:
+      lic: { n: 81, total_eur: 460203643, rango: "2017-03-02..2026-06-25" }
+    organos_destacados:
+      - organo: "Organization:direccion-general-de-carreteras"
+        ambito: "lic"
+        fuente: "PLACSP — licitaciones (sindicación 643)"
+        n_contratos: 3
+        total_eur: 89266752
+        rango: "2012-03-29..2024-07-17"
+        via_ute: "2 de 3 vía UTE (incluida la A-12 con LIC)"
+        ejemplo_link: "https://contrataciondelestado.es/wps/poc?uri=deeplink:detalle_licitacion&idEvl=z1Kyw0JdA1Kmq21uxhbaVQ%3D%3D"
+        ejemplo_titulo: "Autovía A-12 del Camino de Santiago, tramo Santo Domingo (72,4M €, UTE con LIC)"
+
+  - adjudicataria: "Company:marco-infraestructuras-y-medio-ambiente-sa"
+    nif: "A99498255"
+    nota: "337M en licitaciones estatales (TRAGSA, ADIF, Aena)."
+    ambitos:
+      lic: { n: 87, total_eur: 337560919, rango: "2017-10-20..2026-06-16" }
+    organos_destacados:
+      - organo: "Organization:direccion-general-de-carreteras"
+        ambito: "lic"
+        fuente: "PLACSP — licitaciones (sindicación 643)"
+        n_contratos: 3
+        total_eur: 46645582
+        rango: "2021-04-09..2023-04-11"
+        via_ute: "1 de 3 vía UTE"
+        ejemplo_link: "https://contrataciondelestado.es/wps/poc?uri=deeplink:detalle_licitacion&idEvl=VLCUB%2FGFTQVvYnTkQN0%2FZA%3D%3D"
+        ejemplo_titulo: "Paso inferior en la intersección de la A-68 (19,8M €)"
+
+  - adjudicataria: "Company:lantania-s-a-u"
+    nif: "A87268116"
+    nota: "523M en licitaciones 2020-2026 (Ayto. Fuenlabrada, Obras y Equipamientos
+      Madrid, ACUAES)."
+    ambitos:
+      lic: { n: 142, total_eur: 523659550, rango: "2020-05-22..2026-07-08" }
+    organos_destacados:
+      - organo: "Organization:direccion-general-de-carreteras"
+        ambito: "lic"
+        fuente: "PLACSP — licitaciones (sindicación 643)"
+        n_contratos: 5
+        total_eur: 75410003
+        rango: "2023-05-09..2026-02-11"
+        presupuesto_total_eur: 143171080
+        ejemplo_link: "https://contrataciondelestado.es/wps/poc?uri=deeplink:detalle_licitacion&idEvl=Frdt%2Bc%2Fu6ppPpzdqOdhuWg%3D%3D"
+        ejemplo_titulo: "Reforma del enlace de la Autovía del Sur A-4 con la SE-20 (26,3M €)"
+
+  - adjudicataria: "Company:freyssinet-sau"
+    nif: "A48037592"
+    nota: "122M en licitaciones estatales; cazada SOLO por la pasada mono-token del
+      recon 054 (FREYSSINET)."
+    ambitos:
+      lic: { n: 48, total_eur: 122666206, rango: "2015-11-24..2026-06-12" }
+      ccaa_euskadi: { n: 3, total_eur: 43921, rango: "2016-03-21..2025-03-13" }
+    organos_destacados:
+      - organo: "Organization:direccion-general-de-carreteras"
+        ambito: "lic"
+        fuente: "PLACSP — licitaciones (sindicación 643)"
+        n_contratos: 6
+        total_eur: 95689450
+        rango: "2013-01-31..2025-05-27"
+        n_negociado_sp: 3
+        via_ute: "2 de 6 vía UTE"
+        presupuesto_total_eur: 120664978
+        ejemplo_link: "https://contrataciondelestado.es/wps/poc?uri=deeplink:detalle_licitacion&idEvl=UYevMaFeWDDnSoTX3z%2F7wA%3D%3D"
+        ejemplo_titulo: "Construcción de tirantes del Puente del Centenario, Sevilla (86,4M €)"
+
+  # ============ resto del reparto (props-only) ============
+  - adjudicataria: "Company:diagnostica-longwood"
+    nif: "B50487164"
+    nota: "Proveedor sanitario recurrente (Cantabria, CyL, Aragón, Baleares, Osakidetza;
+      4 licitaciones en emergencia) con pico pandémico de menores en el SAS."
+    ambitos:
+      lic: { n: 105, total_eur: 31947628, rango: "2018-06-01..2026-06-29" }
+      ccaa_andalucia: { n: 200, total_eur: 1994471, rango: "2020-11-20..2021-12-14",
+                        nota: "cap too_generic (699 brutos): SUELO" }
+      ccaa_euskadi: { n: 15, total_eur: 160626, rango: "2016-11-16..2024-06-18" }
+    organos_destacados:
+      - organo: "Organization:servicio-andaluz-de-salud"
+        ambito: "ccaa_andalucia"
+        fuente: "datos abiertos Junta de Andalucía (menores, CKAN)"
+        n_contratos: 193
+        total_eur: 1929976
+        rango: "2020-11-20..2021-12-14"
+        note: "193 menores del SAS concentrados en la ventana pandémica 2020-2021 (diagnóstico/laboratorio)."
+
+  - adjudicataria: "Company:aridos-anfersa-sl"
+    nif: "B18487421"
+    nota: "Proveedor recurrente de áridos de TRAGSA (146 hits, 101 por derivados de
+      acuerdo marco). too_generic (409 brutos, cap 200): totales SUELO."
+    ambitos:
+      lic: { n: 200, total_eur: 17720940, rango: "2015-11-12..2023-12-01",
+             nota: "cap too_generic: SUELO" }
+      ccaa_andalucia: { n: 6, total_eur: 203587, rango: "2018-10-23..2024-10-03" }
+
+  - adjudicataria: "Company:eurofins-megalab"
+    nif: "A78873973"
+    nota: "Laboratorio (tests COVID): 9 licitaciones en emergencia (Canarias, Aragón,
+      Baleares, Policía Nacional) + menores SAS."
+    ambitos:
+      lic: { n: 142, total_eur: 16345611, rango: "2018-04-05..2026-07-01" }
+      ccaa_andalucia: { n: 38, total_eur: 292341, rango: "2018-08-27..2026-03-12" }
+
+  - adjudicataria: "Company:hiberus-it-development-services-sl"
+    nif: "B99537854"
+    nota: "IT; 180 de 200 hits del AST Aragón por derivados de acuerdo marco.
+      too_generic (673 brutos, cap 200): totales SUELO."
+    ambitos:
+      lic: { n: 200, total_eur: 12698130, rango: "2019-01-23..2022-04-25",
+             nota: "cap too_generic: SUELO" }
+      ccaa_euskadi: { n: 3, total_eur: 44821, rango: "2021-07-27..2025-12-29" }
+
+  - adjudicataria: "Company:she-herencia-sl"
+    nif: "B81565020"
+    nota: "8 licitaciones 2018-2026, 7 del Cabildo de Tenerife."
+    ambitos:
+      lic: { n: 8, total_eur: 2538890, rango: "2018-12-11..2026-04-30" }
+
+  - adjudicataria: "Company:making-science-group"
+    nif: "B87763207"
+    nota: "1 licitación (CESCE, vía filial Making Science Digital Marketing)."
+    ambitos:
+      lic: { n: 1, total_eur: 36300, rango: "2021-04-21" }
+
+  - adjudicataria: "Company:adentro-construimos"
+    nif: "B31831720"
+    nota: "Constructora navarra del cluster foral del caso: NASUVINSA (2), Parque de la
+      Naturaleza de Navarra (4), Instituto Navarro de la Memoria (1) vía el portal
+      foral."
+    ambitos:
+      agr: { n: 8, total_eur: 1396369 }
+
+  - adjudicataria: "Company:arista-arquitectos-sl"
+    nif: "B31626385"
+    nota: "1 adjudicación foral (Ayto. de Noáin, Navarra)."
+    ambitos:
+      agr: { n: 1, total_eur: 22080 }
+
+  - adjudicataria: "Company:instituto-europa-s-l"
+    nif: "B01117480"
+    nota: "Consultora vasca de empleo/formación: Lanbide y diputaciones forales
+      (agregadas) + 6 menores vascos."
+    ambitos:
+      agr: { n: 10, total_eur: 7421926 }
+      ccaa_euskadi: { n: 6, total_eur: 37809, rango: "2015-04-13..2022-11-07" }
+
+  - adjudicataria: "Company:idom-consulting-engineering-architecture"
+    nif: "A48283964"
+    nota: "Ingeniería; 48 menores gallegos (Augas de Galicia 27, Infraestruturas 14),
+      media ~11.250 € s/IVA. Completitud del reparto."
+    ambitos:
+      ccaa_galicia: { n: 48, total_eur: 540274, rango: "2018-03-14..2026-02-25",
+                      nota: "653.731 € c/IVA en la fuente; normalizado s/IVA" }
+
+  - adjudicataria: "Organization:the-objective"
+    nif: "B86757101"
+    nota: "Se carga por completitud del reparto (el nodo es el medio, fuente de ítems
+      del feed): 2 menores de difusión de la Consellería de Emprego de la Xunta en
+      2026. Sin relación con el caso."
+    ambitos:
+      ccaa_galicia: { n: 2, total_eur: 29752, rango: "2026-01-20..2026-07-10",
+                      nota: "36.000 € c/IVA en la fuente; normalizado s/IVA" }
+
+ampliada_sin_adjudicaciones:   # negativos informativos — 0 adjudicaciones DIRECTAS en el barrido
+                      # ampliado (licitaciones 2012→ + agregadas 2016→ + CCAA), además
+                      # de sus negativos de menores del 046. Solo props, 0 aristas.
+  - entity_id: "Company:deluxe-fortune-sl"
+    nota: "0 adjudicaciones en licitaciones, agregadas y CCAA (2012→2026-07), además de
+      0 contratos menores (overlay 046): el vehículo de Aldama no contrata con el
+      sector público bajo su NIF."
+  - entity_id: "Company:have-got-time"
+    nota: "0 adjudicaciones en todos los datasets del barrido ampliado (2012→2026-07),
+      además de 0 menores (046)."
+  - entity_id: "Organization:fiadelso"
+    nota: "0 adjudicaciones en todos los datasets del barrido ampliado (2012→2026-07),
+      además de 0 menores (046)."
+  - entity_id: "Company:servinabar"
+    nota: "0 adjudicaciones DIRECTAS en todo el barrido (menores + licitaciones +
+      agregadas + CCAA, 2012→2026-07): toda su obra pública visible es vía UTE con
+      Acciona (NASUVINSA, ver su relación agregada) o subcontrata — coherente con el
+      patrón del informe UCO. La ausencia no exculpa ni imputa."

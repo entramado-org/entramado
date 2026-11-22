@@ -1,0 +1,194 @@
+# Overlay MERCANTIL — Fase 2, TANDA 4: constelación societaria Plus Ultra / Zapatero.
+# spec 029. Cargado por `make mercantil` (mercantil_loader.py; claves `network:` + `companies:`).
+#
+# Fuente: informe de inteligencia corporativa de Nearius (BORME + CENDOJ), `Informe_inteligencia_
+# corporativa.pdf`, 28-05-2026 + VERIFICACIÓN VIVA 1:1 contra Nearius/BORME (2026-07-08).
+# Datos oficiales públicos (BORME) citados por hoja/borme_id. BORME capta ADMINISTRADORES
+# REGISTRALES, no la titularidad real ni conducta delictiva alguna → estructura societaria, NO
+# imputación. Presunción de inocencia (materia sub iudice, caso Plus Ultra).
+#
+# ✅ VERIFICADO EN BORME (2026-07-08) — el borrador del PDF se recortó a lo confirmado:
+#   - Domingo Amaro Chacón administra los 6 satélites + Inteligencia Prospectiva + Prospectiva Tec.
+#   - Guillermo Amaro Chacón administra Prospectiva Tec. + Inteligencia Prospectiva bajo la grafía
+#     canónica "GUILLERMO", y ADEMÁS 4 satélites bajo la variante tipográfica del propio BORME
+#     "AMARO CHACON GUILEROMO ALFREDO" (Critical Metals, Green Energy Metals, Minerales Críticos,
+#     Recursos Iberoamericanos) — detectado en la auditoría independiente (mercantil_validation_
+#     20260708.md, M2) y verificado acto por acto (Adm. Solid. con Domingo) el 2026-07-08.
+#     Lección durable: buscar personas BORME también por variantes (CONTAINS apellidos), no solo
+#     la grafía canónica. (El nodo GUILEROMO figura además en Orama Olozaga M669390 y Ramalta
+#     Olozaga M669389 — sin anclaje al caso, NO cargadas.)
+#   - Voli Analítica SL e Hispano Alaska SL NO existen en el BORME de Nearius → DESCARTADAS.
+#   - Idella Consulenza Strategica YA es nodo (Company:idella-consulenza-strategica, tanda 2) →
+#     se ENRIQUECE (companies:) y se le cuelga la arista Julio→Idella; NO se recrea (evita duplicado
+#     idella-consulenza-strategica-sl).
+#
+# Regla durable (auditoría 2026-07-08): toda arista mercantil nueva lleva vigencia (prop `desde`
+# y/o fechas en la note) o el marcador "(histórico, cesado)".
+#
+# Gate anti-homónimo (verificado 2026-07-08 contra entramado.org/api):
+#   - Los 6 Company nuevos NO existen como nodo (slugs libres: recursos-iberoamericanos-sl, etc.).
+#   - Domingo/Guillermo Amaro Chacón, Inteligencia Prospectiva, Julio/Manuel MM, Afitta SL/Capital,
+#     Idella YA son nodos → se usan como ancla existente, NO se recrean.
+#   - Julio Martínez Martínez (clan) ≠ Julio Martínez Sola (presidente Plus Ultra): nodos distintos, OK.
+
+network:
+  # ======================= BLOQUE B — satélites de los hermanos Amaro Chacón =======================
+  # Sociedades madrileñas del núcleo Amaro Chacón (auto-zapatero p.43; informe corporativo §4.1).
+  # Domingo Arnaldo (DNI verificado en auto-zapatero p.43) administra los 6; Guillermo Alfredo solo Prospectiva Tec.
+  # Hojas verificadas en BORME 2026-07-08. Ex-stock SEEGMAN los 3 primeros; 3 mineras = const. 2023-24.
+
+  # --- Recursos Iberoamericanos SL (ex Ainur Europe, reconvertida 20-05-2020) ---
+  - anchor: "Person:domingo-arnaldo-amaro-chacon"
+    rel: ADMINISTRA
+    source: { id: "Person:domingo-arnaldo-amaro-chacon", exists: true }
+    target: { type: Company, name: "Recursos Iberoamericanos SL", hoja: "M709779", provincia: "MADRID", capital_social: 3000 }
+    edge: { rol: "administrador registral", note: "Administrador (según BORME, hoja M709779). Ex Ainur Europe (stock SEEGMAN), reconvertida 20-05-2020. Verificado en Nearius 2026-07-08. Estructura societaria, no imputación." }
+
+  # --- Activos Iberoamericanos SL (BORME: LUFIEN EUROPE SL; ex stock SEEGMAN, reconvertida 20-05-2020) ---
+  - anchor: "Person:domingo-arnaldo-amaro-chacon"
+    rel: ADMINISTRA
+    source: { id: "Person:domingo-arnaldo-amaro-chacon", exists: true }
+    target: { type: Company, name: "Activos Iberoamericanos SL", hoja: "M714268", provincia: "MADRID", capital_social: 3000 }
+    edge: { rol: "administrador registral", note: "Administrador (según BORME, hoja M714268; el BORME de Nearius la lista como LUFIEN EUROPE SL). Ex stock SEEGMAN, reconvertida 20-05-2020. Verificado en Nearius 2026-07-08. Estructura societaria, no imputación." }
+
+  # --- Prospectivus Technologia SL (BORME: PROSPECTIVA TECNOLOGICA SL; const. 18-07-2022) ---
+  # Satélite que ambos hermanos administran bajo la grafía canónica "GUILLERMO" → 2 aristas.
+  # (Guillermo administra otros 4 satélites bajo la variante "GUILEROMO" — bloque más abajo.)
+  - anchor: "Person:domingo-arnaldo-amaro-chacon"
+    rel: ADMINISTRA
+    source: { id: "Person:domingo-arnaldo-amaro-chacon", exists: true }
+    target: { type: Company, name: "Prospectivus Technologia SL", hoja: "M768324", provincia: "MADRID", capital_social: 9000, fecha_constitucion: "2022-07-18" }
+    edge: { rol: "administrador registral", note: "Administrador (según BORME, hoja M768324; el BORME de Nearius la lista como PROSPECTIVA TECNOLOGICA SL). Verificado en Nearius 2026-07-08. Estructura societaria, no imputación." }
+  - anchor: "Person:guillermo-alfredo-amaro-chacon"
+    rel: ADMINISTRA
+    source: { id: "Person:guillermo-alfredo-amaro-chacon", exists: true }
+    target: { type: Company, name: "Prospectivus Technologia SL", hoja: "M768324", provincia: "MADRID", capital_social: 9000, fecha_constitucion: "2022-07-18" }
+    edge: { rol: "administrador registral", note: "Co-administrador (según BORME, hoja M768324; verificado en Nearius 2026-07-08). Administra además Inteligencia Prospectiva y, bajo la variante tipográfica BORME 'AMARO CHACON GUILEROMO ALFREDO', otros 4 satélites del núcleo (Critical Metals, Green Energy Metals, Minerales Críticos, Recursos Iberoamericanos). Estructura societaria, no imputación." }
+
+  # --- Minerales Críticos SL (const. 11-12-2023, mismo domicilio social que Critical Metals) ---
+  - anchor: "Person:domingo-arnaldo-amaro-chacon"
+    rel: ADMINISTRA
+    source: { id: "Person:domingo-arnaldo-amaro-chacon", exists: true }
+    target: { type: Company, name: "Minerales Críticos SL", hoja: "M809560", provincia: "MADRID", capital_social: 3000, fecha_constitucion: "2023-12-11", domicilio: "Madrid" }
+    edge: { rol: "administrador registral", note: "Administrador (según BORME, hoja M809560). Const. 11-12-2023. Mismo domicilio social que Critical Metals SL. Verificado en Nearius 2026-07-08. Estructura societaria, no imputación." }
+
+  # --- Critical Metals SL (const. 11-12-2023, mismo domicilio social que Minerales Críticos) ---
+  - anchor: "Person:domingo-arnaldo-amaro-chacon"
+    rel: ADMINISTRA
+    source: { id: "Person:domingo-arnaldo-amaro-chacon", exists: true }
+    target: { type: Company, name: "Critical Metals SL", hoja: "M809561", provincia: "MADRID", capital_social: 3000, fecha_constitucion: "2023-12-11", domicilio: "Madrid" }
+    edge: { rol: "administrador registral", note: "Administrador (según BORME, hoja M809561). Const. 11-12-2023. Mismo domicilio social que Minerales Críticos SL. Verificado en Nearius 2026-07-08. Estructura societaria, no imputación." }
+
+  # --- Green Energy Metals SL (const. 17-01-2024; ampliación +84.000 € el 05-09-2025 → 87.000) ---
+  - anchor: "Person:domingo-arnaldo-amaro-chacon"
+    rel: ADMINISTRA
+    source: { id: "Person:domingo-arnaldo-amaro-chacon", exists: true }
+    target: { type: Company, name: "Green Energy Metals SL", hoja: "M812450", provincia: "MADRID", capital_social: 87000, fecha_constitucion: "2024-01-17" }
+    edge: { rol: "administrador registral", note: "Administrador (según BORME, hoja M812450). Const. 17-01-2024; ampliación +84.000 € el 05-09-2025 (3.000→87.000). Verificado en Nearius 2026-07-08. Estructura societaria, no imputación." }
+
+  # --- Guillermo co-administra los 4 satélites (variante tipográfica BORME "GUILEROMO") ---
+  # Remediación auditoría 2026-07-08 (M2): el nodo BORME "AMARO CHACON GUILEROMO ALFREDO" (typo del
+  # propio BORME) es Adm. Solidario con Domingo en los 4 — verificado acto por acto vía
+  # historial_empresa. Aristas both-exist (los 4 Company ya son nodos, creados arriba en esta tanda).
+  - anchor: "Person:guillermo-alfredo-amaro-chacon"
+    rel: ADMINISTRA
+    source: { id: "Person:guillermo-alfredo-amaro-chacon", exists: true }
+    target: { id: "Company:critical-metals-sl", exists: true }
+    edge: { rol: "administrador solidario registral", desde: "2023-12-11", note: "Administrador solidario con Domingo desde la constitución (según BORME, hoja M809561; confirmado como administrador en BORME-A-2026-39-28). Figura en BORME bajo la variante tipográfica 'AMARO CHACON GUILEROMO ALFREDO'. Verificado en Nearius 2026-07-08. Estructura societaria, no imputación." }
+  - anchor: "Person:guillermo-alfredo-amaro-chacon"
+    rel: ADMINISTRA
+    source: { id: "Person:guillermo-alfredo-amaro-chacon", exists: true }
+    target: { id: "Company:green-energy-metals-sl", exists: true }
+    edge: { rol: "administrador solidario registral", desde: "2024-01-17", note: "Administrador solidario con Domingo desde la constitución (según BORME, hoja M812450; nombramiento Adm. Solid. en BORME-A-2024-17-28). Figura en BORME bajo la variante tipográfica 'AMARO CHACON GUILEROMO ALFREDO'. Verificado en Nearius 2026-07-08. Estructura societaria, no imputación." }
+  - anchor: "Person:guillermo-alfredo-amaro-chacon"
+    rel: ADMINISTRA
+    source: { id: "Person:guillermo-alfredo-amaro-chacon", exists: true }
+    target: { id: "Company:minerales-criticos-sl", exists: true }
+    edge: { rol: "administrador solidario registral", desde: "2023-12-11", note: "Administrador solidario con Domingo desde la constitución (según BORME, hoja M809560; nombramiento Adm. Solid. en BORME-A-2023-238-28). Figura en BORME bajo la variante tipográfica 'AMARO CHACON GUILEROMO ALFREDO'. Verificado en Nearius 2026-07-08. Estructura societaria, no imputación." }
+  - anchor: "Person:guillermo-alfredo-amaro-chacon"
+    rel: ADMINISTRA
+    source: { id: "Person:guillermo-alfredo-amaro-chacon", exists: true }
+    target: { id: "Company:recursos-iberoamericanos-sl", exists: true }
+    edge: { rol: "administrador solidario registral", desde: "2022-06-02", note: "Administrador solidario con Domingo desde 2022-06-02 (según BORME, hoja M709779; nombramiento Adm. Solid. en BORME-A-2022-109-28, cambio de Adm. Único a solidarios). Figura en BORME bajo la variante tipográfica 'AMARO CHACON GUILEROMO ALFREDO'. Verificado en Nearius 2026-07-08. Estructura societaria, no imputación." }
+
+  # --- Domingo + Guillermo administran Inteligencia Prospectiva (both-exist; ambos confirmados en BORME) ---
+  # La sociedad insignia YA es nodo. Admin solidarios desde 2021-12-13 (historial_empresa M713721).
+  - anchor: "Company:inteligencia-prospectiva"
+    rel: ADMINISTRA
+    source: { id: "Person:domingo-arnaldo-amaro-chacon", exists: true }
+    target: { id: "Company:inteligencia-prospectiva", exists: true }
+    edge: { rol: "administrador solidario registral", note: "Administrador solidario (según BORME, hoja M713721; admin único 2020 → solidario con Guillermo desde 2021-12-13). Verificado en Nearius 2026-07-08. Estructura societaria, no imputación." }
+  - anchor: "Company:inteligencia-prospectiva"
+    rel: ADMINISTRA
+    source: { id: "Person:guillermo-alfredo-amaro-chacon", exists: true }
+    target: { id: "Company:inteligencia-prospectiva", exists: true }
+    edge: { rol: "administrador solidario registral", note: "Administrador solidario (según BORME, hoja M713721; nombrado 2021-12-13). Verificado en Nearius 2026-07-08. Estructura societaria, no imputación." }
+
+  # ======================= BLOQUE A — solo sociedades ancladas al caso =======================
+  # Del clan Martínez Martínez importamos SOLO las piezas con anclaje judicial a nodos que ya existen.
+  # Julio (Person:julio-martinez-martinez), Manuel (Person:manuel-martinez), Afitta SL/Capital e Idella
+  # YA son nodos del caso → todas las aristas de este bloque son both-exist (0 nodos nuevos).
+
+  # --- Julio MM administra Idella (nodo existente; firmante del contrato con Plus Ultra 19-01-2021) ---
+  - anchor: "Company:idella-consulenza-strategica"
+    rel: ADMINISTRA
+    source: { id: "Person:julio-martinez-martinez", exists: true }
+    target: { id: "Company:idella-consulenza-strategica", exists: true }
+    edge: { rol: "administrador registral", note: "Administrador registral (según BORME, hoja A160780). Idella firmó el contrato de honorarios (1% del rescate) con Plus Ultra el 19-01-2021 (auto-zapatero). Verificado en Nearius 2026-07-08. Estructura societaria, no imputación." }
+
+  # --- Manuel MM co-administra Afitta SL / Afitta Capital SL (nodos existentes) ---
+  # Admins Manuel y Julio MM (informe corporativo §3.2; BORME hojas A124034 / A124910). Julio ya
+  # enlazado por vía judicial; añadimos la co-administración registral de Manuel con procedencia mercantil.
+  - anchor: "Company:afitta-sl"
+    rel: ADMINISTRA
+    source: { id: "Person:manuel-martinez", exists: true }
+    target: { id: "Company:afitta-sl", exists: true }
+    edge: { rol: "co-administrador registral", note: "Co-administrador registral de Afitta SL (según BORME, hoja A124034; Elda). Verificado en Nearius 2026-07-08. Estructura societaria, no imputación." }
+  - anchor: "Company:afitta-capital-sl"
+    rel: ADMINISTRA
+    source: { id: "Person:manuel-martinez", exists: true }
+    target: { id: "Company:afitta-capital-sl", exists: true }
+    edge: { rol: "co-administrador registral", note: "Co-administrador registral de Afitta Capital SL (según BORME, hoja A124910). Verificado en Nearius 2026-07-08. Estructura societaria, no imputación." }
+
+companies:
+  # ======================= Enriquecer nodos existentes (props-only, MATCH fill-only) =======================
+  # NO tocan source_kind/summary/name. Solo rellenan props registrales BORME + is_mercantil.
+
+  # --- Inteligencia Prospectiva (nodo del caso) ---
+  # Cronología de capital (según BORME / historial_empresa M713721, verificado 2026-07-08):
+  #   2020-01 Beren Europe const. 3.000 → (Alaska Ilimitada) → 2020-12 10.000 → 2022-05 264.500 →
+  #   2022-12-15 701.500 € (resultante vigente). El campo capital_social del nodo Nearius mostraba
+  #   437.000 (=capital APORTADO de la última ronda); el vigente es el RESULTANTE 701.500.
+  - entity_id: "Company:inteligencia-prospectiva"
+    type: Company
+    hoja: "M713721"
+    provincia: "MADRID"
+    capital_social: 701500
+    fecha_constitucion: "2020-01-13"
+    domicilio: "Madrid"
+
+  # --- Afitta SL / Afitta Capital SL (nodos del caso; 061 T1b 2026-09-16) ---
+  # Hojas registrales verificadas en Nearius (buscar_empresa_por_nombre_exacto, borme-etl-2026.08):
+  # ambas constituidas en Elda (Alicante) en 2011 (BORME-A-2011-23-03 / BORME-A-2011-68-03, sector
+  # inmobiliaria) y con nombramiento+cese publicados en 2021 (BORME-A-2021-86-03), coherente con el
+  # cambio de manos de 2021 que recoge la prensa. Props-only: no crean nodos ni aristas.
+  - entity_id: "Company:afitta-sl"
+    type: Company
+    hoja: "A124034"
+    provincia: "ALICANTE"
+    fecha_constitucion: "2011"
+    domicilio: "Elda (Alicante)"
+    borme_id: "BORME-A-2011-23-03"
+  - entity_id: "Company:afitta-capital-sl"
+    type: Company
+    hoja: "A124910"
+    provincia: "ALICANTE"
+    fecha_constitucion: "2011"
+    borme_id: "BORME-A-2011-68-03"
+
+  # --- Idella Consulenza Strategica (nodo existente; NO recrear) ---
+  - entity_id: "Company:idella-consulenza-strategica"
+    type: Company
+    hoja: "A160780"
+    provincia: "ALICANTE"
+    capital_social: 50000

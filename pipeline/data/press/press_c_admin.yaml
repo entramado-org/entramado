@@ -1,0 +1,57 @@
+# Administration figures & associates — neutral structural enrichment (press / open sources).
+# NEUTRAL facts only (offices, party, company ownership, professional roles, family).
+# Allegations live in the judicial documents with their own provenance. source_kind="prensa".
+#
+# Trimmed during review: dropped José Ruz, Fernando Merino, Delcy Rodríguez and
+# Jésica Rodríguez — either uncertain identity, scandal-framed sources, or quotes
+# that didn't cleanly support a neutral relation.
+
+entities:
+  - {name: "Isabel Pardo de Vera", type: Person}              # MERGE onto existing node
+  - {name: "Juan Carlos Barrabés", type: Person}              # MERGE onto existing node
+  - {name: "Wayra",                type: Company, role: "División de Telefónica para empresas tecnológicas emergentes"}
+
+relations:
+  # ---------------- Isabel Pardo de Vera ----------------
+  - source: "Isabel Pardo de Vera"
+    target: "ADIF"
+    type: WORKS_FOR
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Isabel_Pardo_de_Vera"
+    date: "2018"
+    quote: "Presidenta de Adif y Adif-AV 30 de junio de 2018-28 de julio de 2021"
+    note: "Presidenta de ADIF y ADIF-Alta Velocidad (2018–2021)."
+
+  - source: "Isabel Pardo de Vera"
+    target: "Ministerio de Transportes, Movilidad y Agenda Urbana"
+    type: WORKS_FOR
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Isabel_Pardo_de_Vera"
+    date: "2021"
+    quote: "Secretaria de Estado de Transportes, Movilidad y Agenda Urbana del Gobierno de España de 2021 a 2023"
+    note: "Secretaria de Estado de Transportes, Movilidad y Agenda Urbana (2021–2023)."
+
+  # ---------------- Juan Carlos Barrabés ----------------
+  - source: "Juan Carlos Barrabés"
+    target: "Grupo Barrabés"
+    type: WORKS_FOR
+    outlet: "Infobae"
+    url: "https://www.infobae.com/espana/2024/05/30/quien-es-carlos-barrabes-el-guru-del-emprendimiento-y-la-transformacion-social-sobre-el-que-pivota-el-caso-begona-gomez/"
+    quote: "Barrabés Ski Montaña SL, una sociedad dedicada al 'comercio al por menor y al por mayor de toda clase de artículos, especialmente relacionados con la práctica de todo tipo de actividades deportivas'"
+    note: "Fundador y presidente del Grupo Barrabés, originado en el negocio familiar de Benasque (Huesca)."
+
+  - source: "Juan Carlos Barrabés"
+    target: "Wayra"
+    type: WORKS_FOR
+    outlet: "Infobae"
+    url: "https://www.infobae.com/espana/2024/05/30/quien-es-carlos-barrabes-el-guru-del-emprendimiento-y-la-transformacion-social-sobre-el-que-pivota-el-caso-begona-gomez/"
+    quote: "Fue miembro del consejo de Wayra, la división de Telefónica especializada en empresas tecnológicas emergentes"
+    note: "Miembro del consejo de Wayra (Telefónica)."
+
+  - source: "Juan Carlos Barrabés"
+    target: "Universidad Complutense de Madrid"
+    type: WORKS_FOR
+    outlet: "Infobae"
+    url: "https://www.infobae.com/espana/2024/05/30/quien-es-carlos-barrabes-el-guru-del-emprendimiento-y-la-transformacion-social-sobre-el-que-pivota-el-caso-begona-gomez/"
+    quote: "profesor del Máster en Transformación Social Competitiva de la Universidad Complutense de Madrid"
+    note: "Profesor del Máster en Transformación Social Competitiva de la UCM."

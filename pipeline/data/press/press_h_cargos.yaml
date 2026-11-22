@@ -1,0 +1,43 @@
+# Public officials connected to the cases — neutral office/party facts (Wikipedia).
+# NOTE: quotes intentionally OMITTED here — the fetch summariser paraphrased the
+# Wikipedia infobox rather than returning character-exact text, so rather than
+# present a non-verbatim string as a quote we keep only the factual `note` + the
+# source URL. All facts are uncontroversial public offices.
+
+entities:
+  - {name: "Ángel Víctor Torres", type: Person}
+  - {name: "Marga Prohens", type: Person}
+  - {name: "Óscar Puente", type: Person}
+  - {name: "José Blanco", type: Person}
+  - {name: "PSOE", type: Organization}
+  - {name: "Partido Popular", type: Organization}
+  - {name: "Gobierno de España", type: Organization}
+  - {name: "Congreso de los Diputados", type: Organization}
+  - {name: "Gobierno de Canarias", type: Organization}
+  - {name: "Gobierno de las Islas Baleares", type: Organization}
+  - {name: "Ministerio de Fomento", type: Organization}
+  - {name: "Parlamento de Canarias", type: Organization}
+  - {name: "Parlamento de las Islas Baleares", type: Organization}
+
+relations:
+  # ---------------- Ángel Víctor Torres (PSOE) ----------------
+  - {source: "Ángel Víctor Torres", target: "PSOE", type: MEMBER_OF, outlet: "Wikipedia", url: "https://es.wikipedia.org/wiki/Ángel_Víctor_Torres", date: "2017", note: "Militante del PSOE; secretario general del PSOE de Canarias desde 2017."}
+  - {source: "Ángel Víctor Torres", target: "Gobierno de Canarias", type: WORKS_FOR, outlet: "Wikipedia", url: "https://es.wikipedia.org/wiki/Ángel_Víctor_Torres", date: "2019", note: "Presidente del Gobierno de Canarias (2019–2023)."}
+  - {source: "Ángel Víctor Torres", target: "Gobierno de España", type: WORKS_FOR, outlet: "Wikipedia", url: "https://es.wikipedia.org/wiki/Ángel_Víctor_Torres", date: "2023", note: "Ministro de Política Territorial (desde 2023)."}
+  - {source: "Ángel Víctor Torres", target: "Parlamento de Canarias", type: PARTICIPATED_IN, outlet: "Wikipedia", url: "https://es.wikipedia.org/wiki/Ángel_Víctor_Torres", date: "2019", note: "Diputado autonómico (2019–2023)."}
+
+  # ---------------- Marga Prohens (Partido Popular) ----------------
+  - {source: "Marga Prohens", target: "Partido Popular", type: MEMBER_OF, outlet: "Wikipedia", url: "https://es.wikipedia.org/wiki/Marga_Prohens", date: "2021", note: "Presidenta del PP de las Islas Baleares desde julio de 2021."}
+  - {source: "Marga Prohens", target: "Gobierno de las Islas Baleares", type: WORKS_FOR, outlet: "Wikipedia", url: "https://es.wikipedia.org/wiki/Marga_Prohens", date: "2023", note: "Presidenta de las Islas Baleares (desde 2023)."}
+  - {source: "Marga Prohens", target: "Congreso de los Diputados", type: PARTICIPATED_IN, outlet: "Wikipedia", url: "https://es.wikipedia.org/wiki/Marga_Prohens", date: "2019", note: "Diputada en el Congreso por las Islas Baleares (2019–2023)."}
+  - {source: "Marga Prohens", target: "Parlamento de las Islas Baleares", type: PARTICIPATED_IN, outlet: "Wikipedia", url: "https://es.wikipedia.org/wiki/Marga_Prohens", date: "2011", note: "Diputada autonómica (2011–2019; desde 2023)."}
+
+  # ---------------- Óscar Puente (PSOE) ----------------
+  - {source: "Óscar Puente", target: "PSOE", type: MEMBER_OF, outlet: "Wikipedia", url: "https://es.wikipedia.org/wiki/Óscar_Puente_Santiago", date: "1990", note: "Militante del PSOE desde 1990; secretario general del PSOE de Valladolid desde 2021."}
+  - {source: "Óscar Puente", target: "Gobierno de España", type: WORKS_FOR, outlet: "Wikipedia", url: "https://es.wikipedia.org/wiki/Óscar_Puente_Santiago", date: "2023", note: "Ministro de Transportes (desde el 21 de noviembre de 2023)."}
+  - {source: "Óscar Puente", target: "Congreso de los Diputados", type: PARTICIPATED_IN, outlet: "Wikipedia", url: "https://es.wikipedia.org/wiki/Óscar_Puente_Santiago", date: "2023", note: "Diputado por Valladolid (XV legislatura, desde 2023)."}
+
+  # ---------------- José Blanco (PSOE) ----------------
+  - {source: "José Blanco", target: "PSOE", type: MEMBER_OF, outlet: "Wikipedia", url: "https://es.wikipedia.org/wiki/José_Blanco_López", date: "2000", note: "Secretario de Organización del PSOE (2000–2008); vicesecretario general (2008–2012)."}
+  - {source: "José Blanco", target: "Ministerio de Fomento", type: WORKS_FOR, outlet: "Wikipedia", url: "https://es.wikipedia.org/wiki/José_Blanco_López", date: "2009", note: "Ministro de Fomento (2009–2011)."}
+  - {source: "José Blanco", target: "Congreso de los Diputados", type: PARTICIPATED_IN, outlet: "Wikipedia", url: "https://es.wikipedia.org/wiki/José_Blanco_López", date: "1996", note: "Diputado por Lugo en el Congreso (1996–2014)."}

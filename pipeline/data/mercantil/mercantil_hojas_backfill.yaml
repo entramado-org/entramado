@@ -1,0 +1,43 @@
+# Overlay MERCANTIL — backfill de hojas registrales (remediación auditoría 2026-07-08, §H.4 del
+# informe mercantil_validation_20260708.md). Cargado por `make mercantil` (pass `companies:`,
+# fill-only): rellena `hoja_registral` (+is_mercantil) en nodos que YA existen y que se crearon
+# en tandas anteriores sin hoja. NO crea nodos ni aristas; coalesce nunca pisa un valor existente.
+#
+# Hojas verificadas 1:1 contra Nearius/BORME (auditoría 2026-07-08 + re-verificación en esta
+# remediación; mapeo NEZ resuelto por nombre↔hoja: Arrendadora=A102011, Asesores=A34664,
+# Renta=A79972). Pickashop (A166091) y Rentas Emeritenses (A148614, Alicante) pasaron el gate
+# anti-homónimo (Julio/Manuel MM figuran en la hoja; el homónimo BA22604 de Badajoz es ajeno).
+# SIN hoja BORME real (nodo Nearius con hoja UUID) → excluidas: Rentas Calpe, World Magic in the
+# Villages. Grupo Signum excluida: la hoja M497420 no lista a Aldama (gate no superado).
+
+companies:
+  # --- órbita Barrabés ---
+  - { entity_id: "Company:formiguero-barrabes-sl", type: Company, hoja: "M648880", provincia: "MADRID" }
+  - { entity_id: "Company:llitarrada-innova-sl", type: Company, hoja: "M556278", provincia: "MADRID" }
+  - { entity_id: "Company:step-one", type: Company, hoja: "M461635", provincia: "MADRID" }
+  - { entity_id: "Company:kanvas-media-web-marketing-sl", type: Company, hoja: "M474368", provincia: "MADRID" }
+  - { entity_id: "Company:grupo-barrabes", type: Company, hoja: "HU6693", provincia: "HUESCA" }   # canónico post-merge (061 T1b)
+  - { entity_id: "Company:telefonica-open-innovation-sl", type: Company, hoja: "M520642", provincia: "MADRID" }
+  # --- racimo patrimonial de Julio Martínez Martínez ---
+  - { entity_id: "Company:aplicaciones-portuarias-sl", type: Company, hoja: "A165727", provincia: "ALICANTE" }
+  - { entity_id: "Company:arrendamientos-aspe-sl", type: Company, hoja: "A51161", provincia: "ALICANTE" }
+  - { entity_id: "Company:arrendamientos-carabassi-sl", type: Company, hoja: "A71016", provincia: "ALICANTE" }
+  - { entity_id: "Company:arrendamientos-el-campet-sl", type: Company, hoja: "A46546", provincia: "ALICANTE" }
+  - { entity_id: "Company:arrendamientos-san-juan-sl", type: Company, hoja: "A50013", provincia: "ALICANTE" }
+  - { entity_id: "Company:asp-rentas-sl", type: Company, hoja: "AL49771", provincia: "ALMERÍA" }
+  - { entity_id: "Company:castrum-locator-sl", type: Company, hoja: "A65672", provincia: "ALICANTE" }
+  - { entity_id: "Company:estanza-hotels-sl", type: Company, hoja: "A126845", provincia: "ALICANTE" }
+  - { entity_id: "Company:merida-capital-sl", type: Company, hoja: "A150261", provincia: "ALICANTE" }
+  - { entity_id: "Company:nez-arrendadora-sl", type: Company, hoja: "A102011", provincia: "ALICANTE" }
+  - { entity_id: "Company:nez-asesores-sl", type: Company, hoja: "A34664", provincia: "ALICANTE" }
+  - { entity_id: "Company:nez-renta-sl", type: Company, hoja: "A79972", provincia: "ALICANTE" }
+  - { entity_id: "Company:prointer-2000-sa", type: Company, hoja: "V72742", provincia: "ALICANTE" }
+  - { entity_id: "Company:instalaciones-electricas-j-m-sl", type: Company, hoja: "V16742", provincia: "VALENCIA" }
+  - { entity_id: "Company:rentalia-2002-sl", type: Company, hoja: "A71624", provincia: "ALICANTE" }
+  - { entity_id: "Company:bodegas-victorianas-sa", type: Company, hoja: "VI2239", provincia: "ÁLAVA" }
+  - { entity_id: "Company:inversiones-paderne-sl", type: Company, hoja: "C24655", provincia: "A CORUÑA" }
+  - { entity_id: "Company:zenebtimar-sl", type: Company, hoja: "A152732", provincia: "ALICANTE" }
+  - { entity_id: "Company:zenitram-partners-sl", type: Company, hoja: "A143776", provincia: "ALICANTE" }
+  - { entity_id: "Company:zenzap-sl", type: Company, hoja: "A143676", provincia: "ALICANTE" }
+  - { entity_id: "Company:pickashop", type: Company, hoja: "A166091", provincia: "ALICANTE" }
+  - { entity_id: "Company:rentas-emeritenses-sl", type: Company, hoja: "A148614", provincia: "ALICANTE" }

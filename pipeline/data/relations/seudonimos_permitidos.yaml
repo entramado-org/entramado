@@ -1,0 +1,114 @@
+# Seudónimos judiciales: lista PÚBLICA de lo que se conserva (spec 070).
+#
+# Los autos del Tribunal Supremo sustituyen el nombre real de cada investigado por un nombre de
+# pila ficticio (context/pseudonyms.yaml). Al construir el grafo, `make relations` borra toda arista
+# entre un seudónimo y una sociedad u organismo, de cualquier capa, y todo alias de un seudónimo que
+# NO figure aquí: denegación por defecto. Lo retirado no se enumera en ningún fichero público; consta
+# en el registro de rectificaciones con los extremos neutralizados.
+#
+#   aristas: {seudonimo, otro, tipo, kinds, docs, origen, motivo}: `otro` es una Company u Organization;
+#            `kinds` limita las capas que se conservan (sin él, cualquiera) y `docs` los documentos
+#            (`source_doc`): con él, solo las aristas de esos documentos (sin él, de cualquiera).
+#   alias:   {id, permitidos}: solo el nombre de pila con tratamiento («don X», «Sr. X»).
+# Las dos secciones son obligatorias (vacías: `aristas: []`, `alias: []`): faltar no es «nada».
+#
+# Lo reescribe `qa_esc_apply` (063: «conservar» añade la excepción; «retirar» la quita o la acota por
+# documento), ordenado y sin más comentarios que esta cabecera; `pipeline/scripts/seudonimos_check.py`
+# lo valida en el CI.
+aristas:
+- {seudonimo: 'Person:alejo', otro: 'Company:acciona', tipo: ASSOCIATED_WITH, kinds: [judicial], origen: estado-2026-10-07, motivo: 'estado publicado del seed 20261007-qa067b, sin revisar (spec 070, Q1)'}
+- {seudonimo: 'Person:alejo', otro: 'Company:servinabar', tipo: ASSOCIATED_WITH, kinds: [judicial], origen: estado-2026-10-07, motivo: 'estado publicado del seed 20261007-qa067b, sin revisar (spec 070, Q1)'}
+- {seudonimo: 'Person:alejo', otro: 'Organization:direccion-general-de-carreteras', tipo: ASSOCIATED_WITH, kinds: [judicial], origen: estado-2026-10-07, motivo: 'estado publicado del seed 20261007-qa067b, sin revisar (spec 070, Q1)'}
+- {seudonimo: 'Person:david', otro: 'Company:servinabar', tipo: ASSOCIATED_WITH, kinds: [judicial], origen: estado-2026-10-07, motivo: 'estado publicado del seed 20261007-qa067b, sin revisar (spec 070, Q1)'}
+- {seudonimo: 'Person:david', otro: 'Organization:guardia-civil', tipo: INVESTIGATED_BY, kinds: [judicial], origen: estado-2026-10-07, motivo: 'estado publicado del seed 20261007-qa067b, sin revisar (spec 070, Q1)'}
+- {seudonimo: 'Person:desiderio', otro: 'Company:air-europa', tipo: ASSOCIATED_WITH, kinds: [judicial], origen: estado-2026-10-07, motivo: 'estado publicado del seed 20261007-qa067b, sin revisar (spec 070, Q1)'}
+- {seudonimo: 'Person:desiderio', otro: 'Company:air-europa', tipo: INVOLVES, kinds: [judicial], origen: estado-2026-10-07, motivo: 'estado publicado del seed 20261007-qa067b, sin revisar (spec 070, Q1)'}
+- {seudonimo: 'Person:desiderio', otro: 'Company:levantina-ingenieria-y-construccion', tipo: ASSOCIATED_WITH, kinds: [judicial], origen: estado-2026-10-07, motivo: 'estado publicado del seed 20261007-qa067b, sin revisar (spec 070, Q1)'}
+- {seudonimo: 'Person:desiderio', otro: 'Company:obras-publicas-y-regadios', tipo: ASSOCIATED_WITH, kinds: [judicial], origen: estado-2026-10-07, motivo: 'estado publicado del seed 20261007-qa067b, sin revisar (spec 070, Q1)'}
+- {seudonimo: 'Person:desiderio', otro: 'Company:villafuel', tipo: ASSOCIATED_WITH, kinds: [judicial], origen: estado-2026-10-07, motivo: 'estado publicado del seed 20261007-qa067b, sin revisar (spec 070, Q1)'}
+- {seudonimo: 'Person:desiderio', otro: 'Company:villafuel', tipo: INVOLVES, kinds: [judicial], origen: estado-2026-10-07, motivo: 'estado publicado del seed 20261007-qa067b, sin revisar (spec 070, Q1)'}
+- {seudonimo: 'Person:desiderio', otro: 'Organization:adif', tipo: INVOLVES, kinds: [judicial], origen: estado-2026-10-07, motivo: 'estado publicado del seed 20261007-qa067b, sin revisar (spec 070, Q1)'}
+- {seudonimo: 'Person:desiderio', otro: 'Organization:direccion-general-de-carreteras', tipo: INVOLVES, kinds: [judicial], origen: estado-2026-10-07, motivo: 'estado publicado del seed 20261007-qa067b, sin revisar (spec 070, Q1)'}
+- {seudonimo: 'Person:desiderio', otro: 'Organization:puertos-del-estado', tipo: INVOLVES, kinds: [judicial], origen: estado-2026-10-07, motivo: 'estado publicado del seed 20261007-qa067b, sin revisar (spec 070, Q1)'}
+- {seudonimo: 'Person:fermin', otro: 'Company:acciona', tipo: RECEIVED, kinds: [judicial], origen: estado-2026-10-07, motivo: 'estado publicado del seed 20261007-qa067b, sin revisar (spec 070, Q1)'}
+- {seudonimo: 'Person:fermin', otro: 'Company:servinabar', tipo: ASSOCIATED_WITH, kinds: [judicial], origen: estado-2026-10-07, motivo: 'estado publicado del seed 20261007-qa067b, sin revisar (spec 070, Q1)'}
+- {seudonimo: 'Person:jesus-luis', otro: 'Company:acciona-construccion', tipo: WORKS_FOR, kinds: [judicial], origen: estado-2026-10-07, motivo: 'estado publicado del seed 20261007-qa067b, sin revisar (spec 070, Q1)'}
+- {seudonimo: 'Person:jose-pedro', otro: 'Organization:la-sexta', tipo: ASSOCIATED_WITH, kinds: [judicial], origen: estado-2026-10-07, motivo: 'estado publicado del seed 20261007-qa067b, sin revisar (spec 070, Q1)'}
+- {seudonimo: 'Person:juan-miguel', otro: 'Organization:fiadelso', tipo: ASSOCIATED_WITH, kinds: [judicial], origen: estado-2026-10-07, motivo: 'estado publicado del seed 20261007-qa067b, sin revisar (spec 070, Q1)'}
+- {seudonimo: 'Person:landelino', otro: 'Company:acciona-construccion', tipo: WORKS_FOR, kinds: [judicial], origen: estado-2026-10-07, motivo: 'estado publicado del seed 20261007-qa067b, sin revisar (spec 070, Q1)'}
+- {seudonimo: 'Person:paulino', otro: 'Organization:tragsatec', tipo: PARTICIPATED_IN, kinds: [judicial], origen: estado-2026-10-07, motivo: 'estado publicado del seed 20261007-qa067b, sin revisar (spec 070, Q1)'}
+- {seudonimo: 'Person:roman', otro: 'Organization:adif', tipo: PARTICIPATED_IN, kinds: [judicial], origen: estado-2026-10-07, motivo: 'estado publicado del seed 20261007-qa067b, sin revisar (spec 070, Q1)'}
+- {seudonimo: 'Person:roman', otro: 'Organization:ineco', tipo: PARTICIPATED_IN, kinds: [judicial], origen: estado-2026-10-07, motivo: 'estado publicado del seed 20261007-qa067b, sin revisar (spec 070, Q1)'}
+- {seudonimo: 'Person:roman', otro: 'Organization:puertos-del-estado', tipo: MET_WITH, kinds: [judicial], origen: estado-2026-10-07, motivo: 'estado publicado del seed 20261007-qa067b, sin revisar (spec 070, Q1)'}
+- {seudonimo: 'Person:roman', otro: 'Organization:tragsatec', tipo: PARTICIPATED_IN, kinds: [judicial], origen: estado-2026-10-07, motivo: 'estado publicado del seed 20261007-qa067b, sin revisar (spec 070, Q1)'}
+- {seudonimo: 'Person:romulo', otro: 'Company:air-europa', tipo: ASSOCIATED_WITH, kinds: [judicial], origen: estado-2026-10-07, motivo: 'estado publicado del seed 20261007-qa067b, sin revisar (spec 070, Q1)'}
+- {seudonimo: 'Person:romulo', otro: 'Company:villafuel', tipo: PARTICIPATED_IN, kinds: [judicial], origen: estado-2026-10-07, motivo: 'estado publicado del seed 20261007-qa067b, sin revisar (spec 070, Q1)'}
+
+alias:
+- {id: 'Person:adrian', permitidos: [Sr. Adrian]}
+- {id: 'Person:adriano', permitidos: [don Adriano]}
+- {id: 'Person:agapito', permitidos: [don Agapito]}
+- {id: 'Person:alejandro', permitidos: [don Alejandro]}
+- {id: 'Person:alejo', permitidos: [Sr. Alejo, don Alejo]}
+- {id: 'Person:alfonso', permitidos: [D. Alfonso, don Alfonso]}
+- {id: 'Person:andrea', permitidos: [Doña Andrea]}
+- {id: 'Person:anibal', permitidos: [don Anibal]}
+- {id: 'Person:apolonia', permitidos: [doña Apolonia]}
+- {id: 'Person:basilio', permitidos: [don Basilio]}
+- {id: 'Person:benito', permitidos: [Sr. Benito, don Benito]}
+- {id: 'Person:bienvenido', permitidos: [don Bienvenido]}
+- {id: 'Person:blas', permitidos: [don Blas]}
+- {id: 'Person:carla', permitidos: [Dª Carla]}
+- {id: 'Person:carlos-francisco', permitidos: [Sr. Carlos Francisco]}
+- {id: 'Person:casimiro', permitidos: [don Casimiro, el Sr. Casimiro]}
+- {id: 'Person:cecilio', permitidos: [don Cecilio]}
+- {id: 'Person:celestino', permitidos: [don Celestino]}
+- {id: 'Person:david', permitidos: [D. David, Sr. David, don David]}
+- {id: 'Person:desiderio', permitidos: [Sr. Desiderio, don Desiderio]}
+- {id: 'Person:eduardo', permitidos: [don Eduardo]}
+- {id: 'Person:elias', permitidos: [don Elias]}
+- {id: 'Person:eloisa', permitidos: [Dª Eloisa]}
+- {id: 'Person:eloy', permitidos: [don Eloy]}
+- {id: 'Person:everardo', permitidos: [Sr. Everardo, don Everardo]}
+- {id: 'Person:ezequias', permitidos: [Sr. Ezequias, don Ezequias]}
+- {id: 'Person:fatima', permitidos: [D.ª Fátima, Sra. Fátima]}
+- {id: 'Person:felix', permitidos: [Sr. Felix, don Felix]}
+- {id: 'Person:fermin', permitidos: [Sr. Fermín, don Fermín]}
+- {id: 'Person:gabino', permitidos: [Sr. Gabino, don Gabino]}
+- {id: 'Person:gaspar', permitidos: [Sr. Gaspar, don Gaspar]}
+- {id: 'Person:higinio', permitidos: [Sr. Higinio, don Higinio]}
+- {id: 'Person:isidro', permitidos: [Sr. Isidro]}
+- {id: 'Person:jaime', permitidos: [D. Jaime, Don Jaime, Sr. Jaime, Sres. Jaime, el Sr. Jaime]}
+- {id: 'Person:jose-ignacio', permitidos: [don Jose Ignacio]}
+- {id: 'Person:jose-pedro', permitidos: [Sr. Jose Pedro, don Jose Pedro]}
+- {id: 'Person:juan-miguel', permitidos: [Sr. Juan Miguel, don Juan Miguel]}
+- {id: 'Person:justa', permitidos: [doña Justa]}
+- {id: 'Person:justiniano', permitidos: [don Justiniano]}
+- {id: 'Person:leocadia', permitidos: [Dª Leocadia, doña Leocadia]}
+- {id: 'Person:lucas', permitidos: [don Lucas]}
+- {id: 'Person:magdalena', permitidos: [Dª Magdalena, doña Magdalena]}
+- {id: 'Person:mercedes', permitidos: [Dª Mercedes, doña Mercedes]}
+- {id: 'Person:nemesio', permitidos: [don Nemesio]}
+- {id: 'Person:nicolasa', permitidos: [Dª Nicolasa, doña Nicolasa]}
+- {id: 'Person:pablo', permitidos: [don Pablo]}
+- {id: 'Person:pablo-jesus', permitidos: [don Pablo Jesús]}
+- {id: 'Person:paulino', permitidos: [D. Paulino, Sr. Paulino, Sres. Paulino, don Paulino, el Sr. Paulino]}
+- {id: 'Person:penelope', permitidos: [Dª Penélope]}
+- {id: 'Person:placido', permitidos: [don Plácido]}
+- {id: 'Person:roman', permitidos: [Don Roman, Sr. Roman, Sres. Roman, 'don Roman ,', el Sr. Roman]}
+- {id: 'Person:romulo', permitidos: [Don Romulo, Sr. Romulo, Sres. Romulo, el Sr. Romulo]}
+- {id: 'Person:segismundo', permitidos: [Sr. Segismundo, don Segismundo]}
+- {id: 'Person:tomas', permitidos: [Sr. Tomás, don Tomás]}
+- {id: 'Person:yolanda', permitidos: [Dª Yolanda, Dña Yolanda, doña Yolanda]}
+
+# citas: {seudonimo, sha256, docs, origen, motivo}: una cita de una regla, una capa o una arista no judicial
+#        que nombra al extremo civil de un seudónimo, revisada como coaparición, o una cita judicial recompuesta
+#        con elipsis marcada, revisada contra el documento público. `sha256` es el de la cita normalizada
+#        (`seudonimos.entrada_cita`): la entrada admite ese texto exacto y ningún otro; `docs`, sus documentos.
+#        Sin ella, la cita es un hallazgo.
+citas:
+- {seudonimo: 'Person:alejo', sha256: 99e5facc8e192fbc2c9b0ad79b89360a9ead552fa723e1e881cfd74c06d98ab0, docs: [ATS_8919_2025.pdf], origen: estado-2026-10-07, motivo: cita literal del documento judicial público; coaparición verificada en el export 20261007-qa067b}
+- {seudonimo: 'Person:fermin', sha256: 6d17abf258564d79283e953d17bd4d62b55e1d6d168bda31145fc7fe269d5772, docs: [ATS_8919_2025.pdf], origen: decision-2026-10-08, motivo: cita literal del documento judicial público; coaparición verificada en el export 20261007-qa067b}
+- {seudonimo: 'Person:justa', sha256: 95b7aff9f3a6bbc8b39153716fca1cc8544777d967b3c576f196312ac5c5f235, docs: [ATS_8919_2025.pdf], origen: estado-2026-10-07, motivo: cita literal del documento judicial público; coaparición verificada en el export 20261007-qa067b}
+- {seudonimo: 'Person:pablo-jesus', sha256: 4dc6b0f740c408e2cf2feea6b9ed24e193e3d7d3f870d25c6368dcfe9eb7f0b4, docs: [ATS_15039_2024.pdf], origen: decision-2026-10-08, motivo: cita literal del documento judicial público; coaparición verificada en el export 20261007-qa067b}
+- {seudonimo: 'Person:roman', sha256: 8f10145ec125339ef93a4407e779a3488b668dabfe11b12618052ce09e9de850, docs: [ATS_10280_2025.pdf], origen: decision-2026-10-08, motivo: cita literal del documento judicial público; coaparición verificada en el export 20261007-qa067b}

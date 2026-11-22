@@ -1,0 +1,136 @@
+# Patrones llamativos (spec 053) — capa EDITORIAL curada, servida en runtime por
+# GET /patrones (caché-mtime + bind-mount ro; clon del circuito de última hora, spec 044).
+# Lo edita un humano por PR: la validación es ESTRICTA (api/app/patrones.py — un patrón
+# inválido tumba el load entero; chequear antes del merge con `python -m app.patrones`).
+# Reglas no negociables: presunción de inocencia, todo hecho con fuente pública
+# verificable, «llamativo pero nada declarado ilegal» nunca presentado como indicio judicial.
+# Los dosieres de investigación (con las tablas íntegras) viven en sm-vault/Patrones/.
+patrones:
+# 063 tramo 4 (02-oct): patrón aquaterra-racimo-y-puerta-giratoria retirado — afirmaciones no sostenidas por sus fuentes
+# 063 tramo 4 (02-oct): patrón globalia-ehu-menor-cuenta-corriente retirado — afirmaciones no sostenidas por sus fuentes
+# 063 tramo 4 (02-oct): patrón civis-global-misma-ventanilla retirado — título, estado, hitos y contratos contradicen la tesis auditada; reponer solo reescrito entero con fuentes
+# 063 tramo 4 (02-oct): patrón perez-jimenez-umbral-dos-leyes retirado — afirmaciones no sostenidas por sus fuentes
+- slug: servinabar-nunca-sola
+  titulo: 'Servinabar: la constructora local que concurría en UTE con Acciona'
+  tesis: 'Servinabar 2000, sociedad navarra que aparece en la causa del Tribunal Supremo sobre Santos
+    Cerdán, ha concurrido a obra pública en unión temporal de empresas (UTE) con Acciona. Según el auto
+    del Tribunal Supremo de 30 de junio de 2025 que acordó la prisión provisional de Cerdán (p.11), en
+    un registro se intervino un contrato privado de compraventa por el que el administrador único de
+    Servinabar cedía a Santos Cerdán 1.350 de las 3.000 participaciones sociales de la mercantil (el 45
+    %). Cerdán reconoció su firma y explicó en su declaración que el documento no llegó a elevarse a
+    público y que lo suscribió cuando, tras unos malos resultados electorales del PSOE en Navarra, valoró
+    dejar la política, posibilidad que dice haber descartado el fin de semana siguiente. El instructor
+    considera que la falta de elevación a público no le privaría de eficacia entre las partes y contrapone
+    esa explicación al hecho de que el administrador conservara el documento y a los vínculos de Cerdán
+    con Servinabar años después (p.11). Según un oficio de la UCO citado por OKDiario (24-06-2025), el
+    contrato está fechado el 1 de junio de 2016. Un auto del Tribunal Supremo (ATS
+    8611/2025, p.6) recoge que Servinabar «concurrió, precisamente en U.T.E. con Acciona, a la ejecución
+    de ciertas obras». Según un informe de la UCO (p.34), la UTE Pabellón Navarra Arena, formada por
+    Acciona Construcción y Servinabar 2000, resultó adjudicataria en octubre de 2017 de las obras de
+    adecuación de ese pabellón por 3,7 millones de euros. Según OKDiario (24-06-2025), la sociedad
+    pública Nasuvinsa adjudicó a la UTE Acciona-Servinabar 46 viviendas de protección oficial; según El
+    Español (30-07-2025), Servinabar participó en la rehabilitación del antiguo Archivo General de
+    Navarra, y según Libertad Digital (29-07-2026), las obras de los túneles de Belate se adjudicaron a
+    una UTE formada por Acciona, Excavaciones Fermín Osés y Servinabar. Son hechos en investigación;
+    rige la presunción de inocencia.'
+  tipos:
+  - interposicion-societaria
+  estado: 'Servinabar figura en la causa especial del Tribunal Supremo sobre Santos Cerdán, en fase de
+    instrucción: los autos describen indicios, no hechos probados, y nadie ha sido juzgado por estos
+    hechos'
+  estado_fecha: '2026-10-02'
+  descubierto: '2026-07-19'
+  contratos_tope: obras
+  entities:
+  - Company:servinabar
+  - Company:acciona
+  - Organization:nasuvinsa
+  - Person:santos-cerdan
+  - Person:antxon
+  actores_sin_grafo: []
+  hitos:
+  - fecha: '2015-09-04'
+    hecho: Se constituye Servinabar 2000 SL en Navarra con 3.000 € de capital.
+    fuentes:
+    - borme-servinabar
+  - fecha: '2017-10-10'
+    hecho: 'Según el informe de la UCO, la mesa de contratación del Instituto Navarro de Deporte y
+      Juventud propone a la UTE formada por Acciona y Servinabar para las obras de los lotes 4 y 5 de
+      adecuación del pabellón Navarra Arena, en Pamplona, por 3,7 millones de euros; días después se
+      constituye formalmente la UTE Pabellón Navarra Arena entre Acciona Construcción y Servinabar
+      2000.'
+    fuentes:
+    - uco-navarra-arena
+  - fecha: '2025-06-30'
+    hecho: 'El Tribunal Supremo acuerda la prisión provisional de Santos Cerdán. El auto señala su
+      vinculación con Servinabar, «empresa que resultó adjudicataria de ciertas obras públicas,
+      precisamente actuando en U.T.E., pese a sus mínimas dimensiones y nula experiencia en el negocio
+      de la construcción, con ACCIONA CONSTRUCCIONES» (p. 10), y recoge que en el registro del domicilio
+      del administrador único de Servinabar se intervino un contrato privado por el que este cedía a
+      Cerdán 1.350 de las 3.000 participaciones de la sociedad (el 45 %); el documento, como explicó
+      Cerdán en su declaración, no llegó a elevarse a público (p. 11). El auto describe indicios de una
+      organización orientada a obtener «premios económicos por la ilícita adjudicación de obra pública»
+      (p. 15). Son indicios de la fase de instrucción; rige la presunción de inocencia.'
+    fuentes:
+    - auto-prision-vinculacion
+    - auto-prision-participaciones
+    - auto-prision-organizacion
+  - fecha: '2025-09-18'
+    hecho: 'Un nuevo auto del Tribunal Supremo recoge que Servinabar «concurrió, precisamente en U.T.E.
+      con Acciona, a la ejecución de ciertas obras» y que, según declaró un empleado de Acciona, no
+      aportaba a la UTE más valor añadido que el de tratarse de una empresa local.'
+    fuentes:
+    - ats-ute
+  - fecha: '2025-11-19'
+    hecho: 'Según Infobae (19-11-2025), el magistrado del Tribunal Supremo Leopoldo Puente decreta la
+      libertad provisional de Santos Cerdán al considerar «seriamente mitigado» el riesgo de destrucción
+      de pruebas que motivó su ingreso en prisión el 30 de junio; Cerdán sale ese día de la prisión de
+      Soto del Real tras cinco meses en prisión provisional.'
+    fuentes:
+    - infobae-libertad-cerdan
+  fuentes:
+  - id: borme-servinabar
+    etiqueta: BORME-A-2015-190-31
+    url: https://www.boe.es/diario_borme/txt.php?id=BORME-A-2015-190-31
+    acredita: Constitución de Servinabar 2000 SL (04-09-2015, 3.000 € de capital, Navarra)
+  - id: uco-navarra-arena
+    etiqueta: Informe UCO (caso Cerdán), p. 34
+    doc: informe-uco.pdf
+    pagina: 34
+    acredita: 'Propuesta de 10-10-2017 a la UTE Acciona-Servinabar de los lotes 4 y 5 del pabellón
+      Navarra Arena (3,7 M€) y constitución de la UTE Pabellón Navarra Arena'
+  - id: auto-prision-vinculacion
+    etiqueta: Auto del Tribunal Supremo de 30-06-2025 (prisión provisional de Santos Cerdán), p. 10
+    doc: auto-prision-cerdan-2025-06-30.pdf
+    pagina: 10
+    acredita: 'Servinabar, adjudicataria de obras públicas en UTE con Acciona pese a sus mínimas
+      dimensiones, y su vinculación con Cerdán, según el Supremo'
+  - id: auto-prision-participaciones
+    etiqueta: Auto del Tribunal Supremo de 30-06-2025 (prisión provisional de Santos Cerdán), p. 11
+    doc: auto-prision-cerdan-2025-06-30.pdf
+    pagina: 11
+    acredita: 'Contrato privado intervenido en un registro por el que el administrador único de
+      Servinabar cedía a Cerdán 1.350 de 3.000 participaciones; no elevado a público'
+  - id: auto-prision-organizacion
+    etiqueta: Auto del Tribunal Supremo de 30-06-2025 (prisión provisional de Santos Cerdán), p. 15
+    doc: auto-prision-cerdan-2025-06-30.pdf
+    pagina: 15
+    acredita: 'Indicios, según el Supremo, de una organización orientada a obtener «premios económicos
+      por la ilícita adjudicación de obra pública»'
+  - id: ats-ute
+    etiqueta: Auto del Tribunal Supremo (ATS 8611/2025), p. 6
+    doc: ATS_8611_2025.pdf
+    pagina: 6
+    acredita: 'Servinabar «concurrió, precisamente en U.T.E. con Acciona, a la ejecución de ciertas
+      obras»'
+  - id: infobae-libertad-cerdan
+    etiqueta: Infobae, 19-11-2025
+    url: https://www.infobae.com/espana/2025/11/19/santos-cerdan-sale-de-la-carcel-de-soto-del-real-tras-cinco-meses-en-prision-provisional/
+    acredita: 'Libertad provisional de Santos Cerdán decretada por el magistrado Leopoldo Puente al
+      considerar «seriamente mitigado» el riesgo de destrucción de pruebas; salida de Soto del Real'
+  disclaimer: 'Presunción de inocencia: ninguno de los actos descritos ha sido declarado ilegal y nadie
+    ha sido juzgado por estos hechos; lo que recogen los autos y el informe policial son indicios de la
+    fase de instrucción, no hechos probados. Concurrir en UTE es habitual y no ha sido declarado ilegal.
+    Lo judicial se cita de los autos e informes con su página; lo que procede de la prensa va atribuido
+    al medio.'
+# 063 tramo 4 (02-oct): patrón orbita-barrabes-cartera-publica retirado — título, estado, hitos y contratos contradicen la tesis auditada; reponer solo reescrito entero con fuentes

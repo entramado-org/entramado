@@ -1,0 +1,146 @@
+# Blueprint de Render (spec: DEPLOY.md §B, runbook privado) — 5 servicios en Frankfurt.
+# Solo sm-caddy es público; el resto son private services en la red interna.
+# Los env vars sync:false se rellenan una vez en el dashboard (secretos/seeds).
+#
+# ⚠️ Los upstreams del Caddyfile van por env var por si el hostname interno
+# real difiere del `name` (verificar en Connect → Internal tras el primer deploy).
+services:
+  # ── Neo4j (privado, disco persistente; NO autoescala por diseño de Render) ──
+  - type: pserv
+    name: sm-neo4j
+    runtime: docker
+    region: frankfurt
+    plan: standard # 2 GB RAM — heap 1G + pagecache 768M como en compose
+    dockerfilePath: ./infra/render/neo4j/Dockerfile
+    dockerContext: ./infra/render/neo4j
+    autoDeployTrigger: commit
+    buildFilter:
+      paths:
+        - infra/render/neo4j/**
+    disk:
+      name: neo4j-data
+      mountPath: /data
+      sizeGB: 5
+    envVars:
+      - key: NEO4J_AUTH # "neo4j/<password-fuerte>" — NO el placeholder
+        sync: false
+      - key: NEO4J_PLUGINS
+        value: '["apoc"]'
+      - key: NEO4J_dbms_security_procedures_unrestricted
+        value: "apoc.*"
+      - key: NEO4J_server_memory_heap_max__size
+        value: "1G"
+      - key: NEO4J_server_memory_pagecache_size
+        value: "768M"
+      - key: SEED_URL # https://<bucket-r2>/neo4j-data.tgz
+        sync: false
+      - key: SEED_VERSION # bump manual = re-seed gated del store
+        sync: false
+
+  # ── API FastAPI (privado; feed+patrones horneados, vault desde R2) ──
+  - type: pserv
+    name: sm-api
+    runtime: docker
+    region: frankfurt
+    plan: starter
+    dockerfilePath: ./api/Dockerfile.render
+    dockerContext: .
+    autoDeployTrigger: commit
+    buildFilter:
+      paths:
+        - api/**
+        - pipeline/data/ultima_hora/**
+        - pipeline/data/patrones/**
+        - pipeline/data/ontologia/**
+        - infra/render/api-entrypoint.sh
+    envVars:
+      - key: NEO4J_URI
+        value: "bolt://sm-neo4j:7687"
+      - key: NEO4J_USERNAME
+        value: "neo4j"
+      - key: NEO4J_PASSWORD
+        sync: false
+      - key: CORS_ORIGINS
+        value: "https://entramado.org"
+      - key: VAULT_SEED_URL # https://<bucket-r2>/sm-vault.tgz
+        sync: false
+
+  # ── MCP (misma imagen que sm-api, otro comando) ──
+  - type: pserv
+    name: sm-mcp
+    runtime: docker
+    region: frankfurt
+    plan: starter
+    dockerfilePath: ./api/Dockerfile.render
+    dockerContext: .
+    dockerCommand: /entrypoint.sh uvicorn app.mcp_server:asgi --host 0.0.0.0 --port 8008
+    autoDeployTrigger: commit
+    buildFilter:
+      paths:
+        - api/**
+        - pipeline/data/ultima_hora/**
+        - pipeline/data/patrones/**
+        - pipeline/data/ontologia/**
+        - infra/render/api-entrypoint.sh
+    envVars:
+      - key: NEO4J_URI
+        value: "bolt://sm-neo4j:7687"
+      - key: NEO4J_USERNAME
+        value: "neo4j"
+      - key: NEO4J_PASSWORD
+        sync: false
+      - key: VAULT_SEED_URL
+        sync: false
+
+  # ── Next.js (privado; NEXT_PUBLIC_API_BASE=/api es el default del ARG) ──
+  - type: pserv
+    name: sm-web
+    runtime: docker
+    region: frankfurt
+    plan: starter
+    dockerfilePath: ./web/Dockerfile.prod
+    dockerContext: ./web
+    autoDeployTrigger: commit
+    buildFilter:
+      paths:
+        - web/**
+    envVars:
+      # ⚠️ Hostnames internos REALES de esta instalación (Render añade sufijo
+      # aleatorio a algunos servicios: sm-api→sm-api-2pwf, sm-web→sm-web-gluy;
+      # sm-mcp y sm-neo4j quedaron sin sufijo). Si se recrean los servicios,
+      # releer los hostnames en Connect → Internal y actualizar aquí.
+      - key: API_INTERNAL_BASE # fetches RSC servidor-a-servidor
+        value: "http://sm-api-2pwf:8000"
+
+  # ── Caddy (ÚNICO servicio público: routing por path + rate limit per-IP) ──
+  - type: web
+    name: sm-caddy
+    runtime: docker
+    region: frankfurt
+    plan: starter
+    dockerfilePath: ./infra/render/caddy/Dockerfile
+    dockerContext: ./infra/render/caddy
+    healthCheckPath: /
+    autoDeployTrigger: commit
+    buildFilter:
+      paths:
+        - infra/render/caddy/**
+    envVars:
+      - key: SITE_HOST
+        value: ":8080" # puerto no privilegiado: sin cap_net_bind_service (Render la veta)
+      # ⚠️ Hostnames internos reales (sufijos de esta instalación, ver nota en
+      # sm-web). sm-web escucha en 10000: Render inyecta PORT=10000 y el
+      # server.js standalone de Next lo honra (pisa el PORT=3000 del Dockerfile).
+      - key: API_UPSTREAM
+        value: "sm-api-2pwf:8000"
+      - key: MCP_UPSTREAM
+        value: "sm-mcp:8008"
+      - key: WEB_UPSTREAM
+        value: "sm-web-gluy:10000"
+      # Basic auth del scrape /metrics/{api,mcp} (spec 057): usuario + hash
+      # bcrypt de `caddy hash-password` (pegar el hash tal cual; los `$` del
+      # bcrypt NO se doblan aquí — eso era cosa de .env de compose).
+      - key: METRICS_USER
+        sync: false
+      - key: METRICS_PASSWORD_HASH
+        sync: false

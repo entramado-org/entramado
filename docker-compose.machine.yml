@@ -1,0 +1,19 @@
+name: entramado
+# LOCAL-DEV override for running the stack inside the Apple `container` machine
+# `sm-dev` (see the `migrate-to-container-machine` skill). Use WITH the base dev file:
+#
+#   docker compose -f docker-compose.yml -f docker-compose.machine.yml up -d
+#
+# Why this exists: the LIVE prod Neo4j (Docker Desktop, docker-compose.prod.yml) holds
+# ./neo4j/data open 24/7. So the dev Neo4j inside the machine must NOT touch ./neo4j/* —
+# it gets its own VM-local store under /var/lib/sm-neo4j (native ext4 in the VM, fast and
+# fully isolated from the live graph). `!override` REPLACES the base volume list rather
+# than appending (which would double-mount /data). api/web/mcp keep their code/vault
+# bind mounts from the base file — those resolve via the machine's home-mount.
+services:
+  neo4j:
+    volumes: !override
+      - /var/lib/sm-neo4j/data:/data
+      - /var/lib/sm-neo4j/logs:/logs
+      - /var/lib/sm-neo4j/plugins:/plugins
+      - /var/lib/sm-neo4j/import:/var/lib/neo4j/import

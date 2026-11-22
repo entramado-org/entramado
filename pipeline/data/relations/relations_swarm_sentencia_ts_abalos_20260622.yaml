@@ -1,0 +1,19 @@
+# Durable corrections from the Claude swarm relation-verifier, auto-globbed by
+# relations_loader alongside the hand-curated relations.yaml. Its generator
+# (src/verify_relations.py, `make verify-relations-apply`) was retired by spec
+# 069 F5 and the run inputs are gone: this overlay is now MAINTAINED BY HAND.
+# Edit rules in place; never regenerate it.
+# Rules corrected by hand after generation (keep verbatim, never the verdict text):
+#   - the Carmen Pano FAMILY_OF deny, "motivo corregido (067, …)" (the verdict
+#     gave a false parentage).
+# tier=all edges=564 batches=15
+
+deny:
+  - {source: "Ministerio Fiscal", source_type: "Organization", target: "Víctor de Aldama", target_type: "Person", type: "ASSOCIATED_WITH", doc: "sentencia-ts-abalos-koldo-aldama-2026-06-22.pdf", quote_contains: "apuntando en su informe a la colaboració", reason: "swarm: Ministerio Fiscal es parte procesal contextual, no asociado al acusado"}
+  - {source: "Manuel Sánchez-Puelles y González Carvajal", source_type: "Person", target: "José Luis Ábalos", target_type: "Person", type: "PARTY_TO", doc: "sentencia-ts-abalos-koldo-aldama-2026-06-22.pdf", quote_contains: "acusación popular unificada, bajo la representación procesal", reason: "swarm: Procurador representa a la acusación popular, no parte vinculada a Ábalos"}
+  - {source: "Carmen Pano", source_type: "Person", target: "Leonor María González", target_type: "Person", type: "FAMILY_OF", doc: "sentencia-ts-abalos-koldo-aldama-2026-06-22.pdf", quote_contains: "su hija, Leonor María González", reason: "swarm: motivo corregido (067, 07-10-2026): la sentencia (pp.142 y 148) y la calificación fiscal (p.13) la presentan como hija de Carmen Pano; la arista sigue retirada: copia duplicada retirada; el parentesco sigue publicado por la calificación fiscal (p. 13); decisión del dueño (2026-10-08)"}
+  - {source: "Ana María Aranda", source_type: "Person", target: "Ministerio de Transportes, Movilidad y Agenda Urbana", target_type: "Organization", type: "WORKS_FOR", doc: "sentencia-ts-abalos-koldo-aldama-2026-06-22.pdf", quote_contains: "movilidad, que acreditab", reason: "swarm: Ana María Aranda no aparece en el texto; cita inventada"}
+  - {source: "Have Got Time", source_type: "Company", target: "Contrato de arrendamiento con opción de compra La Alcaidesa", target_type: "Contract", type: "PARTY_TO", doc: "sentencia-ts-abalos-koldo-aldama-2026-06-22.pdf", quote_contains: "La casa se compró por importe de 585.000", reason: "swarm: Have Got Time compró la casa, no es parte del arrendamiento"}
+
+fix:
+  []

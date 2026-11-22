@@ -1,0 +1,25 @@
+# Durable corrections from the Claude swarm relation-verifier, auto-globbed by
+# relations_loader alongside the hand-curated relations.yaml. Its generator
+# (src/verify_relations.py, `make verify-relations-apply`) was retired by spec
+# 069 F5 and the run inputs are gone: this overlay is now MAINTAINED BY HAND.
+# Edit rules in place; never regenerate it.
+# tier=all edges=413 batches=12
+
+deny:
+  - {source: "Blanca de Juan", source_type: "Person", target: "Transforma TSC, S.L.", target_type: "Company", type: "OWNS", doc: "auto-peinado-juicio-oral-begona-2026-06-20.pdf", quote_contains: "ya había sido dado de alta el 20 de sept", reason: "swarm: La cita es sobre el dominio web a nombre de Blanca de Juan, no sobre la sociedad Transforma TSC"}
+  - {source: "Begoña Gómez", source_type: "Person", target: "Cátedra TSC", target_type: "Organization", type: "OWNS", doc: "auto-peinado-juicio-oral-begona-2026-06-20.pdf", quote_contains: "El 2 de marzo de 2020 solicitó personalm", reason: "swarm: cita inexistente en chunk; OWNS de una cátedra no sustentado"}
+  - {source: "Palacio de la Moncloa", source_type: "Location", target: "Joaquín Goyache", target_type: "Person", type: "MET_WITH", doc: "auto-peinado-juicio-oral-begona-2026-06-20.pdf", quote_contains: "el
+entonces rector de la Universidad Com", reason: "swarm: Una ubicación no puede MET_WITH; la reunión fue con el Presidente, no con Goyache."}
+  - {source: "Ignacio Mariscal", source_type: "Person", target: "María Cristina Álvarez Rodríguez", target_type: "Person", type: "MET_WITH", doc: "auto-peinado-juicio-oral-begona-2026-06-20.pdf", quote_contains: "MARÍA CRISTINA ÁLVAREZ RODRÍGUEZ realizó", reason: "swarm: La cita no afirma reunión entre Mariscal y María Cristina; solo seguimiento de patrocinio"}
+  - {source: "Begoña Gómez", source_type: "Person", target: "Cátedra TSC", target_type: "Organization", type: "OWNS", doc: "auto-peinado-juicio-oral-begona-2026-06-20.pdf", quote_contains: "ya había registrado como marca el nombre", reason: "swarm: Registró la marca TSC, no posee la Cátedra (es de la UCM): mal atribuida"}
+  - {source: "Universidad Complutense de Madrid", source_type: "Organization", target: "Begoña Gómez", target_type: "Person", type: "PAID", doc: "auto-peinado-juicio-oral-begona-2026-06-20.pdf", quote_contains: "la Universidad Complutense de Madrid suf", reason: "swarm: UCM sufragaba costes del activo, no pago directo a Begoña"}
+  - {source: "Begoña Gómez", source_type: "Person", target: "Cátedra TSC", target_type: "Organization", type: "OWNS", doc: "auto-peinado-juicio-oral-begona-2026-06-20.pdf", quote_contains: "creación de la sociedad
+mercantil (por t", reason: "swarm: La cita describe la sociedad mercantil, no la Cátedra TSC"}
+
+fix:
+  - {source: "Audiencia Provincial de Madrid", source_type: "Court", target: "Begoña Gómez", target_type: "Person", type: "INVESTIGATED_BY", swap_direction: true, doc: "auto-peinado-juicio-oral-begona-2026-06-20.pdf", quote_contains: "no ha considerado oportuno, que lo
+proce", reason: "swarm: Dirección invertida: es Begoña la investigada por la Audiencia, no a la inversa"}
+  - {source: "Begoña Gómez", source_type: "Person", target: "Grupo Barrabés", target_type: "Company", type: "AWARDED_CONTRACT", corrected_type: "ASSOCIATED_WITH", swap_direction: false, doc: "auto-peinado-juicio-oral-begona-2026-06-20.pdf", quote_contains: "tratando de que se adjudiquen, como post", reason: "swarm: no adjudica contratos; tipo AWARDED_CONTRACT inválido, mejor ASSOCIATED_WITH"}
+  - {source: "Making Science Group", source_type: "Company", target: "Universidad Complutense de Madrid", target_type: "Organization", type: "PAID", swap_direction: true, doc: "auto-peinado-juicio-oral-begona-2026-06-20.pdf", quote_contains: "emitió el 12 de abril de 2023 factura n.", reason: "swarm: Factura de Making Science a la UCM: la UCM paga, dirección invertida."}
+  - {source: "Fiscalía Europea", source_type: "Organization", target: "Red.es", target_type: "Organization", type: "INVESTIGATED_BY", swap_direction: true, doc: "auto-peinado-juicio-oral-begona-2026-06-20.pdf", quote_contains: "hechos que están fuera del perímetro de ", reason: "swarm: La Fiscalía Europea investiga las cartas a Red.es; dirección invertida"}
+  - {source: "Juan Carlos Barrabés Cónsul", source_type: "Person", target: "Red.es", target_type: "Organization", type: "AWARDED_CONTRACT", corrected_type: "PARTY_TO", swap_direction: false, doc: "auto-peinado-juicio-oral-begona-2026-06-20.pdf", quote_contains: "ofertas que más tarde resultaron adjudic", reason: "swarm: Tipo AWARDED_CONTRACT inválido; contratos adjudicados vía Red.es"}

@@ -1,0 +1,4 @@
+# Excepciones del gate PII (scripts/pii_check.py, spec 059). Cada entrada: el texto exacto
+# que se permite, dónde (subcadena de la ruta) y por qué. Sin justificación no entra.
+allow:
+  - {match: "contacto@entramado.org", where: "", why: "buzón de rectificación del proyecto (aviso legal)"}

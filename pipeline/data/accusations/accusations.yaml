@@ -1,0 +1,937 @@
+# Curated, document-grounded ACCUSED_OF overlay (Person -> Crime).
+# Loaded by `make accusations` (src/accusations_loader.py) as source_kind='acusacion'.
+# Additive + idempotent: guarantees each defendant's REAL charge set is present
+# (creating any Crime node that cleanup's allowlist dropped), without deleting or
+# overwriting document-sourced edges.
+#
+# PRESUMPTION OF INNOCENCE: these are charges/imputaciones in OPEN procedures, each
+# cited to a corpus document + penal article + verbatim quote, exactly as the source
+# frames them — never presented as proven.
+#
+# To extend/correct: edit this file, then `make accusations`. Crime `name` must match
+# the canonical short form (slugged into the Crime entity_id), so it coincides with
+# any already-extracted Crime of the same name. Optional `page:` (per crime) is the page
+# of the doc that holds the quote; it loads as the edge's `source_page` ([doc, p.N]).
+#
+# `status:` (per defendant, overridable per crime) records the PROCEDURAL STAGE —
+# investigado | imputado | procesado | acusado | condenado | absuelto | archivado —
+# so the UI/chat never blur an alleged charge with a proven one. A crime with
+# status: condenado (or explicit `type: CONVICTED_OF`) loads as CONVICTED_OF;
+# everything else stays ACCUSED_OF. Default status: acusado.
+#
+# `estado:` (por defendant, spec 061) es el REGISTRO DE ESTADO PROCESAL y manda
+# sobre `status:`. Forma:
+#   estado:
+#     status: investigado|imputado|procesado|acusado|condenado|absuelto|archivado
+#     fecha: 'YYYY-MM-DD'          # fecha del acto procesal que fija el estado
+#     fuente: {doc: <pdf del corpus> | url: <https://…>, tipo: <tipo de acto>}
+#     revisado: 'YYYY-MM-DD'       # última revisión humana de la fila
+#     nota: <opcional>
+# `fuente.tipo` ∈ escrito_acusacion | auto_apertura_juicio_oral | auto_procesamiento |
+# sentencia | auto | providencia | prensa. `acusado`/`procesado` EXIGEN uno de los
+# tres primeros (un acto acusatorio formal); `prensa` solo sostiene
+# investigado/imputado y la API lo presenta como «según prensa». El loader propaga
+# ese estado (+ fecha, fuente y tipo) a las ACCUSED_OF de la persona — incluidas
+# las extraídas de documentos —, nunca a CONVICTED_OF (firmeza = documents.yaml,
+# spec 059) ni a las de prensa/última hora. Sin fila `estado`, la API muestra
+# «investigado», nunca «acusado».
+# ⚠️ Un `status:` puesto EN LA FILA DE UN DELITO manda sobre el `estado` de la
+# persona y la propagación no lo pisa (así convive «investigado» por un cargo con
+# «absuelto» de otro); una arista ya absuelta/archivada tampoco se reabre.
+#
+# ⚠️ Removing a crime from this file does NOT delete its previously loaded
+# 'acusacion' edge (prune only touches extracted edges). Graph updates of this
+# layer = Path A rebuild: DELETE all source_kind='acusacion' edges on the
+# ephemeral, then `make accusations` (QA pase 3, 2026-08-15).
+
+accusations:
+  # Diligencias Previas 77/2024-S (Tribunal Central de Instancia, Plaza nº 2, Madrid;
+  # auto de 18-05-2026 de entradas y registros). Caso Plus Ultra / Venezuela / Análisis
+  # Relevante. (Es el EX-PRESIDENTE, no un homónimo — ver _memory findings/accusation-
+  # cleanup.) QA pase 3 (2026-08-15): la portada del auto solo enumera los delitos DE LA
+  # CAUSA; los únicos que el auto atribuye a Zapatero EN PERSONA (p.29) son la dirección
+  # de la trama (organización criminal) y el tráfico de influencias → borrados
+  # apropiación indebida, falsedad documental y blanqueo de capitales (doctrina
+  # protectora: menos datos y correctos).
+  - person: José Luis Rodríguez Zapatero
+    entity_id: Person:jose-luis-rodriguez-zapatero
+    doc: auto-zapatero.pdf
+    status: investigado   # Diligencias Previas 77/2024-S, fase de instrucción
+    estado:
+      status: investigado
+      fecha: '2026-05-18'
+      fuente: {doc: auto-zapatero.pdf, tipo: auto}
+      revisado: '2026-09-09'
+      nota: auto de entradas y registros de 18-05-2026 (DP 77/2024-S)
+    # 063 (24-09-2026): fuera «organización criminal» — el auto solo la nombra como delito de la causa (p.1)
+    # y en la proporcionalidad de los registros; ninguna frase se la atribuye personalmente (árbitro a4699ae4).
+    crimes:
+      - name: tráfico de influencias
+        article: art. 428 CP
+        page: 29
+        quote: "José Luis Rodríguez Zapatero dirige la trama organizada para el ejercicio de una ilícita actividad de tráfico de influencias"
+
+  # Caso Cátedra TSC (Tribunal del Jurado 1146/2024, JI nº 41 Madrid) — auto de APERTURA
+  # DE JUICIO ORAL de 20-06-2026 (en corpus). La AP de Madrid (auto de 16-07-2026, aún
+  # NO en corpus — candidata a ingesta) mantuvo el juicio con jurado SOLO por tráfico de
+  # influencias y malversación, sobreseyendo corrupción en los negocios y apropiación
+  # indebida, y levantó las cautelares. El Ministerio Fiscal pidió el sobreseimiento;
+  # la acusación es popular. QA pase 3: entrada reescrita (antes: imputada, 4 delitos
+  # con 2 quotes misatribuidas del auto de 11-04-2026).
+  - person: Begoña Gómez
+    entity_id: Person:begona-gomez
+    doc: auto-peinado-juicio-oral-begona-2026-09-21.pdf
+    status: acusado   # auto de apertura de juicio oral con jurado de 21-09-2026 (en corpus, p.65)
+    estado:
+      status: acusado
+      fecha: '2026-09-21'
+      fuente: {doc: auto-peinado-juicio-oral-begona-2026-09-21.pdf, tipo: auto_apertura_juicio_oral}
+      revisado: '2026-09-30'
+      nota: >-
+        063 (30-09-2026): auto de apertura de juicio oral ante el Tribunal del Jurado de 21-09-2026 (Tribunal del Jurado
+        1146/2024, 67 págs., CSV 1296335874013465898025), ingerido al corpus; p.65: apertura contra ella por tráfico de
+        influencias y malversación. No es firme ni hay juicio; la Fiscalía pide el sobreseimiento y acusa solo la
+        acusación popular unificada. Historia anterior:
+        Retro-fix 061 T0c (11-09-2026). El auto de 11-04-2026 (en corpus) es el de imputación y continuación del
+        procedimiento por los trámites del Tribunal del Jurado (p.38: «SE ACUERDA LA CONTINUACIÓN DEL PROCEDIMIENTO»),
+        no un auto de procesamiento (revisión Codex F1). El auto de apertura de juicio oral de 20-06-2026 (en corpus)
+        quedó sin recorrido: según Infobae (16-07-2026), la Sección 23 de la AP de Madrid limitó ese día
+        el juicio con jurado a tráfico de influencias y malversación, y según EFE (vía Infobae, 06-09-2026)
+        ese auto «reordenó» el procedimiento y lo retrotrajo a abril, de modo que las partes volvieron a
+        presentar sus escritos; la audiencia preliminar se repitió el 08-09-2026 (Infobae, The Objective) y
+        Peinado prevé dictar un nuevo auto de apertura antes de su jubilación el 27-09-2026 (EFE). La
+        acusación la sostiene la acusación popular (13 años, según Libertad Digital 27-07-2026); la
+        Fiscalía anunció conclusiones absolutorias (LD/Vozpópuli 28-07-2026). Cuando se dicte el auto
+        definitivo: status acusado, fuente auto_apertura_juicio_oral.
+    # 063 (30-09-2026): delitos re-citados al auto de apertura de 21-09-2026 (p.65). Antes (24-09): auto de 11-04-2026 (p.38; el tramo sobre Barrabés,
+    # limitado a tráfico de influencias y corrupción en los negocios, se omite con «...»); antes citaban el auto de
+    # apertura de 20-06-2026, que quedó sin efecto (tanda del dueño 2d5a9fa0/eac1f4e5). Solo los dos delitos que
+    # la AP de Madrid mantuvo (16-07-2026).
+    crimes:
+      - name: tráfico de influencias
+        article: art. 428 CP
+        doc: auto-peinado-juicio-oral-begona-2026-09-21.pdf
+        quote: "CONTRA LA ACUSADA MARÍA BEGOÑA GÓMEZ FERNÁNDEZ, EN CONCEPTO DE AUTORA, POR LOS DELITOS DE TRÁFICO DE INFLUENCIAS Y MALVERSACIÓN DE CAUDALES PÚBLICOS"
+      - name: malversación
+        article: art. 432 CP
+        doc: auto-peinado-juicio-oral-begona-2026-09-21.pdf
+        quote: "CONTRA LA ACUSADA MARÍA BEGOÑA GÓMEZ FERNÁNDEZ, EN CONCEPTO DE AUTORA, POR LOS DELITOS DE TRÁFICO DE INFLUENCIAS Y MALVERSACIÓN DE CAUDALES PÚBLICOS"
+
+  # Causa especial 20775/2020 (Tribunal Supremo) — escrito de acusación del Ministerio
+  # Fiscal de 19-nov-2025. QA pase 3: re-citado de ATS_10788_2025 (texto CENDOJ
+  # seudonimizado, «Segismundo») a la calificación fiscal, que nombra a los acusados
+  # con el mismo charge set; quotes verbatim de p.17.
+  - person: José Luis Ábalos
+    entity_id: Person:jose-luis-abalos
+    doc: calificacion-fiscal-abalos-aldama-garcia.pdf
+    status: acusado   # escrito de acusación del Ministerio Fiscal (19-nov-2025)
+    estado:
+      status: acusado
+      fecha: '2025-11-19'
+      fuente: {doc: calificacion-fiscal-abalos-aldama-garcia.pdf, tipo: escrito_acusacion}
+      revisado: '2026-09-09'
+      nota: condenado después por la sentencia del TS de 22-06-2026 (CONVICTED_OF; la
+        firmeza la declara documents.yaml)
+    crimes:
+      - name: organización criminal
+        article: art. 570 bis CP
+        quote: "Un delito de organización criminal del artículo 570 bis. 1, inciso primero del Código Penal"
+      - name: cohecho
+        article: art. 419 CP
+        quote: "Un delito continuado de cohecho pasivo del artículo 419 del Código Penal"
+      - name: tráfico de influencias
+        article: art. 428 CP
+        quote: "Un delito de tráfico de influencias del artículo 428 del Código Penal"
+      - name: malversación
+        article: art. 432 CP
+        quote: "Un delito de malversación del art. 432 del Código Penal"
+
+  # QA pase 3: status rebajado de «procesado» a «investigado» — el auto dice literalmente
+  # que declaró «como investigado» (p.1) y no existe auto de procesamiento en el corpus;
+  # quote sustituida por la literal de p.3 (la anterior era una paráfrasis construida).
+  # En libertad provisional desde 19-11-2025; instrucción abierta. Sin artículos CP: el
+  # auto no los cita (pureza documental).
+  - person: Santos Cerdán
+    entity_id: Person:santos-cerdan
+    doc: auto-prision-cerdan-2025-06-30.pdf
+    status: investigado   # declaró como investigado 30-06-2025; sin auto de procesamiento
+    estado:
+      status: investigado
+      fecha: '2025-06-30'
+      fuente: {doc: auto-prision-cerdan-2025-06-30.pdf, tipo: auto}
+      revisado: '2026-09-09'
+    crimes:
+      - name: organización criminal
+        quote: "podrían calificarse, al menos, como constitutivos de sendos delitos de integración en organización criminal, tráfico de influencias y cohecho"
+      - name: cohecho
+        quote: "podrían calificarse, al menos, como constitutivos de sendos delitos de integración en organización criminal, tráfico de influencias y cohecho"
+      - name: tráfico de influencias
+        quote: "podrían calificarse, al menos, como constitutivos de sendos delitos de integración en organización criminal, tráfico de influencias y cohecho"
+
+  # QA pase 3: re-citado a la calificación fiscal (mismo motivo que Ábalos) + quotes
+  # verbatim de p.17 añadidas (antes sin quotes).
+  - person: Koldo García
+    entity_id: Person:koldo-garcia
+    doc: calificacion-fiscal-abalos-aldama-garcia.pdf
+    status: acusado
+    estado:
+      status: acusado
+      fecha: '2025-11-19'
+      fuente: {doc: calificacion-fiscal-abalos-aldama-garcia.pdf, tipo: escrito_acusacion}
+      revisado: '2026-09-09'
+      nota: condenado después por la sentencia del TS de 22-06-2026 (CONVICTED_OF; la
+        firmeza la declara documents.yaml)
+    crimes:
+      - name: organización criminal
+        article: art. 570 bis CP
+        quote: "Un delito de organización criminal del artículo 570 bis. 1, inciso primero del Código Penal"
+      - name: cohecho
+        article: art. 419 CP
+        quote: "Un delito continuado de cohecho pasivo del artículo 419 del Código Penal"
+      - name: tráfico de influencias
+        article: art. 428 CP
+        quote: "Un delito de tráfico de influencias del artículo 428 del Código Penal"
+      - name: malversación
+        article: art. 432 CP
+        quote: "Un delito de malversación del art. 432 del Código Penal"
+
+  # QA pase 3: corregido el artículo del cohecho (424 ACTIVO, no 419 — a Aldama,
+  # particular, se le acusa de cohecho activo; coherente con su condena por el 424.2) y
+  # BORRADO el blanqueo de capitales: no es cargo de la causa especial 20775/2020 — el
+  # TS lo dejó expresamente en el JCI nº 2 (ts-cita-abalos p.8: «delitos contra la
+  # Hacienda Pública o blanqueo de capitales que se atribuyen a otros investigados…
+  # conservará la competencia para la instrucción el JCI número 2»).
+  - person: Víctor de Aldama
+    entity_id: Person:victor-de-aldama
+    doc: calificacion-fiscal-abalos-aldama-garcia.pdf
+    status: acusado
+    estado:
+      status: acusado
+      fecha: '2025-11-19'
+      fuente: {doc: calificacion-fiscal-abalos-aldama-garcia.pdf, tipo: escrito_acusacion}
+      revisado: '2026-09-09'
+      nota: condenado después por la sentencia del TS de 22-06-2026 (CONVICTED_OF; la
+        firmeza la declara documents.yaml)
+    crimes:
+      - name: organización criminal
+        article: art. 570 bis CP
+        quote: "VÍCTOR GONZALO DE ALDAMA DELGADO, en concepto de autor del artículo 28 párrafo 1º del Código Penal de los siguientes delitos: - Un delito de organización criminal del artículo 570 bis. 1, inciso primero del Código Penal"
+      - name: cohecho
+        article: art. 424 CP
+        quote: "Un delito continuado de cohecho activo del artículo 424 del Código Penal"
+
+  # ⚠️ SIN fila `estado` (spec 061): las condenas viajan como CONVICTED_OF y su firmeza
+  # la declara documents.yaml (spec 059) — el registro de estado no las toca. Cada una
+  # de estas personas declara su `estado` en su entrada de ACUSACIÓN, más arriba.
+  #
+  # ── CONDENAS firmes — Sentencia del Tribunal Supremo (Sala 2ª), 22-06-2026, Causa
+  # Especial 20775/2020. Fallo: "Que debemos condenar y condenamos a los acusados".
+  # Instancia única para aforados → firme. status: condenado → CONVICTED_OF (capa
+  # 'acusacion', additiva: NO borra los ACCUSED_OF previos del escrito de acusación,
+  # que reflejan la fase de acusación anterior). Hecho probado, ya no presunto.
+  - person: José Luis Ábalos
+    entity_id: Person:jose-luis-abalos
+    doc: sentencia-ts-abalos-koldo-aldama-2026-06-22.pdf
+    status: condenado
+    crimes:
+      - name: organización criminal
+        article: art. 570 bis CP
+        quote: "A José Luis Ábalos Meco, como autor... a) Un delito de organización criminal del art. 570 bis del Código Penal y otro continuado de cohecho, en concurso real, a las penas de 5 años y 6 meses de prisión"
+      - name: cohecho
+        article: art. 419 CP
+        quote: "y de 5 años de prisión, multa de 20 meses... por el delito continuado de cohecho del art. 419 CP"
+      - name: tráfico de influencias
+        article: art. 428 CP
+        quote: "Un delito de tráfico de influencias del art. 428 CP a la pena de 1 año y 6 meses de prisión"
+      - name: malversación
+        article: art. 432 CP
+        quote: "Un delito de malversación de caudales públicos del art. 432 CP, en concurso real con otro de tráfico de influencias del art. 428 CP, a las penas de 3 años y 6 meses de prisión"
+
+  # QA pase 3: quote del cohecho sustituida (la anterior no mencionaba el cohecho) y
+  # AÑADIDAS las condenas omitidas del fallo: tráfico de influencias y malversación
+  # (como cooperador necesario) — pp.220-221.
+  - person: Koldo García
+    entity_id: Person:koldo-garcia
+    doc: sentencia-ts-abalos-koldo-aldama-2026-06-22.pdf
+    status: condenado
+    crimes:
+      # 063 (2026-09-28, [3bf07777]/[e06482d3]): organización criminal y cohecho retirados de esta capa —
+      # duplicaban las CONVICTED_OF judiciales verificadas (p.220), que siguen publicadas.
+      - name: tráfico de influencias
+        article: art. 428 CP
+        quote: "b) Un delito de cohecho del art. 419 CP en concurso real con otro delito tráfico de influencias del artículo 428 CP"
+      - name: malversación
+        article: art. 432 CP
+        quote: "d) Un delito de malversación de caudales públicos en concurso real con otro de tráfico de influencias. Por el delito de malversación, como cooperador necesario asimilado a autor, a las penas de 2 años y 3 meses de prisión"
+
+  - person: Víctor de Aldama
+    entity_id: Person:victor-de-aldama
+    doc: sentencia-ts-abalos-koldo-aldama-2026-06-22.pdf
+    status: condenado
+    crimes:
+      - name: organización criminal
+        article: art. 570 bis CP
+        quote: "Respecto del acusado Víctor de Aldama Delgado es condenado como autor... a) Un delito de organización criminal del art. 570 bis en concurso real con un delito continuado de cohecho del artículo 424.2 CP... concurriendo la atenuante de análoga significación a la de confesión que se considera cualificada"
+      - name: cohecho
+        article: art. 424 CP
+        quote: "Un delito de organización criminal del art. 570 bis en concurso real con un delito continuado de cohecho del artículo 424.2 CP... Por el delito continuado de cohecho, las penas de 1 año y 6 meses de prisión"
+
+  # Caso Badajoz (Diputación) — QA pase 3: entrada reescrita contra la SENTENCIA de la
+  # AP de Badajoz (Secc. 1ª) de 14-07-2026, en corpus. ⚠️ NO FIRME: recurrida en
+  # apelación ante el TSJ de Extremadura por defensa y acusaciones (Vox formalizó el
+  # 30-07-2026). Condena solo a inhabilitación (sin prisión); ABSUELTO del tráfico de
+  # influencias. La entrada anterior (escrito de la acusación popular) atribuía además
+  # malversación y falsedad documental, que NO figuran en ese escrito → borradas.
+  - person: David Sánchez
+    entity_id: Person:david-sanchez
+    doc: sentencia-ap-badajoz-david-sanchez-gallardo-2026-07-14.pdf
+    status: condenado   # ⚠️ NO firme (apelada ante el TSJ de Extremadura)
+    estado:
+      status: condenado   # → el loader propaga condenado_no_firme (documents.yaml: sentencia_firme false)
+      fecha: '2026-07-14'
+      fuente: {doc: sentencia-ap-badajoz-david-sanchez-gallardo-2026-07-14.pdf, tipo: sentencia}
+      revisado: '2026-09-15'
+      nota: NO firme — sentencia 152/2026 de la AP de Badajoz (Secc. 1ª), fallo pp.373-375; cabe apelación ante la Sala Civil y Penal del TSJ de Extremadura (p.376). Revisión humana T0d (spec 061). Sus ACCUSED_OF extraídas (escrito de acusación) se publicaban como «investigado».
+    crimes:
+      - name: prevaricación
+        article: art. 404 CP
+        page: 374
+        quote: "A DAVID SÁNCHEZ PÉREZ-CASTEJÓN, mayor de edad y sin antecedentes penales, como autor por cooperación necesaria de UN DELITO DE PREVARICACIÓN ADMINISTRATIVA, ya definido... A LA PENA DE INHABILITACIÓN ESPECIAL PARA EMPLEO O CARGO PÚBLICO Y PARA EL EJERCICIO DEL DERECHO DE SUFRAGIO PASIVO por tiempo de NUEVE AÑOS"
+      - name: tráfico de influencias
+        status: absuelto
+        quote: "ABSOLVEMOS LIBREMENTE A LOS ACUSADOS DEL RESTO DE LAS INFRACCIONES PENALES QUE SE LES IMPUTABAN"
+
+  # Resto del fallo de la sentencia 152/2026 (AP Badajoz, 14-07-2026, pp.373-375) — revisión humana
+  # T0d (spec 061, 2026-09-15): los diez coacusados de David Sánchez estaban en el grafo con sus
+  # ACCUSED_OF del escrito de acusación publicadas como «investigado». Todos condenados por
+  # prevaricación administrativa (art. 404 CP) a 9 años de inhabilitación; «ABSOLVEMOS LIBREMENTE A
+  # LOS ACUSADOS DEL RESTO DE LAS INFRACCIONES PENALES QUE SE LES IMPUTABAN» (p.375). Tráfico de
+  # influencias (absuelto) solo para quienes el escrito de acusación se lo imputaba (pp.26-27):
+  # Gallardo, Cinta, Parejo, Martos, Carrero, Cabezas, Candalija (y David Sánchez, arriba).
+  # ⚠️ NO FIRME (recurrida ante el TSJ de Extremadura): el registro propaga condenado_no_firme.
+  - person: Miguel Ángel Gallardo
+    entity_id: Person:miguel-angel-gallardo
+    doc: sentencia-ap-badajoz-david-sanchez-gallardo-2026-07-14.pdf
+    status: condenado   # ⚠️ NO firme (apelada ante el TSJ de Extremadura)
+    estado:
+      status: condenado   # → el loader propaga condenado_no_firme (documents.yaml: sentencia_firme false)
+      fecha: '2026-07-14'
+      fuente: {doc: sentencia-ap-badajoz-david-sanchez-gallardo-2026-07-14.pdf, tipo: sentencia}
+      revisado: '2026-09-15'
+      nota: NO firme — sentencia 152/2026 de la AP de Badajoz (Secc. 1ª), fallo pp.373-375; cabe apelación ante la Sala Civil y Penal del TSJ de Extremadura (p.376). Revisión humana T0d (spec 061). Fallo p.373.
+    crimes:
+      - name: prevaricación
+        article: art. 404 CP
+        quote: "A MIGUEL ÁNGEL GALLARDO MIRANDA, mayor de edad y sin antecedentes penales, como autor de DOS DELITOS DE PREVARICACIÓN ADMINISTRATIVA, ya definidos, correspondientes a los Bloques A) y B) del párrafo de hechos probados, A SENDAS PENAS DE INHABILITACIÓN ESPECIAL PARA EMPLEO O CARGO PÚBLICO Y PARA EL EJERCICIO DEL DERECHO DE SUFRAGIO PASIVO por tiempo de NUEVE AÑOS"
+      - name: tráfico de influencias
+        status: absuelto
+        quote: "ABSOLVEMOS LIBREMENTE A LOS ACUSADOS DEL RESTO DE LAS INFRACCIONES PENALES QUE SE LES IMPUTABAN"
+
+  - person: Elisa Moriano Morales
+    entity_id: Person:elisa-moriano-morales
+    doc: sentencia-ap-badajoz-david-sanchez-gallardo-2026-07-14.pdf
+    status: condenado   # ⚠️ NO firme (apelada ante el TSJ de Extremadura)
+    estado:
+      status: condenado   # → el loader propaga condenado_no_firme (documents.yaml: sentencia_firme false)
+      fecha: '2026-07-14'
+      fuente: {doc: sentencia-ap-badajoz-david-sanchez-gallardo-2026-07-14.pdf, tipo: sentencia}
+      revisado: '2026-09-15'
+      nota: NO firme — sentencia 152/2026 de la AP de Badajoz (Secc. 1ª), fallo pp.373-375; cabe apelación ante la Sala Civil y Penal del TSJ de Extremadura (p.376). Revisión humana T0d (spec 061). Fallo p.373.
+    crimes:
+      - name: prevaricación
+        article: art. 404 CP
+        quote: "A ELISA MORIANO MORALES Y A CRISTINA NÚÑEZ FERNÁNDEZ, ambas mayores de edad y sin antecedentes penales, como autoras por cooperación necesaria de UN DELITO DE PREVARICACIÓN ADMINISTRATIVA, ya definido, correspondiente al Bloque A) del párrafo de hechos probados, A LA PENA, para cada una de ellas, DE INHABILITACIÓN ESPECIAL PARA EMPLEO O CARGO PÚBLICO Y PARA EL EJERCICIO DEL DERECHO DE SUFRAGIO PASIVO por tiempo de NUEVE AÑOS"
+
+  - person: Cristina Núñez Fernández
+    entity_id: Person:cristina-nunez-fernandez
+    doc: sentencia-ap-badajoz-david-sanchez-gallardo-2026-07-14.pdf
+    status: condenado   # ⚠️ NO firme (apelada ante el TSJ de Extremadura)
+    estado:
+      status: condenado   # → el loader propaga condenado_no_firme (documents.yaml: sentencia_firme false)
+      fecha: '2026-07-14'
+      fuente: {doc: sentencia-ap-badajoz-david-sanchez-gallardo-2026-07-14.pdf, tipo: sentencia}
+      revisado: '2026-09-15'
+      nota: NO firme — sentencia 152/2026 de la AP de Badajoz (Secc. 1ª), fallo pp.373-375; cabe apelación ante la Sala Civil y Penal del TSJ de Extremadura (p.376). Revisión humana T0d (spec 061). Fallo p.373.
+    crimes:
+      - name: prevaricación
+        article: art. 404 CP
+        quote: "A ELISA MORIANO MORALES Y A CRISTINA NÚÑEZ FERNÁNDEZ, ambas mayores de edad y sin antecedentes penales, como autoras por cooperación necesaria de UN DELITO DE PREVARICACIÓN ADMINISTRATIVA, ya definido, correspondiente al Bloque A) del párrafo de hechos probados, A LA PENA, para cada una de ellas, DE INHABILITACIÓN ESPECIAL PARA EMPLEO O CARGO PÚBLICO Y PARA EL EJERCICIO DEL DERECHO DE SUFRAGIO PASIVO por tiempo de NUEVE AÑOS"
+
+  - person: Félix González Márquez
+    entity_id: Person:felix-gonzalez-marquez
+    doc: sentencia-ap-badajoz-david-sanchez-gallardo-2026-07-14.pdf
+    status: condenado   # ⚠️ NO firme (apelada ante el TSJ de Extremadura)
+    estado:
+      status: condenado   # → el loader propaga condenado_no_firme (documents.yaml: sentencia_firme false)
+      fecha: '2026-07-14'
+      fuente: {doc: sentencia-ap-badajoz-david-sanchez-gallardo-2026-07-14.pdf, tipo: sentencia}
+      revisado: '2026-09-15'
+      nota: NO firme — sentencia 152/2026 de la AP de Badajoz (Secc. 1ª), fallo pp.373-375; cabe apelación ante la Sala Civil y Penal del TSJ de Extremadura (p.376). Revisión humana T0d (spec 061). Fallo p.373.
+    crimes:
+      - name: prevaricación
+        article: art. 404 CP
+        quote: "A FÉLIX GONZÁLEZ MÁRQUEZ, mayor de edad y sin antecedentes penales, como autor por cooperación necesaria de UN DELITO DE PREVARICACIÓN ADMINISTRATIVA, ya definido, correspondiente al Bloque A) del párrafo de hechos probados, A LA PENA DE INHABILITACIÓN ESPECIAL PARA EMPLEO O CARGO PÚBLICO Y PARA EL EJERCICIO DEL DERECHO DE SUFRAGIO PASIVO por tiempo de NUEVE AÑOS"
+
+  - person: Juana Cinta Calderón Zazo
+    entity_id: Person:juana-cinta-calderon-zazo
+    doc: sentencia-ap-badajoz-david-sanchez-gallardo-2026-07-14.pdf
+    status: condenado   # ⚠️ NO firme (apelada ante el TSJ de Extremadura)
+    estado:
+      status: condenado   # → el loader propaga condenado_no_firme (documents.yaml: sentencia_firme false)
+      fecha: '2026-07-14'
+      fuente: {doc: sentencia-ap-badajoz-david-sanchez-gallardo-2026-07-14.pdf, tipo: sentencia}
+      revisado: '2026-09-15'
+      nota: NO firme — sentencia 152/2026 de la AP de Badajoz (Secc. 1ª), fallo pp.373-375; cabe apelación ante la Sala Civil y Penal del TSJ de Extremadura (p.376). Revisión humana T0d (spec 061). Fallo p.374.
+    crimes:
+      - name: prevaricación
+        article: art. 404 CP
+        quote: "A JUANA CINTA CALDERÓN ZAZO, M.ª EMILIA PAREJO GALA Y FRANCISCO MARTOS ORTIZ, todos ellos mayores de edad y sin antecedentes penales, cómo autores por cooperación necesaria de UN DELITO DE PREVARICACIÓN ADMINISTRATIVA, ya definido, correspondiente al Bloque B) del párrafo de hechos probados, A LA PENA, para cada uno de ellos, DE INHABILITACIÓN ESPECIAL PARA EMPLEO O CARGO PUBLICO Y PARA EL EJERCICIO DEL DERECHO DE SUFRAGIO PASIVO por tiempo de NUEVE AÑOS"
+      - name: tráfico de influencias
+        status: absuelto
+        quote: "ABSOLVEMOS LIBREMENTE A LOS ACUSADOS DEL RESTO DE LAS INFRACCIONES PENALES QUE SE LES IMPUTABAN"
+
+  - person: Emilia Parejo Gala
+    entity_id: Person:emilia-parejo-gala
+    doc: sentencia-ap-badajoz-david-sanchez-gallardo-2026-07-14.pdf
+    status: condenado   # ⚠️ NO firme (apelada ante el TSJ de Extremadura)
+    estado:
+      status: condenado   # → el loader propaga condenado_no_firme (documents.yaml: sentencia_firme false)
+      fecha: '2026-07-14'
+      fuente: {doc: sentencia-ap-badajoz-david-sanchez-gallardo-2026-07-14.pdf, tipo: sentencia}
+      revisado: '2026-09-15'
+      nota: NO firme — sentencia 152/2026 de la AP de Badajoz (Secc. 1ª), fallo pp.373-375; cabe apelación ante la Sala Civil y Penal del TSJ de Extremadura (p.376). Revisión humana T0d (spec 061). Fallo p.374.
+    crimes:
+      - name: prevaricación
+        article: art. 404 CP
+        quote: "A JUANA CINTA CALDERÓN ZAZO, M.ª EMILIA PAREJO GALA Y FRANCISCO MARTOS ORTIZ, todos ellos mayores de edad y sin antecedentes penales, cómo autores por cooperación necesaria de UN DELITO DE PREVARICACIÓN ADMINISTRATIVA, ya definido, correspondiente al Bloque B) del párrafo de hechos probados, A LA PENA, para cada uno de ellos, DE INHABILITACIÓN ESPECIAL PARA EMPLEO O CARGO PUBLICO Y PARA EL EJERCICIO DEL DERECHO DE SUFRAGIO PASIVO por tiempo de NUEVE AÑOS"
+      - name: tráfico de influencias
+        status: absuelto
+        quote: "ABSOLVEMOS LIBREMENTE A LOS ACUSADOS DEL RESTO DE LAS INFRACCIONES PENALES QUE SE LES IMPUTABAN"
+
+  - person: Francisco Martos Ortiz
+    entity_id: Person:francisco-martos-ortiz
+    doc: sentencia-ap-badajoz-david-sanchez-gallardo-2026-07-14.pdf
+    status: condenado   # ⚠️ NO firme (apelada ante el TSJ de Extremadura)
+    estado:
+      status: condenado   # → el loader propaga condenado_no_firme (documents.yaml: sentencia_firme false)
+      fecha: '2026-07-14'
+      fuente: {doc: sentencia-ap-badajoz-david-sanchez-gallardo-2026-07-14.pdf, tipo: sentencia}
+      revisado: '2026-09-15'
+      nota: NO firme — sentencia 152/2026 de la AP de Badajoz (Secc. 1ª), fallo pp.373-375; cabe apelación ante la Sala Civil y Penal del TSJ de Extremadura (p.376). Revisión humana T0d (spec 061). Fallo p.374.
+    crimes:
+      - name: prevaricación
+        article: art. 404 CP
+        quote: "A JUANA CINTA CALDERÓN ZAZO, M.ª EMILIA PAREJO GALA Y FRANCISCO MARTOS ORTIZ, todos ellos mayores de edad y sin antecedentes penales, cómo autores por cooperación necesaria de UN DELITO DE PREVARICACIÓN ADMINISTRATIVA, ya definido, correspondiente al Bloque B) del párrafo de hechos probados, A LA PENA, para cada uno de ellos, DE INHABILITACIÓN ESPECIAL PARA EMPLEO O CARGO PUBLICO Y PARA EL EJERCICIO DEL DERECHO DE SUFRAGIO PASIVO por tiempo de NUEVE AÑOS"
+      - name: tráfico de influencias
+        status: absuelto
+        quote: "ABSOLVEMOS LIBREMENTE A LOS ACUSADOS DEL RESTO DE LAS INFRACCIONES PENALES QUE SE LES IMPUTABAN"
+
+  - person: Luis Carrero
+    entity_id: Person:luis-carrero
+    doc: sentencia-ap-badajoz-david-sanchez-gallardo-2026-07-14.pdf
+    status: condenado   # ⚠️ NO firme (apelada ante el TSJ de Extremadura)
+    estado:
+      status: condenado   # → el loader propaga condenado_no_firme (documents.yaml: sentencia_firme false)
+      fecha: '2026-07-14'
+      fuente: {doc: sentencia-ap-badajoz-david-sanchez-gallardo-2026-07-14.pdf, tipo: sentencia}
+      revisado: '2026-09-15'
+      nota: NO firme — sentencia 152/2026 de la AP de Badajoz (Secc. 1ª), fallo pp.373-375; cabe apelación ante la Sala Civil y Penal del TSJ de Extremadura (p.376). Revisión humana T0d (spec 061). Fallo p.374.
+    crimes:
+      - name: prevaricación
+        article: art. 404 CP
+        quote: "A LUIS MARÍA CARRERO PÉREZ, mayor de edad y sin antecedentes penales, como autor por cooperación necesaria de UN DELITO DE PREVARICACIÓN ADMINISTRATIVA ya tipificado, correspondiente al Bloque C) del párrafo de hechos probados, A LA PENA DE INHABILITACIÓN ESPECIAL PARA EMPLEO O CARGO PÚBLICO Y PARA EL EJERCICIO DEL DERECHO DE SUFRAGIO PASIVO por tiempo de NUEVE AÑOS"
+      - name: tráfico de influencias
+        status: absuelto
+        quote: "ABSOLVEMOS LIBREMENTE A LOS ACUSADOS DEL RESTO DE LAS INFRACCIONES PENALES QUE SE LES IMPUTABAN"
+
+  - person: Ricardo Cabezas Martín
+    entity_id: Person:ricardo-cabezas-martin
+    doc: sentencia-ap-badajoz-david-sanchez-gallardo-2026-07-14.pdf
+    status: condenado   # ⚠️ NO firme (apelada ante el TSJ de Extremadura)
+    estado:
+      status: condenado   # → el loader propaga condenado_no_firme (documents.yaml: sentencia_firme false)
+      fecha: '2026-07-14'
+      fuente: {doc: sentencia-ap-badajoz-david-sanchez-gallardo-2026-07-14.pdf, tipo: sentencia}
+      revisado: '2026-09-15'
+      nota: NO firme — sentencia 152/2026 de la AP de Badajoz (Secc. 1ª), fallo pp.373-375; cabe apelación ante la Sala Civil y Penal del TSJ de Extremadura (p.376). Revisión humana T0d (spec 061). Fallo p.375.
+    crimes:
+      - name: prevaricación
+        article: art. 404 CP
+        quote: "A RICARDO CABEZAS MARTÍN Y A MANUEL CANDALIJA VALLE, ambos mayores de edad y sin antecedentes penales, como autor el primero y autor por cooperación necesaria el segundo, de UN DELITO DE PREVARICACIÓN ADMINISTRATIVA ya definido, correspondiente al Bloque C) del párrafo de hechos probados, A LA PENA, para cada uno de ellos, DE INHABILITACIÓN ESPECIAL PARA EMPLEO O CARGO PÚBLICO Y PARA EL EJERCICIO DEL DERECHO DE SUFRAFGIO PASIVO por tiempo de NUEVE AÑOS"
+      - name: tráfico de influencias
+        status: absuelto
+        quote: "ABSOLVEMOS LIBREMENTE A LOS ACUSADOS DEL RESTO DE LAS INFRACCIONES PENALES QUE SE LES IMPUTABAN"
+
+  - person: Manuel Candalija Valle
+    entity_id: Person:manuel-candalija-valle
+    doc: sentencia-ap-badajoz-david-sanchez-gallardo-2026-07-14.pdf
+    status: condenado   # ⚠️ NO firme (apelada ante el TSJ de Extremadura)
+    estado:
+      status: condenado   # → el loader propaga condenado_no_firme (documents.yaml: sentencia_firme false)
+      fecha: '2026-07-14'
+      fuente: {doc: sentencia-ap-badajoz-david-sanchez-gallardo-2026-07-14.pdf, tipo: sentencia}
+      revisado: '2026-09-15'
+      nota: NO firme — sentencia 152/2026 de la AP de Badajoz (Secc. 1ª), fallo pp.373-375; cabe apelación ante la Sala Civil y Penal del TSJ de Extremadura (p.376). Revisión humana T0d (spec 061). Fallo p.375.
+    crimes:
+      - name: prevaricación
+        article: art. 404 CP
+        quote: "A RICARDO CABEZAS MARTÍN Y A MANUEL CANDALIJA VALLE, ambos mayores de edad y sin antecedentes penales, como autor el primero y autor por cooperación necesaria el segundo, de UN DELITO DE PREVARICACIÓN ADMINISTRATIVA ya definido, correspondiente al Bloque C) del párrafo de hechos probados, A LA PENA, para cada uno de ellos, DE INHABILITACIÓN ESPECIAL PARA EMPLEO O CARGO PÚBLICO Y PARA EL EJERCICIO DEL DERECHO DE SUFRAFGIO PASIVO por tiempo de NUEVE AÑOS"
+      - name: tráfico de influencias
+        status: absuelto
+        quote: "ABSOLVEMOS LIBREMENTE A LOS ACUSADOS DEL RESTO DE LAS INFRACCIONES PENALES QUE SE LES IMPUTABAN"
+
+  # Caso Leire (DP 150/2025) — el auto de entrada en Ferraz fija con cita literal la
+  # condición de investigado del comandante Villalba y sus delitos (barrido 2026-07-10).
+  - person: Rubén Villalba Carnero
+    entity_id: Person:ruben-villalba-carnero
+    doc: autoentradaferraz.pdf
+    status: investigado
+    estado:
+      status: investigado
+      fecha: '2026-05-26'
+      fuente: {doc: autoentradaferraz.pdf, tipo: auto}
+      revisado: '2026-10-08'
+      nota: cita literal en la p.16 del auto
+    crimes:
+      - name: organización criminal
+        page: 16
+        quote: "el Comandante de la Guardia Civil Rubén VILLALBA CARNERERO, quien se encuentra investigado por la comisión de presuntos delitos de pertenencia a organización criminal, cohecho y blanqueo de capitales"
+      - name: cohecho
+        page: 16
+        quote: "el Comandante de la Guardia Civil Rubén VILLALBA CARNERERO, quien se encuentra investigado por la comisión de presuntos delitos de pertenencia a organización criminal, cohecho y blanqueo de capitales"
+      - name: blanqueo de capitales
+        page: 16
+        quote: "el Comandante de la Guardia Civil Rubén VILLALBA CARNERERO, quien se encuentra investigado por la comisión de presuntos delitos de pertenencia a organización criminal, cohecho y blanqueo de capitales"
+
+  # 063 (2026-09-28, [a9952459]/[f73670d6]): entrada de González Amador RETIRADA por prudencia — la única
+  # cita del corpus (auto TS 29-07-2025) habla de «interposición de denuncia», no sostiene el estado
+  # «acusado»; el auto de apertura de juicio oral no está en el corpus. Reponer solo con ese auto.
+
+  # Causa especial 20557/2024 (Sala Segunda TS) — sentencia en corpus. QA pase 3 R7
+  # (2026-08-21): el fallo (p.184) condena a García Ortiz SOLO por revelación de datos
+  # reservados y «Le absolvemos del resto de los delitos objeto de la acusación» →
+  # infidelidad en la custodia queda absuelto. Curar aquí cierra el follow-up de
+  # state.md («sus absoluciones solo están en el texto del caso»); la migración s84
+  # borra los ACCUSED_OF extraídos in-set y el prune del loader los out-of-set
+  # (prevaricación, revelación-de-secretos).
+  - person: Álvaro García Ortiz
+    entity_id: Person:alvaro-garcia-ortiz
+    doc: sentencia-ts-garcia-ortiz-fiscal-general.pdf
+    status: condenado   # sentencia TS (firme); inhabilitación 2 años + multa
+    estado:
+      status: condenado
+      fecha: '2025-12-09'
+      fuente: {doc: sentencia-ts-garcia-ortiz-fiscal-general.pdf, tipo: sentencia}
+      revisado: '2026-09-28'
+      nota: Sentencia TS (Sala Segunda) núm. 1000/2025, de 9 de diciembre de 2025, Causa Especial 20557/2024
+        (fallo, p.184) — revelación de datos reservados (art. 417.1 CP), multa de 12 meses e inhabilitación
+        especial para el cargo de Fiscal General del Estado durante 2 años; absuelto del resto de delitos. 063, 2026-09-28.
+    crimes:
+      - name: revelación de datos reservados
+        article: art. 417.1 CP
+        quote: "Que debemos condenar y condenamos a D. Álvaro García Ortiz, Fiscal General del Estado, como autor de un delito de revelación de datos reservados, art. 417.1 del Código Penal"
+      - name: infidelidad en la custodia de documentos
+        # sin `article`: la cita no lo fija (el «art. 417» va con la revelación de secretos) — 063 tramo 2, 01-oct
+        status: absuelto   # fallo p.184: «Le absolvemos del resto de los delitos objeto de la acusación»
+        quote: "por presuntos delitos de infidelidad en la custodia de documentos y de revelación de secretos del art. 417 del Código Penal"
+
+  # Misma causa 20557/2024 — la Sala de Apelación del TS estimó su recurso y acordó el
+  # SOBRESEIMIENTO LIBRE y archivo de las diligencias a ella referidas (antecedentes de
+  # la sentencia, p.37): no fue juzgada. QA pase 3 R7 (2026-08-21): sin esta entrada el
+  # grafo mantenía sus ACCUSED_OF de la querella sin contrapeso (defecto 6 doble).
+  - person: Pilar Rodríguez Fernández
+    entity_id: Person:pilar-rodriguez-fernandez
+    doc: sentencia-ts-garcia-ortiz-fiscal-general.pdf
+    status: archivado   # sobreseimiento libre y archivo (Sala de Apelación TS, p.37)
+    estado:
+      status: archivado
+      fecha: '2025-07-29'
+      fuente: {doc: auto-ts-garcia-ortiz-2025-07-29.pdf, tipo: auto}
+      revisado: '2026-09-28'
+      nota: Sobreseimiento libre y archivo de las diligencias a ella referidas, acordado por el auto de la Sala de
+        Apelación del TS de 29-07-2025 (p.37), recogido en la sentencia TS 1000/2025, antecedente duodécimo (p.6).
+        063, 2026-09-28.
+    crimes:
+      - name: revelación de secretos
+        article: art. 417 CP
+        quote: "Estimar el recurso de apelación interpuesto por la Ilma. Sra. Doña PILAR RODRÍGUEZ FERNÁNDEZ acordando el sobreseimiento libre y archivo de las diligencias a ella referidas"
+      - name: infidelidad en la custodia de documentos
+        # sin `article`: la cita no lo fija — 063 tramo 2, 01-oct
+        quote: "Estimar el recurso de apelación interpuesto por la Ilma. Sra. Doña PILAR RODRÍGUEZ FERNÁNDEZ acordando el sobreseimiento libre y archivo de las diligencias a ella referidas"
+
+  # ============ T1 061 (2026-09-16, Fable, dueño): filas de REGISTRO (`estado` + crimes: []) ============
+  # Registran el estado procesal sin re-citar cargos: el loader no poda a quien no lista `crimes`
+  # (prune() solo actúa sobre personas con delitos curados) y el gate «stale» de última hora
+  # (>90 días sin fila) deja de descartar sus acusaciones de prensa. Fuente documental: auto de
+  # entrada y registro en Ferraz (autoentradaferraz.pdf, 26-05-2026, DP 150/2025, JCI nº 5 AN),
+  # p.5-7: «el resto de los investigados que se citan en el oficio»; el resto, prensa (tipo prensa).
+  - person: Gaspar Carlos Zarrías Arévalo
+    entity_id: Person:gaspar-carlos-zarrias-arevalo
+    doc: autoentradaferraz.pdf
+    estado:
+      status: investigado
+      fecha: '2026-05-26'
+      fuente: {doc: autoentradaferraz.pdf, tipo: auto}
+      revisado: '2026-09-16'
+      nota: 'p.5: «GASPAR CARLOS ZARRIAS AREVALO (que prestaría su sociedad como vehículo para dichos pagos y asesoría jurídica)» entre «el resto de los investigados que se citan en el oficio».'
+    crimes: []
+  - person: Ismael Oliver Romero
+    entity_id: Person:ismael-oliver
+    doc: autoentradaferraz.pdf
+    estado:
+      status: investigado
+      fecha: '2026-05-26'
+      fuente: {doc: autoentradaferraz.pdf, tipo: auto}
+      revisado: '2026-09-16'
+      nota: 'p.5: «ISMAEL OLIVER ROMERO (letrado de parte de los implicados y vehículo de pago de las cantidades destinadas a LEIRE a través de sus sociedades)»; p.6: «sociedades de los investigados (ZARRIAS, OLIVER y TEIJELO)». Declaró como investigado ante Pedraz el 09-09-2026 (Europa Press vía Infobae).'
+    crimes: []
+  - person: Jacobo Teijelo
+    entity_id: Person:jacobo-teijelo
+    doc: autoentradaferraz.pdf
+    estado:
+      status: investigado
+      fecha: '2026-05-26'
+      fuente: {doc: autoentradaferraz.pdf, tipo: auto}
+      revisado: '2026-09-16'
+      nota: 'p.6: «JACOBO TEIJELO (letrado de SANTOS CERDAN […] y de SANCHEZ YEPES; quien también factura sus servicios al PSOE)» y «sociedades de los investigados (ZARRIAS, OLIVER y TEIJELO)».'
+    crimes: []
+  - person: Javier Pérez Dolset
+    entity_id: Person:javier-perez-dolset
+    doc: autoentradaferraz.pdf
+    estado:
+      status: investigado
+      fecha: '2026-05-26'
+      fuente: {doc: autoentradaferraz.pdf, tipo: auto}
+      revisado: '2026-09-16'
+      nota: 'p.6-7: citado entre los investigados del oficio y como integrante del grupo «liderado por Santos CERDÁN y coordinado por Leire DÍEZ, del que además forman parte Javier PÉREZ DOLSET y Gaspar Carlos ZARRÍAS ARÉVALO».'
+    crimes: []
+  - person: Ana María Fuentes Pacheco
+    entity_id: Person:ana-maria-fuentes-pacheco
+    estado:
+      status: investigado
+      fecha: '2026-09-09'
+      fuente: {url: https://www.infobae.com/espana/agencias/2026/09/09/la-gerente-del-psoe-achaca-a-cerdan-los-encargos-y-pagos-a-imputados-del-caso-leire-diez/, tipo: prensa}
+      revisado: '2026-09-16'
+      nota: 'Declaró como investigada ante Pedraz el 09-09-2026 (Europa Press vía Infobae) por presunta falsedad en documento mercantil (notas de encargo). El auto de 26-05-2026 (p.6, p.11, p.15) la describe con «presumible concierto» sin listarla como investigada; por eso la fuente es de prensa.'
+    crimes: []
+  - person: Ignacio Zaldívar de la Rica
+    entity_id: Person:ignacio-zaldivar-de-la-rica
+    estado:
+      status: investigado
+      fecha: '2026-07-03'
+      fuente: {url: https://theobjective.com/espana/tribunales/2026-07-03/koldo-jesica-enchufes-ineco-tragsatec/, tipo: prensa}
+      revisado: '2026-09-16'
+      nota: 'Citado como investigado por el juez Ismael Moreno (AN, caso Koldo) el 03-07-2026 por presuntos tráfico de influencias y malversación (The Objective / Libertad Digital); compareció como investigado el 20-07-2026 y se acogió a su derecho a no declarar (El País, 20-07-2026). Solo prensa: no hay providencia en corpus.'
+    crimes: []
+  - person: Leticia de la Hoz Calvo
+    entity_id: Person:leticia-de-la-hoz-calvo
+    estado:
+      status: imputado
+      fecha: '2026-06-08'
+      fuente: {url: https://www.eldiario.es/politica/juez-pedraz-imputa-abogada-leticia-hoz-caso-leire-cita-10-julio_1_13284395.html, tipo: prensa}
+      revisado: '2026-09-16'
+      nota: 'Citada como investigada por Pedraz (JCI nº 5 AN, caso Leire, DP 150/2025) por el presunto ofrecimiento a la testigo Carmen Pano (elDiario.es 08-06-2026); declaró el 14-07-2026. Registro T1 061 del estado procesal; la fuente no nombra el delito, por lo que NO hay ACCUSED_OF (la calificación «obstrucción a la justicia» de última hora se retiró en T1 por falta de fuente).'
+    crimes: []
+  - person: Claudio Rivas Ruiz Capillas
+    entity_id: Person:claudio-rivas-ruiz-capillas
+    estado:
+      status: imputado
+      fecha: '2026-06-15'
+      fuente: {url: https://www.eldiario.es/politica/audiencia-nacional-propone-juzgar-empresario-claudio-rivas-capitan-guardia-civil-presunto-fraude-hidrocarburos_1_13304261.html, tipo: prensa}
+      revisado: '2026-09-16'
+      nota: 'Auto de pase a procedimiento abreviado de Pedraz (AN JCI nº 5, 15-06-2026, fraude del IVA de hidrocarburos) según Europa Press (vía elDiario.es; también Confilegal y The Objective). No es un auto de procesamiento: el registro publica «imputado» (fail-closed, decisión del dueño 16-09-2026); las cuatro ACCUSED_OF de última hora se rebajan de «procesado» a «imputado».'
+    crimes: []
+  # --- 061 T1b (2026-09-16): registro de estado para las personas con ACCUSED_OF judicial sin fila
+  # (censo del efímero qa061f: 26 personas = 9 disposiciones cerradas «absuelto» intocables + 9 seudónimos
+  # CENDOJ sin identidad registrable + las 7 de abajo + González Amador, cuya fila va en su bloque).
+  # 063 (30-09-2026): auto de apertura de 21-09-2026 en corpus → fila `acusado`, SOLO malversación (p.65: «NO HA LUGAR
+  # A LA APERTURA DEL JUICIO ORAL CONTRA MARÍA CRISTINA ÁLVAREZ RODRÍGUEZ POR EL DELITO DE TRÁFICO DE INFLUENCIAS»);
+  # sus demás ACCUSED_OF ya no están en el grafo, así que la propagación no agrava otros delitos.
+  - person: María Cristina Álvarez Rodríguez
+    entity_id: Person:maria-cristina-alvarez-rodriguez
+    doc: auto-peinado-juicio-oral-begona-2026-09-21.pdf
+    status: acusado
+    estado:
+      status: acusado
+      fecha: '2026-09-21'
+      fuente: {doc: auto-peinado-juicio-oral-begona-2026-09-21.pdf, tipo: auto_apertura_juicio_oral}
+      revisado: '2026-09-30'
+      nota: 'Auto de apertura de juicio oral con jurado de 21-09-2026 (p.65): cooperadora necesaria de malversación, exclusivamente por el desvío del software. No es firme ni hay juicio; la Fiscalía pide el sobreseimiento. Presunción de inocencia.'
+    crimes:
+      - name: malversación
+        article: art. 432 CP
+        doc: auto-peinado-juicio-oral-begona-2026-09-21.pdf
+        quote: "CONTRA LA ACUSADA MARÍA CRISTINA ÁLVAREZ RODRÍGUEZ, POR EL DELITO DE MALVERSACIÓN DE CAUDALES PÚBLICOS, EXCLUSIVAMENTE EN RELACIÓN CON EL DESVÍO DEL SOFTWARE, EN CONCEPTO DE COOPERADORA NECESARIA"
+  # (Histórico) Cristina Álvarez: SIN fila de registro hasta el 30-09 (revisión Codex T1b, 16-09-2026). El auto de 11-04-2026
+  # la nombra investigada (p.1-2) igual que a Begoña, pero la AP de Madrid (16-07-2026, Infobae) la dejó solo
+  # con malversación y archivó el resto; una fila `imputado` propagaría ese estado también a los 4 delitos
+  # archivados, y el registro no puede cerrar por delito con fuente de prensa. Sus ACCUSED_OF quedan en el
+  # default «investigado» hasta el auto definitivo de apertura (<27-09-2026) → `acusado` + fila espejo.
+  - person: Juan Carlos Barrabés Cónsul
+    entity_id: Person:juan-carlos-barrabes
+    doc: AUTO-IMPUTACION-BEGONA-GOMEZ-11.04.2026.pdf
+    estado:
+      status: investigado
+      fecha: '2026-04-11'
+      fuente: {doc: AUTO-IMPUTACION-BEGONA-GOMEZ-11.04.2026.pdf, tipo: auto}
+      revisado: '2026-09-16'
+      nota: 'Último acto formal en corpus: auto de 11-04-2026 (p.1: «las defensas de los investigados, María Cristina Álvarez Rodríguez y Juan Carlos Barrabés Cónsul»). Después, según prensa: la AP de Madrid lo excluyó del juicio con jurado el 16-07-2026 (Infobae) y Peinado remitió la pieza del contrato de Red.es a la UTE Barrabés–KPMG a la Fiscalía Europea el 04-08-2026, archivando «sin más trámite» las actuaciones en su juzgado (Europa Press vía The Objective). «Investigado» es el suelo del registro: no agrava (no hay acto acusatorio vigente) ni cierra (la investigación sigue en la EPPO; ese archivo no es un sobreseimiento de fondo en corpus). Revisión Codex T1b.'
+    crimes: []
+  - person: Leire Díez Castro
+    entity_id: Person:leire-diez
+    doc: autoentradaferraz.pdf
+    estado:
+      status: investigado
+      fecha: '2026-05-26'
+      fuente: {doc: autoentradaferraz.pdf, tipo: auto}
+      revisado: '2026-09-16'
+      nota: 'p.19: «apareciendo indicios de responsabilidad en la comisión de los mismos … respecto de: • MARIA LEIRE DIEZ CASTRO • JAVIER PEREZ DOLSET • SANTOS CERDAN LEON • GASPAR CARLOS ZARRIAS AREVALO • ISMAEL OLIVER ROMERO» (auto de entrada y registro de Pedraz, JCI nº 5 AN, DP 150/2025).'
+    crimes: []
+  - person: Rodolfo Reyes Rojas
+    entity_id: Person:rodolfo-reyes
+    doc: auto-zapatero.pdf
+    estado:
+      status: investigado
+      fecha: '2026-05-18'
+      fuente: {doc: auto-zapatero.pdf, tipo: auto}
+      revisado: '2026-09-16'
+      nota: 'p.5: «la extracción telefónica de un dispositivo móvil perteneciente al investigado Rodolfo Reyes Rojas» (auto de Calama de 18-05-2026, DP 77/2024).'
+    crimes: []
+  - person: María Gertrudis Alcázar Jiménez
+    entity_id: Person:maria-gertrudis-alcazar-jimenez
+    doc: auto-zapatero.pdf
+    estado:
+      status: investigado
+      fecha: '2026-05-18'
+      fuente: {doc: auto-zapatero.pdf, tipo: auto}
+      revisado: '2026-09-16'
+      nota: 'p.86: «o a los investigados en el marco del registro o fuera del mismo, como es el caso de María Gertrudis Alcázar Jiménez» (auto de Calama de 18-05-2026, DP 77/2024).'
+    crimes: []
+  - person: Julio Martínez Martínez
+    entity_id: Person:julio-martinez-martinez
+    estado:
+      status: investigado
+      fecha: '2026-07-21'
+      fuente: {url: https://www.elespanol.com/espana/politica/20260721/ultima-hora-politica-directo-julito-martinez-declara-juez-calama-implicar-zapatero-rescate-plus-ultra/1003744328373_10.html, tipo: prensa}
+      revisado: '2026-09-16'
+      nota: 'Declaró como investigado ante el juez Calama (AN, DP 77/2024) el 21-07-2026 (El Español; Infobae y The Objective el mismo día). El auto de 18-05-2026 (en corpus) ordena registros en sus sociedades pero no lo nombra literalmente «investigado» con página; por eso la fuente es de prensa. Sus ACCUSED_OF extraídas ya publicaban «investigado».'
+    crimes: []
+  - person: Juan Manuel Serrano Quintana
+    entity_id: Person:juan-manuel-serrano-quintana
+    estado:
+      status: imputado
+      fecha: '2026-07-10'
+      fuente: {url: https://www.vozpopuli.com/tribunales/el-juez-imputa-al-ex-jefe-de-gabinete-y-amigo-de-sanchez-en-el-caso-de-las-cloacas-del-psoe.html, tipo: prensa}
+      revisado: '2026-09-16'
+      nota: 'Pedraz (JCI nº 5 AN, caso Leire, DP 150/2025) acordó su condición de investigado el 10-07-2026 a petición de Anticorrupción y autorizó el volcado de su móvil (Vozpópuli; Moncloa.com y Libertad Digital el mismo día); estaba citado a declarar el 02-09-2026 (El Español 21-08-2026), sin crónica del acto en el feed. El auto de 26-05-2026 (p.19) NO lo lista entre los investigados; solo tiene una ACCUSED_OF de última hora (organización criminal), que esta fila de registro protege de la caducidad.'
+    crimes: []
+  # --- 063 L23 (2026-09-29): particulares con prosa «investigado» y sin fila de registro. Estado verificado en
+  # prensa; `crimes: []` → no crea ACCUSED_OF nuevas (la de blanqueo de Martínez Sola, de última hora, vuelve a
+  # cargarse porque esta fila la protege de la caducidad: la fuente de la detención ya la atribuye a prensa).
+  - person: José Ruz Martínez
+    entity_id: Person:jose-ruz
+    estado:
+      status: investigado
+      fecha: '2025-07-04'
+      fuente: {url: https://www.servimedia.es/noticias/supremo-retira-pasaporte-constructor-jose-ruz-existir-indicios-bastantes-pago-mordidas-obras/1412063177, tipo: prensa}
+      revisado: '2026-09-29'
+      nota: 'El magistrado del Tribunal Supremo Leopoldo Puente le retiró el pasaporte al apreciar «indicios bastantes» tras su declaración como investigado (Servimedia 04-07-2025; El Español 27-02-2025 recoge su declaración anterior, en la que negó haber pagado comisiones). Sin noticia posterior de archivo a 29-09-2026.'
+    crimes: []
+  - person: Julio Martínez Sola
+    entity_id: Person:julio-martinez-sola
+    estado:
+      status: investigado
+      fecha: '2026-09-07'
+      fuente: {url: https://www.infobae.com/espana/agencias/2026/09/07/el-expresidente-de-plus-ultra-declara-que-asumio-que-el-pago-del-1-iba-para-zapatero/, tipo: prensa}
+      revisado: '2026-09-29'
+      nota: 'El juez José Luis Calama (AN, caso Plus Ultra, DP 77/2024) lo citó como investigado (Infobae 24-07-2026) y declaró en esa condición el 07-09-2026 (EFE vía Infobae). No confundir con Julio Martínez Martínez.'
+    crimes: []
+  # González Amador: SIN fila (063, revisión Codex 29-09). El auto de apertura de juicio oral de 22-09-2025 no está en
+  # el corpus y `acusado` no se sostiene con prensa; su ACCUSED_OF se retiró en la 063. La prosa lo atribuye a prensa.
+
+  # ============ 063 L23 (2026-10-04): filas de REGISTRO de la pieza de contratación del caso Leire ============
+  # 22 de los 25 citados como investigados por Pedraz (JCI nº 5 AN, DP 150/2025) a petición de Anticorrupción, según
+  # la lista nominal de elDiario.es (29-06-2026). Supera la decisión del 29-09 («SIN fila»): sus ACCUSED_OF de última
+  # hora ya se retiraron en el tramo 2 (01-oct; quedan solo como comentarios en ultima_hora.yaml), así que la fila no
+  # resucita ninguna. `crimes: []`: la fuente da los delitos de la pieza en bloque, no persona a persona. Búsqueda en
+  # prensa a 04-10-2026 sin archivo, levantamiento de la imputación ni declaración de ninguno de ellos.
+  - person: Miguel Ángel Santiago Mesa
+    entity_id: Person:miguel-angel-santiago-mesa
+    estado:
+      status: investigado
+      fecha: '2026-06-29'
+      fuente: {url: https://www.eldiario.es/politica/juez-caso-leire-imputa-presidenta-sepi-24-personas-supuestos-amanos-contratacion-publica_1_13342324.html, tipo: prensa}
+      revisado: '2026-10-04'
+      nota: 'elDiario.es (29-06-2026) lo incluye entre los 25 citados como investigados en la pieza de contratación pública del caso Leire (ex director corporativo de la SEPI). La fuente da los delitos de la pieza en bloque. Sin noticia de archivo ni de declaración a 04-10-2026.'
+    crimes: []
+  - person: Miguel Ángel Figueroa Teva
+    entity_id: Person:miguel-angel-figueroa
+    estado:
+      status: investigado
+      fecha: '2026-06-29'
+      fuente: {url: https://www.eldiario.es/politica/juez-caso-leire-imputa-presidenta-sepi-24-personas-supuestos-amanos-contratacion-publica_1_13342324.html, tipo: prensa}
+      revisado: '2026-10-04'
+      nota: 'elDiario.es (29-06-2026) lo incluye entre los 25 citados como investigados en la pieza de contratación pública del caso Leire (director de Participadas III de la SEPI entre 2018 y 2021). La fuente da los delitos de la pieza en bloque. Sin noticia de archivo ni de declaración a 04-10-2026.'
+    crimes: []
+  - person: Rosario Martín Manzanedo
+    entity_id: Person:rosario-martin-manzanedo
+    estado:
+      status: investigado
+      fecha: '2026-06-29'
+      fuente: {url: https://www.eldiario.es/politica/juez-caso-leire-imputa-presidenta-sepi-24-personas-supuestos-amanos-contratacion-publica_1_13342324.html, tipo: prensa}
+      revisado: '2026-10-04'
+      nota: 'elDiario.es (29-06-2026) la incluye entre los 25 citados como investigados en la pieza de contratación pública del caso Leire (directora de Participadas de la SEPI). La fuente da los delitos de la pieza en bloque. Sin noticia de archivo ni de declaración a 04-10-2026.'
+    crimes: []
+  - person: Fernando Albert Aragón
+    entity_id: Person:fernando-albert-aragon
+    estado:
+      status: investigado
+      fecha: '2026-06-29'
+      fuente: {url: https://www.eldiario.es/politica/juez-caso-leire-imputa-presidenta-sepi-24-personas-supuestos-amanos-contratacion-publica_1_13342324.html, tipo: prensa}
+      revisado: '2026-10-04'
+      nota: 'elDiario.es (29-06-2026) lo incluye entre los 25 citados como investigados en la pieza de contratación pública del caso Leire (secretario general y director de la asesoría jurídica de SEPIDES). La fuente da los delitos de la pieza en bloque. Sin noticia de archivo ni de declaración a 04-10-2026.'
+    crimes: []
+  - person: María de la Concepción Ordiz Fuertes
+    entity_id: Person:maria-de-la-concepcion-ortiz-fuerte
+    estado:
+      status: investigado
+      fecha: '2026-06-29'
+      fuente: {url: https://www.eldiario.es/politica/juez-caso-leire-imputa-presidenta-sepi-24-personas-supuestos-amanos-contratacion-publica_1_13342324.html, tipo: prensa}
+      revisado: '2026-10-04'
+      nota: 'elDiario.es (29-06-2026) la incluye entre los 25 citados como investigados en la pieza de contratación pública del caso Leire (presidenta del TACRC). La fuente da los delitos de la pieza en bloque. Sin noticia de archivo ni de declaración a 04-10-2026.'
+    crimes: []
+  - person: José Ramón Sempere Vera
+    entity_id: Person:jose-ramon-sempere-vera
+    estado:
+      status: investigado
+      fecha: '2026-06-29'
+      fuente: {url: https://www.eldiario.es/politica/juez-caso-leire-imputa-presidenta-sepi-24-personas-supuestos-amanos-contratacion-publica_1_13342324.html, tipo: prensa}
+      revisado: '2026-10-04'
+      nota: 'elDiario.es (29-06-2026) lo incluye entre los 25 citados como investigados en la pieza de contratación pública del caso Leire (presidente del consejo de administración de MERCASA (2018-2024)). La fuente da los delitos de la pieza en bloque. Sin noticia de archivo ni de declaración a 04-10-2026.'
+    crimes: []
+  - person: María Teresa Castillo Pasalodos
+    entity_id: Person:maria-teresa-castillo-pasalodos
+    estado:
+      status: investigado
+      fecha: '2026-06-29'
+      fuente: {url: https://www.eldiario.es/politica/juez-caso-leire-imputa-presidenta-sepi-24-personas-supuestos-amanos-contratacion-publica_1_13342324.html, tipo: prensa}
+      revisado: '2026-10-04'
+      nota: 'elDiario.es (29-06-2026) la incluye entre los 25 citados como investigados en la pieza de contratación pública del caso Leire (directora de Desarrollo Corporativo y Relaciones Institucionales de MERCASA). La fuente da los delitos de la pieza en bloque. Sin noticia de archivo ni de declaración a 04-10-2026.'
+    crimes: []
+  - person: José Vicente Berlanga Arona
+    entity_id: Person:jose-vicente-berlanga-arona
+    estado:
+      status: investigado
+      fecha: '2026-06-29'
+      fuente: {url: https://www.eldiario.es/politica/juez-caso-leire-imputa-presidenta-sepi-24-personas-supuestos-amanos-contratacion-publica_1_13342324.html, tipo: prensa}
+      revisado: '2026-10-04'
+      nota: 'elDiario.es (29-06-2026) lo incluye entre los 25 citados como investigados en la pieza de contratación pública del caso Leire (presidente del consejo de administración de ENUSA (2018-2021)). La fuente da los delitos de la pieza en bloque. Sin noticia de archivo ni de declaración a 04-10-2026.'
+    crimes: []
+  - person: Rosario Arévalo Sández
+    entity_id: Person:rosario-arevalo-sandez
+    estado:
+      status: investigado
+      fecha: '2026-06-29'
+      fuente: {url: https://www.eldiario.es/politica/juez-caso-leire-imputa-presidenta-sepi-24-personas-supuestos-amanos-contratacion-publica_1_13342324.html, tipo: prensa}
+      revisado: '2026-10-04'
+      nota: 'elDiario.es (29-06-2026) la incluye entre los 25 citados como investigados en la pieza de contratación pública del caso Leire (directora corporativa de ENUSA). La fuente da los delitos de la pieza en bloque. Sin noticia de archivo ni de declaración a 04-10-2026.'
+    crimes: []
+  - person: Francisco Javier López Buciega
+    entity_id: Person:francisco-javier-lopez-buciega
+    estado:
+      status: investigado
+      fecha: '2026-06-29'
+      fuente: {url: https://www.eldiario.es/politica/juez-caso-leire-imputa-presidenta-sepi-24-personas-supuestos-amanos-contratacion-publica_1_13342324.html, tipo: prensa}
+      revisado: '2026-10-04'
+      nota: 'elDiario.es (29-06-2026) lo incluye entre los 25 citados como investigados en la pieza de contratación pública del caso Leire (director de Servicios Urbanos y Medio Ambiente de ACCIONA). La fuente da los delitos de la pieza en bloque. Sin noticia de archivo ni de declaración a 04-10-2026.'
+    crimes: []
+  - person: Juan Antonio Carrillo Donaire
+    entity_id: Person:juan-antonio-carrillo-donaire
+    estado:
+      status: investigado
+      fecha: '2026-06-29'
+      fuente: {url: https://www.eldiario.es/politica/juez-caso-leire-imputa-presidenta-sepi-24-personas-supuestos-amanos-contratacion-publica_1_13342324.html, tipo: prensa}
+      revisado: '2026-10-04'
+      nota: 'elDiario.es (29-06-2026) lo incluye entre los 25 citados como investigados en la pieza de contratación pública del caso Leire (catedrático de Derecho Administrativo y socio de SDP Carrillo y Montes). La fuente da los delitos de la pieza en bloque. Sin noticia de archivo ni de declaración a 04-10-2026.'
+    crimes: []
+  - person: Francisco Irazusta Rodríguez
+    entity_id: Person:francisco-irazusta-rodriguez
+    estado:
+      status: investigado
+      fecha: '2026-06-29'
+      fuente: {url: https://www.eldiario.es/politica/juez-caso-leire-imputa-presidenta-sepi-24-personas-supuestos-amanos-contratacion-publica_1_13342324.html, tipo: prensa}
+      revisado: '2026-10-04'
+      nota: 'elDiario.es (29-06-2026) lo incluye entre los 25 citados como investigados en la pieza de contratación pública del caso Leire (expresidente de Tubos Reunidos). La fuente da los delitos de la pieza en bloque. Sin noticia de archivo ni de declaración a 04-10-2026.'
+    crimes: []
+  - person: Jesús Pérez Rodríguez Urrutia
+    entity_id: Person:jesus-perez-rodriguez-urrutia
+    estado:
+      status: investigado
+      fecha: '2026-06-29'
+      fuente: {url: https://www.eldiario.es/politica/juez-caso-leire-imputa-presidenta-sepi-24-personas-supuestos-amanos-contratacion-publica_1_13342324.html, tipo: prensa}
+      revisado: '2026-10-04'
+      nota: 'elDiario.es (29-06-2026) lo incluye entre los 25 citados como investigados en la pieza de contratación pública del caso Leire (consejero de Tubos Reunidos). La fuente da los delitos de la pieza en bloque. Sin noticia de archivo ni de declaración a 04-10-2026.'
+    crimes: []
+  - person: Félix Azcona Lacarra
+    entity_id: Person:felix-azcona-lacarra
+    estado:
+      status: investigado
+      fecha: '2026-06-29'
+      fuente: {url: https://www.eldiario.es/politica/juez-caso-leire-imputa-presidenta-sepi-24-personas-supuestos-amanos-contratacion-publica_1_13342324.html, tipo: prensa}
+      revisado: '2026-10-04'
+      nota: 'elDiario.es (29-06-2026) lo incluye entre los 25 citados como investigados en la pieza de contratación pública del caso Leire (representante y administrador de Beyol Gestión, administradora de Erri Berri). La fuente da los delitos de la pieza en bloque. Sin noticia de archivo ni de declaración a 04-10-2026.'
+    crimes: []
+  - person: Juan Ignacio Fernández-Micheltorena
+    entity_id: Person:juan-ignacio-fernandez-micheltorena
+    estado:
+      status: investigado
+      fecha: '2026-06-29'
+      fuente: {url: https://www.eldiario.es/politica/juez-caso-leire-imputa-presidenta-sepi-24-personas-supuestos-amanos-contratacion-publica_1_13342324.html, tipo: prensa}
+      revisado: '2026-10-04'
+      nota: 'elDiario.es (29-06-2026) lo incluye entre los 25 citados como investigados en la pieza de contratación pública del caso Leire (director financiero de Erri Berri). La fuente da los delitos de la pieza en bloque. Sin noticia de archivo ni de declaración a 04-10-2026.'
+    crimes: []
+  - person: Fernando Samper Rivas
+    entity_id: Person:fernando-samper-rivas
+    estado:
+      status: investigado
+      fecha: '2026-06-29'
+      fuente: {url: https://www.eldiario.es/politica/juez-caso-leire-imputa-presidenta-sepi-24-personas-supuestos-amanos-contratacion-publica_1_13342324.html, tipo: prensa}
+      revisado: '2026-10-04'
+      nota: 'elDiario.es (29-06-2026) lo incluye entre los 25 citados como investigados en la pieza de contratación pública del caso Leire (director del Grupo Forestalia). La fuente da los delitos de la pieza en bloque. Sin noticia de archivo ni de declaración a 04-10-2026.'
+    crimes: []
+  - person: Roberto Pérez Águeda
+    entity_id: Person:roberto-perez-agueda
+    estado:
+      status: investigado
+      fecha: '2026-06-29'
+      fuente: {url: https://www.eldiario.es/politica/juez-caso-leire-imputa-presidenta-sepi-24-personas-supuestos-amanos-contratacion-publica_1_13342324.html, tipo: prensa}
+      revisado: '2026-10-04'
+      nota: 'elDiario.es (29-06-2026) lo incluye entre los 25 citados como investigados en la pieza de contratación pública del caso Leire (vinculado a Forestalia). La fuente da los delitos de la pieza en bloque. Sin noticia de archivo ni de declaración a 04-10-2026.'
+    crimes: []
+  - person: Eduardo Pérez Águeda
+    entity_id: Person:eduardo-perez-agueda
+    estado:
+      status: investigado
+      fecha: '2026-06-29'
+      fuente: {url: https://www.eldiario.es/politica/juez-caso-leire-imputa-presidenta-sepi-24-personas-supuestos-amanos-contratacion-publica_1_13342324.html, tipo: prensa}
+      revisado: '2026-10-04'
+      nota: 'elDiario.es (29-06-2026) lo incluye entre los 25 citados como investigados en la pieza de contratación pública del caso Leire (vinculado a Forestalia). La fuente da los delitos de la pieza en bloque. Sin noticia de archivo ni de declaración a 04-10-2026.'
+    crimes: []
+  - person: Carmelo Aznárez Pellicer
+    entity_id: Person:carmelo-aznarez-pellicer
+    estado:
+      status: investigado
+      fecha: '2026-06-29'
+      fuente: {url: https://www.eldiario.es/politica/juez-caso-leire-imputa-presidenta-sepi-24-personas-supuestos-amanos-contratacion-publica_1_13342324.html, tipo: prensa}
+      revisado: '2026-10-04'
+      nota: 'elDiario.es (29-06-2026) lo incluye entre los 25 citados como investigados en la pieza de contratación pública del caso Leire (administrador de Mediaciones Martínez). La fuente da los delitos de la pieza en bloque. Sin noticia de archivo ni de declaración a 04-10-2026.'
+    crimes: []
+  - person: Mikel Arrarás Abejón
+    entity_id: Person:mikel-arraras-abejon
+    estado:
+      status: investigado
+      fecha: '2026-06-29'
+      fuente: {url: https://www.eldiario.es/politica/juez-caso-leire-imputa-presidenta-sepi-24-personas-supuestos-amanos-contratacion-publica_1_13342324.html, tipo: prensa}
+      revisado: '2026-10-04'
+      nota: 'elDiario.es (29-06-2026) lo incluye entre los 25 citados como investigados en la pieza de contratación pública del caso Leire (arquitecto técnico de Servinabar). La fuente da los delitos de la pieza en bloque. Sin noticia de archivo ni de declaración a 04-10-2026.'
+    crimes: []

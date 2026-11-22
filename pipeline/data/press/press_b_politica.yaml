@@ -1,0 +1,240 @@
+# Neutral, attributed enrichment facts — politicians & family/professional circle.
+# Strictly neutral structural facts (offices, party, family, professional roles).
+# Every relation backed by a fetched source (outlet + url + verbatim Spanish quote).
+# No allegations, investigations or judicial content.
+
+entities:
+  # People
+  - {name: "Pedro Sánchez", type: Person}
+  - {name: "Begoña Gómez", type: Person}
+  - {name: "David Sánchez", type: Person}
+  - {name: "José Luis Rodríguez Zapatero", type: Person}
+  - {name: "Armengol", type: Person}            # Francina Armengol (stored as "Armengol")
+  - {name: "Miguel Ángel Gallardo", type: Person}
+  - {name: "María Cristina Álvarez Rodríguez", type: Person}
+
+  # Organizations / institutions (endpoints)
+  - {name: "PSOE", type: Organization}
+  - {name: "PSIB-PSOE", type: Organization}
+  - {name: "Universidad Complutense de Madrid", type: Organization}
+  - {name: "Instituto de Empresa", type: Organization}
+  - {name: "Grupo Inmark", type: Company}
+  - {name: "Diputación de Badajoz", type: Organization}
+  - {name: "Ayuntamiento de Madrid", type: Organization}
+  - {name: "Congreso de los Diputados", type: Organization}
+  - {name: "Gobierno de España", type: Organization}
+  - {name: "Gobierno de las Islas Baleares", type: Organization}
+  - {name: "Ayuntamiento de Villanueva de la Serena", type: Organization}
+  - {name: "Asamblea de Extremadura", type: Organization}
+  - {name: "Moncloa", type: Organization}
+
+relations:
+  # ---------------- Pedro Sánchez ----------------
+  - source: "Pedro Sánchez"
+    target: "PSOE"
+    type: MEMBER_OF
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Pedro_S%C3%A1nchez"
+    date: "2017"
+    quote: "Secretario general del Partido Socialista Obrero Español desde el 18 de junio de 2017"
+    note: "Secretario general del PSOE (también 2014-2016)."
+
+  - source: "Pedro Sánchez"
+    target: "Gobierno de España"
+    type: WORKS_FOR
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Pedro_S%C3%A1nchez"
+    date: "2018"
+    quote: "actual presidente del Gobierno de España desde 2018"
+    note: "Presidente del Gobierno de España."
+
+  - source: "Pedro Sánchez"
+    target: "Ayuntamiento de Madrid"
+    type: WORKS_FOR
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Pedro_S%C3%A1nchez"
+    date: "2004"
+    quote: "Concejal del Ayuntamiento de Madrid 18 de mayo de 2004-15 de septiembre de 2009"
+    note: "Concejal del Ayuntamiento de Madrid (2004-2009)."
+
+  - source: "Pedro Sánchez"
+    target: "Begoña Gómez"
+    type: FAMILY_OF
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Pedro_S%C3%A1nchez"
+    date: "2006"
+    quote: "Se casó en 2006 con Begoña Gómez Fernández"
+    note: "Cónyuge."
+
+  - source: "Pedro Sánchez"
+    target: "David Sánchez"
+    type: FAMILY_OF
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Pedro_S%C3%A1nchez"
+    quote: "Su hermano menor David, conocido como David Azagra, es director de orquesta"
+    note: "Hermano."
+
+  # ---------------- Begoña Gómez ----------------
+  - source: "Begoña Gómez"
+    target: "Universidad Complutense de Madrid"
+    type: WORKS_FOR
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Bego%C3%B1a_G%C3%B3mez_Fern%C3%A1ndez"
+    date: "2020"
+    quote: "Desde 2020 codirigió la Cátedra Extraordinaria de Transformación Social Competitiva de la Universidad Complutense de Madrid"
+    note: "Codirectora de cátedra extraordinaria en la UCM."
+
+  - source: "Begoña Gómez"
+    target: "Instituto de Empresa"
+    type: WORKS_FOR
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Bego%C3%B1a_G%C3%B3mez_Fern%C3%A1ndez"
+    date: "2018"
+    quote: "Entre 2018 y 2022, fue directora ejecutiva del Africa Center del Instituto de Empresa (IE)."
+    note: "Directora ejecutiva del Africa Center del IE (2018-2022)."
+
+  - source: "Begoña Gómez"
+    target: "Grupo Inmark"
+    type: WORKS_FOR
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Bego%C3%B1a_G%C3%B3mez_Fern%C3%A1ndez"
+    date: "2000"
+    quote: "Comenzó a trabajar con el grupo Inmark en el año 2000 y se convirtió en Directora de Consultoría en Externalización Comercial, cargo que ocupó hasta 2018."
+    note: "Directora de Consultoría en Externalización Comercial (2000-2018)."
+
+  # 063 R-2026-09-24-0056: duplicado; el parentesco queda respaldado por los autos.
+
+  # ---------------- David Sánchez ----------------
+  - source: "David Sánchez"
+    target: "Diputación de Badajoz"
+    type: WORKS_FOR
+    outlet: "Artículo 14"
+    url: "https://www.articulo14.es/politica/quien-es-y-a-que-se-dedica-david-sanchez-perez-castejon-hermano-de-pedro-sanchez-20240611.html"
+    quote: "En la actualidad, David Sánchez Pérez-Castejón ocupa el cargo de director de la Oficina de Artes Escénicas de la Diputación de Badajoz."
+    note: "Director de la Oficina de Artes Escénicas de la Diputación de Badajoz."
+
+  - source: "David Sánchez"
+    target: "Pedro Sánchez"
+    type: FAMILY_OF
+    outlet: "Artículo 14"
+    url: "https://www.articulo14.es/politica/quien-es-y-a-que-se-dedica-david-sanchez-perez-castejon-hermano-de-pedro-sanchez-20240611.html"
+    quote: "David Sánchez Pérez-Castejón, conocido artísticamente como David Azagra, es una figura que ha cobrado cierta notoriedad no solo por ser hermano de Pedro Sánchez"
+    note: "Hermano de Pedro Sánchez; director de orquesta, conocido profesionalmente como David Azagra."
+
+  # ---------------- José Luis Rodríguez Zapatero ----------------
+  - source: "José Luis Rodríguez Zapatero"
+    target: "PSOE"
+    type: MEMBER_OF
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Jos%C3%A9_Luis_Rodr%C3%ADguez_Zapatero"
+    date: "2000"
+    quote: "Secretario General del PSOE 22 de julio de 2000-4 de febrero de 2012"
+    note: "Miembro del PSOE y secretario general de la formación entre 2000 y 2012, según Wikipedia. La fecha 2000 corresponde al inicio de la secretaría general, no al inicio de la afiliación."
+
+  - source: "José Luis Rodríguez Zapatero"
+    target: "Gobierno de España"
+    type: WORKS_FOR
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Jos%C3%A9_Luis_Rodr%C3%ADguez_Zapatero"
+    date: "2004"
+    quote: "Presidente del Gobierno de España 17 de abril de 2004-21 de diciembre de 2011"
+    note: "Presidente del Gobierno de España (2004-2011)."
+
+  - source: "José Luis Rodríguez Zapatero"
+    target: "Congreso de los Diputados"
+    type: WORKS_FOR
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Jos%C3%A9_Luis_Rodr%C3%ADguez_Zapatero"
+    date: "1986"
+    quote: "Diputado en Cortes Generales por León 15 de julio de 1986-2 de abril de 2004"
+    note: "Diputado por León (1986-2004) y por Madrid (2004-2011)."
+
+  # ---------------- Armengol (Francina Armengol) ----------------
+  - source: "Armengol"
+    target: "PSIB-PSOE"
+    type: MEMBER_OF
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Francina_Armengol"
+    date: "2012"
+    quote: "Secretaria general del PSIB-PSOE Desde el 26 de febrero de 2012"
+    note: "Secretaria general del PSIB-PSOE desde 2012."
+
+  - source: "Armengol"
+    target: "Congreso de los Diputados"
+    type: WORKS_FOR
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Francina_Armengol"
+    date: "2023"
+    quote: "Presidenta del Congreso de los Diputados Desde el 17 de agosto de 2023"
+    note: "Presidenta del Congreso de los Diputados desde 2023."
+
+  - source: "Armengol"
+    target: "Gobierno de las Islas Baleares"
+    type: WORKS_FOR
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Francina_Armengol"
+    date: "2015"
+    quote: "Presidenta del Gobierno de las Islas Baleares 2 de julio de 2015-19 de junio de 2023"
+    note: "Presidenta del Gobierno de las Islas Baleares (2015-2023)."
+
+  # ---------------- Miguel Ángel Gallardo ----------------
+  - source: "Miguel Ángel Gallardo"
+    target: "PSOE"
+    type: MEMBER_OF
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Miguel_%C3%81ngel_Gallardo_Miranda"
+    date: "2024"
+    quote: "secretario general del PSOE en Extremadura"
+    note: "Secretario general del PSOE de Extremadura (2024-2025); afiliado desde 1995."
+
+  - source: "Miguel Ángel Gallardo"
+    target: "Diputación de Badajoz"
+    type: WORKS_FOR
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Miguel_%C3%81ngel_Gallardo_Miranda"
+    date: "2015"
+    quote: "Presidente de la Diputación Provincial de Badajoz"
+    note: "Presidente de la Diputación de Badajoz (2015-2025)."
+
+  - source: "Miguel Ángel Gallardo"
+    target: "Ayuntamiento de Villanueva de la Serena"
+    type: WORKS_FOR
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Miguel_%C3%81ngel_Gallardo_Miranda"
+    date: "2003"
+    quote: "Alcalde de Villanueva de la Serena (2003-2024)"
+    note: "Alcalde de Villanueva de la Serena (2003-2024)."
+
+  - source: "Miguel Ángel Gallardo"
+    target: "Asamblea de Extremadura"
+    type: WORKS_FOR
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Miguel_%C3%81ngel_Gallardo_Miranda"
+    date: "2025"
+    quote: "Diputado a la Asamblea de Extremadura por Badajoz"
+    note: "Diputado autonómico por Badajoz (2025-2026)."
+
+  # ---------------- María Cristina Álvarez Rodríguez ----------------
+  - source: "María Cristina Álvarez Rodríguez"
+    target: "Moncloa"
+    type: WORKS_FOR
+    outlet: "Artículo 14"
+    url: "https://www.articulo14.es/politica/quien-es-cristina-alvarez-la-asesora-de-moncloa-y-asistente-de-begona-gomez-20250624.html"
+    quote: "Cristina Álvarez, asesora de Moncloa y mano derecha de Begoña Gómez"
+    note: "Asesora en Moncloa, asistente de Begoña Gómez."
+
+  - source: "María Cristina Álvarez Rodríguez"
+    target: "Grupo Inmark"
+    type: WORKS_FOR
+    outlet: "Artículo 14"
+    url: "https://www.articulo14.es/politica/quien-es-cristina-alvarez-la-asesora-de-moncloa-y-asistente-de-begona-gomez-20250624.html"
+    quote: "Cristina Álvarez ejercía como directora de consultoría en el área de Externalización Comercial"
+    note: "Directora de consultoría en Inmark (coincidió allí con Begoña Gómez)."
+
+  - source: "María Cristina Álvarez Rodríguez"
+    target: "Begoña Gómez"
+    type: ASSOCIATED_WITH
+    outlet: "Artículo 14"
+    url: "https://www.articulo14.es/politica/quien-es-cristina-alvarez-la-asesora-de-moncloa-y-asistente-de-begona-gomez-20250624.html"
+    quote: "Ambas coincidieron por primera vez a finales de los años 90 en la empresa Inmark, una firma dedicada a la captación de fondos para ONG, donde compartieron funciones durante al menos ocho años"
+    note: "Vínculo profesional con Begoña Gómez desde Inmark (años 90)."

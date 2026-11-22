@@ -1,0 +1,80 @@
+# Decisiones del dueño sobre personas que aparecen en el grafo por parentesco (L24 de qa_lint, spec 063).
+# decision ∈ conservar-con-papel | anonimizar | podar. Una fila por persona; la decide el dueño, nunca QA.
+# 2026-09-29: el dueño aprueba la propuesta en bloque (sesión 063, tras el tramo 1).
+revisados:
+  - {entity_id: Person:alba-rodriguez-espinosa, decision: conservar-con-papel, fecha: '2026-09-29',
+     reason: 'coadministradora solidaria de Whathefav SL (auto TCI 18-05-2026; UDEF 1907 p.78)'}
+  - {entity_id: Person:laura-rodriguez-espinosa, decision: conservar-con-papel, fecha: '2026-09-29',
+     reason: 'administradora y socia de Whathefav SL (UDEF 1907 p.78)'}
+  - {entity_id: Person:antonio-fernandez-menendez, decision: conservar-con-papel, fecha: '2026-09-29',
+     reason: 'apoderado de Obras Públicas y Regadíos (OPR), con causa propia en el caso Koldo'}
+  - {entity_id: Person:daniel-fernandez-menendez, decision: conservar-con-papel, fecha: '2026-09-29',
+     reason: 'administrador mancomunado de OPR, con causa propia en el caso Koldo'}
+  - {entity_id: Person:aurora-lopez-lopez, decision: conservar-con-papel, fecha: '2026-09-29',
+     reason: 'vía societaria del principal accionista de Plus Ultra según la UDEF (informe 1908 p.4)'}
+  - {entity_id: Person:federico-lledo-soria, decision: conservar-con-papel, fecha: '2026-09-29',
+     reason: 'exadministrador único y exsocio de Summer Wind SL (UDEF 1907 p.120)'}
+  - {entity_id: Person:maria-elena-lledo-gomez, decision: conservar-con-papel, fecha: '2026-09-29',
+     reason: 'administradora única de Summer Wind desde 18-03-2023 (UDEF 1907 p.120)'}
+  - {entity_id: Person:fernando-merino, decision: conservar-con-papel, fecha: '2026-09-29',
+     reason: 'exdirectivo de Acciona con causa propia en el caso Cerdán/Koldo'}
+  - {entity_id: Person:francisco-javier-hidalgo-gutierrez, decision: conservar-con-papel, fecha: '2026-09-29',
+     reason: 'segundo accionista y consejero delegado de Air Europa (calificación fiscal p.11)'}
+  - {entity_id: Person:juan-jose-hidalgo-acera, decision: conservar-con-papel, fecha: '2026-09-29',
+     reason: 'presidente de Air Europa (calificación fiscal p.11)'}
+  - {entity_id: Person:guillermo-alfredo-amaro-chacon, decision: conservar-con-papel, fecha: '2026-09-29',
+     reason: 'administrador solidario de Inteligencia Prospectiva SL y otras sociedades del caso Plus Ultra'}
+  - {entity_id: Person:manuel-aaron-fajardo-garcia, decision: conservar-con-papel, fecha: '2026-09-29',
+     reason: 'citado en la instrucción del caso Plus Ultra (UDEF)'}
+  - {entity_id: Person:manuel-martinez, decision: conservar-con-papel, fecha: '2026-09-29',
+     reason: 'administrador de Afitta SL y Afitta Capital SL (UDEF 1907)'}
+  - {entity_id: Person:maria-del-carmen-pano-sanchez, decision: conservar-con-papel, fecha: '2026-09-29',
+     reason: 'papel propio en el entorno de Aldama (El Español 29-06-2026; causa mascarillas)'}
+  - {entity_id: Person:maria-luisa-rivas-ruiz-capillas, decision: conservar-con-papel, fecha: '2026-09-29',
+     reason: 'administradora de Still Growing SL (calificación fiscal p.12)'}
+  - {entity_id: Person:maria-sonsoles-espinosa-diaz, decision: conservar-con-papel, fecha: '2026-09-29',
+     reason: 'pagos de Análisis Relevante recogidos en la causa Plus Ultra/Zapatero'}
+  - {entity_id: Person:ruben-de-aldama, decision: conservar-con-papel, fecha: '2026-09-29',
+     reason: 'escolta del ministro de Transportes (sentencia TS 22-06-2026 p.26; calificación fiscal p.2)'}
+  - {entity_id: Person:ruben-eladio-lopez-martinez, decision: conservar-con-papel, fecha: '2026-09-29',
+     reason: 'director de la Unidad de Emergencias del MITMA (UDEF 1907 p.36); el FAMILY_OF que llevaba era de un seudónimo judicial, escindido el 29-09'}
+  - {entity_id: Person:tatiana-abalos, decision: conservar-con-papel, fecha: '2026-09-29',
+     reason: 'reclamó un pago a Koldo García en junio de 2018 (informe UCO pp.54-55)'}
+  - {entity_id: Person:victor-abalos, decision: conservar-con-papel, fecha: '2026-09-29',
+     reason: 'testigo en el juicio del caso Koldo en el TS'}
+  - {entity_id: Person:pedro-sanchez, decision: conservar-con-papel, fecha: '2026-09-29',
+     reason: 'presidente del Gobierno (cargo público)'}
+  - {entity_id: Person:isabel-diaz-ayuso, decision: conservar-con-papel, fecha: '2026-09-29',
+     reason: 'presidenta de la Comunidad de Madrid (cargo público; rol en figures.yaml)'}
+  - {entity_id: Person:evaristo-ats-9905-2025, decision: anonimizar, fecha: '2026-09-29',
+     reason: 'seudónimo judicial del ATS 9905/2025 (pseudonyms.yaml)'}
+  - {entity_id: Person:nicolasa, decision: anonimizar, fecha: '2026-09-29',
+     reason: 'seudónimo judicial (pseudonyms.yaml)'}
+  - {entity_id: Person:penelope, decision: anonimizar, fecha: '2026-09-29',
+     reason: 'seudónimo judicial del ATS 9905/2025 (pseudonyms.yaml)'}
+  - {entity_id: Person:familiar-de-fernando-merino, decision: anonimizar, fecha: '2026-09-29',
+     reason: 'nodo anonimizado «Familiar de…» (spec 059)'}
+  - {entity_id: Person:familiar-de-julio-martinez-martinez, decision: anonimizar, fecha: '2026-09-29',
+     reason: 'nodo anonimizado «Familiar de…» (spec 059)'}
+  - {entity_id: Person:familiar-de-manuel-aaron-fajardo-garcia, decision: anonimizar, fecha: '2026-09-29',
+     reason: 'nodo anonimizado «Familiar de…» (spec 059)'}
+  - {entity_id: Person:ruben-ats-9905-2025, decision: anonimizar, fecha: '2026-09-29',
+     reason: 'seudónimo judicial del ATS 9905/2025 escindido de un nodo civil homónimo (pseudonyms.yaml)'}
+  - {entity_id: Person:familiar-de-ramon-alzorriz, decision: anonimizar, fecha: '2026-10-07',
+     reason: 'particular no investigada, pareja de un cargo público, nombrada solo por su empleo en Servinabar (DS Senado 745); antes nodo con apellido, alias y resumen con salario (spec 067, decisión del dueño 07-10)'}
+  # 2026-10-07: dos avisos L24 preexistentes (seed qa064a), decididos por el dueño tras el Path A 067.
+  - {entity_id: Person:joseba-garcia-izaguirre, decision: conservar-con-papel, fecha: '2026-10-07',
+     reason: 'hermano de Koldo García con papel propio: extrabajador de Emfesa (filial de Adif) y citado como investigado por el juez Ismael Moreno según prensa; solo FAMILY_OF en el grafo'}
+  - {entity_id: Person:domingo-arnaldo-amaro-chacon, decision: conservar-con-papel, fecha: '2026-10-07',
+     reason: 'empresario con papel propio en el caso: propietario y administrador de sociedades junto a su hermano (Infobae 25-05-2026); solo FAMILY_OF en el grafo'}
+  # 2026-10-07: el dueño aprueba en bloque las cinco filas siguientes (barrido 067 v2: familiares con papel propio en los textos).
+  - {entity_id: Person:martin-vidaurre, decision: conservar-con-papel, fecha: '2026-10-07',
+     reason: 'asistente parlamentario del grupo socialista (PSN) en el Parlamento de Navarra, con papel propio en el caso Alzórriz/Vidaurre (Diario de Sesiones DS_C_15_745; The Objective 8-12-2025)'}
+  - {entity_id: Person:carolina-perles, decision: podar, fecha: '2026-11-20',
+     reason: 'sin relaciones tras las retiradas posteriores de la auditoría; el dueño decide borrar el nodo en el Path A de limpieza (spec 074). Sustituye a la decisión del 2026-10-07 (conservar-con-papel)'}
+  - {entity_id: Person:arturo-barrabes-consul, decision: conservar-con-papel, fecha: '2026-10-07',
+     reason: 'consejero y accionista (32,51 %) de sociedades del grupo Barrabés (informe UCO p.15), con papel societario propio'}
+  - {entity_id: Person:jose-cristobal-barrabes-consul, decision: conservar-con-papel, fecha: '2026-10-07',
+     reason: 'coaccionista (32,51 %) del grupo empresarial Barrabés (informe UCO p.15), con papel societario propio'}
+  - {entity_id: Person:leonor-maria-gonzalez, decision: conservar-con-papel, fecha: '2026-10-07',
+     reason: 'administradora de Have Got Time y parte en el contrato de arrendamiento con opción de compra del chalé (sentencia TS 22-06-2026 pp.142-143; calificación fiscal), con papel propio en los hechos'}

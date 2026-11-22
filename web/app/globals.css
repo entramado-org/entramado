@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+/* Stop the page from rubber-banding while you pan/pinch the graph canvas. */
+html,
+body {
+  overscroll-behavior: none;
+}
+
+/* Safe-area helpers for notched phones (needs viewport-fit=cover, set in
+   layout.tsx). Used by the header and the mobile bottom-sheets so they don't
+   tuck under the notch / home-indicator. max() keeps a sane minimum padding. */
+.pt-safe {
+  padding-top: max(env(safe-area-inset-top), 0px);
+}
+.pb-safe {
+  padding-bottom: max(env(safe-area-inset-bottom), 0.5rem);
+}
+
+/* The canvas owns its touch gestures (pan/pinch); without this the browser
+   steals them for page scroll and the graph feels stuck. Scoped to the canvas
+   wrapper only — panel bodies keep normal touch-action so they still scroll. */
+.touch-none-canvas {
+  touch-action: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  @apply bg-ink-950 text-slate-200 antialiased;
+  background-image:
+    radial-gradient(900px 500px at 12% -10%, rgba(56, 225, 196, 0.10), transparent 60%),
+    radial-gradient(800px 600px at 100% 0%, rgba(167, 139, 250, 0.08), transparent 55%);
+}
+
+/* thin scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #273047 transparent;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background: #273047;
+  border-radius: 8px;
+}
+
+.glass {
+  @apply bg-ink-900/70 backdrop-blur-md border border-white/5;
+}
+
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.text-glow {
+  text-shadow: 0 0 24px rgba(56, 225, 196, 0.45);
+}

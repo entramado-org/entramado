@@ -1,0 +1,49 @@
+# Overlay MERCANTIL — Fase 2, TANDA 5: cierre puente Avintia + participaciones empresa↔empresa.
+# spec 030. Cargado por `make mercantil` (load_network_both en mercantil_loader.py, mismo `network:` key).
+#
+# Las 3 aristas unen dos nodos que YA EXISTEN (source.exists + target.exists = rama `both` del loader):
+# 0 nodos nuevos. El gate ≤1 salto sigue valiendo literal (ambos endpoints MATCHeados; ausente → fila
+# descartada, nunca crea huérfanos). Idempotente. `anchor:` es documental (el loader lo ignora).
+#
+# source_kind='mercantil'; datos oficiales BORME citados por hoja. BORME capta ADMINISTRADORES
+# REGISTRALES (persona física o jurídica), no la titularidad real ni conducta delictiva alguna →
+# estructura societaria, NO imputación. Presunción de inocencia.
+# Regla durable (auditoría 2026-07-08): toda arista mercantil nueva lleva vigencia (prop `desde`
+# y/o fechas en la note) o el marcador "(histórico, cesado)".
+#
+# Verificado 1:1 contra Nearius/BORME (neo4j_query CARGO_EN) el 2026-07-08; roles re-verificados con
+# historial_empresa en la auditoría independiente (mercantil_validation_20260708.md — CARGO_EN incluye
+# apoderados/consejeros, NO equivale a "administrador"):
+#   - BOREAL SINERGIAS SL (M636817): MARTIN JIMENEZ ANTONIO fue APODERADO (solidario) 2019–2024,
+#     revocado en la disolución (BORME-A-2019-44-28 / BORME-A-2022-165-28 / BORME-A-2024-38-28) —
+#     NUNCA administrador; el admin único post-2017-12 fue Avintia Desarrollos Inmobiliarios SL.
+#     (Dueño Grupo Avintia; cierra la sucesión Aldama→Avintia ya modelada en tanda 2.)
+#     Mela Real Estate Inver SL NO cargada como admin de Boreal: sí tuvo un paso transitorio como
+#     Consejero+Presidente (2017-12, BORME-A-2018-10-28; matiz corregido en spec 030), pero su cartera
+#     es de firma de servicios de administración (Atalaya/Araba/Miagao/Caledon Directorship) →
+#     exclusión mantenida. Cerdá Sanjuan admin pero mass-admin 4863 = ruido → EXCLUIDO.
+#   - BOCATA FOOD SL (M536682): admin persona jurídica DELUXE FORTUNE SL ✓.
+#   - FUTURE FACTORY SL (M585737): admin persona jurídica BUSINESSCITY SL ✓.
+# NB: la arista a Bocata Food parte del nodo MERCANTIL Company:deluxe-fortune-sl (M543192), no del nodo
+# judicial duplicado Company:deluxe-fortune-s-l (merge diferido, fuera de alcance de esta tanda).
+
+network:
+  # ============ Cluster 1 — puente Avintia (cierre) ============
+  - anchor: "Company:boreal-sinergias-sl"
+    rel: ADMINISTRA
+    source: { id: "Person:antonio-martin-jimenez", exists: true }
+    target: { id: "Company:boreal-sinergias-sl", exists: true }
+    edge: { rol: "apoderado registral", note: "Apoderado (solidario) registral de Boreal Sinergias SL (BORME, hoja M636817; 2019–2024, revocado en la disolución). Dueño del Grupo Avintia; cierra la sucesión Aldama→Avintia. Estructura societaria, no imputación." }
+
+  # ============ Cluster 2 — participaciones empresa↔empresa (persona jurídica administradora) ============
+  - anchor: "Company:bocata-food-sl"
+    rel: ADMINISTRA
+    source: { id: "Company:deluxe-fortune-sl", exists: true }
+    target: { id: "Company:bocata-food-sl", exists: true }
+    edge: { rol: "administrador registral (persona jurídica)", note: "Deluxe Fortune SL (M543192) administrador persona jurídica de Bocata Food SL (BORME, hoja M536682). Participación cruzada dentro del racimo Aldama. Estructura societaria, no imputación." }
+
+  - anchor: "Company:future-factory-sl"
+    rel: ADMINISTRA
+    source: { id: "Company:businesscity-sl", exists: true }
+    target: { id: "Company:future-factory-sl", exists: true }
+    edge: { rol: "administrador registral (persona jurídica)", note: "BusinessCity SL (M497518) administrador persona jurídica de Future Factory SL (BORME, hoja M585737). Participación cruzada dentro del racimo Aldama. Estructura societaria, no imputación." }

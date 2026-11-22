@@ -1,0 +1,3398 @@
+# Overlay BOE (spec 049, Fase 2) — data file CURADO. Este fichero SÍ se carga
+# (`make boe`); la semilla del recon (matches.candidate.yaml) NUNCA se carga.
+#
+# Reglas editoriales:
+# - Un nombramiento o cese es un acto administrativo LEGAL y público (sección II.A
+#   del BOE): la capa registra trayectoria institucional, no hechos ni indicios del
+#   caso. Presunción de inocencia. Atribución «(según BOE — nombramiento/cese
+#   oficial…)»; se cita el id BOE-A-… con su enlace, nunca [doc, p.N].
+# - Una etapa = un cargo con su disposición de nombramiento y (si consta en la
+#   semilla) la de cese. fecha_cese null = sin cese registrado EN ESTA CAPA (cargo
+#   vigente o cese fuera de la semilla del recon: RD colectivos jun-2018, ventana).
+# - `incidencias` (acuerdos CGPJ de servicios especiales/adscripción, excedencias,
+#   reingresos) se documentan aquí pero NO crean aristas.
+# - Los organismos listados en `organismos:` son stubs onCreate-only; el resto de
+#   los targets son nodos vivos verificados (2026-07-16). Curación: sesión 72
+#   (decisiones 2026-07-16c), pares duplicados fusionados via merges.yaml.
+organismos:
+# (dedup 2026-08-03) Fiscalías separadas del nodo genérico Organization:fiscalia:
+- id: Organization:fiscalia-anticorrupcion
+  name: Fiscalía Anticorrupción
+  label: Organization
+  role: Fiscalía Especial contra la Corrupción y la Criminalidad Organizada («Fiscalía Anticorrupción»), órgano del Ministerio Fiscal especializado en delitos económicos y corrupción de especial trascendencia. Denominación anterior (1995-2007) «Fiscalía Especial para la Represión de los Delitos Económicos relacionados con la Corrupción».
+- id: Organization:fiscalia-general-del-estado
+  name: Fiscalía General del Estado
+  label: Organization
+  role: Órgano que dirige el Ministerio Fiscal en toda España; a su frente está el/la Fiscal General del Estado.
+- id: Organization:fiscalia-de-la-audiencia-nacional
+  name: Fiscalía de la Audiencia Nacional
+  label: Organization
+  role: Fiscalía destinada ante la Audiencia Nacional.
+- id: Court:audiencia-provincial-de-badajoz
+  name: Audiencia Provincial de Badajoz
+  label: Court
+  role: Órgano judicial colegiado de la provincia de Badajoz (dictó la sentencia 152/2026 del caso David Sánchez).
+- id: Court:audiencia-provincial-de-barcelona
+  name: Audiencia Provincial de Barcelona
+  label: Court
+  role: Órgano judicial colegiado de la provincia de Barcelona.
+- id: Court:audiencia-provincial-de-madrid
+  name: Audiencia Provincial de Madrid
+  label: Court
+  role: Órgano judicial colegiado de la provincia de Madrid.
+- id: Court:audiencia-provincial-de-segovia
+  name: Audiencia Provincial de Segovia
+  label: Court
+  role: Órgano judicial colegiado de la provincia de Segovia.
+- id: Court:audiencia-provincial-de-tarragona
+  name: Audiencia Provincial de Tarragona
+  label: Court
+  role: Órgano judicial colegiado de la provincia de Tarragona.
+- id: Court:juzgado-de-instruccion-n-9-de-madrid
+  name: Juzgado de Instrucción n.º 9 de Madrid
+  label: Court
+  role: Juzgado de instrucción de Madrid capital.
+- id: Court:tribunal-de-instancia-de-badajoz
+  name: Tribunal de Instancia de Badajoz
+  label: Court
+  role: Órgano judicial de primera instancia de Badajoz (estructura de tribunales de instancia, 2025+).
+- id: Court:tribunal-superior-de-justicia-de-madrid
+  name: Tribunal Superior de Justicia de Madrid
+  label: Court
+  role: Órgano judicial superior de la Comunidad de Madrid.
+- id: Organization:agencia-tributaria   # s88: AEAT fusionada en el canónico
+  name: Agencia Tributaria
+  role: Agencia pública que gestiona el sistema tributario estatal y aduanero.
+- id: Organization:airef
+  name: Autoridad Independiente de Responsabilidad Fiscal (AIReF)
+  role: Autoridad independiente que supervisa la sostenibilidad de las finanzas públicas españolas.
+- id: Organization:alto-comisionado-espana-nacion-emprendedora
+  name: Alto Comisionado para España Nación Emprendedora
+  role: Órgano de la Presidencia del Gobierno (2020-2023) para la agenda de emprendimiento e innovación.
+- id: Organization:cnmc
+  name: Comisión Nacional de los Mercados y la Competencia
+  role: Autoridad independiente de competencia y regulación de mercados desde 2013.
+- id: Organization:comision-nacional-de-la-competencia
+  name: Comisión Nacional de la Competencia
+  role: Autoridad de competencia 2007-2013 (precedente de la actual CNMC).
+- id: Organization:consejo-general-del-poder-judicial
+  name: Consejo General del Poder Judicial
+  role: Órgano de gobierno de los jueces; sus acuerdos y reales decretos de nombramiento de la carrera judicial
+    se publican en la sección II.A del BOE.
+- id: Organization:delegacion-del-gobierno-en-la-comunidad-de-madrid
+  name: Delegación del Gobierno en la Comunidad de Madrid
+  role: Representación del Gobierno de España en la Comunidad de Madrid.
+- id: Organization:direccion-general-de-la-policia
+  name: Dirección General de la Policía
+  role: Órgano del Ministerio del Interior del que depende la Policía Nacional.
+- id: Organization:generalitat-de-cataluna
+  name: Generalitat de Cataluña
+  role: Gobierno de la comunidad autónoma de Cataluña.
+- id: Organization:gobierno-de-canarias
+  name: Gobierno de Canarias
+  role: Gobierno de la comunidad autónoma de Canarias.
+- id: Organization:gobierno-de-las-illes-balears
+  name: Govern de les Illes Balears
+  role: Gobierno de la comunidad autónoma de las Illes Balears.
+- id: Organization:ministerio-de-asuntos-exteriores
+  name: Ministerio de Asuntos Exteriores
+  role: Departamento de la acción exterior del Estado (denominaciones variables por legislatura); los nombramientos
+    de embajadores se publican en la sección II.A del BOE.
+- id: Organization:ministerio-de-ciencia
+  name: Ministerio de Ciencia
+  role: Departamento de la política de I+D+i y universidades (denominaciones variables por legislatura).
+- id: Organization:ministerio-de-economia
+  name: Ministerio de Economía
+  role: 'Departamento de política económica (denominaciones variables por legislatura: Economía y Hacienda, Asuntos
+    Económicos y Transformación Digital…).'
+- id: Organization:ministerio-de-educacion
+  name: Ministerio de Educación
+  role: Departamento de la política educativa (denominaciones variables por legislatura).
+- id: Organization:ministerio-de-medio-ambiente
+  name: Ministerio de Medio Ambiente
+  role: Departamento de la política ambiental 2004-2011 (luego Medio Ambiente y Medio Rural y Marino; precedente
+    del actual MITECO).
+- id: Organization:ministerio-de-politica-territorial
+  name: Ministerio de Política Territorial
+  role: Departamento de la organización territorial del Estado (denominaciones variables por legislatura); de él
+    dependen delegaciones y subdelegaciones del Gobierno.
+- id: Organization:ministerio-de-sanidad
+  name: Ministerio de Sanidad
+  role: Departamento de la política sanitaria del Gobierno de España (denominaciones variables por legislatura).
+- id: Organization:ministerio-de-vivienda
+  name: Ministerio de Vivienda
+  role: Departamento de la política de vivienda y agenda urbana (denominaciones variables por legislatura).
+- id: Organization:ministerio-para-la-transformacion-digital
+  name: Ministerio para la Transformación Digital y de la Función Pública
+  role: Departamento de la agenda digital y la función pública (2023+).
+- id: Organization:museo-reina-sofia
+  name: Museo Nacional Centro de Arte Reina Sofía
+  role: Museo público estatal de arte contemporáneo, adscrito al Ministerio de Cultura.
+- id: Organization:patrimonio-nacional
+  name: Patrimonio Nacional
+  role: Organismo público que administra los bienes del Estado de origen real; su consejo de administración se nombra
+    por real decreto.
+- id: Organization:tribunal-de-defensa-de-la-competencia
+  name: Tribunal de Defensa de la Competencia
+  role: Autoridad de competencia 1963-2007 (precedente de la CNC y de la actual CNMC).
+- id: Organization:tribunal-economico-administrativo-central
+  name: Tribunal Económico-Administrativo Central
+  role: Órgano administrativo de revisión en materia tributaria, adscrito al Ministerio de Hacienda.
+trayectorias:
+- entity_id: Person:albert-medran-lopez
+  nombre_grafo: Albert Medrán López
+  boe_n_cargos: 2
+  boe_rango: 2018..2021
+  cargos:
+  - organismo: Organization:ministerio-de-industria
+    cargo: Director del Gabinete del Secretario de Estado para la Sociedad de la Información y la Agenda Digital
+    boe_key: director-del-gabinete-del-secretario-de-estado-para-la-socie|2018
+    fecha_nombramiento: '2018-07-03'
+    boe_id_nombramiento: BOE-A-2018-9241
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2018-9241
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Orden ECE/697/2018, de 2 de julio, por la que se nombra Director del Gabinete del Secretario
+      de Estado para la Sociedad de la Información y la Agenda Digital a don Albert Medrán López.
+  - organismo: Organization:alto-comisionado-espana-nacion-emprendedora
+    cargo: Director de la Oficina del Alto Comisionado para España Nación Emprendedora
+    boe_key: director-de-la-oficina-del-alto-comisionado-para-espana-naci|2020
+    fecha_nombramiento: '2020-02-05'
+    boe_id_nombramiento: BOE-A-2020-1661
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-1661
+    fecha_cese: '2021-12-29'
+    boe_id_cese: BOE-A-2021-21670
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2021-21670
+    titulo_nombramiento: Real Decreto 239/2020, de 4 de febrero, por el que se nombra Director de la Oficina del
+      Alto Comisionado para España Nación Emprendedora a don Albert Medrán López.
+    titulo_cese: Real Decreto 1160/2021, de 28 de diciembre, por el que se dispone el cese de don Albert Medrán
+      López como Director de la Oficina del Alto Comisionado para España Nación Emprendedora.
+- entity_id: Person:alejandro-luzon-canovas
+  nombre_grafo: Alejandro Luzón Cánovas
+  boe_n_cargos: 3
+  boe_rango: 2017..2022
+  cargos:
+  - organismo: Organization:ministerio-fiscal  # promoción a categoría del escalafón fiscal, no destino (dedup 2026-08-03)
+    cargo: Fiscal de Sala
+    boe_key: fiscal-de-sala|2017
+    fecha_nombramiento: '2017-07-08'
+    boe_id_nombramiento: BOE-A-2017-7988
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2017-7988
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 707/2017, de 7 de julio, por el que se promueve a la categoría de Fiscal de
+      Sala a don Alejandro Luzón Cánovas.
+    nota: inicio por promocion
+  - organismo: Organization:fiscalia-anticorrupcion
+    cargo: Fiscal Jefe de la Fiscalía Especial contra la Corrupción y la Criminalidad Organizada
+    boe_key: fiscal-jefe-de-la-fiscalia-especial-contra-la-corrupcion-y-l|2017
+    fecha_nombramiento: '2017-07-08'
+    boe_id_nombramiento: BOE-A-2017-7989
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2017-7989
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 708/2017, de 7 de julio, por el que se nombra Fiscal Jefe de la Fiscalía Especial
+      contra la Corrupción y la Criminalidad Organizada a don Alejandro Luzón Cánovas.
+    nota: etapa siguiente del mismo cargo sin cese en la semilla (reelección/renovación 2022)
+  - organismo: Organization:fiscalia-anticorrupcion
+    cargo: Fiscal Jefe de la Fiscalía Especial contra la Corrupción y la Criminalidad Organizada
+    boe_key: fiscal-jefe-de-la-fiscalia-especial-contra-la-corrupcion-y-l|2022
+    fecha_nombramiento: '2022-10-05'
+    boe_id_nombramiento: BOE-A-2022-16205
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2022-16205
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 808/2022, de 4 de octubre, por el que se nombra Fiscal Jefe de la Fiscalía
+      Especial contra la Corrupción y la Criminalidad Organizada a don Alejandro Luzón Cánovas.
+# (dedup 2026-08-03) Retirada la trayectoria BOE que colgaba de Person:alfonso: los 3
+# nombramientos (Sanidad 2004-2011) son de un homónimo ajeno al caso que solo entró por
+# match del nombre de pila contra el nodo-seudónimo de los audios UCO. Sin arista propia
+# en el grafo, no procede trayectoria.
+- entity_id: Person:ana-maria-ferrer-garcia
+  nombre_grafo: Ana María Ferrer García
+  boe_n_cargos: 2
+  boe_rango: 2009..2014
+  cargos:
+  - organismo: Court:audiencia-provincial-de-madrid
+    cargo: Presidenta de la Audiencia Provincial de Madrid
+    boe_key: presidenta-de-la-audiencia-provincial-de-madrid|2009
+    fecha_nombramiento: '2009-02-13'
+    boe_id_nombramiento: BOE-A-2009-2452
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2009-2452
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 19/2009, de 13 de enero, por el que se nombra Presidenta de la Audiencia Provincial
+      de Madrid a doña Ana María Ferrer García.
+  - organismo: Court:tribunal-supremo
+    cargo: Magistrada del Tribunal Supremo
+    boe_key: magistrada-del-tribunal-supremo|2014
+    fecha_nombramiento: '2014-04-03'
+    boe_id_nombramiento: BOE-A-2014-3563
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2014-3563
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 210/2014, de 24 de marzo, por el que se promueve a la categoría de Magistrada
+      del Tribunal Supremo a doña Ana María Ferrer García.
+    nota: inicio por promocion
+- entity_id: Person:andres-martinez-arrieta
+  nombre_grafo: Andrés Martínez Arrieta
+  boe_n_cargos: 1
+  boe_rango: 2025..2025
+  cargos:
+  - organismo: Court:tribunal-supremo
+    cargo: Presidente de la Sala Segunda del Tribunal Supremo
+    boe_key: presidente-de-la-sala-segunda-del-tribunal-supremo|2025
+    fecha_nombramiento: '2025-08-28'
+    boe_id_nombramiento: BOE-A-2025-17263
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2025-17263
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 708/2025, de 25 de agosto, por el que se nombra Presidente de la Sala Segunda
+      del Tribunal Supremo a don Andrés Martínez Arrieta.
+- entity_id: Person:andres-palomo-del-arco
+  nombre_grafo: Andrés Palomo Del Arco
+  boe_n_cargos: 3
+  boe_rango: 2008..2026
+  cargos:
+  - organismo: Court:audiencia-provincial-de-segovia
+    cargo: Presidente de la Audiencia Provincial de Segovia
+    boe_key: presidente-de-la-audiencia-provincial-de-segovia|2008
+    fecha_nombramiento: '2008-07-10'
+    boe_id_nombramiento: BOE-A-2008-11707
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2008-11707
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 1049/2008, de 13 de junio, por el que se nombra Presidente de la Audiencia
+      Provincial de Segovia a don Andrés Palomo del Arco.
+    nota: etapa siguiente del mismo cargo sin cese en la semilla (reelección/renovación 2013)
+  - organismo: Court:audiencia-provincial-de-segovia
+    cargo: Presidente de la Audiencia Provincial de Segovia
+    boe_key: presidente-de-la-audiencia-provincial-de-segovia|2013
+    fecha_nombramiento: '2013-09-16'
+    boe_id_nombramiento: BOE-A-2013-9582
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2013-9582
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 655/2013, de 2 de agosto, por el que se nombra Presidente de la Audiencia
+      Provincial de Segovia a don Andrés Palomo del Arco.
+  - organismo: Court:tribunal-supremo
+    cargo: Magistrado del Tribunal Supremo
+    boe_key: magistrado-del-tribunal-supremo|2014
+    fecha_nombramiento: '2014-04-03'
+    boe_id_nombramiento: BOE-A-2014-3564
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2014-3564
+    fecha_cese: '2026-06-17'
+    boe_id_cese: BOE-A-2026-13109
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2026-13109
+    titulo_nombramiento: Real Decreto 212/2014, de 24 de marzo, por el que se promueve a la categoría de Magistrado
+      del Tribunal Supremo a don Andrés Palomo del Arco.
+    nota: inicio por promocion; jubilación forzosa (acuerdo CGPJ de 12-mar-2026)
+    titulo_cese: Acuerdo de 12 de marzo de 2026, de la Comisión Permanente del Consejo General del Poder Judicial,
+      por el que se declara la jubilación forzosa del Magistrado don Andrés Palomo del Arco.
+- entity_id: Person:angel-contreras
+  nombre_grafo: Ángel Contreras
+  boe_n_cargos: 1
+  boe_rango: 2023..2024
+  cargos:
+  - organismo: Organization:adif
+    cargo: Presidente de la Entidad Pública Empresarial Administrador de Infraestructuras Ferroviarias
+    boe_key: presidente-de-la-entidad-publica-empresarial-administrador-d|2023
+    fecha_nombramiento: '2023-12-08'
+    boe_id_nombramiento: BOE-A-2023-25026
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-25026
+    fecha_cese: '2024-09-18'
+    boe_id_cese: BOE-A-2024-18640
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2024-18640
+    titulo_nombramiento: Real Decreto 1049/2023, de 7 de diciembre, por el que se nombra Presidente de la Entidad
+      Pública Empresarial Administrador de Infraestructuras Ferroviarias a don Ángel Contreras Marín.
+    titulo_cese: Real Decreto 935/2024, de 17 de septiembre, por el que se dispone el cese de don Ángel Contreras
+      Marín como Presidente de la Entidad Pública Empresarial Administrador de Infraestructuras Ferroviarias.
+- entity_id: Person:angel-victor-torres
+  nombre_grafo: Ángel Víctor Torres
+  boe_n_cargos: 2
+  boe_rango: 2019..2023
+  cargos:
+  - organismo: Organization:gobierno-de-canarias
+    cargo: Presidente de Canarias
+    boe_key: presidente-de-canarias|2019
+    fecha_nombramiento: '2019-07-16'
+    boe_id_nombramiento: BOE-A-2019-10440
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2019-10440
+    fecha_cese: '2023-07-14'
+    boe_id_cese: BOE-A-2023-16292
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-16292
+    titulo_nombramiento: Real Decreto 446/2019, de 15 de julio, por el que se nombra Presidente de Canarias a don
+      Ángel Víctor Torres Pérez.
+    titulo_cese: Real Decreto 643/2023, de 13 de julio, por el que se declara el cese de don Ángel Víctor Torres
+      Pérez como Presidente de Canarias.
+  - organismo: Organization:ministerio-de-politica-territorial
+    cargo: Ministro de Política Territorial y Memoria Democrática
+    boe_key: ministro-de-politica-territorial-y-memoria-democratica|2023
+    fecha_nombramiento: '2023-11-21'
+    boe_id_nombramiento: BOE-A-2023-23543
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-23543
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 835/2023, de 20 de noviembre, por el que se nombran Ministros del Gobierno.
+    nota: nombramiento en RD colectivo sin nombres en el título (cuerpo del XML, spec 050)
+- entity_id: Person:antonio-del-moral-garcia
+  nombre_grafo: Antonio del Moral García
+  boe_n_cargos: 1
+  boe_rango: 2012..2012
+  cargos:
+  - organismo: Court:tribunal-supremo
+    cargo: Magistrado de la Sala Segunda del Tribunal Supremo
+    boe_key: magistrado-de-la-sala-segunda-del-tribunal-supremo|2012
+    fecha_nombramiento: '2012-04-04'
+    boe_id_nombramiento: BOE-A-2012-4650
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2012-4650
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 491/2012, de 5 de marzo, por el que se nombra Magistrado de la Sala Segunda
+      del Tribunal Supremo a don Antonio del Moral García.
+  incidencias:
+  - fecha: '2012-05-22'
+    boe_id: BOE-A-2012-6748
+    url: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2012-6748
+    nota: excedencia voluntaria en la carrera fiscal (pasó a magistrado del TS)
+    titulo: Orden JUS/1062/2012, de 3 de mayo, por la que se declara en situación de excedencia voluntaria en la
+      Carrera Fiscal a don Antonio del Moral García.
+- entity_id: Person:antonio-hernando-vera
+  nombre_grafo: Antonio Hernando Vera
+  boe_n_cargos: 3
+  boe_rango: 2021..2024
+  cargos:
+  - organismo: Organization:presidencia-del-gobierno
+    cargo: Director Adjunto del Gabinete de la Presidencia del Gobierno
+    boe_key: director-adjunto-del-gabinete-de-la-presidencia-del-gobierno|2021
+    fecha_nombramiento: '2021-10-20'
+    boe_id_nombramiento: BOE-A-2021-17058
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2021-17058
+    fecha_cese: '2023-06-14'
+    boe_id_cese: BOE-A-2023-14053
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-14053
+    titulo_nombramiento: Real Decreto 910/2021, de 19 de octubre, por el que se nombra Director Adjunto del Gabinete
+      de la Presidencia del Gobierno a don Antonio Hernando Vera.
+    titulo_cese: Real Decreto 449/2023, de 13 de junio, por el que se dispone el cese de don Antonio Hernando Vera
+      como Director Adjunto del Gabinete de la Presidencia del Gobierno.
+  - organismo: Organization:presidencia-del-gobierno
+    cargo: Director Adjunto del Gabinete de la Presidencia del Gobierno
+    boe_key: director-adjunto-del-gabinete-de-la-presidencia-del-gobierno|2023
+    fecha_nombramiento: '2023-11-29'
+    boe_id_nombramiento: BOE-A-2023-24218
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-24218
+    fecha_cese: '2024-09-25'
+    boe_id_cese: BOE-A-2024-19177
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2024-19177
+    titulo_nombramiento: Real Decreto 902/2023, de 28 de noviembre, por el que se nombra Director Adjunto del Gabinete
+      de la Presidencia del Gobierno a don Antonio Hernando Vera.
+    titulo_cese: Real Decreto 967/2024, de 24 de septiembre, por el que se dispone el cese de don Antonio Hernando
+      Vera como Director Adjunto del Gabinete de la Presidencia del Gobierno.
+  - organismo: Organization:ministerio-de-industria
+    cargo: Secretario de Estado de Telecomunicaciones e Infraestructuras Digitales
+    boe_key: secretario-de-estado-de-telecomunicaciones-e-infraestructura|2024
+    fecha_nombramiento: '2024-09-25'
+    boe_id_nombramiento: BOE-A-2024-19203
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2024-19203
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 985/2024, de 24 de septiembre, por el que se nombra Secretario de Estado de
+      Telecomunicaciones e Infraestructuras Digitales a don Antonio Hernando Vera.
+- entity_id: Person:armengol
+  nombre_grafo: Armengol
+  boe_n_cargos: 2
+  boe_rango: 2015..2023
+  nota: nombre registral en el BOE «Francesca Lluch Armengol i Socias» (alias añadido a la capa contexto, spec 050);
+    la presidencia del Congreso de los Diputados (2023→) no se publica en la sección II.A
+  cargos:
+  - organismo: Organization:gobierno-de-las-illes-balears
+    cargo: Presidenta de las Illes Balears
+    boe_key: presidenta-de-las-illes-balears|2015
+    fecha_nombramiento: '2015-07-02'
+    boe_id_nombramiento: BOE-A-2015-7360
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2015-7360
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 586/2015, de 30 de junio, por el que se nombra Presidenta de las Illes Balears
+      a doña Francesca Lluch Armengol i Socias.
+    nota: etapa siguiente del mismo cargo sin cese en la semilla (reelección 2019)
+  - organismo: Organization:gobierno-de-las-illes-balears
+    cargo: Presidenta de las Illes Balears
+    boe_key: presidenta-de-las-illes-balears|2019
+    fecha_nombramiento: '2019-06-29'
+    boe_id_nombramiento: BOE-A-2019-9739
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2019-9739
+    fecha_cese: '2023-06-20'
+    boe_id_cese: BOE-A-2023-14603
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-14603
+    titulo_nombramiento: Real Decreto 410/2019, de 28 de junio, por el que se nombra Presidenta de las Illes Balears
+      a doña Francesca Lluch Armengol i Socias.
+    titulo_cese: Real Decreto 522/2023, de 19 de junio, por el que se declara el cese de doña Francesca Lluch Armengol
+      i Socias como Presidenta de las Illes Balears.
+- entity_id: Person:beatriz-biedma
+  nombre_grafo: Beatriz Biedma
+  boe_n_cargos: 1
+  boe_rango: 2026..2026
+  cargos:
+  - organismo: Court:tribunal-de-instancia-de-badajoz
+    cargo: Presidenta del Tribunal de Instancia de Badajoz
+    boe_key: presidenta-del-tribunal-de-instancia-de-badajoz|2026
+    fecha_nombramiento: '2026-04-02'
+    boe_id_nombramiento: BOE-A-2026-7450
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2026-7450
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 253/2026, de 25 de marzo, por el que se nombra Presidenta del Tribunal de
+      Instancia de Badajoz a la Magistrada doña Beatriz Biedma Rojano.
+- entity_id: Person:carlos-moreno
+  nombre_grafo: Carlos Moreno
+  boe_n_cargos: 5
+  boe_rango: 2018..2026
+  cargos:
+  - organismo: Organization:ministerio-de-hacienda
+    cargo: Director del Gabinete de la Ministra de Hacienda
+    boe_key: director-del-gabinete-de-la-ministra-de-hacienda|2018
+    fecha_nombramiento: '2018-06-09'
+    boe_id_nombramiento: BOE-A-2018-7730
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2018-7730
+    fecha_cese: '2020-01-15'
+    boe_id_cese: BOE-A-2020-519
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-519
+    titulo_nombramiento: Real Decreto 383/2018, de 8 de junio, por el que se nombra Director del Gabinete de la
+      Ministra de Hacienda a don Carlos Moreno Medina.
+    titulo_cese: Real Decreto 23/2020, de 14 de enero, por el que se dispone el cese de don Carlos Moreno Medina
+      como Director del Gabinete de la Ministra de Hacienda.
+  - organismo: Organization:ministerio-de-hacienda
+    cargo: Director del Gabinete de la Ministra de Hacienda
+    boe_key: director-del-gabinete-de-la-ministra-de-hacienda|2020
+    fecha_nombramiento: '2020-01-15'
+    boe_id_nombramiento: BOE-A-2020-520
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-520
+    fecha_cese: '2021-07-14'
+    boe_id_cese: BOE-A-2021-11698
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2021-11698
+    titulo_nombramiento: Real Decreto 24/2020, de 14 de enero, por el que se nombra Director del Gabinete de la
+      Ministra de Hacienda a don Carlos Moreno Medina.
+    titulo_cese: Real Decreto 548/2021, de 13 de julio, por el que se declara el cese de don Carlos Moreno Medina
+      como Director del Gabinete de la Ministra de Hacienda.
+  - organismo: Organization:ministerio-de-hacienda
+    cargo: Director del Gabinete de la Ministra de Hacienda y Función Pública
+    boe_key: director-del-gabinete-de-la-ministra-de-hacienda-y-funcion-p|2021
+    fecha_nombramiento: '2021-07-14'
+    boe_id_nombramiento: BOE-A-2021-11700
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2021-11700
+    fecha_cese: '2023-11-23'
+    boe_id_cese: BOE-A-2023-23747
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-23747
+    titulo_nombramiento: Real Decreto 550/2021, de 13 de julio, por el que se nombra Director del Gabinete de la
+      Ministra de Hacienda y Función Pública a don Carlos Moreno Medina.
+    titulo_cese: Real Decreto 848/2023, de 22 de noviembre, por el que se declara el cese de don Carlos Moreno Medina
+      como Director del Gabinete de la Ministra de Hacienda y Función Pública.
+  - organismo: Organization:presidencia-del-gobierno
+    cargo: Director del Gabinete de la Vicepresidenta Cuarta del Gobierno
+    boe_key: director-del-gabinete-de-la-vicepresidenta-cuarta-del-gobier|2023
+    fecha_nombramiento: '2023-11-23'
+    boe_id_nombramiento: BOE-A-2023-23748
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-23748
+    fecha_cese: '2024-01-10'
+    boe_id_cese: BOE-A-2024-537
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2024-537
+    titulo_nombramiento: Real Decreto 849/2023, de 22 de noviembre, por el que se nombra Director del Gabinete de
+      la Vicepresidenta Cuarta del Gobierno a don Carlos Moreno Medina.
+    titulo_cese: Real Decreto 10/2024, de 9 de enero, por el que se declara el cese de don Carlos Moreno Medina
+      como Director del Gabinete de la Vicepresidenta Cuarta del Gobierno.
+  - organismo: Organization:presidencia-del-gobierno
+    cargo: Director del Gabinete de la Vicepresidenta Primera del Gobierno
+    boe_key: director-del-gabinete-de-la-vicepresidenta-primera-del-gobie|2024
+    fecha_nombramiento: '2024-01-10'
+    boe_id_nombramiento: BOE-A-2024-541
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2024-541
+    fecha_cese: '2026-04-01'
+    boe_id_cese: BOE-A-2026-7354
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2026-7354
+    titulo_nombramiento: Real Decreto 14/2024, de 9 de enero, por el que se nombra Director del Gabinete de la Vicepresidenta
+      Primera del Gobierno a don Carlos Moreno Medina.
+    titulo_cese: Real Decreto 276/2026, de 31 de marzo, por el que se declara el cese de don Carlos Moreno Medina
+      como Director del Gabinete de la Vicepresidenta Primera del Gobierno.
+- entity_id: Person:carmen-balsa-pascual
+  nombre_grafo: Carmen Balsa Pascual
+  boe_n_cargos: 5
+  boe_rango: 2006..2021
+  cargos:
+  - organismo: Organization:ministerio-de-educacion
+    cargo: Directora del Gabinete de la Ministra de Educación y Ciencia
+    boe_key: directora-del-gabinete-de-la-ministra-de-educacion-y-ciencia|2006
+    fecha_nombramiento: '2006-04-22'
+    boe_id_nombramiento: BOE-A-2006-7197
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2006-7197
+    fecha_cese: '2008-04-15'
+    boe_id_cese: BOE-A-2008-6607
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2008-6607
+    titulo_nombramiento: Real Decreto 500/2006, de 21 de abril, por el que se nombra Directora del Gabinete de la
+      Ministra de Educación y Ciencia a doña Carmen Balsa Pascual.
+    titulo_cese: Real Decreto 472/2008, de 14 de abril, por el que se dispone el cese de doña Carmen Balsa Pascual
+      como Directora del Gabinete de la Ministra de Educación y Ciencia.
+  - organismo: Organization:ministerio-de-educacion
+    cargo: Directora del Gabinete de la Ministra de Educación, Política Social y Deporte
+    boe_key: directora-del-gabinete-de-la-ministra-de-educacion-politica|2008
+    fecha_nombramiento: '2008-04-15'
+    boe_id_nombramiento: BOE-A-2008-6611
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2008-6611
+    fecha_cese: '2008-04-29'
+    boe_id_cese: BOE-A-2008-7531
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2008-7531
+    titulo_nombramiento: Real Decreto 477/2008, de 14 de abril, por el que se nombra Directora del Gabinete de la
+      Ministra de Educación, Política Social y Deporte a doña Carmen Balsa Pascual.
+    titulo_cese: Real Decreto 641/2008, de 28 de abril, por el que se dispone el cese de doña Carmen Balsa Pascual
+      como Directora del Gabinete de la Ministra de Educación, Política Social y Deporte.
+  - organismo: Organization:ministerio-de-economia
+    cargo: Directora del Gabinete de la Ministra de Economía y Empresa
+    boe_key: directora-del-gabinete-de-la-ministra-de-economia-y-empresa|2018
+    fecha_nombramiento: '2018-06-19'
+    boe_id_nombramiento: BOE-A-2018-8332
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2018-8332
+    fecha_cese: '2020-01-15'
+    boe_id_cese: BOE-A-2020-548
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-548
+    titulo_nombramiento: Real Decreto 583/2018, de 18 de junio, por el que se nombra Directora del Gabinete de la
+      Ministra de Economía y Empresa a doña Carmen Balsa Pascual.
+    titulo_cese: Real Decreto 52/2020, de 14 de enero, por el que se dispone el cese de doña Carmen Balsa Pascual
+      como Directora del Gabinete de la Ministra de Economía y Empresa.
+  - organismo: Organization:presidencia-del-gobierno
+    cargo: Directora del Gabinete de la Vicepresidenta Tercera del Gobierno
+    boe_key: directora-del-gabinete-de-la-vicepresidenta-tercera-del-gobi|2020
+    fecha_nombramiento: '2020-01-15'
+    boe_id_nombramiento: BOE-A-2020-551
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-551
+    fecha_cese: '2021-04-07'
+    boe_id_cese: BOE-A-2021-5407
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2021-5407
+    titulo_nombramiento: Real Decreto 55/2020, de 14 de enero, por el que se nombra Directora del Gabinete de la
+      Vicepresidenta Tercera del Gobierno a doña Carmen Balsa Pascual.
+    titulo_cese: Real Decreto 249/2021, de 6 de abril, por el que se declara el cese de doña Carmen Balsa Pascual
+      como Directora del Gabinete de la Vicepresidenta Tercera del Gobierno.
+  - organismo: Organization:presidencia-del-gobierno
+    cargo: Directora del Gabinete de la Vicepresidenta Segunda del Gobierno
+    boe_key: directora-del-gabinete-de-la-vicepresidenta-segunda-del-gobi|2021
+    fecha_nombramiento: '2021-04-07'
+    boe_id_nombramiento: BOE-A-2021-5409
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2021-5409
+    fecha_cese: '2021-06-09'
+    boe_id_cese: BOE-A-2021-9578
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2021-9578
+    titulo_nombramiento: Real Decreto 251/2021, de 6 de abril, por el que se nombra Directora del Gabinete de la
+      Vicepresidenta Segunda del Gobierno a doña Carmen Balsa Pascual.
+    titulo_cese: Real Decreto 418/2021, de 8 de junio, por el que se dispone el cese de doña Carmen Balsa Pascual
+      como Directora del Gabinete de la Vicepresidenta Segunda del Gobierno.
+- entity_id: Person:carmen-librero
+  nombre_grafo: Carmen Librero
+  boe_n_cargos: 2
+  boe_rango: 2012..2022
+  cargos:
+  - organismo: Organization:ministerio-de-transportes-movilidad-y-agenda-urbana
+    cargo: Secretaria General de Transportes
+    boe_key: secretaria-general-de-transportes|2012
+    fecha_nombramiento: '2012-01-24'
+    boe_id_nombramiento: BOE-A-2012-1065
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2012-1065
+    fecha_cese: '2018-06-23'
+    boe_id_cese: BOE-A-2018-8609
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2018-8609
+    titulo_nombramiento: Real Decreto 230/2012, de 23 de enero, por el que se nombra Secretaria General de Transportes
+      a doña Carmen Librero Pintado.
+    titulo_cese: Real Decreto 622/2018, de 22 de junio, por el que se dispone el cese de doña Carmen Librero Pintado
+      como Secretaria General de Transportes.
+  - organismo: Organization:ministerio-de-transportes-movilidad-y-agenda-urbana
+    cargo: Comisionada especial para el Transporte, la Movilidad y la Agenda Urbana
+    boe_key: comisionada-especial-para-el-transporte-la-movilidad-y-la-ag|2022
+    fecha_nombramiento: '2022-05-11'
+    boe_id_nombramiento: BOE-A-2022-7658
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2022-7658
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 363/2022, de 10 de mayo, por el que se nombra Comisionada especial para el
+      Transporte, la Movilidad y la Agenda Urbana a doña Carmen Librero Pintado.
+- entity_id: Person:clara-isabel-santos-dieguez
+  nombre_grafo: Clara Isabel Santos Diéguez
+  boe_n_cargos: 2
+  boe_rango: 2008..2011
+  cargos:
+  - organismo: Organization:agencia-tributaria
+    cargo: Delegada de la Agencia Estatal de Administración Tributaria de Valladolid
+    boe_key: delegada-de-la-agencia-estatal-de-administracion-tributaria-|2008
+    fecha_nombramiento: '2008-11-13'
+    boe_id_nombramiento: BOE-A-2008-18291
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2008-18291
+    fecha_cese: '2011-07-14'
+    boe_id_cese: BOE-A-2011-12121
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2011-12121
+    titulo_nombramiento: Resolución de 7 de noviembre de 2008, de la Presidencia de la Agencia Estatal de Administración
+      Tributaria, por la que se nombra Delegada de la Agencia Estatal de Administración Tributaria de Valladolid
+      a doña Clara Isabel Santos Dieguez.
+    titulo_cese: Resolución de 12 de julio de 2011, de la Presidencia de la Agencia Estatal de Administración Tributaria,
+      por la que se dispone el cese de doña Clara Isabel Santos Diéguez como Delegada de la Agencia Estatal de Administración
+      Tributaria de Valladolid.
+  - organismo: Organization:agencia-tributaria
+    cargo: Delegada Especial de la Agencia Estatal de Administración Tributaria de Extremadura
+    boe_key: delegada-especial-de-la-agencia-estatal-de-administracion-tr|2011
+    fecha_nombramiento: '2011-07-14'
+    boe_id_nombramiento: BOE-A-2011-12122
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2011-12122
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Resolución de 12 de julio de 2011, de la Presidencia de la Agencia Estatal de Administración
+      Tributaria, por la que se nombra Delegada Especial de la Agencia Estatal de Administración Tributaria de Extremadura
+      a doña Clara Isabel Santos Diéguez.
+- entity_id: Person:david-cierco-jimenez-de-parga
+  nombre_grafo: David Cierco Jiménez de Parga
+  boe_n_cargos: 2
+  boe_rango: 2006..2010
+  cargos:
+  - organismo: Organization:ministerio-de-industria
+    cargo: Director General para el Desarrollo de la Sociedad de la Información
+    boe_key: director-general-para-el-desarrollo-de-la-sociedad-de-la-inf|2006
+    fecha_nombramiento: '2006-02-01'
+    boe_id_nombramiento: BOE-A-2006-1535
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2006-1535
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 71/2006, de 31 de enero, por el que se nombra Director General para el Desarrollo
+      de la Sociedad de la Información a don David Cierco Jiménez de Parga.
+    nota: etapa siguiente del mismo cargo sin cese en la semilla (reelección/renovación 2008)
+  - organismo: Organization:ministerio-de-industria
+    cargo: Director General para el Desarrollo de la Sociedad de la Información
+    boe_key: director-general-para-el-desarrollo-de-la-sociedad-de-la-inf|2008
+    fecha_nombramiento: '2008-07-16'
+    boe_id_nombramiento: BOE-A-2008-12155
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2008-12155
+    fecha_cese: '2010-05-08'
+    boe_id_cese: BOE-A-2010-7352
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2010-7352
+    titulo_nombramiento: Real Decreto 1201/2008, de 11 de julio, por el que se nombra Director General para el Desarrollo
+      de la Sociedad de la Información a don David Cierco Jiménez de Parga.
+    titulo_cese: Real Decreto 578/2010, de 7 de mayo, por el que se dispone el cese de don David Cierco Jiménez
+      de Parga como Director General para el Desarrollo de la Sociedad de la Información.
+- entity_id: Person:eduardo-de-porres-ortiz-de-urbina
+  nombre_grafo: Eduardo de Porres Ortiz de Urbina
+  boe_n_cargos: 3
+  boe_rango: 2014..2021
+  cargos:
+  - organismo: Court:audiencia-provincial-de-madrid
+    cargo: Presidente de la Audiencia Provincial de Madrid
+    boe_key: presidente-de-la-audiencia-provincial-de-madrid|2014
+    fecha_nombramiento: '2014-05-05'
+    boe_id_nombramiento: BOE-A-2014-4694
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2014-4694
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 259/2014, de 4 de abril, por el que se nombra Presidente de la Audiencia Provincial
+      de Madrid a don Eduardo Porres Ortiz de Urbina.
+  - organismo: Court:tribunal-supremo
+    cargo: Magistrado de la Sala Segunda del Tribunal Supremo
+    boe_key: magistrado-de-la-sala-segunda-del-tribunal-supremo|2018
+    fecha_nombramiento: '2018-09-12'
+    boe_id_nombramiento: BOE-A-2018-12416
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2018-12416
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 1081/2018, de 24 de agosto, por el que se promueve a la categoría de Magistrado
+      de la Sala Segunda del Tribunal Supremo a don Eduardo de Porres Ortiz de Urbina.
+    nota: inicio por promocion
+  - organismo: Court:tribunal-supremo
+    cargo: Magistrado de la Sala Segunda del Tribunal Supremo
+    boe_key: magistrado-de-la-sala-segunda-del-tribunal-supremo|2021
+    fecha_nombramiento: '2021-10-28'
+    boe_id_nombramiento: BOE-A-2021-17511
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2021-17511
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 878/2021, de 5 de octubre, por el que se nombra en propiedad Magistrado de
+      la Sala Segunda del Tribunal Supremo a don Eduardo de Porres Ortiz de Urbina.
+- entity_id: Person:esperanza-collazos
+  nombre_grafo: Esperanza Collazos
+  boe_n_cargos: 1
+  boe_rango: 2014..2014
+  cargos:
+  - organismo: Court:juzgado-de-instruccion-n-9-de-madrid
+    cargo: Juez de Instrucción número 9 de Madrid
+    boe_key: juez-de-instruccion-numero-9-de-madrid|2014
+    fecha_nombramiento: '2014-10-27'
+    boe_id_nombramiento: BOE-A-2014-10916
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2014-10916
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 893/2014, de 10 de octubre, por el que se nombra a la Magistrada doña Esperanza
+      Collazos Chamorro, Juez de Instrucción número 9 de Madrid.
+  incidencias:
+  - fecha: '2014-07-14'
+    boe_id: BOE-A-2014-7415
+    url: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2014-7415
+    nota: queda a disposición del presidente del TSJ de Madrid (acuerdo CGPJ)
+    titulo: Acuerdo de 30 de junio de 2014, de la Comisión Permanente del Consejo General del Poder Judicial, por
+      el que queda a disposición del Presidente del Tribunal Superior de Justicia de Madrid, la Magistrada doña
+      María Esperanza Collazos Chamorro.
+- entity_id: Person:eugenio-pereiro-blanco
+  nombre_grafo: Eugenio Pereiro Blanco
+  boe_n_cargos: 4
+  boe_rango: 2011..2025
+  cargos:
+  - organismo: Organization:ministerio-del-interior
+    cargo: Subdirector General de Cooperación Policial Internacional
+    boe_key: subdirector-general-de-cooperacion-policial-internacional|2011
+    fecha_nombramiento: '2011-01-14'
+    boe_id_nombramiento: BOE-A-2011-700
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2011-700
+    fecha_cese: '2012-03-09'
+    boe_id_cese: BOE-A-2012-3348
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2012-3348
+    titulo_nombramiento: Resolución de 20 de diciembre de 2010, de la Secretaría de Estado de Seguridad, por la
+      que se nombra Subdirector General de Cooperación Policial Internacional a don Eugenio Pereiro Blanco.
+    titulo_cese: Resolución de 7 de marzo de 2012, de la Secretaría de Estado de Seguridad, por la que se dispone
+      el cese de don Eugenio Pereiro Blanco, como Subdirector General de Cooperación Policial Internacional.
+  - organismo: Organization:direccion-general-de-la-policia
+    cargo: Comisario General de Extranjería y Fronteras de la Dirección General de la Policía
+    boe_key: comisario-general-de-extranjeria-y-fronteras-de-la-direccion|2017
+    fecha_nombramiento: '2017-12-15'
+    boe_id_nombramiento: BOE-A-2017-14767
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2017-14767
+    fecha_cese: '2018-10-24'
+    boe_id_cese: BOE-A-2018-14588
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2018-14588
+    titulo_nombramiento: Orden INT/1220/2017, de 13 de diciembre, por la que se nombra Comisario General de Extranjería
+      y Fronteras de la Dirección General de la Policía a don Eugenio Pereiro Blanco.
+    titulo_cese: Orden INT/1120/2018, de 23 de octubre, por la que se dispone el cese de don Eugenio Pereiro Blanco
+      como Comisario General de Extranjería y Fronteras de la Dirección General de la Policía.
+  - organismo: Organization:direccion-general-de-la-policia
+    cargo: Comisario General de Información
+    boe_key: comisario-general-de-informacion|2018
+    fecha_nombramiento: '2018-11-14'
+    boe_id_nombramiento: BOE-A-2018-15521
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2018-15521
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Orden INT/1177/2018, de 12 de noviembre, por la que se nombra Comisario General de Información
+      al Comisario Principal don Eugenio Pereiro Blanco.
+  - organismo: Organization:ministerio-del-interior
+    cargo: Director General de Coordinación y Estudios
+    boe_key: director-general-de-coordinacion-y-estudios|2025
+    fecha_nombramiento: '2025-09-17'
+    boe_id_nombramiento: BOE-A-2025-18368
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2025-18368
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 827/2025, de 16 de septiembre, por el que se nombra Director General de Coordinación
+      y Estudios a don Eugenio Pereiro Blanco.
+- entity_id: Person:felix-bolanos-garcia
+  nombre_grafo: Félix Bolaños García
+  boe_n_cargos: 3
+  boe_rango: 2018..2021
+  cargos:
+  - organismo: Organization:presidencia-del-gobierno
+    cargo: Secretario General de la Presidencia del Gobierno
+    boe_key: secretario-general-de-la-presidencia-del-gobierno|2018
+    fecha_nombramiento: '2018-06-09'
+    boe_id_nombramiento: BOE-A-2018-7714
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2018-7714
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 367/2018, de 8 de junio, por el que se nombra Secretario General de la Presidencia
+      del Gobierno a don Félix Bolaños García.
+  - organismo: Organization:patrimonio-nacional
+    cargo: Vocal del Consejo de Administración del Patrimonio Nacional
+    boe_key: vocal-del-consejo-de-administracion-del-patrimonio-nacional|2018
+    fecha_nombramiento: '2018-06-23'
+    boe_id_nombramiento: BOE-A-2018-8586
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2018-8586
+    fecha_cese: '2021-07-28'
+    boe_id_cese: BOE-A-2021-12617
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2021-12617
+    titulo_nombramiento: Real Decreto 601/2018, de 22 de junio, por el que se nombra Vocal del Consejo de Administración
+      del Patrimonio Nacional a don Félix Bolaños García.
+    titulo_cese: Real Decreto 644/2021, de 27 de julio, por el que se dispone el cese de don Félix Bolaños García
+      como Vocal del Consejo de Administración del Patrimonio Nacional.
+  - organismo: Organization:presidencia-del-gobierno
+    cargo: Ministro de la Presidencia, Relaciones con las Cortes y Memoria Democrática
+    boe_key: ministro-de-la-presidencia-relaciones-con-las-cortes-y-memor|2021
+    fecha_nombramiento: '2021-07-12'
+    boe_id_nombramiento: BOE-A-2021-11536
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2021-11536
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 530/2021, de 10 de julio, por el que se nombra Ministro de la Presidencia,
+      Relaciones con las Cortes y Memoria Democrática a don Félix Bolaños García.
+- entity_id: Person:fernando-grande-marlaska
+  nombre_grafo: Fernando Grande-Marlaska
+  boe_n_cargos: 4
+  boe_rango: 2012..2018
+  cargos:
+  - organismo: Court:audiencia-nacional
+    cargo: Presidente de la Sala de lo Penal de la Audiencia Nacional
+    boe_key: presidente-de-la-sala-de-lo-penal-de-la-audiencia-nacional|2012
+    fecha_nombramiento: '2012-04-10'
+    boe_id_nombramiento: BOE-A-2012-4846
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2012-4846
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 492/2012, de 5 de marzo, por el que se nombra Presidente de la Sala de lo
+      Penal de la Audiencia Nacional a don Fernando Grande-Marlaska Gómez.
+  - organismo: Court:audiencia-nacional
+    cargo: Magistrado de la Sala de lo Penal de la Audiencia Nacional
+    boe_key: magistrado-de-la-sala-de-lo-penal-de-la-audiencia-nacional|2017
+    fecha_nombramiento: '2017-11-21'
+    boe_id_nombramiento: BOE-A-2017-13362
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2017-13362
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 949/2017, de 27 de octubre, por el que se nombra a don Fernando Grande-Marlaska
+      Gómez, Magistrado de la Sala de lo Penal de la Audiencia Nacional.
+  - organismo: Organization:consejo-general-del-poder-judicial
+    cargo: Vocal del Consejo General del Poder Judicial
+    boe_key: vocal-del-consejo-general-del-poder-judicial|pre
+    fecha_nombramiento: '2013-12-03'
+    boe_id_nombramiento: BOE-A-2013-12635
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2013-12635
+    fecha_cese: '2018-06-13'
+    boe_id_cese: BOE-A-2018-7918
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2018-7918
+    titulo_nombramiento: Real Decreto 931/2013, de 29 de noviembre, por el que se nombran Vocales del Consejo General
+      del Poder Judicial a propuesta del Senado.
+    titulo_cese: Real Decreto 412/2018, de 8 de junio, por el que se dispone el cese por renuncia al cargo de Vocal
+      del Consejo General del Poder Judicial de don Fernando Grande-Marlaska Gómez.
+    nota: nombramiento en RD colectivo sin nombres en el título (localizado por el cuerpo del XML, pasada dirigida
+      spec 050)
+  - organismo: Organization:ministerio-del-interior
+    cargo: Ministro del Interior
+    boe_key: ministro-del-interior|2018
+    fecha_nombramiento: '2018-06-07'
+    boe_id_nombramiento: BOE-A-2018-7577
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2018-7577
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 357/2018, de 6 de junio, por el que se nombran Ministros del Gobierno.
+    nota: nombramiento en RD colectivo sin nombres en el título (cuerpo del XML, spec 050); renovado como Ministro
+      del Interior en ene-2020 (RD 8/2020, BOE-A-2020-416) y nov-2023 (RD 835/2023, BOE-A-2023-23543)
+  incidencias:
+  - fecha: '2017-06-06'
+    boe_id: BOE-A-2017-6354
+    url: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2017-6354
+    nota: servicios especiales en la carrera judicial (acuerdo CGPJ)
+    titulo: Acuerdo de 25 de mayo de 2017, de la Comisión Permanente del Consejo General del Poder Judicial, por
+      el que se declara en la situación administrativa de servicios especiales en la Carrera Judicial al Magistrado
+      don Fernando Grande-Marlaska Gómez.
+  - fecha: '2017-06-23'
+    boe_id: BOE-A-2017-7180
+    url: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2017-7180
+    nota: adscripción a la Sala de lo Penal de la Audiencia Nacional (acuerdo CGPJ)
+    titulo: Acuerdo de 15 de junio de 2017, de la Comisión Permanente del Consejo General del Poder Judicial, por
+      el que se adscribe al Magistrado don Fernando Grande-Marlaska Gómez a la Sala de lo Penal de la Audiencia
+      Nacional.
+  - fecha: '2018-06-20'
+    boe_id: BOE-A-2018-8386
+    url: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2018-8386
+    nota: continuidad en servicios especiales en la carrera judicial (acuerdo CGPJ)
+    titulo: Acuerdo de 14 de junio de 2018, de la Comisión Permanente del Consejo General del Poder Judicial, por
+      el que se declara la continuidad en la situación administrativa de servicios especiales en la Carrera Judicial
+      al Magistrado don Fernando Grande-Marlaska Gómez.
+- entity_id: Person:francisco-ferrer
+  nombre_grafo: Francisco Ferrer
+  boe_n_cargos: 2
+  boe_rango: 2018..2020
+  nota: el nodo del corpus (informe-udef-1908, jefe de gabinete de Pedro Saura) ya lleva el alias «Francisco FERRER
+    MORENO» — identidad verificada en la pasada dirigida spec 050
+  cargos:
+  - organismo: Organization:ministerio-de-fomento
+    cargo: Director del Gabinete del Secretario de Estado de Infraestructuras, Transporte y Vivienda
+    boe_key: director-del-gabinete-del-secretario-de-estado-de-infraestru|2018
+    fecha_nombramiento: '2018-06-22'
+    boe_id_nombramiento: BOE-A-2018-8508
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2018-8508
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Orden FOM/664/2018, de 19 de junio, por la que se nombra Director del Gabinete del Secretario
+      de Estado de Infraestructuras, Transporte y Vivienda a don Francisco Ferrer Moreno.
+    nota: renovado en el gabinete del SE de Transportes, Movilidad y Agenda Urbana en ene-2020 (etapa propia)
+  - organismo: Organization:ministerio-de-transportes-movilidad-y-agenda-urbana
+    cargo: Director del Gabinete del Secretario de Estado de Transportes, Movilidad y Agenda Urbana
+    boe_key: director-del-gabinete-del-secretario-de-estado-de-transporte|2020
+    fecha_nombramiento: '2020-02-04'
+    boe_id_nombramiento: BOE-A-2020-1600
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-1600
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Orden TMA/87/2020, de 30 de enero, por la que nombra Director del Gabinete del Secretario
+      de Estado de Transportes, Movilidad y Agenda Urbana a don Francisco Ferrer Moreno.
+- entity_id: Person:francisco-martin-aguirre
+  nombre_grafo: Francisco Martín Aguirre
+  boe_n_cargos: 4
+  boe_rango: 2020..2023
+  cargos:
+  - organismo: Organization:presidencia-del-gobierno
+    cargo: Director del Departamento de Planificación y Seguimiento de la Actividad Gubernamental de la Presidencia
+      del Gobierno
+    boe_key: director-del-departamento-de-planificacion-y-seguimiento-de|2020
+    fecha_nombramiento: '2020-01-29'
+    boe_id_nombramiento: BOE-A-2020-1260
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-1260
+    fecha_cese: '2021-07-21'
+    boe_id_cese: BOE-A-2021-12160
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2021-12160
+    titulo_nombramiento: Real Decreto 153/2020, de 28 de enero, por el que se nombra Director del Departamento de
+      Planificación y Seguimiento de la Actividad Gubernamental de la Presidencia del Gobierno a don Francisco Martín
+      Aguirre.
+    titulo_cese: Real Decreto 592/2021, de 20 de julio, por el que se dispone el cese de don Francisco Martín Aguirre
+      como Director del Departamento de Planificación y Seguimiento de la Actividad Gubernamental de la Presidencia
+      del Gobierno.
+  - organismo: Organization:presidencia-del-gobierno
+    cargo: Secretario General de la Presidencia del Gobierno
+    boe_key: secretario-general-de-la-presidencia-del-gobierno|2021
+    fecha_nombramiento: '2021-07-21'
+    boe_id_nombramiento: BOE-A-2021-12163
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2021-12163
+    fecha_cese: '2023-03-29'
+    boe_id_cese: BOE-A-2023-7944
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-7944
+    titulo_nombramiento: Real Decreto 595/2021, de 20 de julio, por el que se nombra Secretario General de la Presidencia
+      del Gobierno a don Francisco Martín Aguirre.
+    titulo_cese: Real Decreto 212/2023, de 28 de marzo, por el que se dispone el cese de don Francisco Martín Aguirre
+      como Secretario General de la Presidencia del Gobierno.
+  - organismo: Organization:patrimonio-nacional
+    cargo: Vocal del Consejo de Administración del Patrimonio Nacional
+    boe_key: vocal-del-consejo-de-administracion-del-patrimonio-nacional|2021
+    fecha_nombramiento: '2021-07-28'
+    boe_id_nombramiento: BOE-A-2021-12623
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2021-12623
+    fecha_cese: '2023-04-12'
+    boe_id_cese: BOE-A-2023-9046
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-9046
+    titulo_nombramiento: Real Decreto 650/2021, de 27 de julio, por el que se nombra Vocal del Consejo de Administración
+      del Patrimonio Nacional a don Francisco Martín Aguirre.
+    titulo_cese: Real Decreto 279/2023, de 11 de abril, por el que se dispone el cese de don Francisco Martín Aguirre
+      como Vocal del Consejo de Administración del Patrimonio Nacional.
+  - organismo: Organization:delegacion-del-gobierno-en-la-comunidad-de-madrid
+    cargo: Delegado del Gobierno en la Comunidad de Madrid
+    boe_key: delegado-del-gobierno-en-la-comunidad-de-madrid|2023
+    fecha_nombramiento: '2023-03-29'
+    boe_id_nombramiento: BOE-A-2023-7950
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-7950
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 218/2023, de 28 de marzo, por el que se nombra Delegado del Gobierno en la
+      Comunidad de Madrid a don Francisco Martín Aguirre.
+- entity_id: Person:francisco-toledo-lobo
+  nombre_grafo: Francisco Toledo Lobo
+  boe_n_cargos: 1
+  boe_rango: 2020..2021
+  cargos:
+  - organismo: Organization:puertos-del-estado
+    cargo: Presidente del Ente Público Puertos del Estado
+    boe_key: presidente-del-ente-publico-puertos-del-estado|2020
+    fecha_nombramiento: '2020-02-26'
+    boe_id_nombramiento: BOE-A-2020-2680
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-2680
+    fecha_cese: '2021-12-01'
+    boe_id_cese: BOE-A-2021-19814
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2021-19814
+    titulo_nombramiento: Real Decreto 422/2020, de 25 de febrero, por el que se nombra Presidente del Ente Público
+      Puertos del Estado a don Francisco Toledo Lobo.
+    titulo_cese: Real Decreto 1062/2021, de 30 de noviembre, por el que se dispone el cese de don Francisco Toledo
+      Lobo como Presidente del Ente Público Puertos del Estado.
+- entity_id: Person:gaspar-carlos-zarrias-arevalo
+  nombre_grafo: Gaspar Carlos Zarrías Arévalo
+  boe_n_cargos: 1
+  boe_rango: 2009..2011
+  cargos:
+  - organismo: Organization:ministerio-de-politica-territorial
+    cargo: Secretario de Estado de Cooperación Territorial
+    boe_key: secretario-de-estado-de-cooperacion-territorial|2009
+    fecha_nombramiento: '2009-04-25'
+    boe_id_nombramiento: BOE-A-2009-6891
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2009-6891
+    fecha_cese: '2011-12-24'
+    boe_id_cese: BOE-A-2011-20128
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2011-20128
+    titulo_nombramiento: Real Decreto 749/2009, de 24 de abril, por el que se nombra Secretario de Estado de Cooperación
+      Territorial a don Gaspar Carlos Zarrías Arévalo.
+    titulo_cese: Real Decreto 1849/2011, de 23 de diciembre, por el que se dispone el cese de don Gaspar Carlos
+      Zarrías Arévalo como Secretario de Estado de Cooperación Territorial.
+- entity_id: Person:gonzalez-fernandez
+  nombre_grafo: Mercedes González Fernández
+  boe_n_cargos: 3
+  boe_rango: 2021..2024
+  cargos:
+  - organismo: Organization:delegacion-del-gobierno-en-la-comunidad-de-madrid
+    cargo: Delegada del Gobierno en la Comunidad de Madrid
+    boe_key: delegada-del-gobierno-en-la-comunidad-de-madrid|2021
+    fecha_nombramiento: '2021-03-31'
+    boe_id_nombramiento: BOE-A-2021-5044
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2021-5044
+    fecha_cese: '2023-03-29'
+    boe_id_cese: BOE-A-2023-7943
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-7943
+    titulo_nombramiento: Real Decreto 211/2021, de 30 de marzo, por el que se nombra Delegada del Gobierno en la
+      Comunidad de Madrid a doña María de las Mercedes González Fernández.
+    titulo_cese: Real Decreto 211/2023, de 28 de marzo, por el que se dispone el cese de doña María de las Mercedes
+      González Fernández como Delegada del Gobierno en la Comunidad de Madrid.
+  - organismo: Organization:guardia-civil
+    cargo: Directora General de la Guardia Civil
+    boe_key: directora-general-de-la-guardia-civil|2023
+    fecha_nombramiento: '2023-03-29'
+    boe_id_nombramiento: BOE-A-2023-7970
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-7970
+    fecha_cese: '2023-06-14'
+    boe_id_cese: BOE-A-2023-14091
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-14091
+    titulo_nombramiento: Real Decreto 234/2023, de 28 de marzo, por el que se nombra Directora General de la Guardia
+      Civil a doña María de las Mercedes González Fernández.
+    titulo_cese: Real Decreto 476/2023, de 13 de junio, por el que se dispone el cese de doña María de las Mercedes
+      González Fernández como Directora General de la Guardia Civil.
+  - organismo: Organization:guardia-civil
+    cargo: Directora General de la Guardia Civil
+    boe_key: directora-general-de-la-guardia-civil|2024
+    fecha_nombramiento: '2024-09-18'
+    boe_id_nombramiento: BOE-A-2024-18631
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2024-18631
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 931/2024, de 17 de septiembre, por el que se nombra Directora General de la
+      Guardia Civil a doña María de las Mercedes González Fernández.
+- entity_id: Person:gonzalez-herrero-gonzalez
+  nombre_grafo: González-Herrero González
+  boe_n_cargos: 1
+  boe_rango: 2018..2018
+  cargos:
+  - organismo: Organization:fiscalia-de-la-audiencia-nacional  # dedup 2026-08-03
+    cargo: Fiscal de la Fiscalía de la Audiencia Nacional
+    boe_key: fiscal-de-la-fiscalia-de-la-audiencia-nacional|2018
+    fecha_nombramiento: '2018-12-22'
+    boe_id_nombramiento: BOE-A-2018-17611
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2018-17611
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 1483/2018, de 21 de diciembre, por el que se nombra Fiscal de la Fiscalía
+      de la Audiencia Nacional a don Víctor Joaquín González-Herrero González.
+  incidencias:
+  - fecha: '2018-01-20'
+    boe_id: BOE-A-2018-717
+    url: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2018-717
+    nota: reingreso al servicio activo en la carrera fiscal
+    titulo: Orden JUS/22/2018, de 8 de enero, por la que se reingresa al servicio activo en la Carrera Fiscal a
+      don Víctor Joaquín González-Herrero González.
+- entity_id: Person:gustavo-santana-hernandez
+  nombre_grafo: Gustavo Santana Hernández
+  boe_n_cargos: 2
+  boe_rango: 2023..2025
+  cargos:
+  - organismo: Organization:ministerio-de-fomento
+    cargo: Director General de la Marina Mercante
+    boe_key: director-general-de-la-marina-mercante|2023
+    fecha_nombramiento: '2023-12-08'
+    boe_id_nombramiento: BOE-A-2023-25025
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-25025
+    fecha_cese: '2025-04-09'
+    boe_id_cese: BOE-A-2025-7101
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2025-7101
+    titulo_nombramiento: Real Decreto 1048/2023, de 7 de diciembre, por el que se nombra Director General de la
+      Marina Mercante a don Gustavo Santana Hernández.
+    titulo_cese: Real Decreto 269/2025, de 8 de abril, por el que se dispone el cese de don Gustavo Santana Hernández
+      como Director General de la Marina Mercante.
+  - organismo: Organization:puertos-del-estado
+    cargo: Presidente del Ente Público Puertos del Estado
+    boe_key: presidente-del-ente-publico-puertos-del-estado|2025
+    fecha_nombramiento: '2025-04-09'
+    boe_id_nombramiento: BOE-A-2025-7104
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2025-7104
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 272/2025, de 8 de abril, por el que se nombra Presidente del Ente Público
+      Puertos del Estado a don Gustavo Santana Hernández.
+- entity_id: Person:hana-jalloul-muro
+  nombre_grafo: Hana Jalloul Muro
+  boe_n_cargos: 1
+  boe_rango: 2020..2021
+  cargos:
+  - organismo: Organization:ministerio-de-inclusion-seguridad-social-y-migraciones
+    cargo: Secretaria de Estado de Migraciones
+    boe_key: secretaria-de-estado-de-migraciones|2020
+    fecha_nombramiento: '2020-01-30'
+    boe_id_nombramiento: BOE-A-2020-1409
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-1409
+    fecha_cese: '2021-03-31'
+    boe_id_cese: BOE-A-2021-5066
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2021-5066
+    titulo_nombramiento: Real Decreto 228/2020, de 29 de enero, por el que se nombra Secretaria de Estado de Migraciones
+      a doña Hana Jalloul Muro.
+    titulo_cese: Real Decreto 228/2021, de 30 de marzo, por el que se dispone el cese de doña Hana Jalloul Muro
+      como Secretaria de Estado de Migraciones.
+- entity_id: Person:hilda-jimenez
+  nombre_grafo: Hilda Jiménez
+  boe_n_cargos: 5
+  boe_rango: 2018..2025
+  cargos:
+  - organismo: Organization:ministerio-de-ciencia
+    cargo: Directora del Gabinete de la Secretaria de Estado de Universidades, Investigación, Desarrollo e Innovación
+    boe_key: directora-del-gabinete-de-la-secretaria-de-estado-de-univers|2018
+    fecha_nombramiento: '2018-07-10'
+    boe_id_nombramiento: BOE-A-2018-9593
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2018-9593
+    fecha_cese: '2018-10-17'
+    boe_id_cese: BOE-A-2018-14182
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2018-14182
+    titulo_nombramiento: Orden CNU/739/2018, de 9 de julio, por la que se nombra Directora del Gabinete de la Secretaria
+      de Estado de Universidades, Investigación, Desarrollo e Innovación a doña María Hilda Jiménez Núñez.
+    titulo_cese: Orden CNU/1079/2018, de 11 de octubre, por la que se dispone el cese de doña María Hilda Jiménez
+      Núñez como Directora del Gabinete de la Secretaría de Estado de Universidades, Investigación, Desarrollo e
+      Innovación.
+  - organismo: Organization:presidencia-del-gobierno
+    cargo: Vicesecretaria General de la Presidencia del Gobierno
+    boe_key: vicesecretaria-general-de-la-presidencia-del-gobierno|2018
+    fecha_nombramiento: '2018-10-12'
+    boe_id_nombramiento: BOE-A-2018-13935
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2018-13935
+    fecha_cese: '2021-07-21'
+    boe_id_cese: BOE-A-2021-12159
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2021-12159
+    titulo_nombramiento: Real Decreto 1275/2018, de 11 de octubre, por el que se nombra Vicesecretaria General de
+      la Presidencia del Gobierno a doña María Hilda Jiménez Núñez.
+    titulo_cese: Real Decreto 591/2021, de 20 de julio, por el que se dispone el cese de doña María Hilda Jiménez
+      Núñez como Vicesecretaria General de la Presidencia del Gobierno.
+  - organismo: Organization:ministerio-de-asuntos-exteriores
+    cargo: Directora General del Servicio Exterior
+    boe_key: directora-general-del-servicio-exterior|2021
+    fecha_nombramiento: '2021-08-04'
+    boe_id_nombramiento: BOE-A-2021-13287
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2021-13287
+    fecha_cese: '2024-09-18'
+    boe_id_cese: BOE-A-2024-18624
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2024-18624
+    titulo_nombramiento: Real Decreto 707/2021, de 3 de agosto, por el que se nombra Directora General del Servicio
+      Exterior a doña María Hilda Jiménez Núñez.
+    titulo_cese: Real Decreto 925/2024, de 17 de septiembre, por el que se dispone el cese de doña María Hilda Jiménez
+      Núñez como Directora General del Servicio Exterior.
+  - organismo: Organization:ministerio-para-la-transformacion-digital
+    cargo: Secretaria General Técnica
+    boe_key: secretaria-general-tecnica|2025
+    fecha_nombramiento: '2025-03-12'
+    boe_id_nombramiento: BOE-A-2025-4838
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2025-4838
+    fecha_cese: '2025-10-30'
+    boe_id_cese: BOE-A-2025-21828
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2025-21828
+    titulo_nombramiento: Real Decreto 197/2025, de 11 de marzo, por el que se nombra Secretaria General Técnica
+      a doña María Hilda Jiménez Núñez.
+    titulo_cese: Real Decreto 985/2025, de 28 de octubre, por el que se dispone el cese de doña María Hilda Jiménez
+      Núñez como Secretaria General Técnica.
+  - organismo: Organization:ministerio-para-la-transformacion-digital
+    cargo: Directora General de la Función Pública
+    boe_key: directora-general-de-la-funcion-publica|2025
+    fecha_nombramiento: '2025-10-30'
+    boe_id_nombramiento: BOE-A-2025-21829
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2025-21829
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 986/2025, de 28 de octubre, por el que se nombra Directora General de la Función
+      Pública a doña María Hilda Jiménez Núñez.
+- entity_id: Person:ignacio-stampa-fuente
+  nombre_grafo: Ignacio Stampa Fuente
+  boe_n_cargos: 1
+  boe_rango: 2023..2023
+  cargos:
+  - organismo: Organization:fiscalia-de-madrid
+    cargo: Fiscal de la Fiscalía Provincial de Madrid (segunda categoría)
+    boe_key: fiscal-de-la-fiscalia-provincial-de-madrid-segunda-categoria|2023
+    fecha_nombramiento: '2023-06-07'
+    boe_id_nombramiento: BOE-A-2023-13550
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-13550
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 432/2023, de 6 de junio, por el que se adjudica plaza vacante de segunda categoría
+      de la Fiscalía Provincial de Madrid a don Ignacio Stampa Fuente.
+    nota: adjudicación de plaza vacante (RD 432/2023)
+- entity_id: Person:ion-fernando-antolin-llorente
+  nombre_grafo: Ion Fernando Antolín Llorente
+  boe_n_cargos: 2
+  boe_rango: 2022..2024
+  cargos:
+  - organismo: Organization:presidencia-del-gobierno
+    cargo: Director del Departamento de Coordinación Informativa de la Secretaría de Estado de Comunicación
+    boe_key: director-del-departamento-de-coordinacion-informativa-de-la|2022
+    fecha_nombramiento: '2022-06-28'
+    boe_id_nombramiento: BOE-A-2022-10681
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2022-10681
+    fecha_cese: '2022-08-02'
+    boe_id_cese: BOE-A-2022-12945
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2022-12945
+    titulo_nombramiento: Real Decreto 508/2022, de 27 de junio, por el que se nombra Director del Departamento de
+      Coordinación Informativa de la Secretaría de Estado de Comunicación a don Ion Fernando Antolín Llorente.
+    titulo_cese: Real Decreto 674/2022, de 1 de agosto, por el que se dispone el cese de don Ion Fernando Antolín
+      Llorente como Director del Departamento de Coordinación Informativa de la Secretaría de Estado de Comunicación.
+  - organismo: Organization:presidencia-del-gobierno
+    cargo: Secretario de Estado de Comunicación
+    boe_key: secretario-de-estado-de-comunicacion|2024
+    fecha_nombramiento: '2024-12-04'
+    boe_id_nombramiento: BOE-A-2024-25218
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2024-25218
+    fecha_cese: '2024-12-24'
+    boe_id_cese: BOE-A-2024-26936
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2024-26936
+    titulo_nombramiento: Real Decreto 1232/2024, de 3 de diciembre, por el que se nombra Secretario de Estado de
+      Comunicación a don Ion Fernando Antolín Llorente.
+    titulo_cese: Real Decreto 1315/2024, de 23 de diciembre, por el que se dispone el cese de don Ion Fernando Antolín
+      Llorente como Secretario de Estado de Comunicación.
+- entity_id: Person:isabel-pardo-de-vera
+  nombre_grafo: Isabel Pardo de Vera
+  boe_n_cargos: 2
+  boe_rango: 2018..2023
+  cargos:
+  - organismo: Organization:adif
+    cargo: Presidenta de la Entidad Pública Empresarial Administrador de Infraestructuras Ferroviarias
+    boe_key: presidenta-de-la-entidad-publica-empresarial-administrador-d|2018
+    fecha_nombramiento: '2018-06-30'
+    boe_id_nombramiento: BOE-A-2018-9063
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2018-9063
+    fecha_cese: '2021-07-28'
+    boe_id_cese: BOE-A-2021-12644
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2021-12644
+    titulo_nombramiento: Real Decreto 735/2018, de 29 de junio, por el que se nombra Presidenta de la Entidad Pública
+      Empresarial Administrador de Infraestructuras Ferroviarias a doña Isabel Pardo de Vera Posada.
+    titulo_cese: Real Decreto 668/2021, de 27 de julio, por el que se dispone el cese de doña Isabel Pardo de Vera
+      Posada como Presidenta de la Entidad Pública Empresarial Administrador de Infraestructuras Ferroviarias.
+  - organismo: Organization:ministerio-de-transportes-movilidad-y-agenda-urbana
+    cargo: Secretaria de Estado de Transportes, Movilidad y Agenda Urbana
+    boe_key: secretaria-de-estado-de-transportes-movilidad-y-agenda-urban|2021
+    fecha_nombramiento: '2021-07-28'
+    boe_id_nombramiento: BOE-A-2021-12645
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2021-12645
+    fecha_cese: '2023-02-22'
+    boe_id_cese: BOE-A-2023-4668
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-4668
+    titulo_nombramiento: Real Decreto 669/2021, de 27 de julio, por el que se nombra Secretaria de Estado de Transportes,
+      Movilidad y Agenda Urbana a doña Isabel Pardo de Vera Posada.
+    titulo_cese: Real Decreto 130/2023, de 21 de febrero, por el que se dispone el cese de doña Isabel Pardo de
+      Vera Posada como Secretaria de Estado de Transportes, Movilidad y Agenda Urbana.
+- entity_id: Person:isaias-taboas-suarez
+  nombre_grafo: Isaías Taboas Suárez
+  boe_n_cargos: 4
+  boe_rango: 2004..2023
+  cargos:
+  - organismo: Organization:ministerio-de-industria
+    cargo: Director de Gabinete del Ministro de Industria, Turismo y Comercio
+    boe_key: director-de-gabinete-del-ministro-de-industria-turismo-y-com|2004
+    fecha_nombramiento: '2004-04-20'
+    boe_id_nombramiento: BOE-A-2004-7068
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2004-7068
+    fecha_cese: '2006-09-16'
+    boe_id_cese: BOE-A-2006-16229
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2006-16229
+    titulo_nombramiento: Real Decreto 671/2004, de 19 de abril, por el que se nombra Director de Gabinete del Ministro
+      de Industria, Turismo y Comercio a don Isaías Táboas Suárez.
+    titulo_cese: Real Decreto 1045/2006, de 15 de septiembre, por el que se dispone el cese de don Isaías Taboas
+      Suárez como Director del Gabinete del Ministro de Industria, Turismo y Comercio.
+    nota: cese 'Director del Gabinete del Ministro de Industria, Turismo y Comercio' casado con nombramiento 'Director
+      de Gabinete del Ministro de Industria, Turismo y Comercio' (jaccard 1.00)
+  - organismo: Organization:ministerio-de-industria
+    cargo: Director del Gabinete del Ministro de Industria, Turismo y Comercio
+    boe_key: director-del-gabinete-del-ministro-de-industria-turismo-y-co|2006
+    fecha_nombramiento: '2006-09-16'
+    boe_id_nombramiento: BOE-A-2006-16231
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2006-16231
+    fecha_cese: '2006-12-01'
+    boe_id_cese: BOE-A-2006-20960
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2006-20960
+    titulo_nombramiento: Real Decreto 1047/2006, de 15 de septiembre, por el que se nombra Director del Gabinete
+      del Ministro de Industria, Turismo y Comercio a don Isaías Taboas Suárez.
+    titulo_cese: Real Decreto 1375/2006, de 24 de noviembre, por el que se dispone el cese de don Isaías Taboas
+      Suárez como Director del Gabinete del Ministro de Industria, Turismo y Comercio.
+  - organismo: Organization:ministerio-de-fomento
+    cargo: Secretario de Estado de Transportes
+    boe_key: secretario-de-estado-de-transportes|2010
+    fecha_nombramiento: '2010-11-06'
+    boe_id_nombramiento: BOE-A-2010-17071
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2010-17071
+    fecha_cese: '2011-12-24'
+    boe_id_cese: BOE-A-2011-20135
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2011-20135
+    titulo_nombramiento: Real Decreto 1466/2010, de 5 de noviembre, por el que se nombra Secretario de Estado de
+      Transportes a don Isaías Táboas Suárez.
+    titulo_cese: Real Decreto 1856/2011, de 23 de diciembre, por el que se dispone el cese de don Isaías Táboas
+      Suárez como Secretario de Estado de Transportes.
+  - organismo: Organization:renfe
+    cargo: Presidente de la Entidad Pública Empresarial RENFE-Operadora
+    boe_key: presidente-de-la-entidad-publica-empresarial-renfe-operadora|2018
+    fecha_nombramiento: '2018-06-30'
+    boe_id_nombramiento: BOE-A-2018-9064
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2018-9064
+    fecha_cese: '2023-02-22'
+    boe_id_cese: BOE-A-2023-4670
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-4670
+    titulo_nombramiento: Real Decreto 736/2018, de 29 de junio, por el que se nombra Presidente de la Entidad Pública
+      Empresarial RENFE-Operadora a don Isaías Táboas Suárez.
+    titulo_cese: Real Decreto 132/2023, de 21 de febrero, por el que se dispone el cese de don Isaías Táboas Suárez
+      como Presidente de la Entidad Pública Empresarial RENFE-Operadora.
+- entity_id: Person:ivan-redondo
+  nombre_grafo: Iván Redondo
+  boe_n_cargos: 2
+  boe_rango: 2018..2021
+  cargos:
+  - organismo: Organization:presidencia-del-gobierno
+    cargo: Director del Gabinete de la Presidencia del Gobierno
+    boe_key: director-del-gabinete-de-la-presidencia-del-gobierno|2018
+    fecha_nombramiento: '2018-06-09'
+    boe_id_nombramiento: BOE-A-2018-7712
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2018-7712
+    fecha_cese: '2020-01-15'
+    boe_id_cese: BOE-A-2020-507
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-507
+    titulo_nombramiento: Real Decreto 365/2018, de 8 de junio, por el que se nombra Director del Gabinete de la
+      Presidencia del Gobierno a don Iván Redondo Bacaicoa.
+    titulo_cese: Real Decreto 13/2020, de 14 de enero, por el que se dispone el cese de don Iván Redondo Bacaicoa
+      como Director del Gabinete de la Presidencia del Gobierno.
+  - organismo: Organization:presidencia-del-gobierno
+    cargo: Director del Gabinete de la Presidencia del Gobierno
+    boe_key: director-del-gabinete-de-la-presidencia-del-gobierno|2020
+    fecha_nombramiento: '2020-01-15'
+    boe_id_nombramiento: BOE-A-2020-510
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-510
+    fecha_cese: '2021-07-14'
+    boe_id_cese: BOE-A-2021-11687
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2021-11687
+    titulo_nombramiento: Real Decreto 16/2020, de 14 de enero, por el que se nombra Director del Gabinete de la
+      Presidencia del Gobierno a don Iván Redondo Bacaicoa.
+    titulo_cese: Real Decreto 539/2021, de 13 de julio, por el que se dispone el cese de don Iván Redondo Bacaicoa
+      como Director del Gabinete de la Presidencia del Gobierno.
+- entity_id: Person:javier-hernandez-garcia
+  nombre_grafo: Javier Hernández García
+  boe_n_cargos: 2
+  boe_rango: 2009..2020
+  nota: el nodo del corpus es el magistrado de la Sala Segunda del TS (aparece en la sentencia TS 418/2026 del caso);
+    los hits AEAT del recon eran de otra persona (Francisco Javier) — pasada dirigida spec 050
+  cargos:
+  - organismo: Court:audiencia-provincial-de-tarragona
+    cargo: Presidente de la Audiencia Provincial de Tarragona
+    boe_key: presidente-de-la-audiencia-provincial-de-tarragona|2009
+    fecha_nombramiento: '2009-07-21'
+    boe_id_nombramiento: BOE-A-2009-12060
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2009-12060
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 1140/2009, de 7 de julio, por el que se nombra Presidente de la Audiencia
+      Provincial de Tarragona a don Javier Hernández García.
+    nota: cese no localizado en la sección II.A (promovido al TS en 2020, etapa propia)
+  - organismo: Court:tribunal-supremo
+    cargo: Magistrado de la Sala Segunda del Tribunal Supremo
+    boe_key: magistrado-de-la-sala-segunda-del-tribunal-supremo|2020
+    fecha_nombramiento: '2020-11-07'
+    boe_id_nombramiento: BOE-A-2020-13807
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-13807
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 912/2020, de 13 de octubre, por el que se promueve a la categoría de Magistrado
+      de la Sala Segunda del Tribunal Supremo a don Javier Hernández García.
+    nota: promoción «a la categoría de» = entrada efectiva al TS (criterio spec 049)
+- entity_id: Person:javier-herrero
+  nombre_grafo: Javier Herrero
+  boe_n_cargos: 2
+  boe_rango: 2012..2022
+  cargos:
+  - organismo: Organization:ministerio-de-fomento
+    cargo: Subdirector General de Construcción
+    boe_key: subdirector-general-de-construccion|pre
+    fecha_nombramiento: null
+    boe_id_nombramiento: null
+    url_nombramiento: null
+    fecha_cese: '2012-02-09'
+    boe_id_cese: BOE-A-2012-1893
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2012-1893
+    titulo_cese: Resolución de 31 de enero de 2012, de la Secretaría de Estado de Planificación e Infraestructuras,
+      por la que se dispone el cese de don Javier Herrero Lizano como Subdirector General de Construcción.
+    nota: nombramiento anterior a la ventana 2004→hoy o no publicado en la sección II.A (no localizado en la pasada
+      dirigida spec 050)
+  - organismo: Organization:direccion-general-de-carreteras
+    cargo: Director General de Carreteras
+    boe_key: director-general-de-carreteras|2018
+    fecha_nombramiento: '2018-06-30'
+    boe_id_nombramiento: BOE-A-2018-9065
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2018-9065
+    fecha_cese: '2022-10-26'
+    boe_id_cese: BOE-A-2022-17487
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2022-17487
+    titulo_nombramiento: Real Decreto 737/2018, de 29 de junio, por el que se nombra Director General de Carreteras
+      a don Javier Herrero Lizano.
+    titulo_cese: Real Decreto 914/2022, de 25 de octubre, por el que se dispone el cese de don Javier Herrero Lizano
+      como Director General de Carreteras.
+- entity_id: Person:jesus-manuel-gomez-garcia
+  nombre_grafo: Jesús Manuel Gómez García
+  boe_n_cargos: 5
+  boe_rango: 2009..2024
+  cargos:
+  - organismo: Organization:ministerio-de-economia
+    cargo: Director General de Programación Económica
+    boe_key: director-general-de-programacion-economica|2009
+    fecha_nombramiento: '2009-04-25'
+    boe_id_nombramiento: BOE-A-2009-6879
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2009-6879
+    fecha_cese: '2009-06-30'
+    boe_id_cese: BOE-A-2009-10775
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2009-10775
+    titulo_nombramiento: Real Decreto 738/2009, de 24 de abril, por el que se nombra Director General de Programación
+      Económica a don Jesús Manuel Gómez García.
+    titulo_cese: Real Decreto 1052/2009, de 29 de junio, por el que se dispone el cese de don Jesús Manuel Gómez
+      García como Director General de Programación Económica.
+  - organismo: Organization:ministerio-de-economia
+    cargo: Director General de Programación Económica y Presupuestos
+    boe_key: director-general-de-programacion-economica-y-presupuestos|2009
+    fecha_nombramiento: '2009-06-30'
+    boe_id_nombramiento: BOE-A-2009-10776
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2009-10776
+    fecha_cese: '2012-01-06'
+    boe_id_cese: BOE-A-2012-273
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2012-273
+    titulo_nombramiento: Real Decreto 1053/2009, de 29 de junio, por el que se nombra Director General de Programación
+      Económica y Presupuestos a don Jesús Manuel Gómez García.
+    titulo_cese: Real Decreto 45/2012, de 5 de enero, por el que se dispone el cese de don Jesús Manuel Gómez García
+      como Director General de Programación Económica y Presupuestos.
+  - organismo: Organization:ministerio-de-fomento
+    cargo: Subsecretario de Fomento
+    boe_key: subsecretario-de-fomento|2018
+    fecha_nombramiento: '2018-06-19'
+    boe_id_nombramiento: BOE-A-2018-8261
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2018-8261
+    fecha_cese: '2020-01-18'
+    boe_id_cese: BOE-A-2020-745
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-745
+    titulo_nombramiento: Real Decreto 513/2018, de 18 de junio, por el que se nombra Subsecretario de Fomento a
+      don Jesús Manuel Gómez García.
+    titulo_cese: Real Decreto 86/2020, de 17 de enero, por el que se dispone el cese de don Jesús Manuel Gómez García
+      como Subsecretario de Fomento.
+  - organismo: Organization:ministerio-de-transportes-movilidad-y-agenda-urbana
+    cargo: Subsecretario de Transportes, Movilidad y Agenda Urbana
+    boe_key: subsecretario-de-transportes-movilidad-y-agenda-urbana|2020
+    fecha_nombramiento: '2020-01-18'
+    boe_id_nombramiento: BOE-A-2020-746
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-746
+    fecha_cese: '2023-12-13'
+    boe_id_cese: BOE-A-2023-25311
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-25311
+    titulo_nombramiento: Real Decreto 87/2020, de 17 de enero, por el que se nombra Subsecretario de Transportes,
+      Movilidad y Agenda Urbana a don Jesús Manuel Gómez García.
+    titulo_cese: Real Decreto 1108/2023, de 12 de diciembre, por el que se dispone el cese de don Jesús Manuel Gómez
+      García como Subsecretario de Transportes, Movilidad y Agenda Urbana.
+  - organismo: Organization:ministerio-de-transportes-movilidad-y-agenda-urbana
+    cargo: Subsecretario de Transportes y Movilidad Sostenible
+    boe_key: subsecretario-de-transportes-y-movilidad-sostenible|2023
+    fecha_nombramiento: '2023-12-13'
+    boe_id_nombramiento: BOE-A-2023-25313
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-25313
+    fecha_cese: '2024-08-28'
+    boe_id_cese: BOE-A-2024-17383
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2024-17383
+    titulo_nombramiento: Real Decreto 1110/2023, de 12 de diciembre, por el que se nombra Subsecretario de Transportes
+      y Movilidad Sostenible a don Jesús Manuel Gómez García.
+    titulo_cese: Real Decreto 853/2024, de 27 de agosto, por el que se dispone el cese de don Jesús Manuel Gómez
+      García como Subsecretario de Transportes y Movilidad Sostenible.
+- entity_id: Person:jesus-maria-gomez-martin
+  nombre_grafo: Jesús María Gómez Martín
+  boe_n_cargos: 1
+  boe_rango: 2022..2022
+  cargos:
+  - organismo: Organization:direccion-general-de-la-policia
+    cargo: Jefe Superior de Canarias de la Dirección General de la Policía
+    boe_key: jefe-superior-de-canarias-de-la-direccion-general-de-la-poli|2022
+    fecha_nombramiento: '2022-11-19'
+    boe_id_nombramiento: BOE-A-2022-19091
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2022-19091
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Orden INT/1109/2022, de 2 de noviembre, por la que se nombra Jefe Superior de Canarias
+      de la Dirección General de la Policía al Comisario Principal don Jesús María Gómez Martín.
+- entity_id: Person:jesus-silva
+  nombre_grafo: Jesús Silva
+  boe_n_cargos: 4
+  boe_rango: 2004..2020
+  cargos:
+  - organismo: Organization:ministerio-de-asuntos-exteriores
+    cargo: Director General de Relaciones Culturales y Científicas
+    boe_key: director-general-de-relaciones-culturales-y-cientificas|pre
+    fecha_nombramiento: null
+    boe_id_nombramiento: null
+    url_nombramiento: null
+    fecha_cese: '2004-05-08'
+    boe_id_cese: BOE-A-2004-8578
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2004-8578
+    titulo_cese: Real Decreto 1048/2004, de 7 de mayo, por el que se dispone el cese de don Jesús Silva Fernández
+      como Director General de Relaciones Culturales y Científicas.
+    nota: nombramiento anterior a la ventana 2004→hoy o no publicado en la sección II.A (no localizado en la pasada
+      dirigida spec 050)
+  - organismo: Organization:ministerio-de-asuntos-exteriores
+    cargo: Embajador de España en Jamaica
+    boe_key: embajador-de-espana-en-jamaica|2005
+    fecha_nombramiento: '2005-07-05'
+    boe_id_nombramiento: BOE-A-2005-11474
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2005-11474
+    fecha_cese: '2010-09-18'
+    boe_id_cese: BOE-A-2010-14320
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2010-14320
+    titulo_nombramiento: Real Decreto 808/2005, de 1 de julio, por el que se nombra Embajador de España en Jamaica
+      a don Jesús Silva Fernández.
+    titulo_cese: Real Decreto 1171/2010, de 17 de septiembre, por el que se dispone el cese de don Jesús Silva Fernández
+      como Embajador de España en Jamaica.
+    nota: 'con acreditaciones concurrentes en Antigua y Barbuda, Dominica, San Cristóbal y Nieves, Santa Lucía,
+      las Bahamas (RD del mismo destino: BOE-A-2006-1776, BOE-A-2006-1777, BOE-A-2006-1778, BOE-A-2006-4982, BOE-A-2006-6351)'
+  - organismo: Organization:ministerio-de-asuntos-exteriores
+    cargo: Embajador de España en la República de Panamá
+    boe_key: embajador-de-espana-en-la-republica-de-panama|2010
+    fecha_nombramiento: '2010-09-18'
+    boe_id_nombramiento: BOE-A-2010-14329
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2010-14329
+    fecha_cese: '2014-11-15'
+    boe_id_cese: BOE-A-2014-11810
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2014-11810
+    titulo_nombramiento: Real Decreto 1180/2010, de 17 de septiembre, por el que se designa Embajador de España
+      en la República de Panamá a don Jesús Silva Fernández.
+    titulo_cese: Real Decreto 957/2014, de 14 de noviembre, por el que se dispone el cese de don Jesús Silva Fernández
+      como Embajador de España en la República de Panamá.
+    nota: inicio por designacion
+  - organismo: Organization:ministerio-de-asuntos-exteriores
+    cargo: Embajador de España en la República Bolivariana de Venezuela
+    boe_key: embajador-de-espana-en-la-republica-bolivariana-de-venezuela|2017
+    fecha_nombramiento: '2017-03-11'
+    boe_id_nombramiento: BOE-A-2017-2649
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2017-2649
+    fecha_cese: '2020-11-04'
+    boe_id_cese: BOE-A-2020-13502
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-13502
+    titulo_nombramiento: Real Decreto 246/2017, de 10 de marzo, por el que se designa Embajador de España en la
+      República Bolivariana de Venezuela a don Jesús Silva Fernández.
+    titulo_cese: Real Decreto 962/2020, de 3 de noviembre, por el que se dispone el cese de don Jesús Silva Fernández
+      como Embajador de España en la República Bolivariana de Venezuela.
+    nota: inicio por designacion
+- entity_id: Person:joan-groizard
+  nombre_grafo: Joan Groizard
+  boe_n_cargos: 2
+  boe_rango: 2020..2024
+  cargos:
+  - organismo: Organization:ministerio-de-transicion-ecologica-y-reto-demografico
+    cargo: Director General del Instituto para la Diversificación y Ahorro de la Energía, E.P.E
+    boe_key: director-general-del-instituto-para-la-diversificacion-y-aho|2020
+    fecha_nombramiento: '2020-01-29'
+    boe_id_nombramiento: BOE-A-2020-1289
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-1289
+    fecha_cese: '2024-11-29'
+    boe_id_cese: BOE-A-2024-24866
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2024-24866
+    titulo_nombramiento: Real Decreto 191/2020, de 28 de enero, por el que se nombra Director General del Instituto
+      para la Diversificación y Ahorro de la Energía, E.P.E., a don Joan Groizard Payeras.
+    titulo_cese: Real Decreto 1195/2024, de 28 de noviembre, por el que se dispone el cese de don Joan Groizard
+      Payeras como Director General del Instituto para la Diversificación y Ahorro de la Energía, E.P.E.
+  - organismo: Organization:ministerio-de-transicion-ecologica-y-reto-demografico
+    cargo: Secretario de Estado de Energía
+    boe_key: secretario-de-estado-de-energia|2024
+    fecha_nombramiento: '2024-11-29'
+    boe_id_nombramiento: BOE-A-2024-24867
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2024-24867
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 1196/2024, de 28 de noviembre, por el que se nombra Secretario de Estado de
+      Energía a don Joan Groizard Payeras.
+- entity_id: Person:jose-antonio-choclan-montalvo
+  nombre_grafo: José Antonio Choclán Montalvo
+  boe_n_cargos: 0
+  boe_rango: null
+  cargos: []
+  incidencias:
+  - fecha: '2004-07-20'
+    boe_id: BOE-A-2004-13472
+    url: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2004-13472
+    nota: excedencia voluntaria en la carrera judicial (pasó al ejercicio privado)
+    titulo: Acuerdo de 6 de julio de 2004, de la Comisión Permanente del Consejo General del Poder Judicial, por
+      el que se declara en la situación administrativa de excedencia voluntaria en la Carrera Judicial al Magistrado
+      don José Antonio Choclan Montalvo.
+- entity_id: Person:jose-antonio-grinan
+  nombre_grafo: José Antonio Griñán
+  boe_n_cargos: 2
+  boe_rango: 2009..2013
+  cargos:
+  - organismo: Organization:junta-de-andalucia
+    cargo: Presidente de la Junta de Andalucía
+    boe_key: presidente-de-la-junta-de-andalucia|2009
+    fecha_nombramiento: '2009-04-23'
+    boe_id_nombramiento: BOE-A-2009-6745
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2009-6745
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 711/2009, de 22 de abril, por el que se nombra Presidente de la Junta de Andalucía
+      a don José Antonio Griñán Martínez.
+    nota: etapa siguiente del mismo cargo sin cese en la semilla (reelección/renovación 2012)
+  - organismo: Organization:junta-de-andalucia
+    cargo: Presidente de la Junta de Andalucía
+    boe_key: presidente-de-la-junta-de-andalucia|2012
+    fecha_nombramiento: '2012-05-05'
+    boe_id_nombramiento: BOE-A-2012-5994
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2012-5994
+    fecha_cese: '2013-09-06'
+    boe_id_cese: BOE-A-2013-9387
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2013-9387
+    titulo_nombramiento: Real Decreto 774/2012, de 4 de mayo, por el que se nombra Presidente de la Junta de Andalucía
+      a don José Antonio Griñán Martínez.
+    titulo_cese: Real Decreto 666/2013, de 5 de septiembre, por el que se declara el cese de don José Antonio Griñán
+      Martínez como Presidente de la Junta de Andalucía.
+- entity_id: Person:jose-antonio-marco-sanjuan
+  nombre_grafo: José Antonio Marco Sanjuán
+  boe_n_cargos: 2
+  boe_rango: 2005..2025
+  cargos:
+  - organismo: Organization:agencia-tributaria
+    cargo: Delegado Especial de la Agencia Estatal de Administración Tributaria en Cantabria
+    boe_key: delegado-especial-de-la-agencia-estatal-de-administracion-tr|pre
+    fecha_nombramiento: null
+    boe_id_nombramiento: null
+    url_nombramiento: null
+    fecha_cese: '2005-05-17'
+    boe_id_cese: BOE-A-2005-7996
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2005-7996
+    titulo_cese: Resolución de 9 de mayo de 2005, de la Presidencia de la Agencia Estatal de Administración Tributaria,
+      por la que se dispone el cese de don José Antonio Marco Sanjuán como Delegado Especial de la Agencia Estatal
+      de Administración Tributaria en Cantabria.
+    nota: nombramiento anterior a la ventana 2004→hoy o no publicado en la sección II.A (no localizado en la pasada
+      dirigida spec 050)
+  - organismo: Organization:tribunal-economico-administrativo-central
+    cargo: Presidente del Tribunal Económico-Administrativo Central
+    boe_key: presidente-del-tribunal-economico-administrativo-central|2018
+    fecha_nombramiento: '2018-06-23'
+    boe_id_nombramiento: BOE-A-2018-8605
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2018-8605
+    fecha_cese: '2025-06-18'
+    boe_id_cese: BOE-A-2025-12334
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2025-12334
+    titulo_nombramiento: Real Decreto 620/2018, de 22 de junio, por el que se nombra Presidente del Tribunal Económico-Administrativo
+      Central a don José Antonio Marco Sanjuán.
+    titulo_cese: Real Decreto 501/2025, de 17 de junio, por el que se dispone el cese de don José Antonio Marco
+      Sanjuán como Presidente del Tribunal Económico-Administrativo Central.
+- entity_id: Person:jose-antonio-patrocinio-polo
+  nombre_grafo: José Antonio Patrocinio Polo
+  boe_n_cargos: 2
+  boe_rango: 2008..2013
+  cargos:
+  - organismo: Court:audiencia-provincial-de-badajoz
+    cargo: Presidente de la Audiencia Provincial de Badajoz
+    boe_key: presidente-de-la-audiencia-provincial-de-badajoz|2008
+    fecha_nombramiento: '2008-07-10'
+    boe_id_nombramiento: BOE-A-2008-11709
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2008-11709
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 1051/2008, de 13 de junio, por el que se nombra Presidente de la Audiencia
+      Provincial de Badajoz a don José Antonio Patrocinio Polo.
+    nota: etapa siguiente del mismo cargo sin cese en la semilla (reelección/renovación 2013)
+  - organismo: Court:audiencia-provincial-de-badajoz
+    cargo: Presidente de la Audiencia Provincial de Badajoz
+    boe_key: presidente-de-la-audiencia-provincial-de-badajoz|2013
+    fecha_nombramiento: '2013-09-16'
+    boe_id_nombramiento: BOE-A-2013-9583
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2013-9583
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 656/2013, de 2 de agosto, por el que se nombra Presidente de la Audiencia
+      Provincial de Badajoz a don José Antonio Patrocinio Polo.
+  incidencias:
+  - fecha: '2019-01-21'
+    boe_id: BOE-A-2019-650
+    url: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2019-650
+    nota: adscripción a la Audiencia Provincial de Badajoz (acuerdo CGPJ)
+    titulo: Acuerdo de 10 de enero de 2019, de la Comisión Permanente del Consejo General del Poder Judicial, por
+      el que se adscribe al Magistrado don José Antonio Patrocinio Polo a la Audiencia Provincial de Badajoz, orden
+      penal.
+- entity_id: Person:jose-grinda-gonzalez
+  nombre_grafo: José Grinda González
+  boe_n_cargos: 2
+  boe_rango: 2005..2007
+  cargos:
+  - organismo: Organization:fiscalia-anticorrupcion  # denominación anterior de Anticorrupción (dedup 2026-08-03)
+    cargo: Fiscal de la Fiscalía Especial para la Represión de los Delitos Económicos relacionados con la Corrupción
+    boe_key: fiscal-de-la-fiscalia-especial-para-la-represion-de-los-deli|2005
+    fecha_nombramiento: '2005-12-24'
+    boe_id_nombramiento: BOE-A-2005-21182
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2005-21182
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 1571/2005, de 23 de diciembre, por el que se nombra Fiscal de la Fiscalía
+      Especial para la Represión de los Delitos Económicos relacionados con la Corrupción a don José Grinda González.
+  - organismo: Organization:fiscalia-anticorrupcion  # dedup 2026-08-03
+    cargo: Fiscal de la Fiscalía contra la Corrupción y la Criminalidad Organizada
+    boe_key: fiscal-de-la-fiscalia-contra-la-corrupcion-y-la-criminalidad|2007
+    fecha_nombramiento: '2007-11-21'
+    boe_id_nombramiento: BOE-A-2007-19969
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2007-19969
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Orden JUS/3358/2007, de 7 de noviembre, por la que se adjudica a don José Grinda González,
+      la plaza de Fiscal de la Fiscalía contra la Corrupción y la Criminalidad Organizada.
+    nota: adjudicación de plaza (Orden JUS/3358/2007)
+- entity_id: Person:jose-luis-abalos
+  nombre_grafo: José Luis Ábalos
+  boe_n_cargos: 2
+  boe_rango: 2018..2021
+  cargos:
+  - organismo: Organization:ministerio-de-fomento
+    cargo: Ministro de Fomento
+    boe_key: ministro-de-fomento|2018
+    fecha_nombramiento: '2018-06-07'
+    boe_id_nombramiento: BOE-A-2018-7577
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2018-7577
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 357/2018, de 6 de junio, por el que se nombran Ministros del Gobierno.
+    nota: nombramiento en RD colectivo sin nombres en el título (cuerpo del XML, spec 050); la cartera pasó a denominarse
+      Transportes, Movilidad y Agenda Urbana en ene-2020 (etapa propia) sin disposición de cese en la sección II.A
+  - organismo: Organization:ministerio-de-transportes-movilidad-y-agenda-urbana
+    cargo: Ministro de Transportes, Movilidad y Agenda Urbana
+    boe_key: ministro-de-transportes-movilidad-y-agenda-urbana|pre
+    fecha_nombramiento: '2020-01-13'
+    boe_id_nombramiento: BOE-A-2020-416
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-416
+    fecha_cese: '2021-07-12'
+    boe_id_cese: BOE-A-2021-11522
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2021-11522
+    titulo_nombramiento: Real Decreto 8/2020, de 12 de enero, por el que se nombran Ministros del Gobierno.
+    titulo_cese: Real Decreto 516/2021, de 10 de julio, por el que se dispone el cese de don José Luis Ábalos Meco
+      como Ministro de Transportes, Movilidad y Agenda Urbana.
+    nota: nombramiento en RD colectivo sin nombres en el título (cuerpo del XML, spec 050); ministro del ramo desde
+      jun-2018 como Ministro de Fomento (etapa propia)
+- entity_id: Person:jose-luis-escriva-belmonte
+  nombre_grafo: José Luis Escrivá Belmonte
+  boe_n_cargos: 3
+  boe_rango: 2014..2024
+  cargos:
+  - organismo: Organization:airef
+    cargo: Presidente de la Autoridad Independiente de Responsabilidad Fiscal
+    boe_key: presidente-de-la-autoridad-independiente-de-responsabilidad|2014
+    fecha_nombramiento: '2014-02-22'
+    boe_id_nombramiento: BOE-A-2014-1935
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2014-1935
+    fecha_cese: '2020-01-13'
+    boe_id_cese: BOE-A-2020-416
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-416
+    titulo_nombramiento: Real Decreto 118/2014, de 21 de febrero, por el que se nombra Presidente de la Autoridad
+      Independiente de Responsabilidad Fiscal a don José Luis Escrivá Belmonte.
+    titulo_cese: Real Decreto 8/2020, de 12 de enero, por el que se nombran Ministros del Gobierno.
+    nota: cese dispuesto por el propio RD 8/2020 al nombrarlo ministro (art. 12.2 de la Ley 50/1997, cuerpo del XML,
+      spec 050)
+  - organismo: Organization:ministerio-para-la-transformacion-digital
+    cargo: Ministro para la Transformación Digital y de la Función Pública
+    boe_key: ministro-para-la-transformacion-digital-y-de-la-funcion-publ|pre
+    fecha_nombramiento: '2023-11-21'
+    boe_id_nombramiento: BOE-A-2023-23543
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-23543
+    fecha_cese: '2024-09-06'
+    boe_id_cese: BOE-A-2024-17931
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2024-17931
+    titulo_nombramiento: Real Decreto 835/2023, de 20 de noviembre, por el que se nombran Ministros del Gobierno.
+    titulo_cese: Real Decreto 889/2024, de 5 de septiembre, por el que se dispone el cese de don José Luis Escrivá
+      Belmonte como Ministro para la Transformación Digital y de la Función Pública.
+    nota: nombramiento en RD colectivo sin nombres en el título (cuerpo del XML, spec 050) como «Ministro de Transformación
+      Digital»; la cartera pasó a denominarse «para la Transformación Digital y de la Función Pública» durante el
+      mandato
+  - organismo: Organization:banco-de-espana
+    cargo: Gobernador del Banco de España
+    boe_key: gobernador-del-banco-de-espana|2024
+    fecha_nombramiento: '2024-09-06'
+    boe_id_nombramiento: BOE-A-2024-17933
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2024-17933
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 891/2024, de 5 de septiembre, por el que se nombra Gobernador del Banco de
+      España a don José Luis Escrivá Belmonte.
+- entity_id: Person:jose-luis-rodriguez-zapatero
+  nombre_grafo: José Luis Rodríguez Zapatero
+  boe_n_cargos: 2
+  boe_rango: 2004..2011
+  cargos:
+  - organismo: Organization:presidencia-del-gobierno
+    cargo: Presidente del Gobierno
+    boe_key: presidente-del-gobierno|2004
+    fecha_nombramiento: '2004-04-17'
+    boe_id_nombramiento: BOE-A-2004-6855
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2004-6855
+    fecha_cese: '2008-03-11'
+    boe_id_cese: BOE-A-2008-4611
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2008-4611
+    titulo_nombramiento: Real Decreto 552/2004, de 16 de abril, por el que se nombra Presidente del Gobierno a don
+      José Luis Rodríguez Zapatero.
+    titulo_cese: Real Decreto 380/2008, de 10 de marzo, por el que se declara el cese de don José Luis Rodríguez
+      Zapatero como Presidente del Gobierno.
+  - organismo: Organization:presidencia-del-gobierno
+    cargo: Presidente del Gobierno
+    boe_key: presidente-del-gobierno|2008
+    fecha_nombramiento: '2008-04-12'
+    boe_id_nombramiento: BOE-A-2008-6470
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2008-6470
+    fecha_cese: '2011-11-22'
+    boe_id_cese: BOE-A-2011-18322
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2011-18322
+    titulo_nombramiento: Real Decreto 431/2008, de 11 de abril, por el que se nombra Presidente del Gobierno a don
+      José Luis Rodríguez Zapatero.
+    titulo_cese: Real Decreto 1742/2011, de 21 de noviembre, por el que se declara el cese de don José Luis Rodríguez
+      Zapatero como Presidente del Gobierno.
+- entity_id: Person:jose-miguel-vidal-zapatero
+  nombre_grafo: José Miguel Vidal Zapatero
+  boe_n_cargos: 2
+  boe_rango: 2007..2011
+  cargos:
+  - organismo: Organization:presidencia-del-gobierno
+    cargo: Director del Departamento de Asuntos Institucionales del Gabinete de la Presidencia del Gobierno
+    boe_key: director-del-departamento-de-asuntos-institucionales-del-gab|2007
+    fecha_nombramiento: '2007-03-10'
+    boe_id_nombramiento: BOE-A-2007-5046
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2007-5046
+    fecha_cese: '2008-04-29'
+    boe_id_cese: BOE-A-2008-7515
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2008-7515
+    titulo_nombramiento: Real Decreto 343/2007, de 9 de marzo, por el que se nombra Director del Departamento de
+      Asuntos Institucionales del Gabinete de la Presidencia del Gobierno a don José Miguel Vidal Zapatero.
+    titulo_cese: Real Decreto 626/2008, de 28 de abril, por el que se dispone el cese de don José Miguel Vidal Zapatero
+      como Director del Departamento de Asuntos Institucionales del Gabinete de la Presidencia del Gobierno.
+  - organismo: Organization:presidencia-del-gobierno
+    cargo: Director Adjunto del Gabinete de la Presidencia del Gobierno
+    boe_key: director-adjunto-del-gabinete-de-la-presidencia-del-gobierno|2008
+    fecha_nombramiento: '2008-04-29'
+    boe_id_nombramiento: BOE-A-2008-7517
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2008-7517
+    fecha_cese: '2011-12-24'
+    boe_id_cese: BOE-A-2011-20110
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2011-20110
+    titulo_nombramiento: Real Decreto 628/2008, de 28 de abril, por el que se nombra Director Adjunto del Gabinete
+      de la Presidencia del Gobierno a don José Miguel Vidal Zapatero.
+    titulo_cese: Real Decreto 1831/2011, de 23 de diciembre, por el que se dispone el cese de don José Miguel Vidal
+      Zapatero como Director Adjunto del Gabinete de la Presidencia del Gobierno.
+- entity_id: Person:juan-ignacio-diaz-bidart
+  nombre_grafo: Juan Ignacio Díaz Bidart
+  boe_n_cargos: 2
+  boe_rango: 2018..2023
+  cargos:
+  - organismo: Organization:ministerio-de-industria
+    cargo: Director del Gabinete de la Ministra de Industria, Comercio y Turismo
+    boe_key: director-del-gabinete-de-la-ministra-de-industria-comercio-y|2018
+    fecha_nombramiento: '2018-06-23'
+    boe_id_nombramiento: BOE-A-2018-8638
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2018-8638
+    fecha_cese: '2020-01-15'
+    boe_id_cese: BOE-A-2020-534
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-534
+    titulo_nombramiento: Real Decreto 651/2018, de 22 de junio, por el que se nombra Director del Gabinete de la
+      Ministra de Industria, Comercio y Turismo a don Juan Ignacio Díaz Bidart.
+    titulo_cese: Real Decreto 38/2020, de 14 de enero, por el que se dispone el cese de don Juan Ignacio Díaz Bidart
+      como Director del Gabinete de la Ministra de Industria, Comercio y Turismo.
+  - organismo: Organization:ministerio-de-industria
+    cargo: Director del Gabinete de la Ministra de Industria, Comercio y Turismo
+    boe_key: director-del-gabinete-de-la-ministra-de-industria-comercio-y|2020
+    fecha_nombramiento: '2020-01-15'
+    boe_id_nombramiento: BOE-A-2020-535
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-535
+    fecha_cese: '2023-03-22'
+    boe_id_cese: BOE-A-2023-7424
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-7424
+    titulo_nombramiento: Real Decreto 39/2020, de 14 de enero, por el que se nombra Director del Gabinete de la
+      Ministra de Industria, Comercio y Turismo a don Juan Ignacio Díaz Bidart.
+    titulo_cese: Real Decreto 196/2023, de 21 de marzo, por el que se dispone el cese de don Juan Ignacio Díaz Bidart
+      como Director del Gabinete de la Ministra de Industria, Comercio y Turismo.
+- entity_id: Person:judit-alexandra-gonzalez-pedraz
+  nombre_grafo: Judit Alexandra González Pedraz
+  boe_n_cargos: 4
+  boe_rango: 2009..2023
+  cargos:
+  - organismo: Organization:ministerio-de-justicia
+    cargo: Subdirectora General de Relaciones con la Administración de Justicia y el Ministerio Fiscal
+    boe_key: subdirectora-general-de-relaciones-con-la-administracion-de|2009
+    fecha_nombramiento: '2009-10-30'
+    boe_id_nombramiento: BOE-A-2009-17183
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2009-17183
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Resolución de 20 de octubre de 2009, de la Secretaria de Estado de Justicia, por la que
+      se nombra Subdirectora General de Relaciones con la Administración de Justicia y el Ministerio Fiscal, a doña
+      Judit Alexandra González Pedraz.
+  - organismo: Organization:presidencia-del-gobierno
+    cargo: Directora del Departamento de Coordinación Técnica y Jurídica de la Presidencia del Gobierno
+    boe_key: directora-del-departamento-de-coordinacion-tecnica-y-juridic|2021
+    fecha_nombramiento: '2021-07-28'
+    boe_id_nombramiento: BOE-A-2021-12621
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2021-12621
+    fecha_cese: '2023-03-29'
+    boe_id_cese: BOE-A-2023-7945
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-7945
+    titulo_nombramiento: Real Decreto 648/2021, de 27 de julio, por el que se nombra Directora del Departamento
+      de Coordinación Técnica y Jurídica de la Presidencia del Gobierno a doña Judit Alexandra González Pedraz.
+    titulo_cese: Real Decreto 213/2023, de 28 de marzo, por el que se dispone el cese de doña Judit Alexandra González
+      Pedraz como Directora del Departamento de Coordinación Técnica y Jurídica de la Presidencia del Gobierno.
+  - organismo: Organization:presidencia-del-gobierno
+    cargo: Secretaria General de la Presidencia del Gobierno
+    boe_key: secretaria-general-de-la-presidencia-del-gobierno|2023
+    fecha_nombramiento: '2023-03-29'
+    boe_id_nombramiento: BOE-A-2023-7951
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-7951
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 219/2023, de 28 de marzo, por el que se nombra Secretaria General de la Presidencia
+      del Gobierno a doña Judit Alexandra González Pedraz.
+  - organismo: Organization:patrimonio-nacional
+    cargo: Vocal del Consejo de Administración del Patrimonio Nacional
+    boe_key: vocal-del-consejo-de-administracion-del-patrimonio-nacional|2023
+    fecha_nombramiento: '2023-04-12'
+    boe_id_nombramiento: BOE-A-2023-9048
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-9048
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 281/2023, de 11 de abril, por el que se nombra Vocal del Consejo de Administración
+      del Patrimonio Nacional a doña Judit Alexandra González Pedraz.
+- entity_id: Person:julian-sanchez-melgar
+  nombre_grafo: Julián Sánchez Melgar
+  boe_n_cargos: 1
+  boe_rango: 2017..2018
+  cargos:
+  - organismo: Organization:fiscalia-general-del-estado  # dedup 2026-08-03
+    cargo: Fiscal General del Estado
+    boe_key: fiscal-general-del-estado|2017
+    fecha_nombramiento: '2017-12-08'
+    boe_id_nombramiento: BOE-A-2017-14419
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2017-14419
+    fecha_cese: '2018-06-22'
+    boe_id_cese: BOE-A-2018-8504
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2018-8504
+    titulo_nombramiento: Real Decreto 1026/2017, de 7 de diciembre, por el que se nombra Fiscal General del Estado
+      a don Julián Sánchez Melgar.
+    titulo_cese: Real Decreto 593/2018, de 21 de junio, por el que se declara el cese de don Julián Sánchez Melgar
+      como Fiscal General del Estado.
+  incidencias:
+  - fecha: '2018-01-04'
+    boe_id: BOE-A-2018-104
+    url: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2018-104
+    nota: servicios especiales en la carrera judicial al ser nombrado Fiscal General del Estado (acuerdo CGPJ)
+    titulo: Acuerdo de 21 de diciembre de 2017, de la Comisión Permanente del Consejo General del Poder Judicial,
+      por el que se declara en la situación administrativa de servicios especiales en la Carrera Judicial al Magistrado
+      del Tribunal Supremo don Julián Artemio Sánchez Melgar.
+- entity_id: Person:leonardo-marcos
+  nombre_grafo: Leonardo Marcos
+  boe_n_cargos: 2
+  boe_rango: 2020..2024
+  cargos:
+  - organismo: Organization:ministerio-del-interior
+    cargo: Director General de Protección Civil y Emergencias
+    boe_key: director-general-de-proteccion-civil-y-emergencias|2020
+    fecha_nombramiento: '2020-01-29'
+    boe_id_nombramiento: BOE-A-2020-1285
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-1285
+    fecha_cese: '2023-06-14'
+    boe_id_cese: BOE-A-2023-14085
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-14085
+    titulo_nombramiento: Real Decreto 175/2020, de 28 de enero, por el que se nombra Director General de Protección
+      Civil y Emergencias a don Leonardo Marcos González.
+    titulo_cese: Real Decreto 472/2023, de 13 de junio, por el que se dispone el cese de don Leonardo Marcos González
+      como Director General de Protección Civil y Emergencias.
+  - organismo: Organization:guardia-civil
+    cargo: Director General de la Guardia Civil
+    boe_key: director-general-de-la-guardia-civil|2023
+    fecha_nombramiento: '2023-06-14'
+    boe_id_nombramiento: BOE-A-2023-14092
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-14092
+    fecha_cese: '2024-09-18'
+    boe_id_cese: BOE-A-2024-18630
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2024-18630
+    titulo_nombramiento: Real Decreto 477/2023, de 13 de junio, por el que se nombra Director General de la Guardia
+      Civil a don Leonardo Marcos González.
+    titulo_cese: Real Decreto 930/2024, de 17 de septiembre, por el que se dispone el cese de don Leonardo Marcos
+      González como Director General de la Guardia Civil.
+- entity_id: Person:leopoldo-puente-segura
+  nombre_grafo: Leopoldo Puente Segura
+  boe_n_cargos: 1
+  boe_rango: 2020..2020
+  cargos:
+  - organismo: Court:tribunal-supremo
+    cargo: Magistrado de la Sala Segunda del Tribunal Supremo
+    boe_key: magistrado-de-la-sala-segunda-del-tribunal-supremo|2020
+    fecha_nombramiento: '2020-11-07'
+    boe_id_nombramiento: BOE-A-2020-13806
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-13806
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 911/2020, de 13 de octubre, por el que se promueve a la categoría de Magistrado
+      de la Sala Segunda del Tribunal Supremo a don Leopoldo Puente Segura.
+    nota: inicio por promocion
+- entity_id: Person:david-lucas-parron
+  nombre_grafo: David Lucas Parrón
+  boe_n_cargos: 3
+  boe_rango: 2020..2023
+  cargos:
+  - organismo: Organization:ministerio-de-vivienda
+    cargo: Secretario General de Agenda Urbana y Vivienda
+    boe_key: secretario-general-de-agenda-urbana-y-vivienda|2020
+    fecha_nombramiento: '2020-02-12'
+    boe_id_nombramiento: BOE-A-2020-2042
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-2042
+    fecha_cese: '2023-02-22'
+    boe_id_cese: BOE-A-2023-4669
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-4669
+    titulo_nombramiento: Real Decreto 354/2020, de 11 de febrero, por el que se nombra Secretario General de Agenda
+      Urbana y Vivienda a don Francisco David Lucas Parrón.
+    titulo_cese: Real Decreto 131/2023, de 21 de febrero, por el que se dispone el cese de don Francisco David Lucas
+      Parrón como Secretario General de Agenda Urbana y Vivienda.
+  - organismo: Organization:ministerio-de-transportes-movilidad-y-agenda-urbana
+    cargo: Secretario de Estado de Transportes, Movilidad y Agenda Urbana
+    boe_key: secretario-de-estado-de-transportes-movilidad-y-agenda-urban|2023
+    fecha_nombramiento: '2023-02-22'
+    boe_id_nombramiento: BOE-A-2023-4671
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-4671
+    fecha_cese: '2023-11-29'
+    boe_id_cese: BOE-A-2023-24285
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-24285
+    titulo_nombramiento: Real Decreto 133/2023, de 21 de febrero, por el que se nombra Secretario de Estado de Transportes,
+      Movilidad y Agenda Urbana a don Francisco David Lucas Parrón.
+    titulo_cese: Real Decreto 966/2023, de 28 de noviembre, por el que se dispone el cese de don Francisco David
+      Lucas Parrón como Secretario de Estado de Transportes, Movilidad y Agenda Urbana.
+  - organismo: Organization:ministerio-de-vivienda
+    cargo: Secretario de Estado de Vivienda y Agenda Urbana
+    boe_key: secretario-de-estado-de-vivienda-y-agenda-urbana|2023
+    fecha_nombramiento: '2023-11-29'
+    boe_id_nombramiento: BOE-A-2023-24295
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-24295
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 976/2023, de 28 de noviembre, por el que se nombra Secretario de Estado de
+      Vivienda y Agenda Urbana a don Francisco David Lucas Parrón.
+- entity_id: Person:luis-pedro-marco-de-la-pena
+  nombre_grafo: Luis Pedro Marco de la Peña
+  boe_n_cargos: 1
+  boe_rango: 2024..2024
+  cargos:
+  - organismo: Organization:adif
+    cargo: Presidente de la Entidad Pública Empresarial Administrador de Infraestructuras Ferroviarias
+    boe_key: presidente-de-la-entidad-publica-empresarial-administrador-d|2024
+    fecha_nombramiento: '2024-09-18'
+    boe_id_nombramiento: BOE-A-2024-18641
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2024-18641
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 936/2024, de 17 de septiembre, por el que se nombra Presidente de la Entidad
+      Pública Empresarial Administrador de Infraestructuras Ferroviarias a don Luis Pedro Marco de la Peña.
+- entity_id: Person:luis-prieto-cuerdo
+  nombre_grafo: Luis Prieto Cuerdo
+  boe_n_cargos: 1
+  boe_rango: 2004..2004
+  nota: el nodo del corpus es el director de Economía Digital de Red.es (imputado EPPO, contratos Barrabés); identidad
+    con el subdirector general de 2004 por nombre completo distintivo + dominio coherente ciencia/tecnología→digital
+    (pasada dirigida spec 050)
+  cargos:
+  - organismo: Organization:ministerio-de-ciencia
+    cargo: Subdirector General de Planificación y Seguimiento en la Dirección General de Investigación
+    boe_key: subdirector-general-de-planificacion-y-seguimiento|2004
+    fecha_nombramiento: '2004-03-16'
+    boe_id_nombramiento: BOE-A-2004-4791
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2004-4791
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Resolución de 2 de marzo de 2004, de la Secretaría de Estado de Política Científica y Tecnológica,
+      por la que se dispone el nombramiento de don Luis Prieto Cuerdo, como Subdirector General de Planificación
+      y Seguimiento en la Dirección General de Investigación.
+- entity_id: Person:manuel-chaves
+  nombre_grafo: Manuel Chaves
+  boe_n_cargos: 6
+  boe_rango: 2004..2011
+  cargos:
+  - organismo: Organization:junta-de-andalucia
+    cargo: Presidente de la Junta de Andalucía
+    boe_key: presidente-de-la-junta-de-andalucia|2004
+    fecha_nombramiento: '2004-04-24'
+    boe_id_nombramiento: BOE-A-2004-7472
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2004-7472
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 743/2004, de 23 de abril, por el que se nombra Presidente de la Junta de Andalucía
+      a don Manuel Chaves González.
+    nota: etapa siguiente del mismo cargo sin cese en la semilla (reelección/renovación 2008)
+  - organismo: Organization:junta-de-andalucia
+    cargo: Presidente de la Junta de Andalucía
+    boe_key: presidente-de-la-junta-de-andalucia|2008
+    fecha_nombramiento: '2008-04-18'
+    boe_id_nombramiento: BOE-A-2008-6857
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2008-6857
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 521/2008, de 17 de abril, por el que se nombra Presidente de la Junta de Andalucía
+      a don Manuel Chaves González.
+  - organismo: Organization:ministerio-de-politica-territorial
+    cargo: Ministro de Política Territorial
+    boe_key: ministro-de-politica-territorial|pre
+    fecha_nombramiento: null
+    boe_id_nombramiento: null
+    url_nombramiento: null
+    fecha_cese: '2010-10-21'
+    boe_id_cese: BOE-A-2010-16031
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2010-16031
+    titulo_cese: Real Decreto 1319/2010, de 20 de octubre, por el que se dispone el cese de don Manuel Chaves González
+      como Ministro de Política Territorial.
+    nota: nombramiento anterior a la ventana 2004→hoy o no publicado en la sección II.A (no localizado en la pasada
+      dirigida spec 050)
+  - organismo: Organization:ministerio-de-politica-territorial
+    cargo: Ministro de Política Territorial y Administración Pública
+    boe_key: ministro-de-politica-territorial-y-administracion-publica|2010
+    fecha_nombramiento: '2010-10-21'
+    boe_id_nombramiento: BOE-A-2010-16040
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2010-16040
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 1328/2010, de 20 de octubre, por el que se nombra Ministro de Política Territorial
+      y Administración Pública a don Manuel Chaves González.
+  - organismo: Organization:presidencia-del-gobierno
+    cargo: Vicepresidente Tercero del Gobierno
+    boe_key: vicepresidente-tercero-del-gobierno|pre
+    fecha_nombramiento: null
+    boe_id_nombramiento: null
+    url_nombramiento: null
+    fecha_cese: '2011-07-12'
+    boe_id_cese: BOE-A-2011-11962
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2011-11962
+    titulo_cese: Real Decreto 1015/2011, de 11 de julio, por el que se dispone el cese de don Manuel Chaves González
+      como Vicepresidente Tercero del Gobierno.
+    nota: nombramiento anterior a la ventana 2004→hoy o no publicado en la sección II.A (no localizado en la pasada
+      dirigida spec 050)
+  - organismo: Organization:presidencia-del-gobierno
+    cargo: Vicepresidente del Gobierno de Política Territorial
+    boe_key: vicepresidente-del-gobierno-de-politica-territorial|2011
+    fecha_nombramiento: '2011-07-12'
+    boe_id_nombramiento: BOE-A-2011-11965
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2011-11965
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 1018/2011, de 11 de julio, por el que se nombra Vicepresidente del Gobierno
+      de Política Territorial a don Manuel Chaves González.
+- entity_id: Person:manuel-marchena-gomez
+  nombre_grafo: Manuel Marchena Gómez
+  boe_n_cargos: 5
+  boe_rango: 2004..2025
+  cargos:
+  - organismo: Organization:fiscalia-general-del-estado  # dedup 2026-08-03
+    cargo: Fiscal Jefe de la Secretaría Técnica de la Fiscalía General del Estado
+    boe_key: fiscal-jefe-de-la-secretaria-tecnica-de-la-fiscalia-general|pre
+    fecha_nombramiento: null
+    boe_id_nombramiento: null
+    url_nombramiento: null
+    fecha_cese: '2004-06-19'
+    boe_id_cese: BOE-A-2004-11446
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2004-11446
+    titulo_cese: Real Decreto 1479/2004, de 18 de junio, por el que se dispone el cese de don Manuel Marchena Gómez
+      como Fiscal Jefe de la Secretaría Técnica de la Fiscalía General del Estado.
+    nota: nombramiento anterior a la ventana 2004→hoy o no publicado en la sección II.A (no localizado en la pasada
+      dirigida spec 050)
+  - organismo: Court:tribunal-supremo
+    cargo: Magistrado de la Sala Segunda del Tribunal Supremo
+    boe_key: magistrado-de-la-sala-segunda-del-tribunal-supremo|2007
+    fecha_nombramiento: '2007-03-23'
+    boe_id_nombramiento: BOE-A-2007-6123
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2007-6123
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 305/2007, de 2 de marzo, por el que se nombra Magistrado de la Sala Segunda
+      del Tribunal Supremo a don Manuel Marchena Gómez.
+    nota: etapa siguiente del mismo cargo sin cese en la semilla (reelección/renovación 2025)
+  - organismo: Court:tribunal-supremo
+    cargo: Presidente de la Sala Segunda del Tribunal Supremo
+    boe_key: presidente-de-la-sala-segunda-del-tribunal-supremo|2014
+    fecha_nombramiento: '2014-10-27'
+    boe_id_nombramiento: BOE-A-2014-10914
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2014-10914
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 891/2014, de 10 de octubre, por el que se nombra Presidente de la Sala Segunda
+      del Tribunal Supremo a don Manuel Marchena Gómez.
+    nota: etapa siguiente del mismo cargo sin cese en la semilla (reelección/renovación 2019)
+  - organismo: Court:tribunal-supremo
+    cargo: Presidente de la Sala Segunda del Tribunal Supremo
+    boe_key: presidente-de-la-sala-segunda-del-tribunal-supremo|2019
+    fecha_nombramiento: '2019-12-05'
+    boe_id_nombramiento: BOE-A-2019-17531
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2019-17531
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 647/2019, de 8 de noviembre, por el que se nombra a don Manuel Marchena Gómez,
+      Presidente de la Sala Segunda del Tribunal Supremo.
+  - organismo: Court:tribunal-supremo
+    cargo: Magistrado de la Sala Segunda del Tribunal Supremo
+    boe_key: magistrado-de-la-sala-segunda-del-tribunal-supremo|2025
+    fecha_nombramiento: '2025-01-08'
+    boe_id_nombramiento: BOE-A-2025-349
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2025-349
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 1276/2024, de 10 de diciembre, por el que se nombra en propiedad a don Manuel
+      Marchena Gómez, Magistrado de la Sala Segunda del Tribunal Supremo.
+  incidencias:
+  - fecha: '2007-04-23'
+    boe_id: BOE-A-2007-8452
+    url: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2007-8452
+    nota: excedencia voluntaria en la carrera fiscal (pasó a magistrado del TS)
+    titulo: Orden JUS/1053/2007, de 12 de abril, por la que se declara en situación de excedencia voluntaria en
+      la Carrera Fiscal a don Manuel Marchena Gómez.
+- entity_id: Person:mar-ruiperez
+  nombre_grafo: Mar Ruipérez
+  boe_n_cargos: 3
+  boe_rango: 2020..2024
+  cargos:
+  - organismo: Organization:ministerio-de-transportes-movilidad-y-agenda-urbana
+    cargo: Director del Gabinete del Ministro de Transportes, Movilidad y Agenda Urbana
+    boe_key: director-del-gabinete-del-ministro-de-transportes-movilidad|2020
+    fecha_nombramiento: '2020-07-01'
+    boe_id_nombramiento: BOE-A-2020-6946
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-6946
+    fecha_cese: '2021-07-14'
+    boe_id_cese: BOE-A-2021-11701
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2021-11701
+    titulo_nombramiento: Real Decreto 633/2020, de 30 de junio, por el que se nombra Director del Gabinete del Ministro
+      de Transportes, Movilidad y Agenda Urbana a don Ricardo Lorka Mar Ruipérez.
+    titulo_cese: Real Decreto 551/2021, de 13 de julio, por el que se declara el cese de don Ricardo Lorka Mar Ruipérez
+      como Director del Gabinete del Ministro de Transportes, Movilidad y Agenda Urbana.
+  - organismo: Organization:ministerio-de-transportes-movilidad-y-agenda-urbana
+    cargo: Director del Gabinete de la Ministra de Transportes, Movilidad y Agenda Urbana
+    boe_key: director-del-gabinete-de-la-ministra-de-transportes-movilida|2021
+    fecha_nombramiento: '2021-07-14'
+    boe_id_nombramiento: BOE-A-2021-11702
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2021-11702
+    fecha_cese: '2023-11-23'
+    boe_id_cese: BOE-A-2023-23752
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-23752
+    titulo_nombramiento: Real Decreto 552/2021, de 13 de julio, por el que se nombra Director del Gabinete de la
+      Ministra de Transportes, Movilidad y Agenda Urbana a don Ricardo Lorka Mar Ruipérez.
+    titulo_cese: Real Decreto 853/2023, de 22 de noviembre, por el que se declara el cese de don Ricardo Lorka Mar
+      Ruipérez como Director del Gabinete de la Ministra de Transportes, Movilidad y Agenda Urbana.
+  - organismo: Organization:ministerio-de-transportes-movilidad-y-agenda-urbana
+    cargo: Director del Gabinete del Ministro de Transportes y Movilidad Sostenible
+    boe_key: director-del-gabinete-del-ministro-de-transportes-y-movilida|2023
+    fecha_nombramiento: '2023-11-23'
+    boe_id_nombramiento: BOE-A-2023-23753
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-23753
+    fecha_cese: '2024-01-10'
+    boe_id_cese: BOE-A-2024-545
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2024-545
+    titulo_nombramiento: Real Decreto 854/2023, de 22 de noviembre, por el que se nombra Director del Gabinete del
+      Ministro de Transportes y Movilidad Sostenible a don Ricardo Lorka Mar Ruipérez.
+    titulo_cese: Real Decreto 18/2024, de 9 de enero, por el que se dispone el cese de don Ricardo Lorka Mar Ruipérez
+      como Director del Gabinete del Ministro de Transportes y Movilidad Sostenible.
+- entity_id: Person:marc-murtra
+  nombre_grafo: Marc Murtra
+  boe_n_cargos: 1
+  boe_rango: 2006..2008
+  cargos:
+  - organismo: Organization:ministerio-de-industria
+    cargo: Director del Gabinete del Ministro de Industria, Turismo y Comercio
+    boe_key: director-del-gabinete-del-ministro-de-industria-turismo-y-co|2006
+    fecha_nombramiento: '2006-12-01'
+    boe_id_nombramiento: BOE-A-2006-20961
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2006-20961
+    fecha_cese: '2008-04-15'
+    boe_id_cese: BOE-A-2008-6616
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2008-6616
+    titulo_nombramiento: Real Decreto 1376/2006, de 24 de noviembre, por el que se nombra Director del Gabinete
+      del Ministro de Industria, Turismo y Comercio a don Marc Murtra Millar.
+    titulo_cese: Real Decreto 482/2008, de 14 de abril, por el que se dispone el cese de don Marc Murtra Millar
+      como Director del Gabinete del Ministro de Industria, Turismo y Comercio.
+- entity_id: Person:marga-prohens
+  nombre_grafo: Marga Prohens
+  boe_n_cargos: 1
+  boe_rango: 2023..2023
+  cargos:
+  - organismo: Organization:gobierno-de-las-illes-balears
+    cargo: Presidenta de las Illes Balears
+    boe_key: presidenta-de-las-illes-balears|2023
+    fecha_nombramiento: '2023-07-06'
+    boe_id_nombramiento: BOE-A-2023-15738
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-15738
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 603/2023, de 6 de julio, por el que se nombra Presidenta de las Illes Balears
+      a doña Margarita Prohens Rigo.
+- entity_id: Person:maria-belen-gualda-gonzalez
+  nombre_grafo: María Belén Gualda González
+  boe_n_cargos: 1
+  boe_rango: 2021..2021
+  cargos:
+  - organismo: Organization:ministerio-de-industria
+    cargo: Presidenta de la Sociedad Estatal de Participaciones Industriales
+    boe_key: presidenta-de-la-sociedad-estatal-de-participaciones-industr|2021
+    fecha_nombramiento: '2021-03-31'
+    boe_id_nombramiento: BOE-A-2021-5055
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2021-5055
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 218/2021, de 30 de marzo, por el que se nombra Presidenta de la Sociedad Estatal
+      de Participaciones Industriales a doña María Belén Gualda González.
+- entity_id: Person:maria-gamez
+  nombre_grafo: María Gámez
+  boe_n_cargos: 2
+  boe_rango: 2020..2023
+  cargos:
+  - organismo: Organization:guardia-civil
+    cargo: Directora General de la Guardia Civil
+    boe_key: directora-general-de-la-guardia-civil|2020
+    fecha_nombramiento: '2020-01-18'
+    boe_id_nombramiento: BOE-A-2020-754
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-754
+    fecha_cese: '2023-03-29'
+    boe_id_cese: BOE-A-2023-7969
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-7969
+    titulo_nombramiento: Real Decreto 94/2020, de 17 de enero, por el que se nombra Directora General de la Guardia
+      Civil a doña María Gámez Gámez.
+    titulo_cese: Real Decreto 233/2023, de 28 de marzo, por el que se dispone el cese de doña María Gámez Gámez
+      como Directora General de la Guardia Civil.
+  - organismo: Organization:ministerio-de-politica-territorial
+    cargo: Subdelegada del Gobierno en Málaga
+    boe_key: subdelegada-del-gobierno-en-malaga|pre
+    fecha_nombramiento: null
+    boe_id_nombramiento: null
+    url_nombramiento: null
+    fecha_cese: '2020-01-22'
+    boe_id_cese: BOE-A-2020-939
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-939
+    titulo_cese: Resolución de 20 de enero de 2020, de la Delegación del Gobierno en la Comunidad Autónoma de Andalucía,
+      por la que se dispone el cese de doña María Gámez Gámez como Subdelegada del Gobierno en Málaga.
+    nota: nombramiento anterior a la ventana 2004→hoy o no publicado en la sección II.A (no localizado en la pasada
+      dirigida spec 050)
+- entity_id: Person:maria-guardiola
+  nombre_grafo: María Guardiola
+  boe_n_cargos: 2
+  boe_rango: 2023..2026
+  cargos:
+  - organismo: Organization:junta-de-extremadura
+    cargo: Presidenta de la Comunidad Autónoma de Extremadura
+    boe_key: presidenta-de-la-comunidad-autonoma-de-extremadura|2023
+    fecha_nombramiento: '2023-07-15'
+    boe_id_nombramiento: BOE-A-2023-16406
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-16406
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 648/2023, de 14 de julio, por el que se nombra Presidenta de la Comunidad
+      Autónoma de Extremadura a doña María Guardiola Martín.
+    nota: etapa siguiente del mismo cargo sin cese en la semilla (reelección/renovación 2026)
+  - organismo: Organization:junta-de-extremadura
+    cargo: Presidenta de la Comunidad Autónoma de Extremadura
+    boe_key: presidenta-de-la-comunidad-autonoma-de-extremadura|2026
+    fecha_nombramiento: '2026-04-23'
+    boe_id_nombramiento: BOE-A-2026-8873
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2026-8873
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 361/2026, de 22 de abril, por el que se nombra Presidenta de la Comunidad
+      Autónoma de Extremadura a doña María Guardiola Martín.
+- entity_id: Person:maria-jesus-montero
+  nombre_grafo: María Jesús Montero
+  boe_n_cargos: 4
+  boe_rango: 2018..2026
+  cargos:
+  - organismo: Organization:presidencia-del-gobierno
+    cargo: Portavoz del Gobierno
+    boe_key: portavoz-del-gobierno|2020
+    fecha_nombramiento: '2020-01-13'
+    boe_id_nombramiento: BOE-A-2020-417
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-417
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 9/2020, de 12 de enero, por el que se dispone que doña María Jesús Montero
+      Cuadrado, Ministra de Hacienda, asuma las funciones de Portavoz del Gobierno.
+    nota: asunción de funciones siendo ministra de Hacienda (RD 9/2020)
+  - organismo: Organization:ministerio-de-hacienda
+    cargo: Ministra de Hacienda
+    boe_key: ministra-de-hacienda|pre
+    fecha_nombramiento: '2018-06-07'
+    boe_id_nombramiento: BOE-A-2018-7577
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2018-7577
+    fecha_cese: '2021-07-12'
+    boe_id_cese: BOE-A-2021-11521
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2021-11521
+    titulo_nombramiento: Real Decreto 357/2018, de 6 de junio, por el que se nombran Ministros del Gobierno.
+    titulo_cese: Real Decreto 515/2021, de 10 de julio, por el que se dispone el cese de doña María Jesús Montero
+      Cuadrado como Ministra de Hacienda.
+    nota: nombramiento en RD colectivo sin nombres en el título (cuerpo del XML, spec 050); renovada como Ministra
+      de Hacienda en ene-2020 (RD 8/2020, BOE-A-2020-416)
+  - organismo: Organization:ministerio-de-hacienda
+    cargo: Ministra de Hacienda y Función Pública
+    boe_key: ministra-de-hacienda-y-funcion-publica|2021
+    fecha_nombramiento: '2021-07-12'
+    boe_id_nombramiento: BOE-A-2021-11533
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2021-11533
+    fecha_cese: '2026-03-27'
+    boe_id_cese: BOE-A-2026-7046
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2026-7046
+    titulo_nombramiento: Real Decreto 527/2021, de 10 de julio, por el que se nombra Ministra de Hacienda y Función
+      Pública a doña María Jesús Montero Cuadrado.
+    titulo_cese: Real Decreto 257/2026, de 26 de marzo, por el que se dispone el cese de doña María Jesús Montero
+      Cuadrado como Ministra de Hacienda.
+    nota: cese 'Ministra de Hacienda' casado con nombramiento 'Ministra de Hacienda y Función Pública' (jaccard
+      0.50)
+  - organismo: Organization:presidencia-del-gobierno
+    cargo: Vicepresidenta Cuarta del Gobierno
+    boe_key: vicepresidenta-cuarta-del-gobierno|2023
+    fecha_nombramiento: '2023-11-21'
+    boe_id_nombramiento: BOE-A-2023-23542
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-23542
+    fecha_cese: '2026-03-27'
+    boe_id_cese: BOE-A-2026-7045
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2026-7045
+    titulo_nombramiento: Real Decreto 834/2023, de 20 de noviembre, por el que se nombra Vicepresidenta Cuarta del
+      Gobierno a doña María Jesús Montero Cuadrado.
+    titulo_cese: Real Decreto 256/2026, de 26 de marzo, por el que se dispone el cese de doña María Jesús Montero
+      Cuadrado como Vicepresidenta Primera del Gobierno.
+    nota: cese 'Vicepresidenta Primera del Gobierno' casado con nombramiento 'Vicepresidenta Cuarta del Gobierno'
+      (jaccard 0.60)
+- entity_id: Person:mariano-rajoy
+  nombre_grafo: Mariano Rajoy
+  boe_n_cargos: 2
+  boe_rango: 2011..2018
+  cargos:
+  - organismo: Organization:presidencia-del-gobierno
+    cargo: Presidente del Gobierno
+    boe_key: presidente-del-gobierno|2011
+    fecha_nombramiento: '2011-12-21'
+    boe_id_nombramiento: BOE-A-2011-19861
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2011-19861
+    fecha_cese: '2015-12-22'
+    boe_id_cese: BOE-A-2015-13978
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2015-13978
+    titulo_nombramiento: Real Decreto 1822/2011, de 20 de diciembre, por el que se nombra Presidente del Gobierno
+      a don Mariano Rajoy Brey.
+    titulo_cese: Real Decreto 1167/2015, de 21 de diciembre, por el que se declara el cese de don Mariano Rajoy
+      Brey como Presidente del Gobierno.
+  - organismo: Organization:presidencia-del-gobierno
+    cargo: Presidente del Gobierno
+    boe_key: presidente-del-gobierno|2016
+    fecha_nombramiento: '2016-10-31'
+    boe_id_nombramiento: BOE-A-2016-9962
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2016-9962
+    fecha_cese: '2018-06-02'
+    boe_id_cese: BOE-A-2018-7402
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2018-7402
+    titulo_nombramiento: Real Decreto 414/2016, de 30 de octubre, por el que se nombra Presidente del Gobierno a
+      don Mariano Rajoy Brey.
+    titulo_cese: Real Decreto 353/2018, de 1 de junio, por el que se declara el cese de don Mariano Rajoy Brey como
+      Presidente del Gobierno.
+- entity_id: Person:michaux-miranda-paniagua
+  nombre_grafo: Michaux Miranda Paniagua
+  boe_n_cargos: 1
+  boe_rango: 2009..2009
+  cargos:
+  - organismo: Organization:museo-reina-sofia
+    cargo: Subdirector General Gerente del Museo Nacional Centro de Arte Reina Sofía
+    boe_key: subdirector-general-gerente-del-museo-nacional-centro-de-art|2009
+    fecha_nombramiento: '2009-07-11'
+    boe_id_nombramiento: BOE-A-2009-11473
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2009-11473
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Orden CUL/1852/2009, de 19 de junio, por la que se nombra Subdirector General Gerente del
+      Museo Nacional Centro de Arte Reina Sofía a don Michaux Miranda Paniagua.
+- entity_id: Person:miguel-gonzalez-suela
+  nombre_grafo: Miguel González Suela
+  boe_n_cargos: 4
+  boe_rango: 2006..2020
+  cargos:
+  - organismo: Organization:ministerio-de-asuntos-exteriores
+    cargo: Subdirector General de Cooperación Internacional
+    boe_key: subdirector-general-de-cooperacion-internacional|pre
+    fecha_nombramiento: null
+    boe_id_nombramiento: null
+    url_nombramiento: null
+    fecha_cese: '2006-11-03'
+    boe_id_cese: BOE-A-2006-19103
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2006-19103
+    titulo_cese: Orden ECI/3379/2006, de 24 de octubre, por la que se dispone el cese de don Miguel Ángel González
+      Suela como Subdirector General de Cooperación Internacional.
+    nota: nombramiento anterior a la ventana 2004→hoy o no publicado en la sección II.A (no localizado en la pasada
+      dirigida spec 050)
+  - organismo: Organization:ministerio-de-asuntos-exteriores
+    cargo: Subdirector General de Acción y Promoción Cultural
+    boe_key: subdirector-general-de-accion-y-promocion-cultural|2007
+    fecha_nombramiento: '2007-11-29'
+    boe_id_nombramiento: BOE-A-2007-20499
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2007-20499
+    fecha_cese: '2008-06-12'
+    boe_id_cese: BOE-A-2008-10064
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2008-10064
+    titulo_nombramiento: Orden CUL/3444/2007, de 19 de noviembre, por la que se nombra Subdirector General de Acción
+      y Promoción Cultural a don Miguel Ángel González Suela.
+    titulo_cese: Orden CUL/1635/2008, de 11 de mayo, por la que se dispone el cese de don Miguel Ángel González
+      Suela como Subdirector General de Acción y Promoción Cultural.
+  - organismo: Organization:ministerio-de-medio-ambiente
+    cargo: Director General de Servicios
+    boe_key: director-general-de-servicios|2010
+    fecha_nombramiento: '2010-02-13'
+    boe_id_nombramiento: BOE-A-2010-2346
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2010-2346
+    fecha_cese: '2013-02-23'
+    boe_id_cese: BOE-A-2013-2053
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2013-2053
+    titulo_nombramiento: Real Decreto 151/2010, de 12 de febrero, por el que se nombra Director General de Servicios
+      a don Miguel Ángel González Suela.
+    titulo_cese: Real Decreto 140/2013, de 22 de febrero, por el que se dispone el cese de don Miguel Ángel González
+      Suela como Director General de Servicios.
+  - organismo: Organization:ministerio-de-transicion-ecologica-y-reto-demografico
+    cargo: Subsecretario para la Transición Ecológica y el Reto Demográfico
+    boe_key: subsecretario-para-la-transicion-ecologica-y-el-reto-demogra|2020
+    fecha_nombramiento: '2020-01-22'
+    boe_id_nombramiento: BOE-A-2020-948
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-948
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 125/2020, de 21 de enero, por el que se nombra Subsecretario para la Transición
+      Ecológica y el Reto Demográfico a don Miguel Ángel González Suela.
+- entity_id: Person:nadia-calvino-santamaria
+  nombre_grafo: Nadia Calviño Santamaría
+  boe_n_cargos: 8
+  boe_rango: 2004..2023
+  nota: 16 gobernadurías ex officio por España en organismos financieros internacionales (RD de 2018-06-19, derivadas
+    del cargo ministerial; p. ej. BOE-A-2018-8300) omitidas como relaciones para no saturar el grafo — constan en
+    la semilla del recon (spec 048).
+  cargos:
+  - organismo: Organization:ministerio-de-economia
+    cargo: Directora General de Defensa de la Competencia
+    boe_key: directora-general-de-defensa-de-la-competencia|2004
+    fecha_nombramiento: '2004-05-15'
+    boe_id_nombramiento: BOE-A-2004-9107
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2004-9107
+    fecha_cese: '2006-09-02'
+    boe_id_cese: BOE-A-2006-15309
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2006-15309
+    titulo_nombramiento: Real Decreto 1230/2004, de 14 de mayo, por el que se nombra Directora General de Defensa
+      de la Competencia a doña Nadia Calviño Santamaría.
+    titulo_cese: Real Decreto 970/2006, de 1 de septiembre, por el que se dispone el cese de doña Nadia Calviño
+      Santamaría como Directora General de Defensa de la Competencia.
+  - organismo: Organization:ministerio-de-economia
+    cargo: Ministra de Economía y Empresa
+    boe_key: ministra-de-economia-y-empresa|2018
+    fecha_nombramiento: '2018-06-07'
+    boe_id_nombramiento: BOE-A-2018-7577
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2018-7577
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 357/2018, de 6 de junio, por el que se nombran Ministros del Gobierno.
+    nota: nombramiento en RD colectivo sin nombres en el título (cuerpo del XML, spec 050; su nombre registral «Nadia
+      María Calviño Santamaría» dejaba sus etapas fuera del match de títulos); la cartera pasó a denominarse Asuntos
+      Económicos y Transformación Digital en ene-2020 (etapa propia)
+  - organismo: Organization:ministerio-de-economia
+    cargo: Ministra de Asuntos Económicos y Transformación Digital
+    boe_key: ministra-de-asuntos-economicos-y-transformacion-digital|2020
+    fecha_nombramiento: '2020-01-13'
+    boe_id_nombramiento: BOE-A-2020-416
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-416
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 8/2020, de 12 de enero, por el que se nombran Ministros del Gobierno.
+    nota: nombramiento en RD colectivo sin nombres en el título (cuerpo del XML, spec 050); la cartera pasó a denominarse
+      Economía, Comercio y Empresa en nov-2023 (etapa propia)
+  - organismo: Organization:ministerio-de-economia
+    cargo: Ministra de Economía, Comercio y Empresa
+    boe_key: ministra-de-economia-comercio-y-empresa|2023
+    fecha_nombramiento: '2023-11-21'
+    boe_id_nombramiento: BOE-A-2023-23543
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-23543
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 835/2023, de 20 de noviembre, por el que se nombran Ministros del Gobierno.
+    nota: nombramiento en RD colectivo sin nombres en el título (cuerpo del XML, spec 050); cese no localizado en
+      la sección II.A del índice (2004→hoy)
+  - organismo: Organization:presidencia-del-gobierno
+    cargo: Vicepresidenta Tercera del Gobierno
+    boe_key: vicepresidenta-tercera-del-gobierno|2020
+    fecha_nombramiento: '2020-01-13'
+    boe_id_nombramiento: BOE-A-2020-414
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-414
+    fecha_cese: '2021-03-31'
+    boe_id_cese: BOE-A-2021-5040
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2021-5040
+    titulo_nombramiento: Real Decreto 6/2020, de 12 de enero, por el que se nombra Vicepresidenta Tercera del Gobierno
+      a doña Nadia María Calviño Santamaría.
+    titulo_cese: Real Decreto 231/2021, de 30 de marzo, por el que se dispone el cese de doña Nadia María Calviño
+      Santamaría como Vicepresidenta Tercera del Gobierno.
+  - organismo: Organization:presidencia-del-gobierno
+    cargo: Vicepresidenta Segunda del Gobierno
+    boe_key: vicepresidenta-segunda-del-gobierno|2021
+    fecha_nombramiento: '2021-03-31'
+    boe_id_nombramiento: BOE-A-2021-5045
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2021-5045
+    fecha_cese: '2021-07-12'
+    boe_id_cese: BOE-A-2021-11516
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2021-11516
+    titulo_nombramiento: Real Decreto 233/2021, de 30 de marzo, por el que se nombra Vicepresidenta Segunda del
+      Gobierno a doña Nadia María Calviño Santamaría.
+    titulo_cese: Real Decreto 510/2021, de 10 de julio, por el que se dispone el cese de doña Nadia María Calviño
+      Santamaría como Vicepresidenta Segunda del Gobierno.
+  - organismo: Organization:presidencia-del-gobierno
+    cargo: Vicepresidenta Primera del Gobierno
+    boe_key: vicepresidenta-primera-del-gobierno|2021
+    fecha_nombramiento: '2021-07-12'
+    boe_id_nombramiento: BOE-A-2021-11528
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2021-11528
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 522/2021, de 10 de julio, por el que se nombra Vicepresidenta Primera del
+      Gobierno a doña Nadia María Calviño Santamaría.
+    nota: etapa siguiente del mismo cargo sin cese en la semilla (renovación 2023)
+  - organismo: Organization:presidencia-del-gobierno
+    cargo: Vicepresidenta Primera del Gobierno
+    boe_key: vicepresidenta-primera-del-gobierno|2023
+    fecha_nombramiento: '2023-11-21'
+    boe_id_nombramiento: BOE-A-2023-23539
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-23539
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 831/2023, de 20 de noviembre, por el que se nombra Vicepresidenta Primera
+      del Gobierno a doña Nadia María Calviño Santamaría.
+    nota: cese no localizado en la sección II.A del índice (2004→hoy)
+- entity_id: Person:oscar-puente
+  nombre_grafo: Óscar Puente
+  boe_n_cargos: 1
+  boe_rango: 2023..2023
+  cargos:
+  - organismo: Organization:ministerio-de-transportes-movilidad-y-agenda-urbana
+    cargo: Ministro de Transportes y Movilidad Sostenible
+    boe_key: ministro-de-transportes-y-movilidad-sostenible|2023
+    fecha_nombramiento: '2023-11-21'
+    boe_id_nombramiento: BOE-A-2023-23543
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-23543
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 835/2023, de 20 de noviembre, por el que se nombran Ministros del Gobierno.
+    nota: nombramiento en RD colectivo sin nombres en el título (cuerpo del XML, spec 050); el ministerio (nodo genérico
+      de la cartera de transportes) absorbe la denominación de época — el literal va en cargo/titulo_*
+- entity_id: Person:pablo-llarena-conde
+  nombre_grafo: Pablo Llarena Conde
+  boe_n_cargos: 2
+  boe_rango: 2011..2016
+  cargos:
+  - organismo: Court:audiencia-provincial-de-barcelona
+    cargo: Presidente de la Audiencia Provincial de Barcelona
+    boe_key: presidente-de-la-audiencia-provincial-de-barcelona|2011
+    fecha_nombramiento: '2011-02-07'
+    boe_id_nombramiento: BOE-A-2011-2284
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2011-2284
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 51/2011, de 14 de enero, por el que se nombra Presidente de la Audiencia Provincial
+      de Barcelona a don Pablo Llarena Conde.
+  - organismo: Court:tribunal-supremo
+    cargo: Magistrado del Tribunal Supremo
+    boe_key: magistrado-del-tribunal-supremo|2016
+    fecha_nombramiento: '2016-02-18'
+    boe_id_nombramiento: BOE-A-2016-1643
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2016-1643
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 40/2016, de 29 de enero, por el que se promueve a la categoría de Magistrado
+      del Tribunal Supremo a don Pablo Llarena Conde.
+    nota: inicio por promocion
+- entity_id: Person:paula-novo-cuba
+  nombre_grafo: Paula Novo Cuba
+  boe_n_cargos: 1
+  boe_rango: 2020..2021
+  cargos:
+  - organismo: Organization:ministerio-de-justicia
+    cargo: Secretaria General Técnica
+    boe_key: secretaria-general-tecnica|2020
+    fecha_nombramiento: '2020-01-30'
+    boe_id_nombramiento: BOE-A-2020-1352
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-1352
+    fecha_cese: '2021-11-09'
+    boe_id_cese: BOE-A-2021-18291
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2021-18291
+    titulo_nombramiento: Real Decreto 162/2020, de 29 de enero, por el que se nombra Secretaria General Técnica
+      a doña Paula Novo Cuba.
+    titulo_cese: Real Decreto 971/2021, de 8 de noviembre, por el que se dispone el cese de doña Paula Novo Cuba
+      como Secretaria General Técnica.
+- entity_id: Person:pedro-sanchez
+  nombre_grafo: Pedro Sánchez
+  boe_n_cargos: 3
+  boe_rango: 2018..2023
+  cargos:
+  - organismo: Organization:presidencia-del-gobierno
+    cargo: Presidente del Gobierno
+    boe_key: presidente-del-gobierno|2018
+    fecha_nombramiento: '2018-06-02'
+    boe_id_nombramiento: BOE-A-2018-7400
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2018-7400
+    fecha_cese: '2019-04-30'
+    boe_id_cese: BOE-A-2019-6355
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2019-6355
+    titulo_nombramiento: Real Decreto 354/2018, de 1 de junio, por el que se nombra Presidente del Gobierno a don
+      Pedro Sánchez Pérez-Castejón.
+    titulo_cese: Real Decreto 336/2019, de 29 de abril, por el que se declara el cese de don Pedro Sánchez Pérez-Castejón
+      como Presidente del Gobierno.
+  - organismo: Organization:presidencia-del-gobierno
+    cargo: Presidente del Gobierno
+    boe_key: presidente-del-gobierno|2020
+    fecha_nombramiento: '2020-01-08'
+    boe_id_nombramiento: BOE-A-2020-231
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-231
+    fecha_cese: '2023-07-25'
+    boe_id_cese: BOE-A-2023-17073
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-17073
+    titulo_nombramiento: Real Decreto 1/2020, de 7 de enero, por el que se nombra Presidente del Gobierno a don
+      Pedro Sánchez Pérez-Castejón.
+    titulo_cese: Real Decreto 694/2023, de 24 de julio, por el que se declara el cese de don Pedro Sánchez Pérez-Castejón
+      como Presidente del Gobierno.
+  - organismo: Organization:presidencia-del-gobierno
+    cargo: Presidente del Gobierno
+    boe_key: presidente-del-gobierno|2023
+    fecha_nombramiento: '2023-11-17'
+    boe_id_nombramiento: BOE-A-2023-23302
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-23302
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 828/2023, de 16 de noviembre, por el que se nombra Presidente del Gobierno
+      a don Pedro Sánchez Pérez-Castejón.
+- entity_id: Person:pedro-saura
+  nombre_grafo: Pedro Saura
+  boe_n_cargos: 2
+  boe_rango: 2018..2021
+  cargos:
+  - organismo: Organization:ministerio-de-fomento
+    cargo: Secretario de Estado de Infraestructuras, Transporte y Vivienda
+    boe_key: secretario-de-estado-de-infraestructuras-transporte-y-vivien|2018
+    fecha_nombramiento: '2018-06-19'
+    boe_id_nombramiento: BOE-A-2018-8259
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2018-8259
+    fecha_cese: '2020-01-15'
+    boe_id_cese: BOE-A-2020-522
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-522
+    titulo_nombramiento: Real Decreto 511/2018, de 18 de junio, por el que se nombra Secretario de Estado de Infraestructuras,
+      Transporte y Vivienda a don Pedro Saura García.
+    titulo_cese: Real Decreto 26/2020, de 14 de enero, por el que se dispone el cese de don Pedro Saura García como
+      Secretario de Estado de Infraestructuras, Transporte y Vivienda.
+  - organismo: Organization:ministerio-de-transportes-movilidad-y-agenda-urbana
+    cargo: Secretario de Estado de Transportes, Movilidad y Agenda Urbana
+    boe_key: secretario-de-estado-de-transportes-movilidad-y-agenda-urban|2020
+    fecha_nombramiento: '2020-01-15'
+    boe_id_nombramiento: BOE-A-2020-524
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-524
+    fecha_cese: '2021-07-28'
+    boe_id_cese: BOE-A-2021-12643
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2021-12643
+    titulo_nombramiento: Real Decreto 28/2020, de 14 de enero, por el que se nombra Secretario de Estado de Transportes,
+      Movilidad y Agenda Urbana a don Pedro Saura García.
+    titulo_cese: Real Decreto 667/2021, de 27 de julio, por el que se dispone el cese de don Pedro Saura García
+      como Secretario de Estado de Transportes, Movilidad y Agenda Urbana.
+- entity_id: Person:pilar-sanchez-nunez
+  nombre_grafo: Pilar Sánchez Núñez
+  boe_n_cargos: 4
+  boe_rango: 2005..2026
+  cargos:
+  - organismo: Organization:tribunal-de-defensa-de-la-competencia
+    cargo: Vocal del Tribunal de Defensa de la Competencia
+    boe_key: vocal-del-tribunal-de-defensa-de-la-competencia|2005
+    fecha_nombramiento: '2005-10-01'
+    boe_id_nombramiento: BOE-A-2005-16264
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2005-16264
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 1169/2005, de 30 de septiembre, por el que se nombra Vocal del Tribunal de
+      Defensa de la Competencia a doña Pilar Sánchez Núñez.
+    nota: etapa siguiente del mismo cargo sin cese en la semilla (reelección/renovación 2006)
+  - organismo: Organization:tribunal-de-defensa-de-la-competencia
+    cargo: Vocal del Tribunal de Defensa de la Competencia
+    boe_key: vocal-del-tribunal-de-defensa-de-la-competencia|2006
+    fecha_nombramiento: '2006-04-01'
+    boe_id_nombramiento: BOE-A-2006-5891
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2006-5891
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 405/2006, de 31 de marzo, por el que se renueva el mandato de doña Pilar Sánchez
+      Núñez como Vocal del Tribunal de Defensa de la Competencia.
+    nota: inicio por renovacion
+  - organismo: Organization:comision-nacional-de-la-competencia
+    cargo: Vicepresidenta de la Comisión Nacional de la Competencia
+    boe_key: vicepresidenta-de-la-comision-nacional-de-la-competencia|pre
+    fecha_nombramiento: null
+    boe_id_nombramiento: null
+    url_nombramiento: null
+    fecha_cese: '2013-10-15'
+    boe_id_cese: BOE-A-2013-10748
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2013-10748
+    titulo_cese: Real Decreto 802/2013, de 14 de octubre, por el que se dispone el cese de doña Pilar Sánchez Núñez
+      como Vicepresidenta de la Comisión Nacional de la Competencia.
+    nota: nombramiento anterior a la ventana 2004→hoy o no publicado en la sección II.A (no localizado en la pasada
+      dirigida spec 050)
+  - organismo: Organization:cnmc
+    cargo: Consejera de la Comisión Nacional de los Mercados y la Competencia
+    boe_key: consejera-de-la-comision-nacional-de-los-mercados-y-la-compe|2020
+    fecha_nombramiento: '2020-06-17'
+    boe_id_nombramiento: BOE-A-2020-6254
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-6254
+    fecha_cese: '2026-01-23'
+    boe_id_cese: BOE-A-2026-1559
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2026-1559
+    titulo_nombramiento: Real Decreto 584/2020, de 16 de junio, por el que se nombra Consejera de la Comisión Nacional
+      de los Mercados y la Competencia a doña Pilar Sánchez Núñez.
+    titulo_cese: Real Decreto 44/2026, de 20 de enero, por el que se dispone el cese de doña Pilar Sánchez Núñez
+      como Consejera de la Comisión Nacional de los Mercados y la Competencia.
+  incidencias:
+  - fecha: '2010-04-23'
+    boe_id: BOE-A-2010-6429
+    url: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2010-6429
+    nota: acuerdo de suplencias de la presidencia de la CNC (resolución interna)
+    titulo: Resolución de 15 de abril de 2010, de la Presidencia de la Comisión Nacional de la Competencia, por
+      la que se publica el Acuerdo del Consejo de 24 de marzo de 2010, por el que se elige Vicepresidenta del mismo
+      a la Consejera doña Pilar Sánchez Núñez.
+- entity_id: Person:rafael-perez-ruiz
+  nombre_grafo: Rafael Pérez Ruiz
+  boe_n_cargos: 2
+  boe_rango: 2018..2025
+  cargos:
+  - organismo: Organization:ministerio-del-interior
+    cargo: Director del Gabinete del Ministro del Interior
+    boe_key: director-del-gabinete-del-ministro-del-interior|2018
+    fecha_nombramiento: '2018-06-09'
+    boe_id_nombramiento: BOE-A-2018-7732
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2018-7732
+    fecha_cese: '2020-01-15'
+    boe_id_cese: BOE-A-2020-521
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-521
+    titulo_nombramiento: Real Decreto 385/2018, de 8 de junio, por el que se nombra Director del Gabinete del Ministro
+      del Interior a don Rafael Pérez Ruiz.
+    titulo_cese: Real Decreto 25/2020, de 14 de enero, por el que se dispone el cese de don Rafael Pérez Ruiz como
+      Director del Gabinete del Ministro del Interior.
+  - organismo: Organization:ministerio-del-interior
+    cargo: Secretario de Estado de Seguridad
+    boe_key: secretario-de-estado-de-seguridad|2020
+    fecha_nombramiento: '2020-01-18'
+    boe_id_nombramiento: BOE-A-2020-743
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-743
+    fecha_cese: '2025-06-04'
+    boe_id_cese: BOE-A-2025-11085
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2025-11085
+    titulo_nombramiento: Real Decreto 84/2020, de 17 de enero, por el que se nombra Secretario de Estado de Seguridad
+      a don Rafael Pérez Ruiz.
+    titulo_cese: Real Decreto 434/2025, de 3 de junio, por el que se dispone el cese de don Rafael Pérez Ruiz como
+      Secretario de Estado de Seguridad.
+  incidencias:
+  - fecha: '2018-06-20'
+    boe_id: BOE-A-2018-8385
+    url: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2018-8385
+    nota: continuidad en servicios especiales en la carrera judicial (acuerdo CGPJ)
+    titulo: Acuerdo de 14 de junio de 2018, de la Comisión Permanente del Consejo General del Poder Judicial, por
+      el que se declara la continuidad en la situación administrativa de servicios especiales en la Carrera Judicial
+      al Magistrado don Rafael Pérez Ruiz.
+  - fecha: '2020-01-31'
+    boe_id: BOE-A-2020-1448
+    url: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-1448
+    nota: continuidad en servicios especiales en la carrera judicial (acuerdo CGPJ)
+    titulo: Acuerdo de 23 de enero de 2020, de la Comisión Permanente del Consejo General del Poder Judicial, por
+      el que se declara la continuidad en la situación administrativa de servicios especiales en la Carrera Judicial
+      del Magistrado don Rafael Pérez Ruiz.
+  - fecha: '2025-06-23'
+    boe_id: BOE-A-2025-12681
+    url: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2025-12681
+    nota: continuidad en servicios especiales en la carrera judicial (acuerdo CGPJ)
+    titulo: Acuerdo de 10 de junio de 2025, de la Comisión Permanente del Consejo General del Poder Judicial, por
+      el que se declara la continuidad en la situación administrativa de servicios especiales en la Carrera Judicial
+      del Magistrado don Rafael Pérez Ruiz.
+- entity_id: Person:raul-blanco-diaz
+  nombre_grafo: Raúl Blanco Díaz
+  boe_n_cargos: 2
+  boe_rango: 2018..2025
+  cargos:
+  - organismo: Organization:ministerio-de-industria
+    cargo: Secretario General de Industria y de la Pequeña y Mediana Empresa
+    boe_key: secretario-general-de-industria-y-de-la-pequena-y-mediana-em|2018
+    fecha_nombramiento: '2018-06-23'
+    boe_id_nombramiento: BOE-A-2018-8637
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2018-8637
+    fecha_cese: '2022-12-28'
+    boe_id_cese: BOE-A-2022-22714
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2022-22714
+    titulo_nombramiento: Real Decreto 650/2018, de 22 de junio, por el que se nombra Secretario General de Industria
+      y de la Pequeña y Mediana Empresa a don Raül Blanco Díaz.
+    titulo_cese: Real Decreto 1072/2022, de 27 de diciembre, por el que se dispone el cese de don Raül Blanco Díaz
+      como Secretario General de Industria y de la Pequeña y Mediana Empresa.
+  - organismo: Organization:renfe
+    cargo: Presidente de la Entidad Pública Empresarial RENFE-Operadora
+    boe_key: presidente-de-la-entidad-publica-empresarial-renfe-operadora|2023
+    fecha_nombramiento: '2023-02-22'
+    boe_id_nombramiento: BOE-A-2023-4672
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-4672
+    fecha_cese: '2025-01-15'
+    boe_id_cese: BOE-A-2025-609
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2025-609
+    titulo_nombramiento: Real Decreto 134/2023, de 21 de febrero, por el que se nombra Presidente de la Entidad
+      Pública Empresarial RENFE-Operadora a don Raül Blanco Díaz.
+    titulo_cese: Real Decreto 28/2025, de 14 de enero, por el que se dispone el cese de don Raül Blanco Díaz como
+      Presidente de la Entidad Pública Empresarial RENFE-Operadora.
+- entity_id: Person:raul-medina
+  nombre_grafo: Raúl Medina
+  boe_n_cargos: 1
+  boe_rango: 2015..2022
+  cargos:
+  - organismo: Organization:ministerio-de-fomento
+    cargo: Director General de Aviación Civil
+    boe_key: director-general-de-aviacion-civil|2015
+    fecha_nombramiento: '2015-05-30'
+    boe_id_nombramiento: BOE-A-2015-5988
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2015-5988
+    fecha_cese: '2022-10-26'
+    boe_id_cese: BOE-A-2022-17488
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2022-17488
+    titulo_nombramiento: Real Decreto 445/2015, de 29 de mayo, por el que se nombra Director General de Aviación
+      Civil a don Raúl Medina Caballero.
+    titulo_cese: Real Decreto 915/2022, de 25 de octubre, por el que se dispone el cese de don Raúl Medina Caballero
+      como Director General de Aviación Civil.
+- entity_id: Person:roberto-sanchez-sanchez
+  nombre_grafo: Roberto Sanchez Sánchez
+  boe_n_cargos: 3
+  boe_rango: 2011..2022
+  cargos:
+  - organismo: Organization:ministerio-de-industria
+    cargo: Director General de Telecomunicaciones y Tecnologías de la Información
+    boe_key: director-general-de-telecomunicaciones-y-tecnologias-de-la-i|2011
+    fecha_nombramiento: '2011-05-10'
+    boe_id_nombramiento: BOE-A-2011-8147
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2011-8147
+    fecha_cese: '2012-01-06'
+    boe_id_cese: BOE-A-2012-290
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2012-290
+    titulo_nombramiento: Real Decreto 666/2011, de 9 de mayo, por el que se nombra Director General de Telecomunicaciones
+      y Tecnologías de la Información a don Roberto Sánchez Sánchez.
+    titulo_cese: Real Decreto 62/2012, de 5 de enero, por el que se dispone el cese de don Roberto Sánchez Sánchez
+      como Director General de Telecomunicaciones y Tecnologías de la Información.
+  - organismo: Organization:ministerio-de-industria
+    cargo: Director General de Telecomunicaciones y Tecnologías de la Información
+    boe_key: director-general-de-telecomunicaciones-y-tecnologias-de-la-i|2018
+    fecha_nombramiento: '2018-06-30'
+    boe_id_nombramiento: BOE-A-2018-9136
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2018-9136
+    fecha_cese: '2020-01-15'
+    boe_id_cese: BOE-A-2020-547
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-547
+    titulo_nombramiento: Real Decreto 801/2018, de 29 de junio, por el que se nombra Director General de Telecomunicaciones
+      y Tecnologías de la Información a don Roberto Sánchez Sánchez.
+    titulo_cese: Real Decreto 51/2020, de 14 de enero, por el que se dispone el cese de don Roberto Sánchez Sánchez
+      como Director General de Telecomunicaciones y Tecnologías de la Información.
+  - organismo: Organization:ministerio-de-industria
+    cargo: Secretario de Estado de Telecomunicaciones e Infraestructuras Digitales
+    boe_key: secretario-de-estado-de-telecomunicaciones-e-infraestructura|2020
+    fecha_nombramiento: '2020-01-15'
+    boe_id_nombramiento: BOE-A-2020-550
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-550
+    fecha_cese: '2022-10-05'
+    boe_id_cese: BOE-A-2022-16228
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2022-16228
+    titulo_nombramiento: Real Decreto 54/2020, de 14 de enero, por el que se nombra Secretario de Estado de Telecomunicaciones
+      e Infraestructuras Digitales a don Roberto Sánchez Sánchez.
+    titulo_cese: Real Decreto 828/2022, de 4 de octubre, por el que se dispone el cese de don Roberto Sánchez Sánchez
+      como Secretario de Estado de Telecomunicaciones e Infraestructuras Digitales.
+- entity_id: Person:salvador-illa
+  nombre_grafo: Salvador Illa
+  boe_n_cargos: 2
+  boe_rango: 2020..2024
+  cargos:
+  - organismo: Organization:ministerio-de-sanidad
+    cargo: Ministro de Sanidad
+    boe_key: ministro-de-sanidad|pre
+    fecha_nombramiento: '2020-01-13'
+    boe_id_nombramiento: BOE-A-2020-416
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-416
+    fecha_cese: '2021-01-27'
+    boe_id_cese: BOE-A-2021-1139
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2021-1139
+    titulo_nombramiento: Real Decreto 8/2020, de 12 de enero, por el que se nombran Ministros del Gobierno.
+    titulo_cese: Real Decreto 54/2021, de 26 de enero, por el que se dispone el cese de don Salvador Illa Roca como
+      Ministro de Sanidad.
+    nota: nombramiento en RD colectivo sin nombres en el título (cuerpo del XML, spec 050)
+  - organismo: Organization:generalitat-de-cataluna
+    cargo: Presidente de la Generalitat de Cataluña
+    boe_key: presidente-de-la-generalitat-de-cataluna|2024
+    fecha_nombramiento: '2024-08-10'
+    boe_id_nombramiento: BOE-A-2024-16602
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2024-16602
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 839/2024, de 9 de agosto, por el que se nombra Presidente de la Generalitat
+      de Cataluña a don Salvador Illa Roca.
+- entity_id: Person:sara-aagesen-munoz
+  nombre_grafo: Sara Aagesen Muñoz
+  boe_n_cargos: 3
+  boe_rango: 2020..2024
+  cargos:
+  - organismo: Organization:ministerio-de-transicion-ecologica-y-reto-demografico
+    cargo: Secretaria de Estado de Energía
+    boe_key: secretaria-de-estado-de-energia|2020
+    fecha_nombramiento: '2020-01-18'
+    boe_id_nombramiento: BOE-A-2020-758
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-758
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 98/2020, de 17 de enero, por el que se nombra Secretaria de Estado de Energía
+      a doña Sara Aagesen Muñoz.
+  - organismo: Organization:presidencia-del-gobierno
+    cargo: Vicepresidenta Tercera del Gobierno
+    boe_key: vicepresidenta-tercera-del-gobierno|2024
+    fecha_nombramiento: '2024-11-25'
+    boe_id_nombramiento: BOE-A-2024-24520
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2024-24520
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 1172/2024, de 24 de noviembre, por el que se nombra Vicepresidenta Tercera
+      del Gobierno a doña Sara Aagesen Muñoz.
+  - organismo: Organization:ministerio-de-transicion-ecologica-y-reto-demografico
+    cargo: Ministra para la Transición Ecológica y el Reto Demográfico
+    boe_key: ministra-para-la-transicion-ecologica-y-el-reto-demografico|2024
+    fecha_nombramiento: '2024-11-25'
+    boe_id_nombramiento: BOE-A-2024-24521
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2024-24521
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 1173/2024, de 24 de noviembre, por el que se nombra Ministra para la Transición
+      Ecológica y el Reto Demográfico a doña Sara Aagesen Muñoz.
+- entity_id: Person:sergio-sanchez
+  nombre_grafo: Sergio Sánchez
+  boe_n_cargos: 1
+  boe_rango: 2009..2009
+  cargos:
+  - organismo: Organization:ministerio-de-defensa
+    cargo: Director General de Comunicación de la Defensa
+    boe_key: director-general-de-comunicacion-de-la-defensa|2009
+    fecha_nombramiento: '2009-02-28'
+    boe_id_nombramiento: BOE-A-2009-3435
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2009-3435
+    fecha_cese: '2009-10-03'
+    boe_id_cese: BOE-A-2009-15721
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2009-15721
+    titulo_nombramiento: Real Decreto 269/2009, de 27 de febrero, por el que se nombra Director General de Comunicación
+      de la Defensa a don Sergio Sánchez Benítez.
+    titulo_cese: Real Decreto 1519/2009, de 2 de octubre, por el que se dispone el cese de don Sergio Sánchez Benítez
+      como Director General de Comunicación de la Defensa.
+- entity_id: Person:sergio-vazquez-torron
+  nombre_grafo: Sergio Vázquez Torrón
+  boe_n_cargos: 3
+  boe_rango: 2018..2022
+  cargos:
+  - organismo: Organization:ministerio-de-fomento
+    cargo: Director del Gabinete del Ministro de Fomento
+    boe_key: director-del-gabinete-del-ministro-de-fomento|2018
+    fecha_nombramiento: '2018-06-19'
+    boe_id_nombramiento: BOE-A-2018-8263
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2018-8263
+    fecha_cese: '2020-01-15'
+    boe_id_cese: BOE-A-2020-523
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-523
+    titulo_nombramiento: Real Decreto 515/2018, de 18 de junio, por el que se nombra Director del Gabinete del Ministro
+      de Fomento a don Sergio Vázquez Torrón.
+    titulo_cese: Real Decreto 27/2020, de 14 de enero, por el que se dispone el cese de don Sergio Vázquez Torrón
+      como Director del Gabinete del Ministro de Fomento.
+  - organismo: Organization:ministerio-de-transportes-movilidad-y-agenda-urbana
+    cargo: Director del Gabinete del Ministro de Transportes, Movilidad y Agenda Urbana
+    boe_key: director-del-gabinete-del-ministro-de-transportes-movilidad|2020
+    fecha_nombramiento: '2020-01-15'
+    boe_id_nombramiento: BOE-A-2020-525
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-525
+    fecha_cese: '2020-07-01'
+    boe_id_cese: BOE-A-2020-6944
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-6944
+    titulo_nombramiento: Real Decreto 29/2020, de 14 de enero, por el que se nombra Director del Gabinete del Ministro
+      de Transportes, Movilidad y Agenda Urbana a don Sergio Vázquez Torrón.
+    titulo_cese: Real Decreto 631/2020, de 30 de junio, por el que se dispone el cese de don Sergio Vázquez Torrón
+      como Director del Gabinete del Ministro de Transportes, Movilidad y Agenda Urbana.
+  - organismo: Organization:ministerio-de-fomento
+    cargo: Secretario General de Infraestructuras
+    boe_key: secretario-general-de-infraestructuras|2020
+    fecha_nombramiento: '2020-07-01'
+    boe_id_nombramiento: BOE-A-2020-6945
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-6945
+    fecha_cese: '2022-01-12'
+    boe_id_cese: BOE-A-2022-458
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2022-458
+    titulo_nombramiento: Real Decreto 632/2020, de 30 de junio, por el que se nombra Secretario General de Infraestructuras
+      a don Sergio Vázquez Torrón.
+    titulo_cese: Real Decreto 30/2022, de 11 de enero, por el que se dispone el cese de don Sergio Vázquez Torrón
+      como Secretario General de Infraestructuras.
+- entity_id: Person:susana-diaz
+  nombre_grafo: Susana Díaz
+  boe_n_cargos: 2
+  boe_rango: 2013..2019
+  cargos:
+  - organismo: Organization:junta-de-andalucia
+    cargo: Presidenta de la Junta de Andalucía
+    boe_key: presidenta-de-la-junta-de-andalucia|2013
+    fecha_nombramiento: '2013-09-06'
+    boe_id_nombramiento: BOE-A-2013-9388
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2013-9388
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 667/2013, de 5 de septiembre, por el que se nombra Presidenta de la Junta
+      de Andalucía a doña Susana Díaz Pacheco.
+    nota: etapa siguiente del mismo cargo sin cese en la semilla (reelección/renovación 2015)
+  - organismo: Organization:junta-de-andalucia
+    cargo: Presidenta de la Junta de Andalucía
+    boe_key: presidenta-de-la-junta-de-andalucia|2015
+    fecha_nombramiento: '2015-06-13'
+    boe_id_nombramiento: BOE-A-2015-6521
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2015-6521
+    fecha_cese: '2019-01-18'
+    boe_id_cese: BOE-A-2019-550
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2019-550
+    titulo_nombramiento: Real Decreto 471/2015, de 12 de junio, por el que se nombra Presidenta de la Junta de Andalucía
+      a doña Susana Díaz Pacheco.
+    titulo_cese: Real Decreto 5/2019, de 17 de enero, por el que se declara el cese de doña Susana Díaz Pacheco
+      como Presidenta de la Junta de Andalucía.
+- entity_id: Person:susana-polo-garcia
+  nombre_grafo: Susana Polo García
+  boe_n_cargos: 2
+  boe_rango: 2013..2018
+  cargos:
+  - organismo: Court:tribunal-superior-de-justicia-de-madrid
+    cargo: Magistrada de la Sala de lo Civil y Penal del Tribunal Superior de Justicia de Madrid
+    boe_key: magistrada-de-la-sala-de-lo-civil-y-penal-del-tribunal-super|2013
+    fecha_nombramiento: '2013-05-10'
+    boe_id_nombramiento: BOE-A-2013-4863
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2013-4863
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 291/2013, de 19 de abril, por el que se nombra Magistrada de la Sala de lo
+      Civil y Penal del Tribunal Superior de Justicia de Madrid a doña Susana Polo García.
+  - organismo: Court:tribunal-supremo
+    cargo: Magistrada de la Sala Segunda del Tribunal Supremo
+    boe_key: magistrada-de-la-sala-segunda-del-tribunal-supremo|2018
+    fecha_nombramiento: '2018-09-12'
+    boe_id_nombramiento: BOE-A-2018-12414
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2018-12414
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 1079/2018, de 24 de agosto, por el que se promueve a la categoría de Magistrada
+      de la Sala Segunda del Tribunal Supremo a doña Susana Polo García.
+    nota: inicio por promocion
+  incidencias:
+  - fecha: '2018-10-08'
+    boe_id: BOE-A-2018-13658
+    url: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2018-13658
+    nota: adscripción a la Sala Segunda del Tribunal Supremo (acuerdo CGPJ)
+    titulo: Acuerdo de 26 de septiembre de 2018, de la Comisión Permanente del Consejo General del Poder Judicial,
+      por el que se adscribe a la Magistrada doña Susana Polo García a la Sala Segunda del Tribunal Supremo.
+- entity_id: Person:teofilo-serrano
+  nombre_grafo: Teofilo Serrano
+  boe_n_cargos: 1
+  boe_rango: 2009..2012
+  cargos:
+  - organismo: Organization:renfe
+    cargo: Presidente de la Entidad Pública Empresarial RENFE-Operadora
+    boe_key: presidente-de-la-entidad-publica-empresarial-renfe-operadora|2009
+    fecha_nombramiento: '2009-05-15'
+    boe_id_nombramiento: BOE-A-2009-8063
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2009-8063
+    fecha_cese: '2012-01-24'
+    boe_id_cese: BOE-A-2012-1064
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2012-1064
+    titulo_nombramiento: Real Decreto 867/2009, de 14 de mayo, por el que se nombra Presidente de la Entidad Pública
+      Empresarial RENFE-Operadora a don Teófilo Serrano Beltrán.
+    titulo_cese: Real Decreto 229/2012, de 23 de enero, por el que se dispone el cese de don Teófilo Serrano Beltrán
+      como Presidente de la Entidad Pública Empresarial RENFE-Operadora.
+- entity_id: Person:teresa-ribera
+  nombre_grafo: Teresa Ribera
+  boe_n_cargos: 7
+  boe_rango: 2005..2024
+  cargos:
+  - organismo: Organization:ministerio-de-medio-ambiente
+    cargo: Directora de la Oficina Española de Cambio Climático de la Secretaría General para la Prevención de la
+      Contaminación y el Cambio Climático
+    boe_key: directora-de-la-oficina-espanola-de-cambio-climatico-de-la-s|2005
+    fecha_nombramiento: '2005-02-21'
+    boe_id_nombramiento: BOE-A-2005-2871
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2005-2871
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Orden MAM/342/2005, de 11 de febrero, por la que se nombra a doña Teresa Ribera Rodríguez,
+      Directora de la Oficina Española de Cambio Climático de la Secretaría General para la Prevención de la Contaminación
+      y el Cambio Climático.
+  - organismo: Organization:ministerio-de-medio-ambiente
+    cargo: Directora General de la Oficina Española de Cambio Climático
+    boe_key: directora-general-de-la-oficina-espanola-de-cambio-climatico|2006
+    fecha_nombramiento: '2006-11-25'
+    boe_id_nombramiento: BOE-A-2006-20536
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2006-20536
+    fecha_cese: '2008-04-22'
+    boe_id_cese: BOE-A-2008-7050
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2008-7050
+    titulo_nombramiento: Real Decreto 1377/2006, de 24 de noviembre, por el que se nombra Directora General de la
+      Oficina Española de Cambio Climático a doña Teresa Ribera Rodríguez.
+    titulo_cese: Real Decreto 569/2008, de 21 de abril, por el que se dispone el cese de doña Teresa Ribera Rodríguez
+      como Directora General de la Oficina Española de Cambio Climático.
+  - organismo: Organization:ministerio-de-medio-ambiente
+    cargo: Secretaria de Estado de Cambio Climático
+    boe_key: secretaria-de-estado-de-cambio-climatico|2008
+    fecha_nombramiento: '2008-04-22'
+    boe_id_nombramiento: BOE-A-2008-7054
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2008-7054
+    fecha_cese: '2011-12-31'
+    boe_id_cese: BOE-A-2011-20783
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2011-20783
+    titulo_nombramiento: Real Decreto 573/2008, de 21 de abril, por el que se nombra Secretaria de Estado de Cambio
+      Climático a doña Teresa Ribera Rodríguez.
+    titulo_cese: Real Decreto 2012/2011, de 30 de diciembre, por el que se dispone el cese de doña Teresa Ribera
+      Rodríguez como Secretaria de Estado de Cambio Climático.
+  - organismo: Organization:presidencia-del-gobierno
+    cargo: Vicepresidenta Cuarta del Gobierno
+    boe_key: vicepresidenta-cuarta-del-gobierno|2020
+    fecha_nombramiento: '2020-01-13'
+    boe_id_nombramiento: BOE-A-2020-415
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-415
+    fecha_cese: '2021-07-12'
+    boe_id_cese: BOE-A-2021-11518
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2021-11518
+    titulo_nombramiento: Real Decreto 7/2020, de 12 de enero, por el que se nombra Vicepresidenta Cuarta del Gobierno
+      a doña Teresa Ribera Rodríguez.
+    titulo_cese: Real Decreto 512/2021, de 10 de julio, por el que se dispone el cese de doña Teresa Ribera Rodríguez
+      como Vicepresidenta Cuarta del Gobierno.
+  - organismo: Organization:presidencia-del-gobierno
+    cargo: Vicepresidenta Tercera del Gobierno
+    boe_key: vicepresidenta-tercera-del-gobierno|2021
+    fecha_nombramiento: '2021-07-12'
+    boe_id_nombramiento: BOE-A-2021-11530
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2021-11530
+    fecha_cese: null
+    boe_id_cese: null
+    url_cese: null
+    titulo_nombramiento: Real Decreto 524/2021, de 10 de julio, por el que se nombra Vicepresidenta Tercera del
+      Gobierno a doña Teresa Ribera Rodríguez.
+    nota: etapa siguiente del mismo cargo sin cese en la semilla (reelección/renovación 2023)
+  - organismo: Organization:presidencia-del-gobierno
+    cargo: Vicepresidenta Tercera del Gobierno
+    boe_key: vicepresidenta-tercera-del-gobierno|2023
+    fecha_nombramiento: '2023-11-21'
+    boe_id_nombramiento: BOE-A-2023-23541
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2023-23541
+    fecha_cese: '2024-11-25'
+    boe_id_cese: BOE-A-2024-24518
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2024-24518
+    titulo_nombramiento: Real Decreto 833/2023, de 20 de noviembre, por el que se nombra Vicepresidenta Tercera
+      del Gobierno a doña Teresa Ribera Rodríguez.
+    titulo_cese: Real Decreto 1170/2024, de 24 de noviembre, por el que se dispone el cese de doña Teresa Ribera
+      Rodríguez como Vicepresidenta Tercera del Gobierno.
+  - organismo: Organization:ministerio-de-transicion-ecologica-y-reto-demografico
+    cargo: Ministra para la Transición Ecológica y el Reto Demográfico
+    boe_key: ministra-para-la-transicion-ecologica-y-el-reto-demografico|pre
+    fecha_nombramiento: '2020-01-13'
+    boe_id_nombramiento: BOE-A-2020-416
+    url_nombramiento: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2020-416
+    fecha_cese: '2024-11-25'
+    boe_id_cese: BOE-A-2024-24519
+    url_cese: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2024-24519
+    titulo_nombramiento: Real Decreto 8/2020, de 12 de enero, por el que se nombran Ministros del Gobierno.
+    titulo_cese: Real Decreto 1171/2024, de 24 de noviembre, por el que se dispone el cese de doña Teresa Ribera
+      Rodríguez como Ministra para la Transición Ecológica y el Reto Demográfico.
+    nota: nombramiento en RD colectivo sin nombres en el título (cuerpo del XML, spec 050); renovada en nov-2023
+      (RD 835/2023, BOE-A-2023-23543)
+# 063 pendientes (2026-10-04): avisos del vigía BOE curados — acuerdos CGPJ de jubilación (incidencias, sin aristas).
+- entity_id: Person:juan-carlos-peinado-garcia
+  nombre_grafo: Juan Carlos Peinado García
+  boe_n_cargos: 0
+  boe_rango: null
+  cargos: []
+  incidencias:
+  - fecha: '2026-09-27'
+    boe_id: BOE-A-2026-19944
+    url: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2026-19944
+    nota: jubilación forzosa por edad, con efectos de 27-sep-2026 (acuerdo CGPJ de 23-jun-2026; destino Sección de
+      Instrucción del Tribunal de Instancia de Madrid, plaza n.º 41)
+    titulo: Acuerdo de 23 de junio de 2026, de la Comisión Permanente del Consejo General del Poder Judicial, por
+      el que se declara la jubilación forzosa del Magistrado don Juan Carlos Peinado García.
+- entity_id: Person:emilio-francisco-serrano-molera
+  nombre_grafo: Emilio Francisco Serrano Molera
+  boe_n_cargos: 0
+  boe_rango: null
+  cargos: []
+  incidencias:
+  - fecha: '2026-10-01'
+    boe_id: BOE-A-2026-20392
+    url: https://www.boe.es/diario_boe/txt.php?id=BOE-A-2026-20392
+    nota: jubilación voluntaria anticipada, con efectos de 1-oct-2026 (acuerdo CGPJ de 5-may-2026; destino Audiencia
+      Provincial de Badajoz)
+    titulo: Acuerdo de 5 de mayo de 2026, de la Comisión Permanente del Consejo General del Poder Judicial, por
+      el que se declara la jubilación voluntaria anticipada del Magistrado don Emilio Francisco Serrano Molera.

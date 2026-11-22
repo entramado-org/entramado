@@ -1,0 +1,624 @@
+# Overlay MERCANTIL — Fase 2, TANDA 2: nodos + aristas NUEVOS (BORME).
+# Cargado por `make mercantil` (load_network en mercantil_loader.py). Gate ≤1 salto:
+# cada nodo nuevo cuelga de un `anchor` que YA existe (verificado 1:1 vs grafo vivo 2026-07-06).
+# source_kind='mercantil'; datos oficiales BORME citados por hoja/borme_id; estructura ≠
+# culpabilidad — presunción de inocencia. BORME capta admins registrales, no al dueño en la sombra.
+# Fuente: findings/nearius-mercantil-recon.md + matches.candidate.yaml. Excluidos: co-admins masivos
+# (Triguero 3323 / Cerdá Sanjuan 4863 / Durán Mesas 3774 = ruido) y 2º orden (Corredera et al. = 2 saltos).
+# Regla durable (auditoría 2026-07-08): toda arista mercantil nueva lleva vigencia (prop `desde`
+# y/o fechas en la note) o el marcador "(histórico, cesado)".
+
+network:
+  # ============ ADMINISTRA entre nodos que YA existen (0 nodos nuevos) ============
+  - rel: ADMINISTRA
+    source: { id: "Person:antxon", exists: true }
+    target: { id: "Company:servinabar", exists: true }
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja NA35314). Adm. Único" }
+  - rel: ADMINISTRA
+    source: { id: "Person:jose-ruz", exists: true }
+    target: { id: "Company:levantina-ingenieria-y-construccion", exists: true }
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja V73916). administrador" }
+  - rel: ADMINISTRA
+    source: { id: "Person:victor-de-aldama", exists: true }
+    target: { id: "Company:deluxe-fortune-sl", exists: true }
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja M543192). administrador" }
+  - rel: ADMINISTRA
+    source: { id: "Person:victor-de-aldama", exists: true }
+    target: { id: "Company:mtm-180-capital-sl", exists: true }
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja M700468). administrador; sub-clúster '180 Capital'" }
+  - rel: ADMINISTRA
+    source: { id: "Person:victor-de-aldama", exists: true }
+    target: { id: "Company:pilot-real-estate", exists: true }
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja M605483). administrador; clúster 'Pilot'" }
+  - rel: ADMINISTRA
+    source: { id: "Person:victor-de-aldama", exists: true }
+    target: { id: "Company:businesscity-sl", exists: true }
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja M497518). administrador" }
+  - rel: ADMINISTRA
+    source: { id: "Person:victor-de-aldama", exists: true }
+    target: { id: "Company:pilot-club-natacion-de-sevilla", exists: true }
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja M646101). administrador; clúster 'Pilot'" }
+  - rel: ADMINISTRA
+    source: { id: "Person:juan-carlos-barrabes", exists: true }
+    target: { id: "Company:formiguero-barrabes-sl", exists: true }
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja M648880). administrador" }
+  - rel: ADMINISTRA
+    source: { id: "Person:juan-carlos-barrabes", exists: true }
+    target: { id: "Company:llitarrada-innova-sl", exists: true }
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja M556278). administrador" }
+  - rel: ADMINISTRA
+    source: { id: "Person:juan-carlos-barrabes", exists: true }
+    target: { id: "Company:step-one", exists: true }
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja M461635). administrador (Step One Ventures)" }
+  - rel: ADMINISTRA
+    source: { id: "Person:juan-carlos-barrabes", exists: true }
+    target: { id: "Company:kanvas-media-web-marketing-sl", exists: true }
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja M474368). administrador" }
+  - rel: ADMINISTRA
+    source: { id: "Person:julio-martinez-martinez", exists: true }
+    target: { id: "Company:analisis-relevante", exists: true }
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja M715273). administrador" }
+  - rel: ADMINISTRA
+    source: { id: "Person:julio-martinez-martinez", exists: true }
+    target: { id: "Company:afitta-sl", exists: true }
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja A124034). administrador" }
+  - rel: ADMINISTRA
+    source: { id: "Person:julio-martinez-martinez", exists: true }
+    target: { id: "Company:agropecuaria-lucena", exists: true }
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja A149640). administrador" }
+  # (Julio→Idella se define UNA sola vez, en mercantil_network_plusultra.yaml con la note rica del
+  #  contrato 1% Plus Ultra — la fila duplicada de esta tanda se retiró en la remediación 2026-07-08:
+  #  apoc.merge no re-aplica props, así que la fila pobre ganaba silenciosamente en el grafo.)
+  - rel: ADMINISTRA
+    source: { id: "Person:julio-martinez-martinez", exists: true }
+    target: { id: "Company:rentas-emeritenses-sl", exists: true }
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja A148614). administrador; racimo patrimonial Alicante" }
+  - rel: ADMINISTRA
+    source: { id: "Person:julio-martinez-martinez", exists: true }
+    target: { id: "Company:zenzap-sl", exists: true }
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja A143676). administrador; naming-tell ZEN*" }
+  - rel: ADMINISTRA
+    source: { id: "Person:julio-martinez-martinez", exists: true }
+    target: { id: "Company:pickashop", exists: true }
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja A166091). administrador; racimo patrimonial Alicante" }
+  # ============ Vehículos NUEVOS colgados de una persona existente (≤1 salto) ============
+  # --- Racimo de Víctor de Aldama (Madrid) ---
+  - anchor: "Person:victor-de-aldama"
+    rel: ADMINISTRA
+    source: { id: "Person:victor-de-aldama", exists: true }
+    target:
+      type: Company
+      name: "Alburfoto 2020 SL"
+      hoja: "M694486"
+      provincia: "MADRID"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja M694486)" }
+  - anchor: "Person:victor-de-aldama"
+    rel: ADMINISTRA
+    source: { id: "Person:victor-de-aldama", exists: true }
+    target:
+      type: Company
+      name: "Araf & Grupovivir SL"
+      hoja: "M683397"
+      provincia: "MADRID"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja M683397)" }
+  - anchor: "Person:victor-de-aldama"
+    rel: ADMINISTRA
+    source: { id: "Person:victor-de-aldama", exists: true }
+    target:
+      type: Company
+      name: "Batarse y Asociados SL"
+      hoja: "M607590"
+      provincia: "MADRID"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja M607590)" }
+  - anchor: "Person:victor-de-aldama"
+    rel: ADMINISTRA
+    source: { id: "Person:victor-de-aldama", exists: true }
+    target:
+      type: Company
+      name: "Bocata Food SL"
+      hoja: "M536682"
+      provincia: "MADRID"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja M536682). co-admin persona jurídica Deluxe Fortune SL" }
+  - anchor: "Person:victor-de-aldama"
+    rel: ADMINISTRA
+    source: { id: "Person:victor-de-aldama", exists: true }
+    target:
+      type: Company
+      name: "Boreal Sinergias SL"
+      hoja: "M636817"
+      provincia: "MADRID"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja M636817). promoción inmobiliaria; admin solidario 2017 (cesó 2017-12)" }
+  - anchor: "Person:victor-de-aldama"
+    rel: ADMINISTRA
+    source: { id: "Person:victor-de-aldama", exists: true }
+    target:
+      type: Company
+      name: "Businesstar International 21 SL"
+      hoja: "M611179"
+      provincia: "MADRID"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja M611179)" }
+  - anchor: "Person:victor-de-aldama"
+    rel: ADMINISTRA
+    source: { id: "Person:victor-de-aldama", exists: true }
+    target:
+      type: Company
+      name: "Crisis Resolution SL"
+      hoja: "M648367"
+      provincia: "MADRID"
+      capital_social: 24000
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja M648367)" }
+  - anchor: "Person:victor-de-aldama"
+    rel: ADMINISTRA
+    source: { id: "Person:victor-de-aldama", exists: true }
+    target:
+      type: Company
+      name: "Duda Razonable SL"
+      hoja: "M650625"
+      provincia: "MADRID"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja M650625)" }
+  - anchor: "Person:victor-de-aldama"
+    rel: ADMINISTRA
+    source: { id: "Person:victor-de-aldama", exists: true }
+    target:
+      type: Company
+      name: "ERR 180 Capital SL"
+      hoja: "M706187"
+      provincia: "MADRID"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja M706187). sub-clúster '180 Capital'" }
+  - anchor: "Person:victor-de-aldama"
+    rel: ADMINISTRA
+    source: { id: "Person:victor-de-aldama", exists: true }
+    target:
+      type: Company
+      name: "Future Factory SL"
+      hoja: "M585737"
+      provincia: "MADRID"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja M585737)" }
+  - anchor: "Person:victor-de-aldama"
+    rel: ADMINISTRA
+    source: { id: "Person:victor-de-aldama", exists: true }
+    target:
+      type: Company
+      name: "Global Stratos Investments SL"
+      hoja: "M730943"
+      provincia: "MADRID"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja M730943)" }
+  - anchor: "Person:victor-de-aldama"
+    rel: ADMINISTRA
+    source: { id: "Person:victor-de-aldama", exists: true }
+    target:
+      type: Company
+      name: "Grupo Aurum Inversiones SL"
+      hoja: "M496416"
+      provincia: "MADRID"
+      capital_social: 150000
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja M496416). holding" }
+  - anchor: "Person:victor-de-aldama"
+    rel: ADMINISTRA
+    source: { id: "Person:victor-de-aldama", exists: true }
+    target:
+      type: Company
+      name: "Grupo Signum Inversiones SL"
+      provincia: "MADRID"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME). holding" }
+  - anchor: "Person:victor-de-aldama"
+    rel: ADMINISTRA
+    source: { id: "Person:victor-de-aldama", exists: true }
+    target:
+      type: Company
+      name: "Logística Comercial Montelimar SL"
+      hoja: "M695092"
+      provincia: "MADRID"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja M695092). logística" }
+  - anchor: "Person:victor-de-aldama"
+    rel: ADMINISTRA
+    source: { id: "Person:victor-de-aldama", exists: true }
+    target:
+      type: Company
+      name: "Original London SL"
+      hoja: "M569567"
+      provincia: "MADRID"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja M569567)" }
+  - anchor: "Person:victor-de-aldama"
+    rel: ADMINISTRA
+    source: { id: "Person:victor-de-aldama", exists: true }
+    target:
+      type: Company
+      name: "Pilot Valdeón SL"
+      hoja: "M655411"
+      provincia: "MADRID"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja M655411). clúster 'Pilot'" }
+  - anchor: "Person:victor-de-aldama"
+    rel: ADMINISTRA
+    source: { id: "Person:victor-de-aldama", exists: true }
+    target:
+      type: Company
+      name: "Proyectos Annapurna II SL"
+      hoja: "M645748"
+      provincia: "MADRID"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja M645748)" }
+  - anchor: "Person:victor-de-aldama"
+    rel: ADMINISTRA
+    source: { id: "Person:victor-de-aldama", exists: true }
+    target:
+      type: Company
+      name: "Proyectos Independientes GEMS II SL"
+      hoja: "M650627"
+      provincia: "MADRID"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja M650627)" }
+  - anchor: "Person:victor-de-aldama"
+    rel: ADMINISTRA
+    source: { id: "Person:victor-de-aldama", exists: true }
+    target:
+      type: Company
+      name: "Proyectos Vapesa 2015 SL"
+      hoja: "M601111"
+      provincia: "MADRID"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja M601111)" }
+  - anchor: "Person:victor-de-aldama"
+    rel: ADMINISTRA
+    source: { id: "Person:victor-de-aldama", exists: true }
+    target:
+      type: Company
+      name: "RRP 180 Capital SL"
+      hoja: "M700469"
+      provincia: "MADRID"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja M700469). sub-clúster '180 Capital'" }
+  - anchor: "Person:victor-de-aldama"
+    rel: ADMINISTRA
+    source: { id: "Person:victor-de-aldama", exists: true }
+    target:
+      type: Company
+      name: "Soum & Endell Investments SL"
+      hoja: "M650629"
+      provincia: "MADRID"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja M650629)" }
+  - anchor: "Person:victor-de-aldama"
+    rel: ADMINISTRA
+    source: { id: "Person:victor-de-aldama", exists: true }
+    target:
+      type: Company
+      name: "Telefarmacia App SL"
+      hoja: "M682829"
+      provincia: "MADRID"
+      capital_social: 2210
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja M682829). tecnología" }
+  - anchor: "Person:victor-de-aldama"
+    rel: ADMINISTRA
+    source: { id: "Person:victor-de-aldama", exists: true }
+    target:
+      type: Company
+      name: "The Mad Toilets SL"
+      hoja: "M770483"
+      provincia: "MADRID"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja M770483)" }
+  - anchor: "Person:victor-de-aldama"
+    rel: ADMINISTRA
+    source: { id: "Person:victor-de-aldama", exists: true }
+    target:
+      type: Company
+      name: "World Magic in the Villages SL"
+      provincia: "MADRID"
+      capital_social: 3000
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME). hostelería" }
+  # --- Racimo de Antxon Alonso (Navarra/Gipuzkoa/Madrid) ---
+  - anchor: "Person:antxon"
+    rel: ADMINISTRA
+    source: { id: "Person:antxon", exists: true }
+    target:
+      type: Company
+      name: "Alegure SL"
+      hoja: "NA37119"
+      provincia: "NAVARRA"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja NA37119)" }
+  - anchor: "Person:antxon"
+    rel: ADMINISTRA
+    source: { id: "Person:antxon", exists: true }
+    target:
+      type: Company
+      name: "Marbella Real State 190 SL"
+      hoja: "M780255"
+      provincia: "MADRID"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja M780255)" }
+  - anchor: "Person:antxon"
+    rel: ADMINISTRA
+    source: { id: "Person:antxon", exists: true }
+    target:
+      type: Company
+      name: "Next Generation Caliope Innova SL"
+      hoja: "M767823"
+      provincia: "MADRID"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja M767823). el nombre alude a fondos Next Generation UE" }
+  - anchor: "Person:antxon"
+    rel: ADMINISTRA
+    source: { id: "Person:antxon", exists: true }
+    target:
+      type: Company
+      name: "Residencial Las Merindades SL"
+      hoja: "SS25086"
+      provincia: "GIPUZKOA"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja SS25086). inmobiliaria" }
+  - anchor: "Person:antxon"
+    rel: ADMINISTRA
+    source: { id: "Person:antxon", exists: true }
+    target:
+      type: Company
+      name: "Residencial Playa Laga SL"
+      hoja: "SS27129"
+      provincia: "GIPUZKOA"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja SS27129). inmobiliaria" }
+  - anchor: "Person:antxon"
+    rel: ADMINISTRA
+    source: { id: "Person:antxon", exists: true }
+    target:
+      type: Company
+      name: "Promociones y Construcciones Etxebal SL"
+      hoja: "SS23921"
+      provincia: "GIPUZKOA"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja SS23921). construcción" }
+  - anchor: "Person:antxon"
+    rel: ADMINISTRA
+    source: { id: "Person:antxon", exists: true }
+    target:
+      type: Company
+      name: "Antal-Milagro SL"
+      hoja: "SS27305"
+      provincia: "GIPUZKOA"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja SS27305)" }
+  - anchor: "Person:antxon"
+    rel: ADMINISTRA
+    source: { id: "Person:antxon", exists: true }
+    target:
+      type: Company
+      name: "Antal MK Gestión y Promoción Inmobiliaria SL"
+      hoja: "SS27019"
+      provincia: "GIPUZKOA"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja SS27019). inmobiliaria" }
+  - anchor: "Person:antxon"
+    rel: ADMINISTRA
+    source: { id: "Person:antxon", exists: true }
+    target:
+      type: Company
+      name: "Carrión Ocio SL"
+      hoja: "SS27303"
+      provincia: "GIPUZKOA"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja SS27303)" }
+  - anchor: "Person:antxon"
+    rel: ADMINISTRA
+    source: { id: "Person:antxon", exists: true }
+    target:
+      type: Company
+      name: "Grupo Mining Team SL"
+      hoja: "SS39540"
+      provincia: "GIPUZKOA"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja SS39540)" }
+  - anchor: "Person:antxon"
+    rel: ADMINISTRA
+    source: { id: "Person:antxon", exists: true }
+    target:
+      type: Company
+      name: "Softlan Desarrollos Informáticos SL"
+      hoja: "SS17900"
+      provincia: "GIPUZKOA"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja SS17900). tecnología" }
+  # --- Vehículos de Juan Carlos Barrabés ---
+  - anchor: "Person:juan-carlos-barrabes"
+    rel: ADMINISTRA
+    source: { id: "Person:juan-carlos-barrabes", exists: true }
+    target:
+      type: Company
+      name: "Telefónica Open Innovation SL"
+      hoja: "M520642"
+      provincia: "MADRID"
+    edge: { rol: "consejero registral (histórico)", desde: "2013-09", note: "Consejero (BORME, hoja M520642; nombrado 2013-09, BORME-A-2013-174-28; cesó 2015-02, BORME-A-2015-42-28). Histórico, cesado. Vínculo corporativo-institucional (Barrabés en el consejo). Estructura societaria, no imputación." }
+  - anchor: "Person:juan-carlos-barrabes"
+    rel: ADMINISTRA
+    source: { id: "Person:juan-carlos-barrabes", exists: true }
+    # 061 T1b: el canónico es Company:grupo-barrabes (merges.yaml funde «Grupo Barrabés Consul SL»);
+    # declararlo por nombre recreaba el stub en cada `make mercantil` posterior a `make context`.
+    target: { id: "Company:grupo-barrabes", exists: true }
+    edge: { rol: "administrador registral", note: "Administrador registral de Grupo Barrabés Consul SL (BORME, hoja HU6693), matriz del grupo Barrabés. Estructura societaria, no imputación." }
+  # --- Red patrimonial de 'Julito' (base Alicante) ---
+  - anchor: "Person:julio-martinez-martinez"
+    rel: ADMINISTRA
+    source: { id: "Person:julio-martinez-martinez", exists: true }
+    target:
+      type: Company
+      name: "Afitta Capital SL"
+      hoja: "A124910"
+      provincia: "ALICANTE"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja A124910). distinta de Afitta SL" }
+  - anchor: "Person:julio-martinez-martinez"
+    rel: ADMINISTRA
+    source: { id: "Person:julio-martinez-martinez", exists: true }
+    target:
+      type: Company
+      name: "Rentas Calpe SL"
+      provincia: "ALICANTE"
+      capital_social: 10000
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME). racimo patrimonial Alicante" }
+  - anchor: "Person:julio-martinez-martinez"
+    rel: ADMINISTRA
+    source: { id: "Person:julio-martinez-martinez", exists: true }
+    target:
+      type: Company
+      name: "ASP Rentas SL"
+      hoja: "AL49771"
+      provincia: "ALMERÍA"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja AL49771). racimo patrimonial" }
+  - anchor: "Person:julio-martinez-martinez"
+    rel: ADMINISTRA
+    source: { id: "Person:julio-martinez-martinez", exists: true }
+    target:
+      type: Company
+      name: "Mérida Capital SL"
+      hoja: "A150261"
+      provincia: "ALICANTE"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja A150261). racimo patrimonial" }
+  - anchor: "Person:julio-martinez-martinez"
+    rel: ADMINISTRA
+    source: { id: "Person:julio-martinez-martinez", exists: true }
+    target:
+      type: Company
+      name: "Castrum Locator SL"
+      hoja: "A65672"
+      provincia: "ALICANTE"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja A65672). racimo patrimonial" }
+  - anchor: "Person:julio-martinez-martinez"
+    rel: ADMINISTRA
+    source: { id: "Person:julio-martinez-martinez", exists: true }
+    target:
+      type: Company
+      name: "Rentalia 2002 SL"
+      hoja: "A71624"
+      provincia: "ALICANTE"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja A71624). racimo patrimonial" }
+  - anchor: "Person:julio-martinez-martinez"
+    rel: ADMINISTRA
+    source: { id: "Person:julio-martinez-martinez", exists: true }
+    target:
+      type: Company
+      name: "Aplicaciones Portuarias SL"
+      hoja: "A165727"
+      provincia: "ALICANTE"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja A165727)" }
+  - anchor: "Person:julio-martinez-martinez"
+    rel: ADMINISTRA
+    source: { id: "Person:julio-martinez-martinez", exists: true }
+    target:
+      type: Company
+      name: "Estanza Hotels SL"
+      hoja: "A126845"
+      provincia: "ALICANTE"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja A126845). hostelería" }
+  - anchor: "Person:julio-martinez-martinez"
+    rel: ADMINISTRA
+    source: { id: "Person:julio-martinez-martinez", exists: true }
+    target:
+      type: Company
+      name: "Prointer 2000 SA"
+      hoja: "V72742"
+      provincia: "ALICANTE"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja V72742)" }
+  - anchor: "Person:julio-martinez-martinez"
+    rel: ADMINISTRA
+    source: { id: "Person:julio-martinez-martinez", exists: true }
+    target:
+      type: Company
+      name: "Instalaciones Eléctricas J.M. SL"
+      hoja: "V16742"
+      provincia: "VALENCIA"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja V16742)" }
+  - anchor: "Person:julio-martinez-martinez"
+    rel: ADMINISTRA
+    source: { id: "Person:julio-martinez-martinez", exists: true }
+    target:
+      type: Company
+      name: "Zenebtimar SL"
+      hoja: "A152732"
+      provincia: "ALICANTE"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja A152732). naming-tell ZEN*/inversión de MARTINEZ" }
+  - anchor: "Person:julio-martinez-martinez"
+    rel: ADMINISTRA
+    source: { id: "Person:julio-martinez-martinez", exists: true }
+    target:
+      type: Company
+      name: "Zenitram Partners SL"
+      hoja: "A143776"
+      provincia: "ALICANTE"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja A143776). naming-tell ZENITRAM = MARTINEZ invertido" }
+  - anchor: "Person:julio-martinez-martinez"
+    rel: ADMINISTRA
+    source: { id: "Person:julio-martinez-martinez", exists: true }
+    target:
+      type: Company
+      name: "Bodegas Victorianas SA"
+      hoja: "VI2239"
+      provincia: "ÁLAVA"
+    edge: { rol: "administrador registral (histórico)", note: "Administrador registral (BORME, hoja VI2239). Histórico, cesado: la ventana BORME (2009+) solo registra ceses del cargo." }
+  - anchor: "Person:julio-martinez-martinez"
+    rel: ADMINISTRA
+    source: { id: "Person:julio-martinez-martinez", exists: true }
+    target:
+      type: Company
+      name: "Inversiones Paderne SL"
+      hoja: "C24655"
+      provincia: "A CORUÑA"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja C24655)" }
+  - anchor: "Person:julio-martinez-martinez"
+    rel: ADMINISTRA
+    source: { id: "Person:julio-martinez-martinez", exists: true }
+    target:
+      type: Company
+      name: "Arrendamientos Aspe SL"
+      hoja: "A51161"
+      provincia: "ALICANTE"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja A51161). racimo de arrendamientos Alicante" }
+  - anchor: "Person:julio-martinez-martinez"
+    rel: ADMINISTRA
+    source: { id: "Person:julio-martinez-martinez", exists: true }
+    target:
+      type: Company
+      name: "Arrendamientos Carabassi SL"
+      hoja: "A71016"
+      provincia: "ALICANTE"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja A71016). racimo de arrendamientos Alicante" }
+  - anchor: "Person:julio-martinez-martinez"
+    rel: ADMINISTRA
+    source: { id: "Person:julio-martinez-martinez", exists: true }
+    target:
+      type: Company
+      name: "Arrendamientos El Campet SL"
+      hoja: "A46546"
+      provincia: "ALICANTE"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja A46546). racimo de arrendamientos Alicante" }
+  - anchor: "Person:julio-martinez-martinez"
+    rel: ADMINISTRA
+    source: { id: "Person:julio-martinez-martinez", exists: true }
+    target:
+      type: Company
+      name: "Arrendamientos San Juan SL"
+      hoja: "A50013"
+      provincia: "ALICANTE"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja A50013). racimo de arrendamientos Alicante" }
+  - anchor: "Person:julio-martinez-martinez"
+    rel: ADMINISTRA
+    source: { id: "Person:julio-martinez-martinez", exists: true }
+    target:
+      type: Company
+      name: "NEZ Asesores SL"
+      hoja: "A34664"
+      provincia: "ALICANTE"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja A34664). naming-tell NEZ = martiNEZ" }
+  - anchor: "Person:julio-martinez-martinez"
+    rel: ADMINISTRA
+    source: { id: "Person:julio-martinez-martinez", exists: true }
+    target:
+      type: Company
+      name: "NEZ Renta SL"
+      hoja: "A79972"
+      provincia: "ALICANTE"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja A79972). naming-tell NEZ = martiNEZ" }
+  - anchor: "Person:julio-martinez-martinez"
+    rel: ADMINISTRA
+    source: { id: "Person:julio-martinez-martinez", exists: true }
+    target:
+      type: Company
+      name: "NEZ Arrendadora SL"
+      hoja: "A102011"
+      provincia: "ALICANTE"
+    edge: { rol: "administrador registral", note: "Administrador registral (BORME, hoja A102011). naming-tell NEZ = martiNEZ" }
+  # ============ Puente Aldama → Avintia (enlace ausente del corpus judicial) ============
+  - rel: ADMINISTRA
+    source:
+      type: Person
+      name: "Antonio Martín Jiménez"
+      provincia: "MADRID"
+    target: { id: "Company:avintia", exists: true }
+    edge: { rol: "administrador del Grupo Avintia", note: "Dueño/administrador del Grupo Avintia (BORME; Grupo Avintia SL M501998, Corporación Grupo Avintia SL M663037, Avintia Proyectos M435015). Identidad asegurada por la constelación Avintia completa en su cartera + co-aparición con Avintia Desarrollos Inmobiliarios en Boreal Sinergias (M636817) — NO por cartera acotada: el nodo BORME 'MARTIN JIMENEZ ANTONIO' agrega 162 sociedades con homónimos obvios (auditoría 2026-07-08)." }
+  # 063 tramo 6 (2026-10-03): CONTROLS→ADMINISTRA. El árbitro pidió retirarla por no hallarla en el corpus; el BORME
+  # (hoja M636817, Nearius) la sostiene: consejera 2017-12, adm. única 2022-08, liquidadora 2024-02. Administrar ≠ controlar.
+  - rel: ADMINISTRA
+    source: { id: "Company:avintia", exists: true }
+    target: { id: "Company:boreal-sinergias-sl", exists: true }
+    edge: { rol: "administradora registral (persona jurídica)", note: "Avintia Desarrollos Inmobiliarios SL, del Grupo Avintia, figura en el BORME (hoja M636817) como consejera de Boreal Sinergias SL desde 2017-12 (cuando cesan como administradores Víctor de Aldama y Cristóbal Corredera), administradora única desde 2022-08 y liquidadora en la disolución de 2024-02. Estructura societaria, no imputación." }

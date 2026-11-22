@@ -1,0 +1,209 @@
+entities:
+  # People (central figures — exist in graph, will merge)
+  - {name: "Koldo García", type: Person}
+  - {name: "José Luis Ábalos", type: Person}
+  - {name: "Santos Cerdán", type: Person}
+  - {name: "Víctor de Aldama", type: Person}
+  - {name: "Antxón", type: Person}
+  # Organizations / parties (existing endpoints)
+  - {name: "PSOE", type: Organization}
+  - {name: "Partido Popular", type: Organization}
+  - {name: "Ministerio de Transportes, Movilidad y Agenda Urbana", type: Organization}
+  - {name: "Servinabar", type: Company}
+  - {name: "Zamora CF", type: Organization}
+  # New endpoints declared here so they can be created
+  - {name: "Ministerio de Fomento", type: Organization}
+  - {name: "UGT", type: Organization}
+  - {name: "Renfe Mercancías", type: Company}
+  - {name: "Puertos del Estado", type: Organization}
+  - {name: "Partido Socialista de Navarra", type: Organization}
+  - {name: "Patricia Úriz", type: Person}
+  - {name: "Joseba García", type: Person}
+  - {name: "Congreso de los Diputados", type: Organization}
+  - {name: "Parlamento de Navarra", type: Organization}
+  - {name: "Grupo Vivir", type: Company}
+  # Re-key s85 (2026-08-27): antes «Noran Sociedad Cooperativa» (Company) — creaba un
+  # stub duplicado del canónico Organization:noran-coop; el stub vivo se absorbe vía
+  # merges.yaml y load_merges cosecha el nombre viejo como alias.
+  - {name: "Noran Coop", type: Organization}
+
+relations:
+  # ----------------------------- José Luis Ábalos -----------------------------
+  - source: "José Luis Ábalos"
+    target: "PSOE"
+    type: MEMBER_OF
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/José_Luis_Ábalos"
+    date: "1981"
+    quote: "Miembro del Partido Socialista Obrero Español (PSOE) desde 1981"
+    note: "Militante del PSOE de 1981 a 2025, cuando fue expulsado del partido, según Wikipedia."
+
+  - source: "José Luis Ábalos"
+    target: "Ministerio de Fomento"
+    type: WORKS_FOR
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/José_Luis_Ábalos"
+    date: "2018"
+    quote: "se desempeñó como ministro de Fomento entre 2018 y 2021"
+    note: "Ministro de Fomento (7 jun 2018 - 13 ene 2020)."
+
+  - source: "José Luis Ábalos"
+    target: "Ministerio de Transportes, Movilidad y Agenda Urbana"
+    type: WORKS_FOR
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/José_Luis_Ábalos"
+    date: "2020"
+    quote: "se desempeñó como ministro de Fomento entre 2018 y 2021"
+    note: "Ministro de Transportes, Movilidad y Agenda Urbana (13 ene 2020 - 12 jul 2021), tras renombrarse Fomento."
+
+  - source: "José Luis Ábalos"
+    target: "Congreso de los Diputados"
+    type: PARTICIPATED_IN
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/José_Luis_Ábalos"
+    date: "2009"
+    quote: "fue diputado a Cortes Generales por Valencia entre 2009 y 2026"
+    note: "Diputado por Valencia en el Congreso (2009-2018 y 2019-2026)."
+
+  # ----------------------------- Koldo García -----------------------------
+  - source: "Koldo García"
+    target: "José Luis Ábalos"
+    type: ASSOCIATED_WITH
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Caso_Koldo"
+    date: "2018"
+    quote: "Fue chófer y asistente personal del político socialista José Luis Ábalos"
+    note: "Chófer y asistente personal de Ábalos."
+
+  - source: "Koldo García"
+    target: "Ministerio de Fomento"
+    type: WORKS_FOR
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Caso_Koldo"
+    date: "2018"
+    quote: "al ser nombrado Ábalos Ministro de Fomento, nombró a Koldo como su asesor principal"
+    note: "Asesor del ministro en el Ministerio de Fomento."
+
+  - source: "Koldo García"
+    target: "Renfe Mercancías"
+    type: PARTICIPATED_IN
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Caso_Koldo"
+    quote: "Ábalos le nombró consejero de Renfe Mercancías y vocal del consejo rector de Puertos del Estado"
+    note: "Consejero de Renfe Mercancías."
+
+  - source: "Koldo García"
+    target: "Puertos del Estado"
+    type: PARTICIPATED_IN
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Caso_Koldo"
+    quote: "Ábalos le nombró consejero de Renfe Mercancías y vocal del consejo rector de Puertos del Estado"
+    note: "Vocal del consejo rector de Puertos del Estado."
+
+  - source: "Koldo García"
+    target: "PSOE"
+    type: MEMBER_OF
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Caso_Koldo"
+    quote: "Afiliado al PSOE, a UGT y a la plataforma Stop Desahucios"
+    note: "Afiliado al PSOE."
+
+  - source: "Koldo García"
+    target: "UGT"
+    type: MEMBER_OF
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Caso_Koldo"
+    quote: "Afiliado al PSOE, a UGT y a la plataforma Stop Desahucios"
+    note: "Afiliado al sindicato UGT."
+
+  - source: "Koldo García"
+    target: "Patricia Úriz"
+    type: FAMILY_OF
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Caso_Koldo"
+    quote: "su mujer, Patricia Úriz"
+    note: "Esposa de Koldo García."
+
+  # 063 (2026-09-28): Koldo García → Noran Coop OWNS retirada (deny [a9895368] en relations.yaml): cofundar una
+  # cooperativa no acredita propiedad. Se quita aquí para que `make press` no la resucite.
+
+  # ----------------------------- Santos Cerdán -----------------------------
+  - source: "Santos Cerdán"
+    target: "PSOE"
+    type: MEMBER_OF
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Santos_Cerdán"
+    date: "2014"
+    quote: "es un político español que tuvo varios puestos de responsabilidad dentro del Partido Socialista Obrero Español (PSOE) entre 2014 y 2025"
+    note: "Cargos de responsabilidad en el PSOE entre 2014 y 2025; secretario de organización (2021-2025)."
+
+  - source: "Santos Cerdán"
+    target: "Partido Socialista de Navarra"
+    type: MEMBER_OF
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Santos_Cerdán"
+    date: "1999"
+    quote: "Partido Socialista de Navarra-PSOE (1999-2025)"
+    note: "Militante del PSN-PSOE (1999-2025)."
+
+  - source: "Santos Cerdán"
+    target: "Congreso de los Diputados"
+    type: PARTICIPATED_IN
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Santos_Cerdán"
+    date: "2019"
+    quote: "Partido Socialista de Navarra-PSOE (1999-2025)"
+    note: "Diputado en el Congreso por Navarra (21 may 2019 - 16 jun 2025)."
+
+  - source: "Santos Cerdán"
+    target: "Parlamento de Navarra"
+    type: PARTICIPATED_IN
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Santos_Cerdán"
+    date: "2014"
+    quote: "Partido Socialista de Navarra-PSOE (1999-2025)"
+    note: "Parlamentario foral de Navarra (27 feb 2014 - 5 sep 2017)."
+
+  # NOTE: the "Cerdán comprador del 45% de Servinabar" claim is deliberately
+  # OMITTED — it's the contested crux of the judicial case (disputed), not a
+  # clean neutral fact, so it stays out of the press-enrichment layer.
+
+  # ----------------------------- Víctor de Aldama -----------------------------
+  - source: "Víctor de Aldama"
+    target: "Zamora CF"
+    type: CONTROLS
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Víctor_de_Aldama"
+    date: "2018"
+    quote: "En 2018, a través del Grupo Vivir, adquirió el Zamora Club de Fútbol"
+    note: "Según Wikipedia (archivo aportado sin fecha de publicación), adquirió el Zamora CF en 2018 a través del Grupo Vivir y ocupó su presidencia. La relación representa esa adquisición histórica."
+
+  - source: "Víctor de Aldama"
+    target: "Grupo Vivir"
+    type: ASSOCIATED_WITH   # 063 tramo 2 (01-oct): era CONTROLS — retype [7bb52576], la fuente acredita vinculación, no control societario
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Víctor_de_Aldama"
+    date: "2018"
+    quote: "En 2018, a través del Grupo Vivir, adquirió el Zamora Club de Fútbol"
+    note: "Operó a través del Grupo Vivir para adquirir el Zamora CF."
+
+  # ----------------------------- Antxón (Antxon Alonso Egurrola) -----------------------------
+  - source: "Antxón"
+    target: "Servinabar"
+    type: OWNS
+    outlet: "Noticias de Navarra"
+    url: "https://www.noticiasdenavarra.com/politica/2025/06/11/servinabar-koldo-vinculos-9749787.html"
+    quote: "Joseba Antxon Alonso Egurrola, dueño de Servinabar 2000 S.L."
+    note: "Propietario y administrador único de Servinabar 2000 SLU según el auto de prisión del Tribunal Supremo de 30-06-2025 (p.11), que recoge además un contrato privado, no elevado a público, de cesión de 1.350 de las 3.000 participaciones a Santos Cerdán."
+
+  # 063 (2026-09-28): Antxón → Noran Coop OWNS retirada (deny [68a0e3cf] en relations.yaml); se quita aquí para
+  # que `make press` no la resucite.
+
+  - source: "Antxón"
+    target: "Koldo García"
+    type: ASSOCIATED_WITH
+    outlet: "Noticias de Navarra"
+    url: "https://www.noticiasdenavarra.com/politica/2025/06/11/servinabar-koldo-vinculos-9749787.html"
+    date: "2015"
+    quote: "Alonso, único accionista y administrador de Servinabar, fundó en junio de 2015 junto a Koldo García una sociedad denominada Noran Sociedad Cooperativa Pequeña, con sede en Donostia"
+    note: "Socios cofundadores de Noran Sociedad Cooperativa (2015)."

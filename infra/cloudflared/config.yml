@@ -1,0 +1,27 @@
+# Cloudflare Tunnel — El Entramado (entramado.org). Spec 020.
+#
+# Local (not token-managed) tunnel: this file is the VERSIONED source of truth.
+# `infra/launchd/install.sh` copies it to
+#   ~/Library/Application Support/entramado/cloudflared-config.yml
+# (the TCC-safe Support dir) where the launchd-spawned cloudflared actually reads
+# it — the repo lives under ~/Documents, which macOS TCC blocks for launchd procs.
+# The credentials JSON lives in ~/.cloudflared (NOT in the repo).
+#
+# One-time setup (see infra/cloudflared/README.md):
+#   cloudflared tunnel login                  # authorize the entramado.org zone
+#   cloudflared tunnel create entramado       # prints the UUID below; writes ~/.cloudflared/<UUID>.json
+#   # → paste the UUID into BOTH fields below, then ./infra/launchd/install.sh
+#   cloudflared tunnel route dns entramado entramado.org
+
+tunnel: f481b4e9-ab92-420e-a5c1-d328aca03179
+credentials-file: $HOME/.cloudflared/f481b4e9-ab92-420e-a5c1-d328aca03179.json
+
+# Route the apex domain to the SAME loopback forwarder the Tailscale Funnel uses
+# (socat 127.0.0.1:8080 → sm-prod:80 Caddy). Caddy serves :80 as a catch-all, so it
+# handles entramado.org and the …ts.net host alike. TLS terminates at Cloudflare's
+# edge; cloudflared → origin is plain HTTP on the loopback.
+ingress:
+  - hostname: entramado.org
+    service: http://localhost:8080
+  # Anything else hitting this tunnel gets a 404 (required catch-all rule).
+  - service: http_status:404

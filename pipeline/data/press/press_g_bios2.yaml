@@ -1,0 +1,97 @@
+# Additional NEUTRAL biographical enrichment for central figures (press / open sources).
+# NEUTRAL facts only: earlier offices, education, professional roles. NO allegations.
+# Every relation backed by a real fetched source (Wikipedia ES). source_kind=contexto.
+
+entities:
+  # People (MERGE onto existing nodes — exact graph spelling)
+  - {name: "José Luis Ábalos", type: Person}
+  - {name: "Santos Cerdán", type: Person}
+  - {name: "Víctor de Aldama", type: Person}
+  - {name: "Pedro Sánchez", type: Person}
+  - {name: "José Luis Rodríguez Zapatero", type: Person}
+
+  # New endpoints (declared)
+  - {name: "Ayuntamiento de Valencia", type: Organization}
+  - {name: "Ayuntamiento de Milagro", type: Organization, role: "Ayuntamiento de Milagro (Navarra)"}
+  - {name: "Universidad Camilo José Cela", type: Organization}
+  - {name: "Universidad de León", type: Organization}
+  - {name: "Georgia", type: Location, role: "País (Cáucaso)"}
+
+relations:
+  # --- José Luis Ábalos ---
+  - source: "José Luis Ábalos"
+    target: "Ayuntamiento de Valencia"
+    type: WORKS_FOR
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/José_Luis_Ábalos"
+    date: "1999"
+    quote: "Concejal del Ayuntamiento de Valencia 4 de julio de 1999-25 de mayo de 2009"
+    note: "Concejal del Ayuntamiento de Valencia (1999–2009), cargo anterior a su etapa estatal."
+
+  # 063 (2026-09-26): Ábalos → Universidad de Valencia WORKS_FOR retirada (deny [ef7029f1]): estudiar allí no es
+  # trabajar para ella. Se quita aquí para que `make press` no la resucite.
+
+  # --- Santos Cerdán ---
+  - source: "Santos Cerdán"
+    target: "Ayuntamiento de Milagro"
+    type: WORKS_FOR
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Santos_Cerdán"
+    date: "1999"
+    quote: "Ha sido concejal de su localidad natal en las legislaturas 1999-2003, 2007-2011 y 2011-2015."
+    note: "Concejal de Milagro (Navarra), su localidad natal, en 1999–2003, 2007–2011 y 2011–2015."
+
+  - source: "Santos Cerdán"
+    target: "Ayuntamiento de Milagro"
+    type: ASSOCIATED_WITH
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Santos_Cerdán"
+    quote: "cursó estudios de Formación Profesional de segundo grado (FP-II), titulándose como técnico en Electrónica Industrial"
+    note: "Formación previa: técnico en Electrónica Industrial (FP-II); trabajó en el sector agroalimentario antes de la política."
+
+  # --- Víctor de Aldama ---
+  - source: "Víctor de Aldama"
+    target: "Georgia"
+    type: ASSOCIATED_WITH
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Víctor_de_Aldama"
+    quote: "Ha ocupado cargos como presidente del Zamora Club de Fútbol y cónsul honorario de Georgia en Zamora."
+    note: "Cónsul honorario de Georgia en Zamora."
+
+  # --- Pedro Sánchez ---
+  - source: "Pedro Sánchez"
+    target: "Universidad Camilo José Cela"
+    type: WORKS_FOR
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Pedro_Sánchez"
+    date: "2008"
+    quote: "Desde 2008 y hasta 2013, Pedro Sánchez fue profesor asociado de «Estructura Económica» e «Historia del Pensamiento Económico» en la Facultad de Ciencias Jurídicas y Empresariales de la Universidad Camilo José Cela."
+    note: "Profesor asociado de Economía en la Universidad Camilo José Cela (2008–2013)."
+
+  - source: "Pedro Sánchez"
+    target: "Universidad Camilo José Cela"
+    type: ASSOCIATED_WITH
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/Pedro_Sánchez"
+    date: "2012"
+    quote: "Desde noviembre de 2012, es doctor en Economía y Empresa por la Universidad Camilo José Cela de Madrid"
+    note: "Doctor en Economía y Empresa por la Universidad Camilo José Cela (2012)."
+
+  # --- José Luis Rodríguez Zapatero ---
+  - source: "José Luis Rodríguez Zapatero"
+    target: "Universidad de León"
+    type: WORKS_FOR
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/José_Luis_Rodríguez_Zapatero"
+    date: "1983"
+    quote: "fue contratado como profesor colaborador de Derecho Constitucional en la misma Universidad (1983-1986)"
+    note: "Profesor colaborador de Derecho Constitucional en la Universidad de León (1983–1986)."
+
+  - source: "José Luis Rodríguez Zapatero"
+    target: "Universidad de León"
+    type: ASSOCIATED_WITH
+    outlet: "Wikipedia"
+    url: "https://es.wikipedia.org/wiki/José_Luis_Rodríguez_Zapatero"
+    date: "1982"
+    quote: "Rodríguez Zapatero obtuvo la licenciatura en 1982"
+    note: "Licenciado en Derecho por la Universidad de León (1982)."
