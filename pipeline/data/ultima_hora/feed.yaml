@@ -326,6 +326,39 @@ items:
   - Court:audiencia-nacional
   focus: Person:cristian-abel-corvillo-aguilar
   briefing_slug: cerdan-uco
+- iso: '2026-11-13'
+  date: 13 nov 2026
+  headline: >-
+    La UCO investiga una adjudicación de Adif de 28 millones para el AVE a Extremadura por la
+    presunta mediación de Cristian Corvillo a través de Koldo García
+  dek: >-
+    Según EFE (vía COPE) y ESdiario (13 de noviembre de 2026), un informe de la UCO pone el foco en una
+    adjudicación de Adif de 2019, de unos 28 millones de euros, para la plataforma del tramo de La Jara
+    de la línea de alta velocidad Madrid-Extremadura, concedida a la UTE formada por Sevilla Nevado y
+    Azvi. Según el informe policial al que ha tenido acceso EFE, el empresario Cristian Corvillo habría
+    mediado a través de Koldo García, entonces asesor del ministro José Luis Ábalos, para favorecer a
+    distintas empresas en contratos públicos, y los investigadores sospechan que pudo usar esa relación
+    para influir en el proceso. Entre los indicios figura un mensaje de García a Corvillo del 12 de
+    diciembre de 2018, «Te voy a solucionar la vida»; los investigadores sitúan ese mismo día un
+    encuentro entre García e Isabel Pardo de Vera, que entonces presidía Adif. La UCO analiza otras dos
+    adjudicaciones, un contrato de limpieza de Adif y otro de conservación de la AP-7, y ha pedido
+    información a las empresas. Según ESdiario, es la hipótesis de los investigadores, dentro de la
+    pieza separada cuyo secreto levantó el juez Ismael Moreno. Son diligencias de instrucción en
+    curso. Rige la presunción de inocencia.
+  outlet: EFE (vía COPE)
+  url: https://www.cope.es/emisoras/extremadura/noticias/uco-investiga-contrato-28-millones-ave-extremadura-conexion-caso-koldo-20261113_3474532.html
+  case_tag: Obra pública
+  entities:
+  - Person:cristian-abel-corvillo-aguilar
+  - Person:koldo-garcia
+  - Person:isabel-pardo-de-vera
+  - Person:jose-luis-abalos
+  - Person:ismael-moreno
+  - Organization:adif
+  - Company:azvi
+  - Organization:unidad-central-operativa
+  focus: Person:cristian-abel-corvillo-aguilar
+  briefing_slug: cerdan-uco
 - iso: '2026-11-12'
   date: 12 nov 2026
   headline: >-
