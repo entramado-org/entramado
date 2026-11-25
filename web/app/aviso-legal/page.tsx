@@ -59,20 +59,22 @@ export default function AvisoLegalPage() {
           <span className="text-slate-300">titulares publicados por medios de comunicación</span> sobre los
           casos que rodean al Gobierno en España y enlaza los{" "}
           <span className="text-slate-300">documentos oficiales</span> en la web del organismo que los emitió.
-          No es un medio de comunicación, ni un registro oficial, ni una resolución judicial, y{" "}
-          <span className="text-slate-300">no redacta ni afirma nada por su cuenta</span>: cada ítem muestra el
-          titular que tiene la pieza enlazada, su medio y su fecha, y un enlace a ella.
+          No es un medio de comunicación, ni un registro oficial, ni una resolución judicial.{" "}
+          <span className="text-slate-300">No redacta ni afirma nada por su cuenta, salvo en la sección
+          institucional, que es análisis y opinión propios.</span> Cada ítem muestra el titular que tiene la
+          pieza enlazada, su medio y su fecha, y un enlace a ella.
         </p>
         <p>
-          El sitio no aloja copia del contenido de ninguna pieza ni de ningún documento: solo el titular y el enlace. La sección institucional
-          es la única parte con análisis y opinión propios, y como tal debe leerse.
+          El sitio no aloja copia del contenido de ninguna pieza ni de ningún documento: solo el titular y el enlace. Lo que dice la sección
+          institucional es análisis y opinión propios, y como tal debe leerse.
         </p>
       </Section>
 
       <Section title="3. Presunción de inocencia">
         <p>
-          Muchas de las personas mencionadas en los titulares están investigadas, imputadas, procesadas o
-          acusadas en procedimientos <span className="text-slate-300">en curso</span>. Que alguien aparezca en
+          Algunas de las personas mencionadas en los titulares están investigadas, imputadas, procesadas o
+          acusadas en procedimientos <span className="text-slate-300">en curso</span>, y otros titulares informan
+          de sentencias ya dictadas, que pueden no ser firmes. Que alguien aparezca en
           un titular <span className="text-slate-200">no significa que sea culpable</span>: rige plenamente la
           presunción de inocencia hasta que exista sentencia firme. Una imputación o una acusación no son una
           condena, y el titular de un medio no es una declaración de este sitio.
@@ -82,7 +84,9 @@ export default function AvisoLegalPage() {
       <Section title="4. Titulares, enlaces y propiedad intelectual">
         <p>
           Los titulares y las piezas enlazadas pertenecen a sus medios, y los documentos oficiales a los
-          organismos que los emiten. Cada enlace lleva a la web de origen. El titular mostrado es el que tenía
+          organismos que los emiten. Cada enlace lleva a la pieza cuyo titular se muestra; cuando la pieza es de una agencia y la agencia no la
+          publica en abierto, se enlaza la web que la publicó y se indica junto al medio, por ejemplo «Europa Press
+          (vía Infobae)». El titular mostrado es el que tenía
           la pieza al incorporarla al sitio y puede haber cambiado desde entonces; los enlaces a sitios externos
           no implican respaldo de sus contenidos.
         </p>
@@ -121,8 +125,7 @@ export default function AvisoLegalPage() {
           compromete el titular: <span className="text-slate-200">acuse de recibo en un día hábil</span>;
           las rectificaciones y retiradas que afectan a personas se resuelven, o se explica por qué no
           proceden, <span className="text-slate-200">en tres días hábiles como objetivo</span>; cualquier
-          otra petición, en un mes como máximo. Un ítem retirado deja de aparecer en el sitio, incluida la página
-          de su caso. También tienes derecho a presentar una reclamación ante la Agencia Española de Protección
+          otra petición, en un mes como máximo. Un ítem retirado deja de aparecer en el sitio. También tienes derecho a presentar una reclamación ante la Agencia Española de Protección
           de Datos.
         </p>
         <p>
@@ -162,7 +165,8 @@ export default function AvisoLegalPage() {
           <ShieldAlert className="h-5 w-5 shrink-0 text-amber-400" />
           <p className="text-sm leading-relaxed text-slate-400">
             <span className="font-medium text-slate-200">En una línea.</span> Esto republica titulares de medios
-            y enlaza documentos oficiales sobre casos abiertos; rige la presunción de inocencia, y si algo sobre
+            y enlaza documentos oficiales sobre procedimientos judiciales, abiertos o ya sentenciados (la sección
+            institucional es opinión propia); rige la presunción de inocencia, y si algo sobre
             ti es inexacto o ha quedado desactualizado, escribe a{" "}
             <a href={`mailto:${CONTACTO}`} className="text-accent hover:underline">
               {CONTACTO}

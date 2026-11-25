@@ -30,7 +30,8 @@ export default function Contribuir() {
         Contacto y <span className="text-accent text-glow">rectificaciones</span>
       </h1>
       <p className="mt-4 text-lg leading-relaxed text-slate-400">
-        Este sitio solo republica titulares de medios y enlaza documentos oficiales. Si un enlace es inexacto,
+        Este sitio republica titulares de medios y enlaza documentos oficiales; no redacta ni afirma nada por su
+        cuenta, salvo en la sección institucional, que es análisis y opinión propios. Si un enlace es inexacto,
         está desactualizado o no debería figurar, se corrige o se retira escribiendo a{" "}
         <a href={`mailto:${CONTACTO}`} className="text-accent hover:underline">
           {CONTACTO}
@@ -51,7 +52,7 @@ export default function Contribuir() {
         <ol className="space-y-3 text-sm">
           <Paso n={1}>
             <strong className="text-slate-200">Escribe a {CONTACTO}</strong> indicando el ítem (el enlace de la
-            pieza o su titular) y la página del sitio donde aparece.
+            pieza o su titular).
           </Paso>
           <Paso n={2}>
             <strong className="text-slate-200">Explica qué falla</strong>: que el titular es inexacto, que ha
@@ -60,7 +61,7 @@ export default function Contribuir() {
           </Paso>
           <Paso n={3}>
             <strong className="text-slate-200">Se revisa y se responde.</strong> Un ítem retirado deja de aparecer
-            en el sitio, incluida la página de su caso.
+            en el sitio.
           </Paso>
         </ol>
         <p className="mt-4 text-sm leading-relaxed text-slate-500">
@@ -75,9 +76,9 @@ export default function Contribuir() {
         <h2 className="mb-2 text-xl font-semibold text-slate-100">Avisar de un error o proponer una pieza</h2>
         <p className="text-sm leading-relaxed text-slate-400">
           También puedes avisar de un enlace roto o de un titular que ha cambiado, o proponer una pieza de prensa
-          o un documento oficial: envía el enlace y el caso al que pertenece. Un ítem nuevo entra en el sitio
-          solo después de comprobar que la pieza existe, que es del caso y que el titular es el que muestra su
-          medio.
+          o un documento oficial: envía el enlace. Un ítem nuevo entra en el sitio solo después de comprobar que
+          la pieza existe y que el titular es el que muestra su medio. Solo entran titulares cuyas personas
+          nombradas son parte del procedimiento o cargos públicos, y sin motes.
         </p>
       </section>
 
