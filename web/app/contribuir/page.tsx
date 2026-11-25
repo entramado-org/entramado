@@ -77,8 +77,10 @@ export default function Contribuir() {
         <p className="text-sm leading-relaxed text-slate-400">
           También puedes avisar de un enlace roto o de un titular que ha cambiado, o proponer una pieza de prensa
           o un documento oficial: envía el enlace. Un ítem nuevo entra en el sitio solo después de comprobar que
-          la pieza existe y que el titular es el que muestra su medio. Solo entran titulares cuyas personas
-          nombradas son parte del procedimiento o cargos públicos, y sin motes.
+          la pieza existe y que el titular es el que muestra su medio. Solo entran piezas de medios, y solo si las
+          personas que nombra el titular son personas formalmente investigadas, acusadas o condenadas, o cargos y
+          funcionarios públicos por su actuación oficial; no testigos, abogados nombrados como tales, familiares
+          ni motes.
         </p>
       </section>
 
