@@ -114,9 +114,9 @@ export const PROBLEMAS: Problema[] = [
     titulo: "La acusación popular, en reforma",
     stat: { value: "art. 125", unit: "CE", label: "permite a cualquier ciudadano acusar; el proyecto de nueva LECrim la acota", tone: "accent" },
     llano:
-      "Cualquier ciudadano puede sostener una acusación penal aunque la Fiscalía no quiera. El proyecto de nueva LECrim, ya en las Cortes, la acota — justo cuando sostiene causas en las que la Fiscalía pidió absolver.",
+      "Cualquier ciudadano puede sostener una acusación penal aunque la Fiscalía no quiera. El proyecto de nueva LECrim, ya en las Cortes, la acota.",
     cotidiano:
-      "En el caso del hermano del presidente, la Fiscalía pidió la absolución: sin acusación popular no habría juicio.",
+      "Hoy cualquier ciudadano puede personarse como acusación en un proceso penal aunque no sea víctima; la reforma limita quién puede hacerlo y por qué delitos.",
     fuente: { ref: "Constitución, art. 125 · LECrim 101 y 270", href: "https://www.boe.es/buscar/act.php?id=BOE-A-1882-6036" },
     parte: 1,
   },
@@ -144,19 +144,6 @@ export const PROBLEMAS: Problema[] = [
     fuente: { ref: "Constitución, art. 86 · Congreso (estadística de leyes)", href: "https://app.congreso.es/est_leyes/" },
     parte: 1,
   },
-  {
-    id: "amnistia",
-    categoria: "reglas-juego",
-    titulo: "Amnistía a cambio de investidura",
-    stat: { value: "7", unit: "votos", label: "de Junts hicieron presidente a Sánchez; la ley de amnistía fue la contraprestación pactada", tone: "rose" },
-    llano:
-      "Una ley borró los delitos del procés justo cuando sus responsables tenían los votos que el candidato necesitaba. La Comisión de Venecia criticó la vía de urgencia y pidió mayorías más amplias; el TC la avaló con el tribunal partido, y en julio de 2026 el TJUE dictaminó que el Derecho de la UE no se opone a ella.",
-    cotidiano:
-      "El mensaje es simple: si tus votos valen una investidura, tus delitos son negociables. Los tuyos no lo son.",
-    fuente: { ref: "LO 1/2024 (BOE) · Comisión de Venecia, CDL-AD(2024)003", href: "https://www.boe.es/buscar/act.php?id=BOE-A-2024-11776" },
-    parte: 1,
-  },
-
   /* ── Parte 2 · La maquinaria del Estado ── */
   {
     id: "deuda-publica",
@@ -173,12 +160,12 @@ export const PROBLEMAS: Problema[] = [
   {
     id: "empleo-publico",
     categoria: "estado-gasto",
-    titulo: "Récord de empleo público y enchufes",
+    titulo: "Récord de empleo público",
     stat: { value: "3,66", unit: "M", label: "empleados públicos (EPA 1T 2026), máximo de la serie", tone: "amber" },
     llano:
-      "Nunca hubo tantos empleados públicos, rodeados de más de 19.300 entes públicos y un millar de asesores de confianza. No es solo sanidad o educación: es una maquinaria que los partidos reparten.",
+      "Nunca hubo tantos empleados públicos, rodeados de más de 19.300 entes públicos y un millar de asesores de confianza. No es solo sanidad o educación.",
     cotidiano:
-      "Pagas los sueldos del CIS, Correos o RTVE — presidencias asignadas por afinidad política, no por concurso.",
+      "Pagas la nómina de 3,66 millones de empleados públicos y el funcionamiento de más de 19.300 entes públicos.",
     fuente: { ref: "EPA (INE) · Inventario de Entes (Hacienda)", href: "https://www.ine.es/dyngs/Prensa/EPA1T26.htm" },
     parte: 2,
   },

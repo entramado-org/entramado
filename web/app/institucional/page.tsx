@@ -35,7 +35,7 @@ export const metadata = {
   title: "Contexto institucional",
   alternates: { canonical: "/institucional" },
   description:
-    "Mapa interactivo de los problemas del régimen del 78 y del poder sin urnas de Bruselas: nombramientos judiciales, Fiscalía, aforamiento, sistema electoral, democracia directa, decretazo, amnistía, deuda, empleo público, hiperregulación, justicia lenta, partitocracia, transparencia, paro, pensiones, vivienda, impuestos, poder adquisitivo, soberanía en la UE, Pfizergate, Chat Control, identidad digital, euro digital y las cuentas de Bruselas. Crítica desde una óptica de mercado, con cada cifra citada a fuente oficial.",
+    "Mapa interactivo de los problemas del régimen del 78 y del poder sin urnas de Bruselas: nombramientos judiciales, Fiscalía, aforamiento, sistema electoral, democracia directa, decretazo, deuda, empleo público, hiperregulación, justicia lenta, partitocracia, transparencia, paro, pensiones, vivienda, impuestos, poder adquisitivo, soberanía en la UE, Pfizergate, Chat Control, identidad digital, euro digital y las cuentas de Bruselas. Crítica desde una óptica de mercado, con cada cifra citada a fuente oficial.",
 };
 
 /* ────────────────────────────────────────────────────────────────────────────
@@ -58,7 +58,7 @@ export const metadata = {
  *      servicios públicos). El ENCUADRE es declaradamente crítico; el DATO, no:
  *      cada cifra se cita a fuente oficial (INE, AEAT, OCDE, AIReF, Banco de
  *      España, Comisión Europea, Min. de Vivienda, Seguridad Social/IGAE).
- *   En lo judicial (amnistía, Pfizergate, Qatargate) rige la presunción de
+ *   En lo judicial (Pfizergate, Qatargate) rige la presunción de
  *      inocencia: se distingue lo probado de lo acusado, y las sentencias sobre
  *      transparencia no se presentan como culpabilidad penal.
  *
@@ -342,8 +342,7 @@ export default function InstitucionalPage() {
           La <strong>acción popular</strong> permite a cualquier ciudadano —y a asociaciones,
           partidos u otras personas jurídicas— personarse como acusación en un proceso penal
           aunque no sean víctimas (art. 125 CE; arts. 101 y 270 LECrim). Es una vía poco
-          común en el derecho comparado y ha sido decisiva en varios casos de relevancia
-          pública.
+          común en el derecho comparado.
         </p>
         <p>
           Ya no son solo propuestas: el Consejo de Ministros aprobó el{" "}
@@ -401,12 +400,8 @@ export default function InstitucionalPage() {
           <p>
             Esta es la pieza que explica muchas otras de esta página: <strong>sin freno
             ciudadano, la única disciplina del poder son las siguientes elecciones</strong> —
-            un cheque en blanco de cuatro años que se paga entero o no se paga. Una ley tan
-            divisiva como la <a href="#amnistia" className="text-accent hover:underline">amnistía</a>{" "}
-            se aprobó por mayoría simple sin que existiera mecanismo alguno para someterla a
-            las urnas; con las reglas suizas, 50.000 firmas habrían bastado para que la
-            última palabra la tuvieran los ciudadanos. Quien diseñó el sistema decidió que
-            era mejor no preguntarte.
+            un cheque en blanco de cuatro años que se paga entero o no se paga. Quien diseñó
+            el sistema decidió que era mejor no preguntarte.
           </p>
         </TakeBox>
       </Section>
@@ -450,83 +445,6 @@ export default function InstitucionalPage() {
             «urgencia extraordinaria» se invoca dos veces al mes, deja de ser urgencia y
             pasa a ser método — y el Legislativo queda reducido a un botón de sí o no. La
             separación de poderes no suele morir de un golpe: se erosiona decreto a decreto.
-          </p>
-        </TakeBox>
-      </Section>
-
-      <Section
-        id="amnistia"
-        icon={Handshake}
-        title="La ley de amnistía: delitos borrados a cambio de votos"
-        sources={[
-          { ref: "BOE — Ley Orgánica 1/2024, de 10 de junio, de amnistía (BOE-A-2024-11776)", href: "https://www.boe.es/buscar/act.php?id=BOE-A-2024-11776" },
-          { ref: "Comisión de Venecia (Consejo de Europa) — dictamen CDL-AD(2024)003 sobre la ley de amnistía española (15-mar-2024)", href: "https://www.venice.coe.int/webforms/documents/default.aspx?pdffile=CDL-AD(2024)003-e" },
-          { ref: "Newtral — el dictamen de la Comisión de Venecia, explicado (22-mar-2024)", href: "https://www.newtral.es/comision-venecia-amnistia-paises/20240322/" },
-          { ref: "Poder Judicial — el Tribunal Supremo declara NO amnistiada la malversación del procés", href: "https://www.poderjudicial.es/cgpj/es/Poder-Judicial/Tribunal-Supremo/Noticias-Judiciales/El-Tribunal-Supremo-declara-no-amnistiado-el-delito-de-malversacion-de-caudales-publicos-en-la-causa-del--proces-" },
-          { ref: "TJUE (Gran Sala) — nota de prensa 112/26: «El Derecho de la Unión no se opone a la ley española de amnistía» (asuntos C-523/24 y C-666/24, 16-jul-2026)", href: "https://curia.europa.eu/site/upload/docs/application/pdf/2026-07/cp260112es.pdf" },
-          { ref: "COPE — el Tribunal de Luxemburgo dice que la ley de amnistía es conforme al derecho comunitario (16-jul-2026)", href: "https://www.cope.es/actualidad/espana/noticias/tribunal-luxemburgo-dice-ley-amnistia-conforme-derecho-comunitario-20260716_3405719.html" },
-        ]}
-      >
-        <p>
-          Los hechos, en orden: en noviembre de 2023 Pedro Sánchez fue investido con los{" "}
-          <strong>7 votos de Junts</strong>, cuyo acuerdo público de investidura incluía una
-          ley de amnistía para los responsables del procés. En junio de 2024 se aprobó la{" "}
-          <strong>Ley Orgánica 1/2024</strong>, que extingue la responsabilidad penal,
-          administrativa y contable de los actos vinculados al procés entre 2011 y 2023.
-        </p>
-        <p>
-          La <strong>Comisión de Venecia</strong> —el órgano consultivo del Consejo de
-          Europa en materia constitucional, consultado por el Senado— avaló que las
-          amnistías puedan existir, pero criticó lo esencial del caso español: recomendó que
-          una ley así se apruebe con <strong>mayorías cualificadas</strong>, no por mayoría
-          simple; censuró la <strong>tramitación por vía de urgencia</strong> como
-          proposición de ley (sin informes de los órganos consultivos); y advirtió de que
-          una amnistía debe unir a la sociedad, no profundizar su división. El Tribunal
-          Constitucional la avaló en junio de 2025 con el tribunal partido — <strong>votos
-          particulares de sus cuatro magistrados conservadores</strong>.
-        </p>
-        <p>
-          El 16 de julio de 2026 llegó el pronunciamiento europeo: la <strong>Gran Sala del
-          TJUE declaró que el Derecho de la Unión no se opone a la ley de amnistía</strong>{" "}
-          (sentencias C-523/24 y C-666/24, sobre las cuestiones prejudiciales del Tribunal
-          de Cuentas y de la Audiencia Nacional). Los intereses financieros de la UE no se
-          ven afectados «por la mera disminución de la renta nacional bruta» que pudiera
-          derivarse de una secesión — el argumento que sostenía una de las dos excepciones
-          que aplicaba el Supremo a la malversación —; la directiva antiterrorista «no queda
-          menoscabada»; y el control europeo se limita a problemas «de carácter sistémico»
-          del sistema judicial, que el Tribunal no aprecia. Único límite que fija: el plazo
-          de dos meses para aplicar la amnistía no puede pasar por encima de cuestiones
-          prejudiciales pendientes — si lo hiciera, esas disposiciones «deberían dejarse
-          inaplicadas».
-        </p>
-        <p>
-          La pelota vuelve así a los tribunales españoles, que deciden caso a caso conforme
-          a esa interpretación: el <strong>Tribunal Supremo</strong>, que mantenía que la
-          malversación del procés no era amnistiable (beneficio patrimonial + afectación a
-          los intereses financieros de la UE — esta segunda pata, tocada por el fallo), y el{" "}
-          <strong>Tribunal Constitucional</strong>.
-        </p>
-        <TakeBox>
-          <p>
-            Despejemos el eufemismo de la «normalización institucional»: <strong>los
-            beneficiarios de la ley aportaron los votos que la hicieron posible</strong>, y
-            los aportaron precisamente a cambio de ella. Que el instrumento sea
-            constitucional no lo hace menos corrosivo: si la consecuencia penal de un delito
-            depende de cuántos escaños controlen sus autores, la igualdad ante la ley pasa a
-            tener excepciones parlamentarias. Y el diseño institucional cierra el círculo:
-            como España carece de <a href="#democracia-directa" className="text-accent hover:underline">
-            freno ciudadano a las leyes</a>, la única instancia que pudo pronunciarse fue un
-            Constitucional <a href="#nombramientos" className="text-accent hover:underline">nombrado
-            por los mismos partidos</a> que negociaron la amnistía.
-          </p>
-          <p>
-            El fallo del TJUE no cambia ese diagnóstico — lo consuma. Luxemburgo solo
-            respondía a si el Derecho de la UE <em>impide</em> la ley, no a si es sana:
-            el propio Tribunal subraya que amnistiar es competencia de los Estados y que su
-            control se limita a lo sistémico. Con todos los avales judiciales ya emitidos,
-            queda a la vista lo esencial: <strong>ninguna instancia juzgará jamás el fondo
-            del intercambio</strong> — delitos borrados a cambio de una investidura. Todo
-            fue legal; eso es exactamente lo que denunciamos del diseño.
           </p>
         </TakeBox>
       </Section>
@@ -596,7 +514,7 @@ export default function InstitucionalPage() {
       <Section
         id="empleo-publico"
         icon={Building2}
-        title="Empleo público y clientelismo: la maquinaria que se reparte"
+        title="Empleo público: la maquinaria del Estado"
         sources={[
           { ref: "INE — Encuesta de Población Activa, 1.er trimestre 2026 (empleo público: 3.662.500)", href: "https://www.ine.es/dyngs/Prensa/EPA1T26.htm" },
           { ref: "Inventario de Entes del Sector Público (Invente) — Ministerio de Hacienda / IGAE", href: "https://www.pap.hacienda.gob.es/invente2/pagMenuPrincipalV2.aspx" },
@@ -634,11 +552,9 @@ export default function InstitucionalPage() {
           <p>
             El problema no es el funcionario que aprueba una oposición: es que{" "}
             <strong>el perímetro del Estado se ha vuelto una agencia de colocación</strong>.
-            Cada ente nuevo son consejos, asesores y contratos con menos foco encima; cada
-            presidencia repartida por carnet convierte una institución de todos en una
-            delegación del partido. Y el incentivo se realimenta:{" "}
+            Cada ente nuevo son consejos, asesores y contratos con menos foco encima. Y el incentivo se realimenta:{" "}
             <strong>quien debe su nómina al BOE tiende a votar que el BOE crezca</strong>.
-            Auditar entes, fusionarlos y nombrar por concurso no es ideología: es higiene
+            Auditar entes y fusionarlos no es ideología: es higiene
             democrática.
           </p>
         </TakeBox>
@@ -1368,9 +1284,7 @@ export default function InstitucionalPage() {
             Julio de 2026 añadió la lección de procedimiento: <strong>una cámara votó «no»
             por mayoría y la norma sobrevivió</strong>, porque se eligió la única vía —
             urgencia, calendario de vacaciones y un umbral de mayoría absoluta — en la que
-            el «no» no podía ganar. Es la misma técnica que la Comisión de Venecia censuró
-            en la <a href="#amnistia" className="text-accent hover:underline">amnistía
-            española</a>: la urgencia como herramienta para esquivar el escrutinio. Cuando
+            el «no» no podía ganar. Cuando
             aprobar depende de convencer y rechazar depende de un quórum imposible en julio,
             el procedimiento ha sustituido a la votación. Y la autoexención de los aparatos
             del Estado en los borradores es la confesión de diseño: <strong>el escáner
@@ -1578,7 +1492,7 @@ export default function InstitucionalPage() {
             <span className="text-slate-200">cada cifra está citada a su fuente oficial</span>{" "}
             (INE, AEAT, OCDE, AIReF, Banco de España, Comisión Europea, Tribunal de Cuentas
             Europeo, BCE, EUR-Lex…) y las estimaciones de think-tanks y los datos de prensa
-            van nombrados. En lo judicial (amnistía, Pfizergate, Qatargate) rige la{" "}
+            van nombrados. En lo judicial (Pfizergate, Qatargate) rige la{" "}
             <span className="text-slate-200">presunción de inocencia</span>: distinguimos lo
             probado de lo acusado, y una sentencia sobre transparencia no es una condena
             penal. No inventamos datos: lo que no
