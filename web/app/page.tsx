@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, FileText, Landmark, Mail, Newspaper, ShieldAlert } from "lucide-react";
 import ItemList from "@/components/ItemList";
-import { CASOS, DOCUMENTOS, ITEMS, itemsDeCaso } from "@/lib/datos";
+import { ITEMS } from "@/lib/datos";
 
 export const metadata = {
   alternates: { canonical: "/" },
@@ -23,8 +23,9 @@ export default function Landing() {
         <p className="mt-5 max-w-2xl text-lg leading-relaxed text-slate-400">
           El Entramado republica los titulares que los medios han publicado sobre los casos que rodean al
           Gobierno y enlaza los documentos oficiales en la web del organismo que los emitió.{" "}
-          <span className="text-slate-300">No redacta ni afirma nada por su cuenta</span>: cada titular es el
-          de la pieza enlazada, con su medio y su fecha. Rige la presunción de inocencia.
+          <span className="text-slate-300">No redacta ni afirma nada por su cuenta, salvo en la sección
+          institucional, que es análisis y opinión propios.</span> Cada titular es el de la pieza enlazada,
+          con su medio y su fecha. Rige la presunción de inocencia.
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
           <Link
@@ -70,35 +71,6 @@ export default function Landing() {
         <ItemList items={ITEMS.slice(0, ULTIMOS)} />
       </section>
 
-      {/* casos */}
-      <section className="mt-16">
-        <h2 className="mb-1 text-2xl font-semibold text-slate-100">Los casos</h2>
-        <p className="mb-6 text-sm text-slate-500">Los titulares y los documentos oficiales publicados sobre cada uno.</p>
-        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {CASOS.map((c) => {
-            const n = itemsDeCaso(c.slug).length;
-            return (
-              <li key={c.slug}>
-                <Link
-                  href={`/caso/${c.slug}`}
-                  className="group flex h-full flex-col rounded-2xl glass p-5 transition hover:border-accent/40 hover:bg-white/5"
-                >
-                  <span className="text-sm font-medium text-slate-100 group-hover:text-accent">{c.nombre}</span>
-                  <span className="mt-1 text-xs text-slate-500">
-                    {n} {n === 1 ? "titular" : "titulares"}
-                  </span>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-        <p className="mt-4 text-sm text-slate-500">
-          <Link href="/documentos" className="text-slate-400 hover:text-accent">
-            {DOCUMENTOS.length} documentos oficiales →
-          </Link>
-        </p>
-      </section>
-
       {/* recordatorio */}
       <section className="mt-16 rounded-2xl glass p-5">
         <div className="flex gap-3">
@@ -106,7 +78,7 @@ export default function Landing() {
           <p className="text-sm leading-relaxed text-slate-400">
             <span className="font-medium text-slate-200">Presunción de inocencia.</span> Los titulares son los
             de cada medio, no una afirmación de este sitio: que alguien aparezca en uno no significa que sea
-            culpable. Si algo es inexacto o ha quedado desactualizado, o quieres que se retire un enlace,{" "}
+            culpable, y rige hasta que exista sentencia firme. Si algo es inexacto o ha quedado desactualizado, o quieres que se retire un enlace,{" "}
             <Link href="/contribuir" className="underline decoration-white/20 underline-offset-2 hover:text-accent">
               escríbenos
             </Link>

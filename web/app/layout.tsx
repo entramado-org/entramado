@@ -8,8 +8,8 @@ import { SITE_URL } from "@/lib/site";
 const TITLE = "El Entramado — Titulares y documentos oficiales de los casos que rodean al Gobierno en España";
 const DESCRIPTION =
   "Los titulares que la prensa ha publicado sobre los casos que rodean al Gobierno en España y los " +
-  "documentos oficiales de cada caso, siempre enlazados a su fuente. El sitio republica: no redacta " +
-  "ni afirma nada por su cuenta.";
+  "documentos oficiales relacionados, siempre enlazados a su fuente. El sitio republica: no redacta " +
+  "ni afirma nada por su cuenta, salvo en la sección institucional, que es análisis y opinión propios.";
 
 export const metadata: Metadata = {
   // Absolute base for every relative canonical/OG url below; entramado.org is the canonical host.
@@ -32,12 +32,10 @@ export const metadata: Metadata = {
   },
 };
 
-// viewport-fit=cover enables the env(safe-area-inset-*) padding on notched phones.
 // Zoom is left enabled (accessibility — never disable it).
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  viewportFit: "cover",
   themeColor: "#070a12", // matches bg-ink-950 so the browser chrome blends in
 };
 
