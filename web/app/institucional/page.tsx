@@ -35,7 +35,7 @@ export const metadata = {
   title: "Contexto institucional",
   alternates: { canonical: "/institucional" },
   description:
-    "Mapa interactivo de los problemas del régimen del 78 y del poder sin urnas de Bruselas: nombramientos judiciales, Fiscalía, aforamiento, sistema electoral, democracia directa, decretazo, deuda, empleo público, hiperregulación, justicia lenta, partitocracia, transparencia, paro, pensiones, vivienda, impuestos, poder adquisitivo, soberanía en la UE, Pfizergate, Chat Control, identidad digital, euro digital y las cuentas de Bruselas. Crítica desde una óptica de mercado, con cada cifra citada a fuente oficial.",
+    "Mapa interactivo de los problemas del régimen del 78 y del poder sin urnas de Bruselas: nombramientos judiciales, Fiscalía, aforamiento, sistema electoral, democracia directa, decretazo, deuda, empleo público, hiperregulación, justicia lenta, partitocracia, transparencia, paro, pensiones, vivienda, impuestos, poder adquisitivo, soberanía en la UE, Chat Control, identidad digital, euro digital, las cuentas de Bruselas y los privilegios de la Eurocámara. Crítica desde una óptica de mercado: opinión propia declarada y cifras con su fuente, oficial o atribuida por su nombre.",
 };
 
 /* ────────────────────────────────────────────────────────────────────────────
@@ -51,26 +51,26 @@ export const metadata = {
  *   3. "Tu bolsillo" (#coste, id conservado) — paro, pensiones, vivienda,
  *      impuestos y poder adquisitivo.
  *   4. "El poder sin urnas" (#europa, spec 034) — el nivel europeo: soberanía,
- *      Pfizergate, Chat Control, identidad digital, euro digital, las cuentas
- *      de la UE y los privilegios de la Eurocámara.
+ *      Chat Control, identidad digital, euro digital, las cuentas de la UE y
+ *      los privilegios de la Eurocámara.
  *   Las partes 2 a 4 son crítica abierta desde una óptica liberal / de
  *      mercado (eficiencia e intereses alineados con el ciudadano, no contra los
  *      servicios públicos). El ENCUADRE es declaradamente crítico; el DATO, no:
- *      cada cifra se cita a fuente oficial (INE, AEAT, OCDE, AIReF, Banco de
- *      España, Comisión Europea, Min. de Vivienda, Seguridad Social/IGAE).
- *   En lo judicial (Pfizergate, Qatargate) rige la presunción de
- *      inocencia: se distingue lo probado de lo acusado, y las sentencias sobre
- *      transparencia no se presentan como culpabilidad penal.
+ *      cada cifra lleva su fuente, oficial cuando existe (INE, AEAT, OCDE, AIReF,
+ *      Banco de España, Comisión Europea, Min. de Vivienda, Seguridad Social/IGAE)
+ *      y atribuida por su nombre cuando es de prensa, de un estudio o de un
+ *      think-tank. Una cifra sin enlace en la caja de fuentes de su sección no entra.
+ *   Esta página no trata causas judiciales ni a personas con causa.
  *
  * Disciplina que sostiene la credibilidad:
  *   - Dato oficial → como hecho, con enlace.
- *   - Think-tank o fuente con sesgo / privada (Civismo, IEE-CEOE, U. Hespérides,
- *     Fedea, OCU, idealista) → ATRIBUIDO por su nombre en el texto, nunca como
- *     dato neutro.
+ *   - Prensa, estudio o fuente con sesgo / privada (Fedea, CEOE, Vozpópuli,
+ *     The Objective…) → ATRIBUIDO por su nombre en el texto, nunca como
+ *     dato neutro, y con su enlace en la caja de fuentes.
  *   - Cifra sin fuente única (deuda implícita de pensiones, tax gap, recaudación
  *     nacional de ITP) → NO se publica como número cerrado.
  * Override consciente de la norma "sin panfleto" del 2026-06-02: la interpretación
- * es nuestra y se declara como tal; la prueba sigue siendo irrefutable.
+ * es nuestra y se declara como tal; la prueba sigue siendo comprobable.
  * ──────────────────────────────────────────────────────────────────────────── */
 
 interface Source {
@@ -172,11 +172,12 @@ export default function InstitucionalPage() {
             segunda parte es una <span className="text-slate-200">crítica abierta desde
             una perspectiva de mercado</span> —eficiencia e incentivos alineados con el
             ciudadano—. <span className="text-slate-300">No es estar contra los servicios
-            públicos</span>: es exigir que funcionen y que el dinero rinda. El encuadre es
-            nuestro y se declara como tal; <span className="text-slate-200">cada cifra,
-            en cambio, va citada a su fuente oficial</span> (INE, AEAT, OCDE, AIReF, Banco
-            de España, Comisión Europea…) y es comprobable. Lo persuasivo no es lo
-            incendiario, sino lo irrefutable.
+            públicos</span>: es exigir que funcionen y que el dinero rinda. El encuadre y las
+            conclusiones son nuestros y se declaran como tales; <span className="text-slate-200">las
+            cifras, en cambio, llevan su fuente</span>: oficial cuando existe (INE, AEAT, OCDE,
+            AIReF, Banco de España, Comisión Europea…) y, cuando es de prensa, de un estudio o de
+            un think-tank, atribuida por su nombre. Lo persuasivo no es lo incendiario, sino lo
+            comprobable.
           </p>
         </div>
         <nav className="mt-5 flex flex-wrap gap-2 text-[13px]">
@@ -204,10 +205,11 @@ export default function InstitucionalPage() {
         title="Las reglas del juego"
         intro={
           <>
-            Cómo está construido el poder. <span className="text-slate-300">Cada
-            afirmación cita la norma y el artículo concreto</span>, que es la fuente que
-            vale; el enlace lleva al texto oficial. Aquí las valoraciones se atribuyen a
-            quien las hace —GRECO, Comisión Europea— y no se afirman como propias.
+            Cómo está construido el poder. <span className="text-slate-300">Las
+            afirmaciones descriptivas citan la norma y el artículo concreto</span>, que es la
+            fuente que vale; el enlace lleva al texto oficial. Las valoraciones de terceros
+            —GRECO, Comisión Europea— se atribuyen a quien las hace; las nuestras van en los
+            recuadros «la lectura».
           </>
         }
       />
@@ -460,8 +462,8 @@ export default function InstitucionalPage() {
             propios — endeudarse, crecer, regular y financiar a quien lo gobierna. Una
             lectura crítica de cinco engranajes: deuda, plantilla, normas, justicia y
             partitocracia. El encuadre es nuestro;{" "}
-            <span className="text-slate-300">cada cifra está citada a su fuente
-            oficial</span>, y las estimaciones de think-tanks van nombradas.
+            <span className="text-slate-300">las cifras llevan su fuente</span>, oficial
+            cuando existe, y las de prensa, estudios o think-tanks van atribuidas por su nombre.
           </>
         }
       />
@@ -683,7 +685,6 @@ export default function InstitucionalPage() {
           { ref: "BOE — Resolución de 7-ene-2025, subvenciones de funcionamiento a partidos, 4.º trimestre 2024 (BOE-A-2025-693)", href: "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2025-693" },
           { ref: "Tribunal de Cuentas — fiscalización de las contabilidades electorales de las elecciones generales de 2023", href: "https://www.cuentaspartidospoliticos.es/es/noticias/detalle/El-Tribunal-de-Cuentas-considera-justificados-gastos-por-valor-de-58-millones-de-euros-realizados-por-los-partidos-politicos-para-financiar-la-campana-de-las-elecciones-generales-de-2023/" },
           { ref: "BOE — RD 963/2024, subvención a fundaciones de partidos (BOE-A-2024-19174)", href: "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2024-19174" },
-          { ref: "El Debate — evolución de las subvenciones del Ministerio de Trabajo a los sindicatos, 2020-2025", href: "https://www.eldebate.com/economia/20260421/sindicatos-quedan-yolanda-diaz-gran-benefactora-cuadriplico-ayudas-cinco-anos_408895.html" },
           { ref: "Fundación Hay Derecho — Estudio sobre las puertas giratorias en la AGE (2017)", href: "https://hayderecho.com/wp-content/uploads/2017/04/Estudio-sobre-Puertas-Giratorias_Vconsolidada-2.pdf" },
         ]}
       >
@@ -700,7 +701,6 @@ export default function InstitucionalPage() {
         <StatGrid>
           <BigStat value="~53" unit="M€/año" label="Subvención estatal ordinaria a partidos" sub="Cálculo a partir del BOE (13,18 M€/trimestre)" tone="amber" />
           <BigStat value="58" unit="M€" label="Gastos electorales justificados, generales 2023" sub="Tribunal de Cuentas" tone="amber" />
-          <BigStat value="32" unit="M€" label="Subvenciones de Trabajo a sindicatos en 2025 (+260% en 5 años)" sub="El Debate, s/ resoluciones del Ministerio" tone="rose" />
           <BigStat value="377 / 6" label="Autorizaciones vs denegaciones a ex altos cargos para irse a la privada" sub="F. Hay Derecho, s/ datos OCI (hasta 2016)" tone="rose" />
         </StatGrid>
         <BarCompare
@@ -794,9 +794,9 @@ export default function InstitucionalPage() {
             Las mismas reglas, vistas por la factura que dejan. Una lectura crítica desde
             la eficiencia y los incentivos: ¿a quién benefician realmente el mercado
             laboral, el sistema de pensiones, el precio de la vivienda, la presión fiscal
-            y la inflación? El encuadre es nuestro; <span className="text-slate-300">cada
-            cifra está citada a su fuente oficial</span>, y las estimaciones de
-            think-tanks van nombradas.
+            y la inflación? El encuadre es nuestro; <span className="text-slate-300">las
+            cifras llevan su fuente</span>, oficial cuando existe, y las de prensa, estudios o
+            think-tanks van atribuidas por su nombre.
           </>
         }
       />
@@ -814,10 +814,7 @@ export default function InstitucionalPage() {
         <p>
           El paro español no es un accidente cíclico: es <strong>estructural y crónico</strong>.
           Según Eurostat, en mayo de 2026 España tenía un <strong>10,3% de paro</strong> —
-          casi el doble de la media de la UE (5,9%)— y solo en febrero de 2026 dejó de ser
-          el país con más paro de la Unión, superada por Finlandia, tras una racha que la
-          prensa cifra en 39 meses consecutivos liderando la tabla y en una posición de
-          cabeza casi ininterrumpida desde 2013.
+          casi el doble de la media de la UE (5,9%).
         </p>
         <StatGrid>
           <BigStat value="10,3" unit="%" label="Tasa de paro (mayo 2026)" sub="Eurostat — media UE: 5,9%" tone="rose" />
@@ -846,7 +843,7 @@ export default function InstitucionalPage() {
         </p>
         <TakeBox>
           <p>
-            Medio siglo con el paro doblando al vecindario no se explica por la mala
+            Un paro casi doble que el de la media de la UE no se explica por la mala
             suerte: es el resultado de <strong>encarecer y arriesgar la contratación</strong>
             —cotizaciones de las más altas de la OCDE (ver Impuestos), despido incierto,
             convenios rígidos— que protege a quien ya está dentro a costa de quien está
@@ -886,7 +883,6 @@ export default function InstitucionalPage() {
           <BigStat value="2,44" label="Cotizantes por cada pensionista (2024)" sub="Seguridad Social" />
           <BigStat value="182.526" unit="M€" label="Gasto en pensiones en 2025 (+5,7% en un año)" sub="Min. Inclusión — ejecución 2025" />
           <BigStat value="16,1" unit="% PIB" label="Gasto de pensiones proyectado a 2050" sub="Ageing Report 2024 (CE)" tone="amber" />
-          <BigStat value="53,7" unit="%" label="Tasa de dependencia (mayores/activos) en 2050" sub="Ivie, s/ proyecciones INE" />
         </StatGrid>
         <TrendStrip
           title="Gasto en pensiones, % del PIB — proyección de la Comisión Europea"
@@ -928,8 +924,7 @@ export default function InstitucionalPage() {
         <p>
           El precio sube por lo de siempre: <strong>mucha demanda y poca oferta</strong>.
           Y la oferta no es escasa por azar — está estrangulada por decisión política. Se
-          construye una fracción de lo que se construía, y casi todo el suelo está vetado a
-          la edificación.
+          construye una fracción de lo que se construía.
         </p>
         <BarCompare
           title="Viviendas de obra nueva al año: del pico a hoy"
@@ -944,26 +939,7 @@ export default function InstitucionalPage() {
           <BigStat value="+12,9" unit="%" label="Subida del precio de la vivienda, 1T 2026" sub="INE — IPV (interanual)" tone="amber" />
           <BigStat value="8,0" unit="años" label="De renta bruta del hogar para comprar una vivienda (1T 2026)" sub="Banco de España — Síntesis de Indicadores" tone="amber" />
           <BigStat value="36,1" unit="%" label="Esfuerzo teórico anual de acceso a la vivienda (1T 2026)" sub="Banco de España (umbral sano: 30%)" />
-          <BigStat value="~2,5" unit="%" label="Del parque es vivienda social en España" sub="UPF / Provivienda — media UE ~9,3%" />
         </StatGrid>
-        <p>
-          ¿Por qué no se construye? Según el Centro Ruth Richardson (U. de las Hespérides,
-          think-tank de orientación liberal), <strong>en torno al 95% del suelo está
-          clasificado como no urbanizable</strong> y solo una porción mínima admite vivienda
-          a corto plazo; reclasificar suelo lleva una década. Es una estimación de ese
-          centro, no un dato del INE, pero apunta a la causa estructural: la oferta la
-          raciona el planeamiento.
-        </p>
-        <BarCompare
-          title="Vivienda social como % del parque total"
-          data={[
-            { label: "España", value: 2.5, display: "~2,5%", highlight: true },
-            { label: "Media UE", value: 9.3, display: "~9,3%" },
-            { label: "Austria", value: 24, display: "~24%" },
-            { label: "Países Bajos", value: 30, display: "~30%" },
-          ]}
-          source="Fuente: estudio UPF / Provivienda. El Estado que más encarece la compra es, a la vez, el que menos vivienda asequible aporta."
-        />
         <TakeBox>
           <p>
             El conflicto de interés es directo: comprar una vivienda paga <strong>IVA del
@@ -974,13 +950,6 @@ export default function InstitucionalPage() {
             recauda: <strong>el primer interesado en que el precio suba es quien debería
             moderarlo</strong>. Lo que abarataría la vivienda —liberar suelo, agilizar
             licencias, dejar construir— es justo lo que reduce esa recaudación.
-          </p>
-          <p className="text-[13px] text-slate-400">
-            El control de precios del alquiler (Ley de Vivienda) es objeto de debate: sus
-            defensores lo ven como protección; sus críticos, como menos oferta. El dato
-            observable es que en 2024 el alquiler siguió en máximos (+11,5%, según el índice
-            de idealista — fuente privada). El precio no obedece a decretos, sino a cuánta
-            oferta haya.
           </p>
         </TakeBox>
       </Section>
@@ -1006,7 +975,6 @@ export default function InstitucionalPage() {
           <BigStat value="41,4" unit="%" label="Cuña fiscal sobre el salario medio (soltero)" sub="OCDE 2025 — media OCDE: 35,1%" tone="amber" />
           <BigStat value="294.734" unit="M€" label="Recaudación tributaria de la AEAT en 2024" sub="+8,4% sobre 2023" />
           <BigStat value="47" unit="%" label="Tipo marginal máximo estatal del IRPF" sub="(+ tramo autonómico)" />
-          <BigStat value="30 jul" label="Día de la liberación fiscal: 212 días para pagar impuestos" sub="Fund. Civismo (think-tank liberal)" tone="amber" />
         </StatGrid>
         <BarCompare
           title="Cuña fiscal sobre el trabajo: lo que se queda el Estado del coste laboral"
@@ -1017,12 +985,6 @@ export default function InstitucionalPage() {
           ]}
           source="Fuente: OCDE, Taxing Wages 2026. España es la 10.ª más alta de 38 países; el grueso son cotizaciones, que encarecen contratar."
         />
-        <p>
-          Sobre la presión fiscal total (en torno al <strong>37% del PIB</strong> según
-          Eurostat), el IEE —el instituto de la CEOE— sostiene que el «esfuerzo fiscal»
-          español supera en ~18% la media de la UE por hacerse sobre una renta per cápita
-          menor. Es la tesis de una patronal, no un dato neutro; se cita como tal.
-        </p>
         <TakeBox>
           <p>
             La asimetría es el problema: <strong>Hacienda funciona como un reloj para
@@ -1044,7 +1006,7 @@ export default function InstitucionalPage() {
           { ref: "INE — nota de prensa del IPC, diciembre 2025 (anual +2,9%)", href: "https://www.ine.es/dyngs/Prensa/IPC1225.htm" },
           { ref: "OCDE — Employment Outlook (evolución de salarios reales)", href: "https://www.oecd.org/en/publications/oecd-employment-outlook_19991266.html" },
           { ref: "Eurostat — salarios y costes laborales (comparación europea)", href: "https://ec.europa.eu/eurostat/web/labour-market/earnings" },
-          { ref: "AIReF y Fedea — efecto de no deflactar el IRPF por inflación (estimaciones)", href: "https://www.airef.es/es/centro-documental/" },
+          { ref: "AIReF — efecto de no deflactar el IRPF por inflación (estimación)", href: "https://www.airef.es/es/centro-documental/" },
         ]}
       >
         <p>
@@ -1081,8 +1043,7 @@ export default function InstitucionalPage() {
             como el Estado <strong>no deflacta los tramos del IRPF</strong>, una subida
             salarial que solo compensa los precios te empuja a tipos más altos y pagas más
             impuesto sobre un poder de compra que no ha crecido. Es la «progresividad en
-            frío»: la AIReF la cifra en más de 10.000 M€ al año y Fedea estima que una
-            familia de renta media paga ~30% más de IRPF que en 2015 por este motivo. Una
+            frío»: la AIReF la cifra en más de 10.000 M€ al año. Una
             subida de impuestos que nadie aprobó en el Parlamento.
           </p>
         </TakeBox>
@@ -1098,11 +1059,9 @@ export default function InstitucionalPage() {
             Encima de todo lo anterior hay otra capa de poder: la Unión Europea, cuyas
             normas España debe aplicar y cuyo único órgano con iniciativa legislativa no
             sale de ninguna urna. Mismas reglas que en el resto de la página:{" "}
-            <span className="text-slate-300">cada cifra citada a su fuente</span> —aquí,
-            sobre todo, sentencias, dictámenes y auditorías oficiales de la propia UE—, la
-            crítica declarada como nuestra, y{" "}
-            <span className="text-slate-300">presunción de inocencia</span> en lo judicial:
-            lo probado se distingue de lo acusado.
+            <span className="text-slate-300">las cifras llevan su fuente</span> —aquí,
+            sobre todo, tratados, votaciones, dictámenes y auditorías oficiales de la propia
+            UE— y la crítica se declara como nuestra.
           </>
         }
       />
@@ -1114,8 +1073,6 @@ export default function InstitucionalPage() {
         sources={[
           { ref: "Tratado de la Unión Europea, art. 17 (texto consolidado, EUR-Lex): iniciativa legislativa de la Comisión y elección de su presidente", href: "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:12016M017" },
           { ref: "Parlamento Europeo — resolución P9_TA(2022)0242 reclamando un derecho de iniciativa propio (art. 225 TFUE)", href: "https://eur-lex.europa.eu/legal-content/ES/TXT/PDF/?uri=CELEX:52022IP0242" },
-          { ref: "Euronews — la investidura de Von der Leyen en 2019: 383 votos, sin haber sido candidata (Spitzenkandidat)", href: "https://es.euronews.com/2019/07/03/ha-sido-un-fraude-la-eleccion-de-ursula-von-der-leyen-como-presidenta-de-la-comision-euro" },
-          { ref: "Le Monde diplomatique en español — «¿Quién ha elegido a Ursula von der Leyen?»", href: "https://mondiplo.com/quien-ha-elegido-a-ursula-von-der-leyen" },
         ]}
       >
         <p>
@@ -1128,17 +1085,13 @@ export default function InstitucionalPage() {
           ningún elector ha puesto ahí.
         </p>
         <p>
-          ¿Y quién elige a quien manda en la Comisión? Los gobiernos, entre ellos. El
-          sistema del <em>Spitzenkandidat</em> —que el presidente saliera del cabeza de
-          lista más votado en las europeas— se ensayó en 2014 para dar un barniz electoral
-          al cargo… y se abandonó en cuanto estorbó: en 2019 el Consejo Europeo descartó a
-          los dos cabezas de lista (Weber y Timmermans) y sacó de la chistera a{" "}
-          <strong>Ursula von der Leyen, que no había concurrido a las elecciones</strong>.
-          El Parlamento la ratificó por <strong>383 votos contra 327 — 9 de margen</strong>.
+          ¿Y quién elige a quien manda en la Comisión? Los gobiernos, entre ellos: el{" "}
+          <strong>Consejo Europeo propone un candidato por mayoría cualificada</strong> y el
+          Parlamento Europeo lo elige o no (art. 17.7 TUE). Ningún elector vota directamente
+          al presidente de la Comisión.
         </p>
         <StatGrid>
-          <BigStat value="0" label="Papeletas ciudadanas llevaban el nombre de Von der Leyen en 2019" sub="No fue candidata en las europeas" tone="rose" />
-          <BigStat value="9" unit="votos" label="Margen de su investidura en el Parlamento (383-327)" sub="Euronews, 16-jul-2019" tone="amber" />
+          <BigStat value="0" label="Votos directos de los ciudadanos para elegir al presidente de la Comisión" sub="Art. 17.7 TUE: lo propone el Consejo Europeo y lo elige el Parlamento" tone="rose" />
           <BigStat value="1" label="Institución puede proponer leyes en la UE: la Comisión, no electa" sub="Art. 17.2 TUE" tone="rose" />
         </StatGrid>
         <TakeBox>
@@ -1150,54 +1103,6 @@ export default function InstitucionalPage() {
             con quien decide. A esa distancia, la rendición de cuentas llega tan diluida
             que ya no disciplina a nadie — y las secciones siguientes muestran lo que pasa
             cuando el poder deja de temer al votante.
-          </p>
-        </TakeBox>
-      </Section>
-
-      <Section
-        id="pfizergate"
-        icon={MessagesSquare}
-        title="Pfizergate: 35.000 millones negociados por SMS"
-        sources={[
-          { ref: "Tribunal General de la UE — asunto T-36/23, sentencia de 14-may-2025 (página oficial del caso en CURIA)", href: "https://curia.europa.eu/juris/liste.jsf?num=T-36/23" },
-          { ref: "Defensora del Pueblo Europeo — decisión en el caso 1316/2021/MIG: mala administración de la Comisión por no buscar los SMS", href: "https://www.ombudsman.europa.eu/en/decision/en/158295" },
-          { ref: "Público — la Comisión aprueba el contrato de hasta 1.800 millones de dosis con Pfizer (mayo 2021)", href: "https://www.publico.es/politica/comision-europea-aprueba-contrato-1-800-millones-dosis-vacuna-pfizer.html" },
-          { ref: "Infobae — la presidenta de la Comisión supera la moción de censura por el Pfizergate (10-jul-2025: 360 en contra, 175 a favor)", href: "https://www.infobae.com/espana/2025/07/10/von-der-leyen-sobrevive-a-la-mocion-de-censura-que-deja-sus-apoyos-mermados/" },
-        ]}
-      >
-        <p>
-          En mayo de 2021 la Comisión cerró el mayor contrato de vacunas de la UE:{" "}
-          <strong>hasta 1.800 millones de dosis de Pfizer/BioNTech</strong>, con un coste
-          estimado por la prensa en torno a <strong>35.000 millones de euros</strong>. Parte
-          de esa negociación la condujo personalmente la presidenta de la Comisión{" "}
-          <strong>intercambiando SMS con el CEO de Pfizer</strong>, según
-          reveló The New York Times.
-        </p>
-        <p>
-          Cuando una periodista pidió esos mensajes por la vía de acceso a documentos, la
-          Comisión respondió que <em>no los poseía</em>. La <strong>Defensora del Pueblo
-          Europeo concluyó en 2022 que hubo «mala administración»</strong> — ni siquiera se
-          los pidió al gabinete de la presidenta. Y el 14 de mayo de 2025 el{" "}
-          <strong>Tribunal General de la UE anuló la denegación</strong> (asunto T-36/23):
-          la Comisión «no dio una explicación plausible» de por qué no tenía los
-          documentos. En julio de 2025 la
-          presidenta de la Comisión superó una moción de censura motivada por el caso (360
-          votos en contra, 175 a favor). Precisión debida: la sentencia versa sobre
-          transparencia — no hay condena penal alguna, y nada de lo anterior debe leerse
-          como tal.
-        </p>
-        <StatGrid>
-          <BigStat value="1.800" unit="M" label="Dosis del contrato negociado en parte por SMS (mayo 2021)" sub="Comisión Europea / Público" tone="amber" />
-          <BigStat value="~35.000" unit="M€" label="Coste estimado del contrato" sub="Estimación de prensa (Público)" tone="rose" />
-        </StatGrid>
-        <TakeBox>
-          <p>
-            Quien administra dinero ajeno no elige qué enseña — <strong>eso lo decide el
-            dueño del dinero, que aquí eres tú</strong>. Si el mayor contrato sanitario de
-            la historia europea se negocia en parte por mensajes que la Comisión dijo no
-            poseer, y hacen falta una Defensora, un periódico y años de litigio para que un
-            tribunal anule esa negativa, la lección para cualquier administración es clara:{" "}
-            <strong>la opacidad sale barata</strong>.
           </p>
         </TakeBox>
       </Section>
@@ -1390,7 +1295,6 @@ export default function InstitucionalPage() {
         sources={[
           { ref: "Tribunal de Cuentas Europeo — Informe Anual 2024: error estimado del 3,6% del gasto y sexta opinión desfavorable consecutiva", href: "https://www.eca.europa.eu/en/publications/AR-2024" },
           { ref: "Parlamento Europeo — ficha temática sobre el Tribunal de Cuentas Europeo", href: "https://www.europarl.europa.eu/factsheets/es/sheet/14/el-tribunal-de-cuentas" },
-          { ref: "eldiario.es — el «Qatargate»: la trama de sobornos que atravesó el Parlamento Europeo (dic-2022)", href: "https://www.eldiario.es/internacional/qatargate-trama-corrupcion-atravesado-parlamento-europeo_1_9799255.html" },
         ]}
       >
         <p>
@@ -1403,19 +1307,9 @@ export default function InstitucionalPage() {
           recuperación. No es una acusación de fraude generalizado —el error no equivale a
           fraude—, pero sí la constatación anual de que el control no funciona.
         </p>
-        <p>
-          Y cuando el dinero corre, aparece quien lo recoge: en diciembre de 2022 la
-          policía belga incautó <strong>en torno a 1,5 millones de euros en efectivo</strong>{" "}
-          —en domicilios particulares y en una maleta de hotel— en la trama de sobornos conocida como{" "}
-          <strong>Qatargate</strong>. Presunción de inocencia estricta: hay imputaciones y
-          hubo prisión provisional, pero <strong>a día de hoy no hay condena firme</strong>;
-          el caso sigue abierto años después — lo que, para el ciudadano que mira, es parte
-          del problema.
-        </p>
         <StatGrid>
           <BigStat value="6º" unit="año" label="Consecutivo con opinión desfavorable del auditor de la UE" sub="Tribunal de Cuentas Europeo, AR-2024" tone="rose" />
           <BigStat value="3,6" unit="%" label="Error estimado en los pagos de 2024 (~6.000 M€); 5,7% en cohesión" sub="Tribunal de Cuentas Europeo" tone="amber" />
-          <BigStat value="~1,5" unit="M€" label="En efectivo incautado en el Qatargate (dic-2022) — sin condena firme aún" sub="eldiario.es, s/ fiscalía belga" tone="rose" />
         </StatGrid>
         <TakeBox>
           <p>
@@ -1481,18 +1375,16 @@ export default function InstitucionalPage() {
           <Scale className="h-5 w-5 shrink-0 text-amber-400" />
           <p className="text-sm leading-relaxed text-slate-400">
             <span className="font-medium text-slate-200">Nota sobre el método.</span> La
-            primera parte («las reglas») es descriptiva y cita la norma. Las partes segunda
+            primera parte («las reglas») describe y cita la norma. Las partes segunda
             a cuarta («la maquinaria», «tu bolsillo» y «el poder sin urnas») son una{" "}
             <span className="text-slate-200">crítica abierta desde una óptica
-            de mercado</span>: el <em>encuadre</em> es nuestro y se declara como tal, pero{" "}
-            <span className="text-slate-200">cada cifra está citada a su fuente oficial</span>{" "}
-            (INE, AEAT, OCDE, AIReF, Banco de España, Comisión Europea, Tribunal de Cuentas
-            Europeo, BCE, EUR-Lex…) y las estimaciones de think-tanks y los datos de prensa
-            van nombrados. En lo judicial (Pfizergate, Qatargate) rige la{" "}
-            <span className="text-slate-200">presunción de inocencia</span>: distinguimos lo
-            probado de lo acusado, y una sentencia sobre transparencia no es una condena
-            penal. No inventamos datos: lo que no
-            tiene fuente sólida no se publica como cifra cerrada. Los casos concretos, con sus
+            de mercado</span>: el <em>encuadre</em> y las conclusiones, incluidos los
+            recuadros «la lectura» de todas las partes, son <span className="text-slate-200">opinión
+            propia</span> y se declaran como tal. Las cifras llevan su fuente: oficial cuando
+            existe (INE, AEAT, OCDE, AIReF, Banco de España, Comisión Europea, Tribunal de
+            Cuentas Europeo, BCE, EUR-Lex…) y, cuando son de prensa, de un estudio o de un
+            think-tank, atribuidas por su nombre. Lo que no tiene fuente sólida no se publica
+            como cifra cerrada. Los casos concretos, con sus
             titulares y sus documentos oficiales, están en la{" "}
             <Link href="/ultima-hora" className="text-accent hover:underline">cronología</Link> y en los{" "}
             <Link href="/documentos" className="text-accent hover:underline">documentos</Link>.

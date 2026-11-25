@@ -199,7 +199,7 @@ export const PROBLEMAS: Problema[] = [
     titulo: "Partidos pagados con tus impuestos",
     stat: { value: "~53", unit: "M€/año", label: "de subvención ordinaria a los partidos (cálculo sobre la tabla del BOE)", tone: "amber" },
     llano:
-      "Partidos, sindicatos y fundaciones de partido viven de subvenciones públicas que ellos mismos aprueban en los Presupuestos. Quien debería vigilar el gasto, cobra del gasto.",
+      "Partidos y fundaciones de partido viven de subvenciones públicas que ellos mismos aprueban en los Presupuestos. Quien debería vigilar el gasto, cobra del gasto.",
     cotidiano:
       "Financias con tus impuestos a todos los partidos — también a los que jamás votarías.",
     fuente: { ref: "BOE — financiación de partidos · Tribunal de Cuentas", href: "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2025-693" },
@@ -225,7 +225,7 @@ export const PROBLEMAS: Problema[] = [
     titulo: "Paro crónico, el doble que Europa",
     stat: { value: "10,3", unit: "%", label: "de paro (mayo 2026) — la media de la UE es el 5,9%", tone: "rose" },
     llano:
-      "España pasó años como campeona del paro de la UE (hoy es segunda, tras Finlandia) y casi dobla la media europea. El juvenil: 23,7%. No es mala suerte: es un mercado laboral que penaliza contratar.",
+      "España casi dobla la media europea de paro. El juvenil: 23,7%. No es mala suerte: es un mercado laboral que penaliza contratar.",
     cotidiano:
       "Casi uno de cada cuatro jóvenes que busca trabajo no lo encuentra.",
     fuente: { ref: "Eurostat — desempleo armonizado, mayo 2026", href: "https://ec.europa.eu/eurostat/web/products-euro-indicators/w/3-02072026-ap" },
@@ -249,7 +249,7 @@ export const PROBLEMAS: Problema[] = [
     titulo: "Vivienda: oferta estrangulada",
     stat: { value: "8,0", unit: "años", label: "de renta bruta del hogar para comprar una vivienda (1T 2026)", tone: "amber" },
     llano:
-      "Se construye una sexta parte de lo que en 2006 y casi todo el suelo está vetado a edificar. El Estado se lleva en torno al 10% de cada compra: cuanto más cara, más recauda.",
+      "Se construye una sexta parte de lo que en 2006. El Estado se lleva en torno al 10% de cada compra: cuanto más cara, más recauda.",
     cotidiano:
       "Necesitas ocho años de renta íntegra —sin comer ni pagar nada más— para un piso.",
     fuente: { ref: "Banco de España — Síntesis de Indicadores 1.5 (mercado inmobiliario)", href: "https://www.bde.es/webbe/es/estadisticas/compartido/datos/pdf/si_1_5.pdf" },
@@ -285,24 +285,12 @@ export const PROBLEMAS: Problema[] = [
     id: "soberania-ue",
     categoria: "europa",
     titulo: "Un gobierno que nadie vota",
-    stat: { value: "0", unit: "votos", label: "ciudadanos han elegido a la presidenta de la Comisión, el único órgano que propone las leyes de la UE", tone: "rose" },
+    stat: { value: "0", unit: "votos", label: "directos de los ciudadanos para elegir al presidente de la Comisión, la institución que propone las leyes de la UE", tone: "rose" },
     llano:
-      "Las normas europeas que acaban rigiendo en España solo puede proponerlas la Comisión (art. 17 TUE), cuya presidencia pactan los gobiernos: en 2019 Von der Leyen ni siquiera fue candidata en las elecciones europeas.",
+      "Las normas europeas que acaban rigiendo en España solo puede proponerlas la Comisión (art. 17 TUE), cuyo presidente propone el Consejo Europeo (los gobiernos) y elige el Parlamento (art. 17.7 TUE): ningún elector lo vota directamente.",
     cotidiano:
       "Buena parte de las normas que cumples cada día nacen de un órgano al que jamás has podido votar — ni echar.",
     fuente: { ref: "Tratado de la UE, art. 17 (EUR-Lex)", href: "https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:12016M017" },
-    parte: 4,
-  },
-  {
-    id: "pfizergate",
-    categoria: "europa",
-    titulo: "Pfizergate: el contrato por SMS",
-    stat: { value: "~35.000", unit: "M€", label: "en vacunas negociadas por SMS cuyos mensajes la Comisión se negó a enseñar", tone: "rose" },
-    llano:
-      "La presidenta de la Comisión negoció por SMS con el CEO de Pfizer el mayor contrato de vacunas de la UE (hasta 1.800 millones de dosis). La Comisión se negó a enseñar los mensajes; la Justicia europea anuló esa negativa en 2025.",
-    cotidiano:
-      "Se compraron con tu dinero 1.800 millones de dosis y no puedes leer cómo se cerró el trato.",
-    fuente: { ref: "Tribunal General de la UE — sentencia T-36/23 (14-may-2025)", href: "https://curia.europa.eu/juris/liste.jsf?num=T-36/23" },
     parte: 4,
   },
   {
@@ -347,7 +335,7 @@ export const PROBLEMAS: Problema[] = [
     titulo: "El gasto que el auditor no aprueba",
     stat: { value: "6º", unit: "año", label: "consecutivo con opinión desfavorable del Tribunal de Cuentas Europeo — error del 3,6% (~6.000 M€) en 2024", tone: "rose" },
     llano:
-      "El auditor de la UE lleva seis años seguidos negándose a dar por bueno el gasto del presupuesto europeo. Y en el Parlamento Europeo, el Qatargate destapó bolsas con 1,5 millones en efectivo — el caso sigue sin condena firme.",
+      "El auditor de la UE lleva seis años seguidos negándose a dar por bueno el gasto del presupuesto europeo.",
     cotidiano:
       "De cada 100 € que gasta la UE — también los tuyos —, unos 3,6 se pagaron saltándose las reglas.",
     fuente: { ref: "Tribunal de Cuentas Europeo — Informe Anual 2024", href: "https://www.eca.europa.eu/en/publications/AR-2024" },
