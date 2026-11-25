@@ -1170,9 +1170,8 @@ export default function InstitucionalPage() {
           <strong>hasta 1.800 millones de dosis de Pfizer/BioNTech</strong>, con un coste
           estimado por la prensa en torno a <strong>35.000 millones de euros</strong>. Parte
           de esa negociación la condujo personalmente la presidenta de la Comisión{" "}
-          <strong>intercambiando SMS con el CEO de Pfizer</strong> — lo
-          reveló The New York Times, y la propia presidenta lo había descrito antes en otra
-          entrevista.
+          <strong>intercambiando SMS con el CEO de Pfizer</strong>, según
+          reveló The New York Times.
         </p>
         <p>
           Cuando una periodista pidió esos mensajes por la vía de acceso a documentos, la
@@ -1181,8 +1180,7 @@ export default function InstitucionalPage() {
           los pidió al gabinete de la presidenta. Y el 14 de mayo de 2025 el{" "}
           <strong>Tribunal General de la UE anuló la denegación</strong> (asunto T-36/23):
           la Comisión «no dio una explicación plausible» de por qué no tenía los
-          documentos. Tras la sentencia, la Comisión anunció una nueva decisión «más
-          detallada»; <strong>los SMS siguen sin publicarse</strong>. En julio de 2025 la
+          documentos. En julio de 2025 la
           presidenta de la Comisión superó una moción de censura motivada por el caso (360
           votos en contra, 175 a favor). Precisión debida: la sentencia versa sobre
           transparencia — no hay condena penal alguna, y nada de lo anterior debe leerse
@@ -1190,18 +1188,16 @@ export default function InstitucionalPage() {
         </p>
         <StatGrid>
           <BigStat value="1.800" unit="M" label="Dosis del contrato negociado en parte por SMS (mayo 2021)" sub="Comisión Europea / Público" tone="amber" />
-          <BigStat value="~35.000" unit="M€" label="Coste estimado del contrato" sub="Estimación de prensa (Público, El Español)" tone="rose" />
-          <BigStat value="4" unit="años" label="Y contando: los SMS siguen sin enseñarse pese a Defensora y Tribunal" sub="Solicitud de 2022; sentencia T-36/23 (2025)" tone="rose" />
+          <BigStat value="~35.000" unit="M€" label="Coste estimado del contrato" sub="Estimación de prensa (Público)" tone="rose" />
         </StatGrid>
         <TakeBox>
           <p>
             Quien administra dinero ajeno no elige qué enseña — <strong>eso lo decide el
             dueño del dinero, que aquí eres tú</strong>. Si el mayor contrato sanitario de
-            la historia europea cabe en mensajes que su firmante dice no conservar, y hacen
-            falta una Defensora, un periódico y cuatro años de litigio para que un tribunal
-            declare ilegal la opacidad — sin que a día de hoy haya ni mensajes ni
-            consecuencias —, la lección que aprende todo cargo público es exacta:{" "}
-            <strong>borrar sale gratis</strong>.
+            la historia europea se negocia en parte por mensajes que la Comisión dijo no
+            poseer, y hacen falta una Defensora, un periódico y años de litigio para que un
+            tribunal anule esa negativa, la lección para cualquier administración es clara:{" "}
+            <strong>la opacidad sale barata</strong>.
           </p>
         </TakeBox>
       </Section>

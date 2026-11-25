@@ -297,9 +297,9 @@ export const PROBLEMAS: Problema[] = [
     id: "pfizergate",
     categoria: "europa",
     titulo: "Pfizergate: el contrato por SMS",
-    stat: { value: "~35.000", unit: "M€", label: "en vacunas negociadas por SMS que la Comisión se niega a enseñar", tone: "rose" },
+    stat: { value: "~35.000", unit: "M€", label: "en vacunas negociadas por SMS cuyos mensajes la Comisión se negó a enseñar", tone: "rose" },
     llano:
-      "La presidenta de la Comisión negoció por SMS con el CEO de Pfizer el mayor contrato de vacunas de la UE (hasta 1.800 millones de dosis). La Comisión se negó a enseñar los mensajes; la Justicia europea anuló esa negativa en 2025 — y siguen sin publicarse.",
+      "La presidenta de la Comisión negoció por SMS con el CEO de Pfizer el mayor contrato de vacunas de la UE (hasta 1.800 millones de dosis). La Comisión se negó a enseñar los mensajes; la Justicia europea anuló esa negativa en 2025.",
     cotidiano:
       "Se compraron con tu dinero 1.800 millones de dosis y no puedes leer cómo se cerró el trato.",
     fuente: { ref: "Tribunal General de la UE — sentencia T-36/23 (14-may-2025)", href: "https://curia.europa.eu/juris/liste.jsf?num=T-36/23" },
