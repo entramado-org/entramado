@@ -7,20 +7,11 @@ import { parse } from "yaml";
  * los que se construyó. */
 const DATOS = process.env.DATOS_DIR ?? path.join(__dirname, "..", "..", "datos");
 const leer = (f: string, k: string) => parse(readFileSync(path.join(DATOS, f), "utf-8"))[k] as any[];
-const ITEMS = leer("feed.yaml", "items") as { iso: string; titulo: string; medio: string; url: string; caso?: string }[];
+const ITEMS = leer("feed.yaml", "items") as { iso: string; titulo: string; medio: string; url: string }[];
 const MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
-const CASOS = leer("casos.yaml", "casos") as { slug: string; nombre: string }[];
-const DOCUMENTOS = leer("documentos.yaml", "documentos") as { url: string; caso?: string }[];
+const DOCUMENTOS = leer("documentos.yaml", "documentos") as { url: string }[];
 
-const PAGINAS = [
-  "/",
-  "/ultima-hora",
-  ...CASOS.map((c) => `/caso/${c.slug}`),
-  "/documentos",
-  "/contribuir",
-  "/aviso-legal",
-  "/institucional",
-];
+const PAGINAS = ["/", "/ultima-hora", "/documentos", "/contribuir", "/aviso-legal", "/institucional"];
 const RETIRADAS = [
   "/explore",
   "/entidad/x",
@@ -31,6 +22,7 @@ const RETIRADAS = [
   "/glosario",
   "/conectar",
   "/caso",
+  "/caso/caso-leire",
   "/api/ultima-hora",
   "/mcp",
 ];
@@ -117,28 +109,54 @@ test("cada fila es fecha · medio · titular enlazado a la pieza, sin más", asy
   });
 });
 
-test("cada caso muestra solo los ítems de su slug", async ({ page }) => {
-  for (const caso of CASOS) {
-    await page.goto(`/caso/${caso.slug}`);
-    await expect(page.locator("h1")).toHaveText(caso.nombre);
-    const esperadas = ITEMS.filter((i) => i.caso === caso.slug).map((i) => i.url);
-    const mostradas = await page.getByTestId("item").locator("a").evaluateAll((as) => as.map((a) => a.getAttribute("href")));
-    expect([...mostradas].sort()).toEqual([...esperadas].sort());
-    const docs = DOCUMENTOS.filter((d) => d.caso === caso.slug);
-    await expect(page.getByTestId("documento")).toHaveCount(docs.length);
-  }
-});
-
-test("la portada: qué es, últimos ítems y los casos con su número de ítems", async ({ page }) => {
+test("la portada: qué es, últimos ítems y enlaces a cronología, documentos, institucional y contacto", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator("main")).toContainText("No redacta ni afirma nada por su cuenta");
   await expect(page.getByTestId("item")).toHaveCount(10);
-  for (const caso of CASOS) {
-    const n = ITEMS.filter((i) => i.caso === caso.slug).length;
-    await expect(page.locator(`main a[href="/caso/${caso.slug}"]`)).toContainText(`${n} ${n === 1 ? "titular" : "titulares"}`);
+  for (const href of ["/ultima-hora", "/documentos", "/institucional", "/contribuir"]) {
+    await expect(page.locator(`main a[href="${href}"]`).first()).toBeVisible();
   }
-  await expect(page.locator('main a[href="/documentos"]').first()).toBeVisible();
-  await expect(page.locator('main a[href="/contribuir"]').first()).toBeVisible();
+});
+
+test("/ultima-hora es una sola lista por fecha, sin agrupar ni filtrar", async ({ page }) => {
+  await page.goto("/ultima-hora");
+  await expect(page.locator("main ol")).toHaveCount(1);
+  await expect(page.locator("main button, main select, main h2, main h3")).toHaveCount(0);
+  const fechas = await page.getByTestId("item").locator("time").evaluateAll((ts) => ts.map((t) => t.getAttribute("datetime")!));
+  expect(fechas).toEqual([...fechas].sort().reverse());
+});
+
+test("ninguna página enlaza a /caso/ ni habla de página de caso", async ({ page }) => {
+  for (const ruta of PAGINAS) {
+    await page.goto(ruta);
+    await expect(page.locator('a[href^="/caso"]'), ruta).toHaveCount(0);
+    await expect(page.locator("body"), ruta).not.toContainText(/página de su caso/i);
+  }
+});
+
+test("«no redacta ni afirma» nunca aparece sin la excepción de la sección institucional", async ({ page }) => {
+  const FRASE = /no redacta ni afirma/gi;
+  let apariciones = 0;
+  for (const ruta of PAGINAS) {
+    await page.goto(ruta);
+    const textos = await page.evaluate(() => {
+      const meta = (sel: string) => document.querySelector(sel)?.getAttribute("content") ?? "";
+      return [
+        document.body.innerText,
+        meta('meta[name="description"]'),
+        meta('meta[property="og:description"]'),
+        ...[...document.querySelectorAll('script[type="application/ld+json"]')].map((n) => n.textContent ?? ""),
+      ];
+    });
+    for (const texto of textos) {
+      for (const m of texto.matchAll(FRASE)) {
+        apariciones++;
+        const cola = texto.slice(m.index!, m.index! + 200).replace(/\s+/g, " ");
+        expect(cola, `${ruta}: «${cola}»`).toMatch(/salvo en la sección institucional, que es análisis y opinión propios/i);
+      }
+    }
+  }
+  expect(apariciones).toBeGreaterThan(0); // la comprobación no es vacía
 });
 
 test("/documentos lista cada documento con enlace al organismo", async ({ page }) => {
@@ -156,6 +174,7 @@ test("contacto y aviso legal explican la rectificación y no mencionan el grafo,
     await expect(main).toContainText(/rectificaci/i);
     await expect(main).toContainText(/retirada|retira/i);
     await expect(main).not.toContainText(/grafo|MCP|GitHub|repositorio/i);
+    await expect(main).not.toContainText(/casos abiertos|página de su caso/i);
   }
 });
 
@@ -165,4 +184,19 @@ test("el sitemap solo lista páginas que existen y robots no bloquea nada", asyn
   expect(urls.sort()).toEqual([...PAGINAS].sort());
   const robots = await (await request.get("/robots.txt")).text();
   expect(robots).not.toMatch(/disallow:\s*\S/i);
+});
+
+test("contacto fija el criterio de entrada y el aviso legal admite las sentencias ya dictadas", async ({ page }) => {
+  await page.goto("/contribuir");
+  await expect(page.locator("main")).toContainText("parte del procedimiento o cargos públicos, y sin motes");
+  await expect(page.locator("main")).not.toContainText("que es del caso");
+  await page.goto("/aviso-legal");
+  await expect(page.locator("main")).toContainText("sentencias ya dictadas");
+  await expect(page.locator("main")).toContainText("cuyo titular se muestra");
+});
+
+test("/institucional no trata la amnistía ni nombra personas con causa", async ({ page }) => {
+  await page.goto("/institucional");
+  await expect(page.locator("body")).not.toContainText(/amnist|junts|procés|carnet|hermano del presidente|Griñán|Chaves|Puigdemont/i);
+  await expect(page.locator("#amnistia")).toHaveCount(0);
 });
