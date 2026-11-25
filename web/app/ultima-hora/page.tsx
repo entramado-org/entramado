@@ -5,7 +5,7 @@ import { ITEMS } from "@/lib/datos";
 export const metadata = {
   title: "Última hora",
   description:
-    "Cronología de los titulares publicados por la prensa sobre los casos que rodean al Gobierno, con su medio y su fecha, enlazados a la pieza que los publica. Rige la presunción de inocencia.",
+    "Cronología de los titulares publicados por la prensa sobre causas judiciales de relevancia política en España, con su medio y su fecha, enlazados a la pieza que los publica. Rige la presunción de inocencia.",
   alternates: { canonical: "/ultima-hora" },
 };
 
@@ -19,8 +19,8 @@ export default function UltimaHoraPage() {
         <h1 className="text-4xl font-bold leading-tight tracking-tight text-slate-50">Cronología</h1>
         <p className="mt-4 text-lg leading-relaxed text-slate-400">
           Los titulares que ha publicado la prensa, del más reciente al más antiguo. Cada uno enlaza a la pieza
-          cuyo titular se muestra; si es de una agencia que no la publica en abierto, enlaza la web que la
-          publicó y se indica junto al medio, por ejemplo «Europa Press (vía Infobae)».
+          cuyo titular se muestra; cuando la pieza es de una agencia y se leyó en otro medio, se enlaza la web
+          donde se leyó y se indica junto al medio, por ejemplo «Europa Press (vía Infobae)».
         </p>
       </header>
 

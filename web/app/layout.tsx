@@ -5,9 +5,9 @@ import SiteFooter from "@/components/SiteFooter";
 import SiteNav from "@/components/SiteNav";
 import { SITE_URL } from "@/lib/site";
 
-const TITLE = "El Entramado — Titulares y documentos oficiales de los casos que rodean al Gobierno en España";
+const TITLE = "El Entramado — Titulares y documentos oficiales de causas judiciales de relevancia política en España";
 const DESCRIPTION =
-  "Los titulares que la prensa ha publicado sobre los casos que rodean al Gobierno en España y los " +
+  "Los titulares que la prensa ha publicado sobre causas judiciales de relevancia política en España y los " +
   "documentos oficiales relacionados, siempre enlazados a su fuente. El sitio republica: no redacta " +
   "ni afirma nada por su cuenta, salvo en la sección institucional, que es análisis y opinión propios.";
 
@@ -51,11 +51,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             url: SITE_URL,
             description: DESCRIPTION,
             inLanguage: "es",
-            publisher: {
-              "@type": "Organization",
-              name: "El Entramado",
-              url: SITE_URL,
-            },
           }}
         />
         <SiteNav />

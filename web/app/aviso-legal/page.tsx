@@ -56,8 +56,8 @@ export default function AvisoLegalPage() {
       <Section title="2. Naturaleza del sitio">
         <p>
           <span className="text-slate-200">El Entramado</span> es un agregador: republica los{" "}
-          <span className="text-slate-300">titulares publicados por medios de comunicación</span> sobre los
-          casos que rodean al Gobierno en España y enlaza los{" "}
+          <span className="text-slate-300">titulares publicados por medios de comunicación</span> sobre
+          causas judiciales de relevancia política en España y enlaza los{" "}
           <span className="text-slate-300">documentos oficiales</span> en la web del organismo que los emitió.
           No es un medio de comunicación, ni un registro oficial, ni una resolución judicial.{" "}
           <span className="text-slate-300">No redacta ni afirma nada por su cuenta, salvo en la sección
@@ -84,9 +84,9 @@ export default function AvisoLegalPage() {
       <Section title="4. Titulares, enlaces y propiedad intelectual">
         <p>
           Los titulares y las piezas enlazadas pertenecen a sus medios, y los documentos oficiales a los
-          organismos que los emiten. Cada enlace lleva a la pieza cuyo titular se muestra; cuando la pieza es de una agencia y la agencia no la
-          publica en abierto, se enlaza la web que la publicó y se indica junto al medio, por ejemplo «Europa Press
-          (vía Infobae)». El titular mostrado es el que tenía
+          organismos que los emiten. Cada enlace lleva a la pieza cuyo titular se muestra; cuando la pieza es de una agencia y se leyó en otro
+          medio, se enlaza la web donde se leyó y se indica junto al medio, por ejemplo «Europa Press (vía
+          Infobae)». El titular mostrado es el que tenía
           la pieza al incorporarla al sitio y puede haber cambiado desde entonces; los enlaces a sitios externos
           no implican respaldo de sus contenidos.
         </p>

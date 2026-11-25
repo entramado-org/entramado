@@ -6,7 +6,7 @@ import { DOCUMENTOS } from "@/lib/datos";
 export const metadata: Metadata = {
   title: "Documentos oficiales",
   description:
-    "Enlaces a documentos oficiales relacionados con los casos, en la web del organismo que los emitió. El sitio no aloja copia de ninguno.",
+    "Enlaces a documentos oficiales relacionados con causas judiciales de relevancia política, en la web del organismo que los emitió. El sitio no aloja copia de ninguno.",
   alternates: { canonical: "/documentos" },
 };
 

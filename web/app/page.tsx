@@ -21,8 +21,8 @@ export default function Landing() {
           El <span className="text-accent text-glow">entramado</span>, en titulares enlazados.
         </h1>
         <p className="mt-5 max-w-2xl text-lg leading-relaxed text-slate-400">
-          El Entramado republica los titulares que los medios han publicado sobre los casos que rodean al
-          Gobierno y enlaza los documentos oficiales en la web del organismo que los emitió.{" "}
+          El Entramado republica los titulares que los medios han publicado sobre causas judiciales de
+          relevancia política en España y enlaza los documentos oficiales en la web del organismo que los emitió.{" "}
           <span className="text-slate-300">No redacta ni afirma nada por su cuenta, salvo en la sección
           institucional, que es análisis y opinión propios.</span> Cada titular es el de la pieza enlazada,
           con su medio y su fecha. Rige la presunción de inocencia.
