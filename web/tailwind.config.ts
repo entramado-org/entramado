@@ -28,13 +28,9 @@ const config: Config = {
       },
       keyframes: {
         "fade-in": { from: { opacity: "0", transform: "translateY(8px)" }, to: { opacity: "1", transform: "translateY(0)" } },
-        "pulse-glow": { "0%,100%": { opacity: "0.6" }, "50%": { opacity: "1" } },
-        "slide-in-r": { from: { transform: "translateX(20px)", opacity: "0" }, to: { transform: "translateX(0)", opacity: "1" } },
       },
       animation: {
         "fade-in": "fade-in 0.6s ease-out both",
-        "pulse-glow": "pulse-glow 3s ease-in-out infinite",
-        "slide-in-r": "slide-in-r 240ms cubic-bezier(.2,.7,.2,1) both",
       },
     },
   },
