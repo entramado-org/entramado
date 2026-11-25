@@ -1,24 +1,26 @@
 # Cronología de El Entramado (spec 077). El sitio republica; no redacta.
 # Cada ítem lleva SOLO: iso · titulo (el que la pieza muestra en su web, literal) ·
 # medio (medio de origen; «EFE (vía COPE)» si el enlace es una republicación) ·
-# url (https) · caso (slug de casos.yaml; opcional). Cualquier otro campo es un
+# url (https) · caso (slug de casos.yaml; opcional: SOLO si el propio titular nombra el caso
+# o a su investigado principal; si no, el ítem va solo a la cronología). iso = fecha de
+# publicación que declara la pieza. Cualquier otro campo es un
 # error de `scripts/validar_datos.py`. Orden: del más reciente al más antiguo.
 items:
 - iso: '2026-11-20'
   titulo: El guardia civil investigado en el 'caso Koldo' incorpora a Macarena Olona a su defensa
   medio: The Objective
   url: https://theobjective.com/espana/tribunales/2026-11-20/guardia-civil-caso-koldo-macarena-olona-defensa/
-  caso: caso-cerdan
+  caso: caso-koldo
 - iso: '2026-11-19'
   titulo: El juez llama a declarar como imputado al comandante Rubén Villalba el 23 de noviembre en el caso Koldo
   medio: Europa Press (vía Demócrata)
   url: https://www.democrata.es/tribunales/el-juez-llama-a-declarar-como-imputado-al-comandante-ruben-villalba-el-23-de-noviembre-en-el-caso-koldo/
-  caso: caso-cerdan
+  caso: caso-koldo
 - iso: '2026-11-18'
   titulo: El juez rechaza anular el registro de la casa de Ábalos
   medio: EFE (vía Infobae)
   url: https://www.infobae.com/espana/agencias/2026/11/18/el-juez-rechaza-anular-el-registro-de-la-casa-de-abalos/
-  caso: caso-cerdan
+  caso: caso-koldo
 - iso: '2026-11-18'
   titulo: El Tribunal de Cuentas se abre a investigar el sueldo del hermano de Pedro Sánchez en la Diputación de Badajoz
   medio: Europa Press (vía Infobae)
@@ -48,27 +50,26 @@ items:
   titulo: La UCO investiga un contrato de 28 millones del AVE a Extremadura por su conexión con el caso Koldo
   medio: EFE (vía COPE)
   url: https://www.cope.es/emisoras/extremadura/noticias/uco-investiga-contrato-28-millones-ave-extremadura-conexion-caso-koldo-20261113_3474532.html
-  caso: caso-cerdan
-- iso: '2026-11-12'
-  titulo: La UCO acude al Tribunal de Cuentas al notar "discrepancias" en la documentación sobre las donaciones al PSOE
-  medio: El Español
-  url: https://www.elespanol.com/espana/tribunales/20261112/uco-pide-tribunal-cuentas-informacion-donaciones-psoe-detectar-discrepancias/1003744455572_0.html
   caso: caso-koldo
-- iso: '2026-11-12'
-  titulo: 'Caso Koldo: Ismael Moreno llama a declarar a un ex alto cargo de Adif por la contratación de Jessica'
-  medio: Libertad Digital
-  url: https://www.libertaddigital.com/espana/2026-11-12/caso-koldo-ismael-moreno-llama-a-declarar-a-un-exalto-cargo-de-adif-por-la-contratacion-de-jessica-7490448/
-  caso: caso-cerdan
-- iso: '2026-11-12'
+- iso: '2026-11-13'
   titulo: Pedraz acepta al Foro Judicial Independiente como acusación en el 'caso Leire Díez'
   medio: Europa Press (vía Noticias de Navarra)
   url: https://www.noticiasdenavarra.com/politica/2026/11/13/pedraz-acepta-foro-judicial-independiente-leire-11755037.html
   caso: caso-leire
 - iso: '2026-11-12'
+  titulo: La UCO acude al Tribunal de Cuentas al notar "discrepancias" en la documentación sobre las donaciones al PSOE
+  medio: El Español
+  url: https://www.elespanol.com/espana/tribunales/20261112/uco-pide-tribunal-cuentas-informacion-donaciones-psoe-detectar-discrepancias/1003744455572_0.html
+- iso: '2026-11-12'
+  titulo: 'Caso Koldo: Ismael Moreno llama a declarar a un ex alto cargo de Adif por la contratación de Jessica'
+  medio: Libertad Digital
+  url: https://www.libertaddigital.com/espana/2026-11-12/caso-koldo-ismael-moreno-llama-a-declarar-a-un-exalto-cargo-de-adif-por-la-contratacion-de-jessica-7490448/
+  caso: caso-koldo
+- iso: '2026-11-12'
   titulo: El juez levanta el secreto de la pieza en la que ordenó el registro de la casa de Ábalos
   medio: EFE (vía Infobae)
   url: https://www.infobae.com/espana/agencias/2026/11/12/el-juez-levanta-el-secreto-de-la-pieza-en-la-que-ordeno-el-registro-de-la-casa-de-abalos/
-  caso: caso-cerdan
+  caso: caso-koldo
 - iso: '2026-11-12'
   titulo: Leire Díez afirma que abogados afines al PP le ofrecieron dos millones por mentir contra Sánchez
   medio: elDiario.es
@@ -88,7 +89,6 @@ items:
   titulo: Pedraz pide a Leticia de la Hoz que detalle todos los honorarios que cobró por defender a Koldo
   medio: The Objective
   url: https://theobjective.com/espana/tribunales/2026-11-11/pedraz-leticia-de-la-hoz-facturas-koldo/
-  caso: caso-leire
 - iso: '2026-11-11'
   titulo: Pedraz esperará a las elecciones para decidir si imputa al ex numero dos de Cerdán en el 'caso cloacas'
   medio: El Independiente
@@ -98,7 +98,6 @@ items:
   titulo: La abogada Leticia de la Hoz deja de representar a Koldo García por "razones profesionales"
   medio: Europa Press (vía Público)
   url: https://www.publico.es/politica/tribunales/abogada-leticia-hoz-deja-representar-koldo-garcia-razones-profesionales.html
-  caso: caso-leire
 - iso: '2026-11-10'
   titulo: La Audiencia Nacional avala que Calama investigue los negocios de Zapatero en Bolivia
   medio: The Objective
@@ -133,7 +132,7 @@ items:
   titulo: La Guardia Civil deja en libertad a los seis detenidos por el caso Koldo a la espera de que el juez los cite a declarar
   medio: elDiario.es
   url: https://www.eldiario.es/politica/uco-despliega-operacion-secreto-caso-koldo-investiga-audiencia-nacional_1_13639620.html
-  caso: caso-cerdan
+  caso: caso-koldo
 - iso: '2026-11-04'
   titulo: El Tribunal Supremo abre la ejecutoria de la sentencia del ‘caso mascarillas’ y requiere a los condenados el pago de 647.000 euros en multas, decomisos e indemnizaciones
   medio: CGPJ (nota de prensa)
@@ -162,12 +161,10 @@ items:
   titulo: La UCO avisó a la juez Biedma de que los anexos de la causa de David Sánchez contenían los correos de Begoña y Sánchez
   medio: Libertad Digital
   url: https://www.libertaddigital.com/espana/2026-10-29/la-uco-asegura-a-pedraz-que-informo-a-biedma-de-que-su-informe-contenia-el-correo-de-begona-gomez-7484228/
-  caso: caso-leire
 - iso: '2026-10-29'
   titulo: Okdiario pagó la defensa de Koldo García en el juicio del Supremo
   medio: elDiario.es
   url: https://www.eldiario.es/politica/editora-okdiario-pago-defensa-koldo-garcia-juicio-supremo_1_13623197.html
-  caso: caso-leire
 - iso: '2026-10-28'
   titulo: Sáenz de Tejada niega haber recibido ningún encargo de Leire Díez y declara que se refería a "eliminar judicialmente" a la jueza Biedma
   medio: Europa Press (vía El Independiente)
@@ -212,12 +209,10 @@ items:
   titulo: Pedraz da otros 15 días al PSOE para que entregue su listado de abogados contratados
   medio: The Objective
   url: https://theobjective.com/espana/tribunales/2026-10-23/pedraz-psoe-abogados-contratados/
-  caso: caso-leire
 - iso: '2026-10-22'
   titulo: El PSOE deja pasar las 48 horas que le dio el juez Pedraz para entregar los contratos de sus abogados y se escuda en el “secreto profesional” y la “confidencialidad”
   medio: Infobae y The Objective
   url: https://www.infobae.com/espana/2026/10/22/el-psoe-deja-pasar-las-48-horas-que-le-dio-el-juez-pedraz-para-entregar-los-contratos-de-sus-abogados-y-se-escuda-en-el-secreto-profesional-y-la-confidencialidad/
-  caso: caso-leire
 - iso: '2026-10-22'
   titulo: Servinabar, vinculada a Cerdán, facturó Acciona 2 millones por la ronda sur de Logroño
   medio: EFE (vía Infobae)
@@ -237,7 +232,6 @@ items:
   titulo: El DAO de la G.Civil dice que Marlaska le llamó tras filtrarse el correo de Begoña Gómez
   medio: EFE (vía Infobae)
   url: https://www.infobae.com/espana/agencias/2026/10/15/el-dao-de-la-gcivil-dice-que-marlaska-le-llamo-tras-filtrarse-el-correo-de-begona-gomez/
-  caso: caso-leire
 - iso: '2026-10-14'
   titulo: El Supremo rechaza el incidente de nulidad de Ábalos y abre la puerta a acudir al TC
   medio: EFE (vía Infobae)
@@ -247,7 +241,6 @@ items:
   titulo: Pedraz imputa al exjuez que insultó a la instructora del caso de David Sánchez
   medio: EFE (vía Infobae)
   url: https://www.infobae.com/espana/agencias/2026/10/13/pedraz-imputa-al-exjuez-que-insulto-a-la-instructora-del-caso-de-david-sanchez/
-  caso: caso-leire
 - iso: '2026-10-09'
   titulo: El juez descarta imputar por ahora al PSOE en el 'caso Leire Díez' y esperará a más diligencias tras pedirlo el PP
   medio: Europa Press (vía Infobae)
@@ -257,7 +250,6 @@ items:
   titulo: La Audiencia Nacional confirma la imputación de Jéssica y un ex alto cargo de Adif
   medio: EFE (vía Infobae)
   url: https://www.infobae.com/espana/agencias/2026/10/09/la-audiencia-nacional-confirma-la-imputacion-de-jessica-y-un-ex-alto-cargo-de-adif/
-  caso: caso-koldo
 - iso: '2026-10-08'
   titulo: El hermano de Pedro Sánchez presenta recurso de apelación por "investigación prospectiva" y pide su absolución
   medio: Europa Press (vía Infobae)
@@ -267,7 +259,6 @@ items:
   titulo: Pedraz reclama al PSOE todos sus contratos con abogados y consultoras de 2021 a 2025 y cita a Nervis Villalobos
   medio: Estrella Digital y Europa Press (vía Infobae)
   url: https://www.estrelladigital.es/articulo/tribunales/pedraz-reclama-psoe-todos-contratos-abogados-consultoras-2021-2025-cita-nervis-villalobos/20261006150011451867.html
-  caso: caso-leire
 - iso: '2026-10-01'
   titulo: Leire Díez recurre la personación de la jueza Biedma al no considerarla perjudicada
   medio: EFE (vía Infobae)
@@ -277,7 +268,6 @@ items:
   titulo: Biedma entrega al juez 90 vídeos contra ella y asegura tener testigos de las presiones para apartarla del caso David Sánchez
   medio: COPE
   url: https://www.cope.es/emisoras/extremadura/noticias/biedma-entrega-juez-90-videos-asegura-testigos-presiones-apartarla-caso-david-sanchez-20260930_3447138.html
-  caso: caso-leire
 - iso: '2026-09-29'
   titulo: 'La Fiscalía rechaza dejar de investigar las gestiones de Zapatero en Bolivia: "No puede ser que encorsete la instrucción"'
   medio: El Independiente
@@ -362,7 +352,6 @@ items:
   titulo: La UCO se persona en Adif por orden del juez Moreno para investigar los contratos de Transportes con Levantina
   medio: Libertad Digital
   url: https://www.libertaddigital.com/espana/2026-09-15/la-uco-se-persona-en-adif-por-orden-del-juez-moreno-para-investigar-los-contratos-de-transportes-con-levantina-7460428/
-  caso: caso-cerdan
 - iso: '2026-09-14'
   titulo: Zapatero pide frenar la investigación de sus negocios en Bolivia para evitar una "patente de corso" de la UDEF contra él
   medio: El Español
@@ -372,7 +361,6 @@ items:
   titulo: El Tribunal de Cuentas lleva al juez los nombres de los donantes en la causa por la financiación del PSOE
   medio: El Mundo (vía Qué!)
   url: https://www.que.es/2026/09/14/tribunal-cuentas-donantes-financiacion-psoe/
-  caso: caso-koldo
 - iso: '2026-09-14'
   titulo: Aplazada hasta el 21 de septiembre la decisión sobre ceder la causa del 'caso Montoro' a Madrid
   medio: Europa Press (vía Infobae)
@@ -388,16 +376,15 @@ items:
   medio: EFE (vía Infobae)
   url: https://www.infobae.com/espana/agencias/2026/09/11/dos-socios-de-aldama-niegan-que-conocieran-las-comisiones-por-los-contratos-de-mascarillas/
   caso: caso-koldo
-- iso: '2026-09-11'
+- iso: '2026-09-10'
   titulo: 'Caso Koldo: la empresa que facturó 53 millones en mascarillas frente al juez'
   medio: Moncloa.com
   url: https://www.moncloa.com/2026/09/10/caso-koldo-mascarillas-juez-3428569
-  caso: caso-cerdan
+  caso: caso-koldo
 - iso: '2026-09-10'
   titulo: Gallardo trata de impedir que su inhabilitación vaya más allá de la presidencia de la Diputación
   medio: COPE
   url: https://www.cope.es/emisoras/extremadura/noticias/gallardo-trata-impedir-inhabilitacion-presidencia-diputacion-20260910_3434389.html
-  caso: caso-david-sanchez
 - iso: '2026-09-10'
   titulo: Exdirector de la Guardia Civil niega ante el juez del caso Leire haber presionado a la UCO
   medio: EFE (vía Infobae)
@@ -448,7 +435,7 @@ items:
   medio: EFE (vía Infobae)
   url: https://www.infobae.com/espana/agencias/2026/09/04/el-juez-rechaza-la-nulidad-de-la-causa-de-plus-ultra-planteada-por-zapatero/
   caso: caso-zapatero-plus-ultra
-- iso: '2026-09-04'
+- iso: '2026-09-03'
   titulo: 'Cristina Álvarez pide su absolución y descarga la responsabilidad en Begoña Gómez: "Actuó siguiendo sus instrucciones"'
   medio: Libertad Digital
   url: https://www.libertaddigital.com/espana/2026-09-03/cristina-alvarez-pide-su-absolucion-y-descarga-la-responsabilidad-en-begona-gomez-actuo-siguiendo-sus-instrucciones-7454887/
@@ -457,7 +444,6 @@ items:
   titulo: 'Varapalo de Pedraz a la abogada de Koldo: no incluirá el desmentido de Aldama del soborno a Carmen Pano'
   medio: Libertad Digital
   url: https://www.libertaddigital.com/espana/2026-09-02/pedraz-niega-a-la-abogada-de-koldo-incluir-unas-declaraciones-de-aldama-para-encubrir-su-supuesto-soborno-a-carmen-pano-7453959/
-  caso: caso-leire
 - iso: '2026-09-01'
   titulo: Anticorrupción pide al TS rechazar la petición de Ábalos y Koldo para anular la sentencia del 'caso mascarillas'
   medio: Europa Press (vía Infobae)
@@ -487,7 +473,6 @@ items:
   titulo: La Audiencia Nacional realiza un nuevo clonado del móvil del exjefe de gabinete de Sánchez
   medio: EFE (vía Infobae)
   url: https://www.infobae.com/espana/agencias/2026/08/18/la-audiencia-nacional-realiza-un-nuevo-clonado-del-movil-del-exjefe-de-gabinete-de-sanchez/
-  caso: caso-leire
 - iso: '2026-08-17'
   titulo: El juez Pedraz asume toda la investigación del 'caso Leire Díez'
   medio: EFE (vía The Objective)
@@ -502,7 +487,6 @@ items:
   titulo: Peinado remite a la Fiscalía Europea la causa contra Barrabés por irregularidades en un contrato
   medio: Europa Press (vía The Objective)
   url: https://theobjective.com/espana/tribunales/2026-08-04/peinado-fiscalia-europea-causa-barrabes/
-  caso: caso-begona-gomez
 - iso: '2026-08-04'
   titulo: El juez Calama encarga a la UDEF un "exhaustivo" informe sobre la entrada de capital venezolano en Plus Ultra
   medio: El Independiente
@@ -512,7 +496,7 @@ items:
   titulo: La lucense Isabel Pardo de Vera niega el cobro de comisiones por el amaño de obras en el caso Koldo
   medio: Europa Press (vía El Progreso)
   url: https://www.elprogreso.es/articulo/espana/pardo-vera-niega-cobro-comisiones-amano-obras-ve-inverosimil-que-pudiera-favorecer-empresas/202608041450211989553.html
-  caso: caso-cerdan
+  caso: caso-koldo
 - iso: '2026-08-03'
   titulo: La defensa de Zapatero recurre la extensión de la investigación económica acordada por el juez Calama
   medio: El Español
@@ -522,7 +506,6 @@ items:
   titulo: El exjefe de gabinete de Sánchez pide al juez que declare nulo el clonado de su móvil
   medio: EFE (vía Infobae)
   url: https://www.infobae.com/espana/agencias/2026/07/31/el-exjefe-de-gabinete-de-sanchez-pide-al-juez-que-declare-nulo-el-clonado-de-su-movil/
-  caso: caso-leire
 - iso: '2026-07-31'
   titulo: Zarrías pide al juez que solo investigue la cuenta en la que hubo pagos a Leire Díez
   medio: EFE (vía Infobae)
@@ -552,12 +535,11 @@ items:
   titulo: La Fiscalía Europea irrumpe en la trama de obra pública del caso Koldo para saber si Bruselas financió sus proyectos
   medio: Libertad Digital
   url: https://www.libertaddigital.com/espana/2026-07-29/la-fiscalia-europea-irrumpe-en-la-trama-de-obra-publica-del-caso-koldo-para-saber-si-bruselas-financio-sus-proyectos-7442757/
-  caso: caso-cerdan
+  caso: caso-koldo
 - iso: '2026-07-29'
   titulo: El juez Pedraz rechaza suspender provisionalmente de sus cargos a la directora y al DAO de la Guardia Civil
   medio: El Debate
   url: https://www.eldebate.com/espana/20260729/juez-pedraz-rechaza-suspender-provisionalmente-cargos-directora-dao-guardia-civil_444910.html
-  caso: caso-leire
 - iso: '2026-07-29'
   titulo: El juez Pedraz imputa al exdirector de la Guardia Civil Leonardo Marcos en el ‘caso Leire Díez’ tras cambiar de criterio sobre su presunto papel en las presiones a la UCO
   medio: Infobae
@@ -602,7 +584,6 @@ items:
   titulo: El juez rechaza el recurso de Jésica Rodríguez y mantiene su imputación al apreciar indicios de malversación por los sueldos cobrados en empresas públicas sin trabajar
   medio: Infobae
   url: https://www.infobae.com/espana/2026/07/24/el-juez-rechaza-el-recurso-de-jesica-rodriguez-y-mantiene-su-imputacion-al-apreciar-indicios-de-malversacion-por-los-sueldos-cobrados-en-empresas-publicas-sin-trabajar/
-  caso: caso-cerdan
 - iso: '2026-07-24'
   titulo: Dimiten el presidente y el CEO de Plus Ultra, investigados por el préstamo a la aerolínea
   medio: EFE (vía Infobae)
@@ -612,7 +593,6 @@ items:
   titulo: La acusación popular pide imputar al exdirector de la Guardia Civil y apartar a Mercedes González de la UCO
   medio: Libertad Digital
   url: https://www.libertaddigital.com/espana/2026-07-24/la-acusacion-popular-pide-imputar-al-exdirector-de-la-guardia-civil-y-apartar-a-mercedes-gonzalez-de-la-uco-7440573/
-  caso: caso-leire
 - iso: '2026-07-23'
   titulo: El Supremo rechaza que la sentencia de Ábalos vulnere derechos de Isabel Pardo de Vera
   medio: EFE (vía Infobae)
@@ -637,7 +617,6 @@ items:
   titulo: Antxon Alonso cobró 181.000 euros por las obras de la cárcel de Zubieta, según la UCO
   medio: The Objective
   url: https://theobjective.com/espana/tribunales/2026-07-17/uco-antxon-alonso-cobro-obras-carcel-zubieta/
-  caso: caso-cerdan
 - iso: '2026-07-17'
   titulo: La UCO halla pruebas de que Acciona pagó el ‘renting’ de un Toyota de Santos Cerdán a través de pagos en efectivo que hacía un directivo de la constructora a Koldo García
   medio: Infobae
@@ -647,7 +626,6 @@ items:
   titulo: El DAO dice que a Marlaska le parece «injusta» su imputación y critica la «vanidad» de la UCO
   medio: The Objective
   url: https://theobjective.com/espana/tribunales/2026-07-17/dao-marlaska-imputacion-uco/
-  caso: caso-leire
 - iso: '2026-07-17'
   titulo: El juez del 'caso Leire Díez' interroga este viernes a la directora de la Guardia Civil como investigada
   medio: Europa Press (vía Infobae)
@@ -707,7 +685,6 @@ items:
   titulo: 'La exdirectora de la Agencia Tributaria reconoce que las alarmas fallaron en el caso de Julio Martínez: "Fue un error"'
   medio: El Español
   url: https://www.elespanol.com/espana/20260713/expresidenta-agencia-tributaria-reconoce-alarmas-fallaron-caso-julio-martinez-error/1003744319326_0.html
-  caso: caso-zapatero-plus-ultra
 - iso: '2026-07-13'
   titulo: La Audiencia de Madrid decide sobre un punto clave del procedimiento contra Begoña Gómez
   medio: EFE (vía Infobae)
@@ -742,7 +719,6 @@ items:
   titulo: 'Aagesen admite que los cargos hoy imputados de la SEPI condicionaban los rescates: "Su criterio se cumplía"'
   medio: Vozpópuli
   url: https://www.vozpopuli.com/tribunales/aagesen-admite-que-los-cargos-hoy-imputados-de-la-sepi-condicionaban-los-rescates-su-criterio-se-cumplia.html
-  caso: caso-leire
 - iso: '2026-07-07'
   titulo: El comandante Villalba ratifica que Leire Díez le ofreció ser la "mano derecha" de la directora de la Guardia Civil
   medio: El Independiente
@@ -777,12 +753,10 @@ items:
   titulo: Pedraz exime al exdirector de la Guardia Civil que pidió limpiar el informe de David Sánchez
   medio: The Objective
   url: https://theobjective.com/espana/tribunales/2026-07-03/pedraz-guardia-civil-informe-david-sanchez/
-  caso: caso-leire
 - iso: '2026-07-03'
   titulo: Calama ordena a la UDEF que evite en sus informes "información irrelevante"
   medio: Libertad Digital
   url: https://www.libertaddigital.com/espana/2026-07-03/calama-ordena-a-la-udef-evitar-en-sus-informes-informacion-irrelevante-7430879/
-  caso: caso-zapatero-plus-ultra
 - iso: '2026-07-02'
   titulo: 'José Luis Ábalos: “Aldama ha conseguido la impunidad que pretendía”'
   medio: El País (vía El Español)
@@ -797,7 +771,6 @@ items:
   titulo: El juez Pedraz pide al PSOE que identifique quién contrató a Jacobo Teijelo como asesor del partido por 125.000 euros
   medio: El Independiente
   url: https://www.elindependiente.com/espana/2026/07/02/el-juez-pedraz-pide-al-psoe-que-identifique-quien-contrato-a-jacobo-teijelo-como-asesor-juridico-del-partido/
-  caso: caso-leire
 - iso: '2026-07-02'
   titulo: La Audiencia Nacional decidirá el 24 de julio si Pedraz se queda con la investigación de las cloacas del PSOE
   medio: Libertad Digital
@@ -832,7 +805,6 @@ items:
   titulo: Pano ratifica que la abogada de Koldo le intentó sobornar para que cambiase su declaración
   medio: The Objective
   url: https://theobjective.com/espana/tribunales/2026-06-29/pano-abogada-koldo-declaracion/
-  caso: caso-leire
 - iso: '2026-06-27'
   titulo: Begoña Gómez reclama ahora una nueva declaración y la paralización de la causa del juez Peinado
   medio: El Debate
@@ -852,7 +824,6 @@ items:
   titulo: El exjefe de la UCO y el jefe de la policía judicial se ratifican en que se les pidió "ponerse de perfil" en el caso del hermano de Sánchez
   medio: El Independiente
   url: https://www.elindependiente.com/espana/2026/06/26/exjefe-uco-jefe-policia-judicial-reafirman-campana-para-acabar-con-guardia-civil-ante-juez-pedraz/
-  caso: caso-leire
 - iso: '2026-06-25'
   titulo: Zapatero pide la nulidad de la causa porque se ha vulnerado su derecho a «un proceso justo»
   medio: The Objective
@@ -882,7 +853,6 @@ items:
   titulo: Dos exjefes de la UCO admiten presiones de la cúpula en causas contra el Gobierno
   medio: The Objective
   url: https://theobjective.com/espana/tribunales/2026-06-23/dos-exjefes-uco-presiones-cupula-causas-contra-gobierno/
-  caso: caso-leire
 - iso: '2026-06-23'
   titulo: La UCO desvela que la trama Leire gestionó el rescate de Tubos Reunidos con ayuda del PNV
   medio: The Objective
@@ -963,7 +933,7 @@ items:
   medio: The Objective
   url: https://theobjective.com/espana/tribunales/2026-06-15/zapatero-declaracion-juez-documentacion-joyas/
   caso: caso-zapatero-plus-ultra
-- iso: '2026-06-15'
+- iso: '2026-06-14'
   titulo: El juez Peinado cita este lunes a Begoña Gómez a una audiencia preliminar a la que tiene "obligación de comparecer"
   medio: Europa Press (vía Infobae)
   url: https://www.infobae.com/espana/agencias/2026/06/14/el-juez-peinado-cita-este-lunes-a-begona-gomez-a-una-audiencia-preliminar-a-la-que-tiene-obligacion-de-comparecer/
@@ -997,7 +967,6 @@ items:
   titulo: La UCO detecta 52 facturas falsas del PSOE en la causa de la financiación irregular
   medio: The Objective
   url: https://theobjective.com/espana/2026-06-11/uco-facturas-falsas-psoe-financiacion-irregular/
-  caso: caso-koldo
 - iso: '2026-06-11'
   titulo: Cerdán pidió a Sánchez la cabeza de Marlaska y Mercedes González por «no controlar la UCO»
   medio: The Objective
@@ -1032,7 +1001,6 @@ items:
   titulo: El PP-A pide a Montero aclarar si conoció o participó en la "trama para proteger a Sánchez"
   medio: Córdoba Buenas Noticias
   url: https://www.cordobabn.com/articulo/andalucia/pp-exige-montero-que-aclare-tuvo-conocimiento-participo-origen-trama-proteger-sanchez/20260608160944259961.html
-  caso: caso-leire
 - iso: '2026-06-05'
   titulo: El Supremo vuelve a rechazar poner en libertad a Koldo García, a la espera de la sentencia
   medio: The Objective
@@ -1072,7 +1040,7 @@ items:
   titulo: El juez del caso Koldo unifica la causa de las mordidas de obra pública con 14 imputados
   medio: EFE (vía Infobae)
   url: https://www.infobae.com/espana/agencias/2026/03/09/el-juez-del-caso-koldo-unifica-la-causa-de-las-mordidas-de-obra-publica-con-14-imputados/
-  caso: caso-cerdan
+  caso: caso-koldo
 - iso: '2025-06-12'
   titulo: 'Las obras del informe de la UCO que ha tumbado a Cerdán: trece contratos por 637 millones y con fondos de la UE'
   medio: elDiario.es
