@@ -1,0 +1,16 @@
+# Casos (spec 077): solo slug y nombre. Sin descripción ni reparto.
+casos:
+- slug: caso-koldo
+  nombre: Caso Koldo
+- slug: caso-cerdan
+  nombre: Caso Cerdán
+- slug: caso-begona-gomez
+  nombre: Caso Begoña Gómez
+- slug: caso-zapatero-plus-ultra
+  nombre: Caso Plus Ultra
+- slug: caso-leire
+  nombre: Caso Leire
+- slug: caso-david-sanchez
+  nombre: Caso David Sánchez
+- slug: caso-montoro
+  nombre: Caso Montoro

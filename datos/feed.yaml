@@ -1,0 +1,1080 @@
+# Cronología de El Entramado (spec 077). El sitio republica; no redacta.
+# Cada ítem lleva SOLO: iso · titulo (el que la pieza muestra en su web, literal) ·
+# medio (medio de origen; «EFE (vía COPE)» si el enlace es una republicación) ·
+# url (https) · caso (slug de casos.yaml; opcional). Cualquier otro campo es un
+# error de `scripts/validar_datos.py`. Orden: del más reciente al más antiguo.
+items:
+- iso: '2026-11-20'
+  titulo: El guardia civil investigado en el 'caso Koldo' incorpora a Macarena Olona a su defensa
+  medio: The Objective
+  url: https://theobjective.com/espana/tribunales/2026-11-20/guardia-civil-caso-koldo-macarena-olona-defensa/
+  caso: caso-cerdan
+- iso: '2026-11-19'
+  titulo: El juez llama a declarar como imputado al comandante Rubén Villalba el 23 de noviembre en el caso Koldo
+  medio: Europa Press (vía Demócrata)
+  url: https://www.democrata.es/tribunales/el-juez-llama-a-declarar-como-imputado-al-comandante-ruben-villalba-el-23-de-noviembre-en-el-caso-koldo/
+  caso: caso-cerdan
+- iso: '2026-11-18'
+  titulo: El juez rechaza anular el registro de la casa de Ábalos
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/11/18/el-juez-rechaza-anular-el-registro-de-la-casa-de-abalos/
+  caso: caso-cerdan
+- iso: '2026-11-18'
+  titulo: El Tribunal de Cuentas se abre a investigar el sueldo del hermano de Pedro Sánchez en la Diputación de Badajoz
+  medio: Europa Press (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/11/18/el-tribunal-de-cuentas-se-abre-a-investigar-el-sueldo-del-hermano-de-pedro-sanchez-en-la-diputacion-de-badajoz/
+  caso: caso-david-sanchez
+- iso: '2026-11-18'
+  titulo: El PSOE aporta al 'caso Leire' los abogados contratados entre 2021 y 2025 y facturas y pide que estén bajo secreto
+  medio: Europa Press (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/11/18/el-psoe-aporta-al-caso-leire-los-abogados-contratados-entre-2021-y-2025-y-facturas-y-pide-que-esten-bajo-secreto/
+  caso: caso-leire
+- iso: '2026-11-18'
+  titulo: El juez del caso Forestalia se inhibe a favor de Pedraz por la conexión con el caso Leire
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/11/18/el-juez-del-caso-forestalia-se-inhibe-a-favor-de-pedraz-por-la-conexion-con-el-caso-leire/
+  caso: caso-leire
+- iso: '2026-11-16'
+  titulo: La Fiscalía de Madrid asumirá la denuncia del PSOE sobre los supuestos pagos del PP a Koldo
+  medio: EFE (vía El Correo Gallego)
+  url: https://www.elcorreogallego.es/espana/2026/11/16/fiscalia-madrid-denuncia-psoe-pagos-pp-koldo-136510542.html
+  caso: caso-koldo
+- iso: '2026-11-16'
+  titulo: El juzgado del 'caso Begoña Gómez' insta a Google a no eliminar contenido del 'software' investigado
+  medio: Europa Press (vía Telemadrid)
+  url: https://www.telemadrid.es/noticias/nacional/juzgado-caso-begona-gomez-insta_1_2816965.html
+  caso: caso-begona-gomez
+- iso: '2026-11-13'
+  titulo: La UCO investiga un contrato de 28 millones del AVE a Extremadura por su conexión con el caso Koldo
+  medio: EFE (vía COPE)
+  url: https://www.cope.es/emisoras/extremadura/noticias/uco-investiga-contrato-28-millones-ave-extremadura-conexion-caso-koldo-20261113_3474532.html
+  caso: caso-cerdan
+- iso: '2026-11-12'
+  titulo: La UCO acude al Tribunal de Cuentas al notar "discrepancias" en la documentación sobre las donaciones al PSOE
+  medio: El Español
+  url: https://www.elespanol.com/espana/tribunales/20261112/uco-pide-tribunal-cuentas-informacion-donaciones-psoe-detectar-discrepancias/1003744455572_0.html
+  caso: caso-koldo
+- iso: '2026-11-12'
+  titulo: 'Caso Koldo: Ismael Moreno llama a declarar a un ex alto cargo de Adif por la contratación de Jessica'
+  medio: Libertad Digital
+  url: https://www.libertaddigital.com/espana/2026-11-12/caso-koldo-ismael-moreno-llama-a-declarar-a-un-exalto-cargo-de-adif-por-la-contratacion-de-jessica-7490448/
+  caso: caso-cerdan
+- iso: '2026-11-12'
+  titulo: Pedraz acepta al Foro Judicial Independiente como acusación en el 'caso Leire Díez'
+  medio: Europa Press (vía Noticias de Navarra)
+  url: https://www.noticiasdenavarra.com/politica/2026/11/13/pedraz-acepta-foro-judicial-independiente-leire-11755037.html
+  caso: caso-leire
+- iso: '2026-11-12'
+  titulo: El juez levanta el secreto de la pieza en la que ordenó el registro de la casa de Ábalos
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/11/12/el-juez-levanta-el-secreto-de-la-pieza-en-la-que-ordeno-el-registro-de-la-casa-de-abalos/
+  caso: caso-cerdan
+- iso: '2026-11-12'
+  titulo: Leire Díez afirma que abogados afines al PP le ofrecieron dos millones por mentir contra Sánchez
+  medio: elDiario.es
+  url: https://www.eldiario.es/politica/leire-diez-afirma-abogados-afines-pp-le-ofrecieron-millones-mentir-sanchez_1_13656894.html
+  caso: caso-leire
+- iso: '2026-11-11'
+  titulo: El juez prorroga la investigación a Zapatero y no descarta nuevas imputaciones
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/11/11/el-juez-prorroga-la-investigacion-a-zapatero-y-no-descarta-nuevas-imputaciones/
+  caso: caso-zapatero-plus-ultra
+- iso: '2026-11-11'
+  titulo: Koldo recurre al TC para anular su condena y solicita quedar en libertad hasta que se responda a su recurso
+  medio: Europa Press (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/11/11/koldo-recurre-al-tc-para-anular-su-condena-y-solicita-quedar-en-libertad-hasta-que-se-responda-a-su-recurso/
+  caso: caso-koldo
+- iso: '2026-11-11'
+  titulo: Pedraz pide a Leticia de la Hoz que detalle todos los honorarios que cobró por defender a Koldo
+  medio: The Objective
+  url: https://theobjective.com/espana/tribunales/2026-11-11/pedraz-leticia-de-la-hoz-facturas-koldo/
+  caso: caso-leire
+- iso: '2026-11-11'
+  titulo: Pedraz esperará a las elecciones para decidir si imputa al ex numero dos de Cerdán en el 'caso cloacas'
+  medio: El Independiente
+  url: https://www.elindependiente.com/espana/2026/11/11/pedraz-esperara-elecciones-decidir-imputa-ex-numero-dos-cerdan-caso-cloacas/
+  caso: caso-leire
+- iso: '2026-11-10'
+  titulo: La abogada Leticia de la Hoz deja de representar a Koldo García por "razones profesionales"
+  medio: Europa Press (vía Público)
+  url: https://www.publico.es/politica/tribunales/abogada-leticia-hoz-deja-representar-koldo-garcia-razones-profesionales.html
+  caso: caso-leire
+- iso: '2026-11-10'
+  titulo: La Audiencia Nacional avala que Calama investigue los negocios de Zapatero en Bolivia
+  medio: The Objective
+  url: https://theobjective.com/espana/tribunales/2026-11-10/audiencia-nacional-negocios-zapatero-bolivia/
+  caso: caso-zapatero-plus-ultra
+- iso: '2026-11-10'
+  titulo: El juez del 'caso Leire' cita de nuevo al exviceministro venezolano Nervis Villalobos como imputado el 24 de noviembre
+  medio: Europa Press
+  url: https://www.europapress.es/nacional/noticia-juez-caso-leire-cita-nuevo-exviceministro-venezolano-nervis-villalobos-imputado-24-noviembre-20261110120959.html
+  caso: caso-leire
+- iso: '2026-11-06'
+  titulo: La Fiscalía pide sentar en el banquillo a Koldo García, Víctor de Aldama, Isabel Pardo de Vera y Jéssica Rodríguez por el caso Koldo y solicita el archivo para otros 12
+  medio: Infobae
+  url: https://www.infobae.com/espana/2026/11/06/la-fiscalia-pide-llevar-a-procedimiento-abreviado-seguir-hacia-juicio-a-14-investigados-entre-ellos-koldo-garcia-victor-de-aldama-isabel-pardo-de-vera-y-jessica-rodriguez-y-solicita-el-archivo-para-otros-12/
+  caso: caso-koldo
+- iso: '2026-11-06'
+  titulo: Koldo y Ábalos entran en campaña acusando al PP de intentar sobornarles mientras piden amparo al Constitucional
+  medio: El Español
+  url: https://www.elespanol.com/espana/20261106/koldo-abalos-entran-campana-acusando-pp-intentar-sobornarles-piden-amparo-constitucional/1003744447903_0.html
+  caso: caso-koldo
+- iso: '2026-11-06'
+  titulo: El juez Calama rechaza imputar a Zapatero malversación en el caso de las joyas como pretendía Anticorrupción
+  medio: elDiario.es
+  url: https://www.eldiario.es/politica/juez-calama-rechaza-imputar-zapatero-malversacion-fondos-publicos-joyas-pretendia-anticorrupcion_1_13643682.html
+  caso: caso-zapatero-plus-ultra
+- iso: '2026-11-05'
+  titulo: Ábalos recurre al Constitucional para anular su condena y suspender su cumplimiento de prisión
+  medio: EFE (vía menorca.info)
+  url: https://menorca.info/actualidad/nacional/2026/11/05/2743489/abalos-recurre-constitucional-para-anular-condena-suspender-cumplimiento-prision.html
+  caso: caso-koldo
+- iso: '2026-11-05'
+  titulo: La Guardia Civil deja en libertad a los seis detenidos por el caso Koldo a la espera de que el juez los cite a declarar
+  medio: elDiario.es
+  url: https://www.eldiario.es/politica/uco-despliega-operacion-secreto-caso-koldo-investiga-audiencia-nacional_1_13639620.html
+  caso: caso-cerdan
+- iso: '2026-11-04'
+  titulo: El Tribunal Supremo abre la ejecutoria de la sentencia del ‘caso mascarillas’ y requiere a los condenados el pago de 647.000 euros en multas, decomisos e indemnizaciones
+  medio: CGPJ (nota de prensa)
+  url: https://www.poderjudicial.es/cgpj/es/Poder-Judicial/Noticias-Judiciales/El-Tribunal-Supremo-abre-la-ejecutoria-de-la-sentencia-del--caso-mascarillas--y-requiere-a-los-condenados-el-pago-de-647-000-euros-en-multas--decomisos-e-indemnizaciones
+  caso: caso-koldo
+- iso: '2026-11-04'
+  titulo: El juicio contra Aldama por acusar a Bolaños de intentar sobornarle será el 17 de febrero
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/11/04/el-juicio-contra-aldama-por-acusar-a-bolanos-de-intentar-sobornarle-sera-el-17-de-febrero/
+- iso: '2026-11-03'
+  titulo: El juez del 'caso Leire Díez' prorroga la investigación hasta junio de 2027 y no descarta nuevas actuaciones
+  medio: Europa Press (vía Ultima Hora)
+  url: https://www.ultimahora.es/noticias/nacional/2026/11/03/2742317/juez-del-caso-leire-diez-prorroga-investigacion-hasta-junio-2027-descarta-nuevas-actuaciones.html
+  caso: caso-leire
+- iso: '2026-11-03'
+  titulo: El juez del 'caso Plus Ultra' pide a la Policía que identifique al autor del punzón de las joyas de Zapatero
+  medio: Europa Press (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/11/03/el-juez-del-caso-plus-ultra-pide-a-la-policia-que-identifique-al-autor-del-punzon-de-las-joyas-de-zapatero/
+  caso: caso-zapatero-plus-ultra
+- iso: '2026-10-30'
+  titulo: El exviceministro venezolano Nervis Villalobos se niega a declarar ante el juez del caso Leire Díez
+  medio: Europa Press (vía Demócrata)
+  url: https://www.democrata.es/tribunales/el-exviceministro-venezolano-nervis-villalobos-se-niega-a-declarar-ante-el-juez-del-caso-leire-diez/
+  caso: caso-leire
+- iso: '2026-10-29'
+  titulo: La UCO avisó a la juez Biedma de que los anexos de la causa de David Sánchez contenían los correos de Begoña y Sánchez
+  medio: Libertad Digital
+  url: https://www.libertaddigital.com/espana/2026-10-29/la-uco-asegura-a-pedraz-que-informo-a-biedma-de-que-su-informe-contenia-el-correo-de-begona-gomez-7484228/
+  caso: caso-leire
+- iso: '2026-10-29'
+  titulo: Okdiario pagó la defensa de Koldo García en el juicio del Supremo
+  medio: elDiario.es
+  url: https://www.eldiario.es/politica/editora-okdiario-pago-defensa-koldo-garcia-juicio-supremo_1_13623197.html
+  caso: caso-leire
+- iso: '2026-10-28'
+  titulo: Sáenz de Tejada niega haber recibido ningún encargo de Leire Díez y declara que se refería a "eliminar judicialmente" a la jueza Biedma
+  medio: Europa Press (vía El Independiente)
+  url: https://www.elindependiente.com/espana/2026/10/28/saenz-tejada-declara-referia-eliminar-judicialmente-biedma/
+  caso: caso-leire
+- iso: '2026-10-27'
+  titulo: El juez del 'caso Leire Díez' permite que el coronel Antonio Balas siga al frente de la investigación en la UCO
+  medio: Europa Press (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/10/27/el-juez-del-caso-leire-diez-permite-que-el-coronel-antonio-balas-siga-al-frente-de-la-investigacion-en-la-uco/
+  caso: caso-leire
+- iso: '2026-10-27'
+  titulo: 'La Audiencia Nacional rechaza la querella de Leire Díez contra el PP por incluirla en un vídeo hecho con IA: “Es un tema personal”'
+  medio: elDiario.es
+  url: https://www.eldiario.es/politica/audiencia-nacional-inadmite-querella-leire-diez-pp-incluirle-video-hecho-ia-tema-personal_1_13619533.html
+  caso: caso-leire
+- iso: '2026-10-27'
+  titulo: El juez no se cree la versión de Zapatero sobre las joyas y descarta pedir información a Arabia
+  medio: The Objective
+  url: https://theobjective.com/espana/tribunales/2026-10-27/juez-zapatero-joyas-arabia/
+  caso: caso-zapatero-plus-ultra
+- iso: '2026-10-26'
+  titulo: La abogada de Koldo da permiso al PSOE para que dé al juez del 'caso Leire' "cuanto obre en sus archivos" sobre ella
+  medio: Europa Press (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/10/26/la-abogada-de-koldo-da-permiso-al-psoe-para-que-de-al-juez-del-caso-leire-cuanto-obre-en-sus-archivos-sobre-ella/
+  caso: caso-leire
+- iso: '2026-10-26'
+  titulo: El juez del caso Plus Ultra pide prorrogar la instrucción para practicar más diligencias
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/10/26/el-juez-del-caso-plus-ultra-pide-prorrogar-la-instruccion-para-practicar-mas-diligencias/
+  caso: caso-zapatero-plus-ultra
+- iso: '2026-10-23'
+  titulo: Leire Díez se querella contra el PP por el vídeo de IA en el que la acusa de “contratar matones” para eliminar a la jueza Biedma
+  medio: elDiario.es
+  url: https://www.eldiario.es/politica/leire-diez-querella-pp-video-ia-acusa-contratar-matones-eliminar-jueza-biedma_1_13608569.html
+  caso: caso-leire
+- iso: '2026-10-23'
+  titulo: El juez del caso Plus Ultra pide a Patrimonio el acta de obsequios que recibió Zapatero en el Gobierno
+  medio: Europa Press (vía El Debate)
+  url: https://www.eldebate.com/espana/20261023/juez-caso-plus-ultra-pide-patrimonio-acta-obsequios-recibio-zapatero-gobierno_473124.html
+  caso: caso-zapatero-plus-ultra
+- iso: '2026-10-23'
+  titulo: Pedraz da otros 15 días al PSOE para que entregue su listado de abogados contratados
+  medio: The Objective
+  url: https://theobjective.com/espana/tribunales/2026-10-23/pedraz-psoe-abogados-contratados/
+  caso: caso-leire
+- iso: '2026-10-22'
+  titulo: El PSOE deja pasar las 48 horas que le dio el juez Pedraz para entregar los contratos de sus abogados y se escuda en el “secreto profesional” y la “confidencialidad”
+  medio: Infobae y The Objective
+  url: https://www.infobae.com/espana/2026/10/22/el-psoe-deja-pasar-las-48-horas-que-le-dio-el-juez-pedraz-para-entregar-los-contratos-de-sus-abogados-y-se-escuda-en-el-secreto-profesional-y-la-confidencialidad/
+  caso: caso-leire
+- iso: '2026-10-22'
+  titulo: Servinabar, vinculada a Cerdán, facturó Acciona 2 millones por la ronda sur de Logroño
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/10/22/servinabar-vinculada-a-cerdan-facturo-acciona-2-millones-por-la-ronda-sur-de-logrono/
+  caso: caso-cerdan
+- iso: '2026-10-21'
+  titulo: Cerdán se opone a que Pedraz envíe sus agendas al juez del caso Koldo
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/10/21/cerdan-se-opone-a-que-pedraz-envie-sus-agendas-al-juez-del-caso-koldo/
+  caso: caso-cerdan
+- iso: '2026-10-15'
+  titulo: El juez del caso Koldo pide la documentación intervenida en mayo a Cerdán y al PSOE
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/10/15/el-juez-del-caso-koldo-pide-la-documentacion-intervenida-en-mayo-a-cerdan-y-al-psoe/
+  caso: caso-cerdan
+- iso: '2026-10-15'
+  titulo: El DAO de la G.Civil dice que Marlaska le llamó tras filtrarse el correo de Begoña Gómez
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/10/15/el-dao-de-la-gcivil-dice-que-marlaska-le-llamo-tras-filtrarse-el-correo-de-begona-gomez/
+  caso: caso-leire
+- iso: '2026-10-14'
+  titulo: El Supremo rechaza el incidente de nulidad de Ábalos y abre la puerta a acudir al TC
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/10/14/el-supremo-rechaza-el-incidente-de-nulidad-de-abalos-y-abre-la-puerta-a-acudir-al-tc/
+  caso: caso-koldo
+- iso: '2026-10-13'
+  titulo: Pedraz imputa al exjuez que insultó a la instructora del caso de David Sánchez
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/10/13/pedraz-imputa-al-exjuez-que-insulto-a-la-instructora-del-caso-de-david-sanchez/
+  caso: caso-leire
+- iso: '2026-10-09'
+  titulo: El juez descarta imputar por ahora al PSOE en el 'caso Leire Díez' y esperará a más diligencias tras pedirlo el PP
+  medio: Europa Press (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/10/09/el-juez-descarta-imputar-por-ahora-al-psoe-en-el-caso-leire-diez-y-esperara-a-mas-diligencias-tras-pedirlo-el-pp/
+  caso: caso-leire
+- iso: '2026-10-09'
+  titulo: La Audiencia Nacional confirma la imputación de Jéssica y un ex alto cargo de Adif
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/10/09/la-audiencia-nacional-confirma-la-imputacion-de-jessica-y-un-ex-alto-cargo-de-adif/
+  caso: caso-koldo
+- iso: '2026-10-08'
+  titulo: El hermano de Pedro Sánchez presenta recurso de apelación por "investigación prospectiva" y pide su absolución
+  medio: Europa Press (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/10/08/el-hermano-de-pedro-sanchez-presenta-recurso-de-apelacion-por-investigacion-prospectiva-y-pide-su-absolucion/
+  caso: caso-david-sanchez
+- iso: '2026-10-06'
+  titulo: Pedraz reclama al PSOE todos sus contratos con abogados y consultoras de 2021 a 2025 y cita a Nervis Villalobos
+  medio: Estrella Digital y Europa Press (vía Infobae)
+  url: https://www.estrelladigital.es/articulo/tribunales/pedraz-reclama-psoe-todos-contratos-abogados-consultoras-2021-2025-cita-nervis-villalobos/20261006150011451867.html
+  caso: caso-leire
+- iso: '2026-10-01'
+  titulo: Leire Díez recurre la personación de la jueza Biedma al no considerarla perjudicada
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/10/01/leire-diez-recurre-la-personacion-de-la-jueza-biedma-al-no-considerarla-perjudicada/
+  caso: caso-leire
+- iso: '2026-09-30'
+  titulo: Biedma entrega al juez 90 vídeos contra ella y asegura tener testigos de las presiones para apartarla del caso David Sánchez
+  medio: COPE
+  url: https://www.cope.es/emisoras/extremadura/noticias/biedma-entrega-juez-90-videos-asegura-testigos-presiones-apartarla-caso-david-sanchez-20260930_3447138.html
+  caso: caso-leire
+- iso: '2026-09-29'
+  titulo: 'La Fiscalía rechaza dejar de investigar las gestiones de Zapatero en Bolivia: "No puede ser que encorsete la instrucción"'
+  medio: El Independiente
+  url: https://www.elindependiente.com/espana/tribunales/2026/09/29/fiscalia-rechaza-sacar-investigacion-zapatero-rama-gestiones-bolivia-no-puede-ser-encorsete-instruccion/
+  caso: caso-zapatero-plus-ultra
+- iso: '2026-09-29'
+  titulo: El juez Calama rechaza la petición de Zapatero de apartar a la joyería Yanes de la tasación de sus joyas por una supuesta “falta de imparcialidad”
+  medio: Infobae
+  url: https://www.infobae.com/espana/2026/09/29/el-juez-calama-rechaza-la-peticion-de-zapatero-de-apartar-a-la-joyeria-yanes-de-la-tasacion-de-sus-joyas-por-una-supuesta-falta-de-imparcialidad/
+  caso: caso-zapatero-plus-ultra
+- iso: '2026-09-28'
+  titulo: Pedraz admite a la jueza Beatriz Biedma como acusación en el caso Leire Díez y la cita el 8 de octubre
+  medio: Estrella Digital
+  url: https://www.estrelladigital.es/articulo/tribunales/pedraz-admite-jueza-beatriz-biedma-como-acusacion-particular-cita-declarar-8-octubre/20260928172506451545.html
+  caso: caso-leire
+- iso: '2026-09-28'
+  titulo: El despacho de Montoro pide al Supremo que traslade su causa de Tarragona a Madrid
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/09/28/el-despacho-de-montoro-pide-al-supremo-que-traslade-su-causa-de-tarragona-a-madrid/
+  caso: caso-montoro
+- iso: '2026-09-26'
+  titulo: La Audiencia investiga cientos de mensajes de Delcy con Aldama negociando operaciones millonarias de petróleo en la causa de la financiación del PSOE
+  medio: El Mundo
+  url: https://www.elmundo.es/espana/2026/09/26/6ab7edb721efa0f1548b45a9.html
+  caso: caso-koldo
+- iso: '2026-09-26'
+  titulo: El juez Juan Carlos Peinado se jubila por edad avanzada a un día de cumplir 72 años y tras mandar a Begoña Gómez a juicio oral
+  medio: Infobae
+  url: https://www.infobae.com/espana/2026/09/26/el-juez-juan-carlos-peinado-se-jubila-por-edad-avanzada-a-un-dia-de-cumplir-72-anos-y-tras-mandar-a-begona-gomez-a-juicio-oral/
+  caso: caso-begona-gomez
+- iso: '2026-09-24'
+  titulo: La Fiscalía Europea pregunta a la UCO si en el caso Leire están afectados fondos de la UE
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/09/24/la-fiscalia-europea-pregunta-a-la-uco-si-en-el-caso-leire-estan-afectados-fondos-de-la-ue/
+  caso: caso-leire
+- iso: '2026-09-24'
+  titulo: Testigos relatan a la UCO que el exjefe de prensa del PSOE decidió pagar al medio que tenía en nómina a Leire Díez
+  medio: El Español
+  url: https://www.elespanol.com/espana/tribunales/20260924/testigos-relatan-uco-exjefe-prensa-psoe-decidio-pagar-medio-nomina-leire/1003744395731_0.html
+  caso: caso-leire
+- iso: '2026-09-24'
+  titulo: La UCO documenta el interés de Sofía Puente por la nacionalización de un exviceministro chavista en la que trató de influir Leire Díez
+  medio: El Debate
+  url: https://www.eldebate.com/espana/20260924/uco-documenta-interes-sofia-puente-nacionalizacion-ex-ministro-chavista-trato-influir-leire-diez_461702.html
+  caso: caso-leire
+- iso: '2026-09-23'
+  titulo: 'El chat secreto de la cloaca del PSOE: "Estamos hablando de atacar a gente metida en las más altas instituciones"'
+  medio: Libertad Digital
+  url: https://www.libertaddigital.com/espana/2026-09-23/el-chat-secreto-de-la-cloaca-del-psoe-estamos-hablando-de-atacar-a-gente-metida-en-las-mas-altas-instituciones-7463376/
+  caso: caso-leire
+- iso: '2026-09-22'
+  titulo: El Supremo decidirá si el caso Montoro se queda en los juzgados de Tarragona o de Madrid
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/09/22/el-supremo-decidira-si-el-caso-montoro-se-queda-en-los-juzgados-de-tarragona-o-de-madrid/
+  caso: caso-montoro
+- iso: '2026-09-17'
+  titulo: Acusación recurre la sentencia a David Sánchez por no recoger tráfico de influencias
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/09/17/acusacion-recurre-la-sentencia-a-david-sanchez-por-no-recoger-trafico-de-influencias/
+  caso: caso-david-sanchez
+- iso: '2026-09-17'
+  titulo: El juez del caso Leire rechaza limitar las cuentas bancarias que analizará la UCO
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/09/17/el-juez-del-caso-leire-rechaza-limitar-las-cuentas-bancarias-que-analizara-la-uco/
+  caso: caso-leire
+- iso: '2026-09-16'
+  titulo: La juez que investigó a David Sánchez revela que la 'trama Leire' contactó con narcos para tratar de boicotear su labor
+  medio: El Español
+  url: https://www.elespanol.com/espana/tribunales/20260916/juez-caso-david-sanchez-pide-perjudicada-leire-boicot-fontanera-psoe-labor/1003744385388_0.html
+  caso: caso-leire
+- iso: '2026-09-16'
+  titulo: 'La Audiencia de Badajoz concreta el alcance de la condena a David Sánchez: perderá su plaza en la Diputación y no podrá acceder a otro puesto electivo o discrecional'
+  medio: Infobae
+  url: https://www.infobae.com/espana/2026/09/16/la-audiencia-de-badajoz-concreta-el-alcance-de-la-condena-a-david-sanchez-perdera-su-plaza-en-la-diputacion-y-no-podra-acceder-a-otro-puesto-electivo-o-discrecional/
+  caso: caso-david-sanchez
+- iso: '2026-09-16'
+  titulo: La Diputación no reclamará los 427.000 euros que cobraron David Sánchez y Carrero
+  medio: The Objective
+  url: https://theobjective.com/espana/politica/2026-09-16/diputacion-427-000-euros-david-sanchez-carrero/
+  caso: caso-david-sanchez
+- iso: '2026-09-15'
+  titulo: La UCO se persona en Adif por orden del juez Moreno para investigar los contratos de Transportes con Levantina
+  medio: Libertad Digital
+  url: https://www.libertaddigital.com/espana/2026-09-15/la-uco-se-persona-en-adif-por-orden-del-juez-moreno-para-investigar-los-contratos-de-transportes-con-levantina-7460428/
+  caso: caso-cerdan
+- iso: '2026-09-14'
+  titulo: Zapatero pide frenar la investigación de sus negocios en Bolivia para evitar una "patente de corso" de la UDEF contra él
+  medio: El Español
+  url: https://www.elespanol.com/espana/tribunales/20260914/zapatero-pide-frenar-investigacion-negocios-bolivia-evitar-patente-corso-udef/1003744382997_0.html
+  caso: caso-zapatero-plus-ultra
+- iso: '2026-09-14'
+  titulo: El Tribunal de Cuentas lleva al juez los nombres de los donantes en la causa por la financiación del PSOE
+  medio: El Mundo (vía Qué!)
+  url: https://www.que.es/2026/09/14/tribunal-cuentas-donantes-financiacion-psoe/
+  caso: caso-koldo
+- iso: '2026-09-14'
+  titulo: Aplazada hasta el 21 de septiembre la decisión sobre ceder la causa del 'caso Montoro' a Madrid
+  medio: Europa Press (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/09/14/aplazada-hasta-el-21-de-septiembre-la-decision-sobre-ceder-la-causa-del-caso-montoro-a-madrid/
+  caso: caso-montoro
+- iso: '2026-09-13'
+  titulo: 'El escrito que complica que Begoña Gómez se siente en el banquillo: el juez Peinado no notificó el auto de apertura de juicio en plazo por las dudas sobre la acusación'
+  medio: Infobae
+  url: https://www.infobae.com/espana/2026/09/13/el-escrito-que-complica-que-begona-gomez-se-siente-en-el-banquillo-el-juez-peinado-no-notifico-el-auto-de-apertura-de-juicio-en-plazo-por-las-dudas-sobre-la-acusacion/
+  caso: caso-begona-gomez
+- iso: '2026-09-11'
+  titulo: Dos socios de Aldama niegan que conocieran las comisiones por los contratos de mascarillas
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/09/11/dos-socios-de-aldama-niegan-que-conocieran-las-comisiones-por-los-contratos-de-mascarillas/
+  caso: caso-koldo
+- iso: '2026-09-11'
+  titulo: 'Caso Koldo: la empresa que facturó 53 millones en mascarillas frente al juez'
+  medio: Moncloa.com
+  url: https://www.moncloa.com/2026/09/10/caso-koldo-mascarillas-juez-3428569
+  caso: caso-cerdan
+- iso: '2026-09-10'
+  titulo: Gallardo trata de impedir que su inhabilitación vaya más allá de la presidencia de la Diputación
+  medio: COPE
+  url: https://www.cope.es/emisoras/extremadura/noticias/gallardo-trata-impedir-inhabilitacion-presidencia-diputacion-20260910_3434389.html
+  caso: caso-david-sanchez
+- iso: '2026-09-10'
+  titulo: Exdirector de la Guardia Civil niega ante el juez del caso Leire haber presionado a la UCO
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/09/10/exdirector-de-la-guardia-civil-niega-ante-el-juez-del-caso-leire-haber-presionado-a-la-uco/
+  caso: caso-leire
+- iso: '2026-09-10'
+  titulo: 'Suiza desmonta una de las pistas financieras de la causa de Zapatero: no encuentra cuentas vinculadas a la sociedad investigada tras rastrear dos bancos'
+  medio: Infobae
+  url: https://www.infobae.com/espana/2026/09/10/suiza-desmonta-una-de-las-pistas-financieras-de-la-causa-de-zapatero-no-encuentra-cuentas-vinculadas-a-la-sociedad-investigada-tras-rastrear-dos-bancos/
+  caso: caso-zapatero-plus-ultra
+- iso: '2026-09-09'
+  titulo: La gerente del PSOE declara que seguía órdenes de Cerdán al autorizar pagos del caso Leire
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/09/09/la-gerente-del-psoe-declara-que-seguia-ordenes-de-cerdan-al-autorizar-pagos-del-caso-leire/
+  caso: caso-leire
+- iso: '2026-09-08'
+  titulo: ExCEO de Plus Ultra mantiene que se pagó medio millón al socio de Zapatero por gestiones del expresidente en el rescate
+  medio: Europa Press (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/09/08/exceo-de-plus-ultra-mantiene-que-se-pago-medio-millon-al-socio-de-zapatero-por-gestiones-del-expresidente-en-el-rescate/
+  caso: caso-zapatero-plus-ultra
+- iso: '2026-09-08'
+  titulo: 'La audiencia preliminar de Begoña Gómez antes de las vacaciones de Peinado: las defensas piden el archivo y queda cerrada la instrucción'
+  medio: Infobae
+  url: https://www.infobae.com/espana/2026/09/08/la-audiencia-preliminar-de-begona-gomez-antes-de-las-vacaciones-de-peinado-las-defensas-piden-el-archivo-y-queda-cerrada-la-instruccion/
+  caso: caso-begona-gomez
+- iso: '2026-09-07'
+  titulo: El Tribunal de Cuentas da cinco días a la Diputación de Badajoz como entidad pública "presuntamente perjudicada" para que decida si quiere reclamar las nóminas de David Sánchez
+  medio: COPE
+  url: https://www.cope.es/emisoras/extremadura/noticias/tribunal-cuentas-da-cinco-dias-diputacion-badajoz-entidad-publica-presuntamente-perjudicada-decida-quiere-reclamar-nominas-david-sanchez-20260907_3431837.html
+  caso: caso-david-sanchez
+- iso: '2026-09-07'
+  titulo: El expresidente de Plus Ultra declara que asumió que el pago del 1% iba para Zapatero
+  medio: EFE (vía infoLibre)
+  url: https://www.infolibre.es/politica/expresidente-plus-ultra-declara-asumio-pago-1-iba-zapatero_1_2235946.html
+  caso: caso-zapatero-plus-ultra
+- iso: '2026-09-06'
+  titulo: El juez Peinado prevé abrir juicio a Begoña Gómez antes de jubilarse a finales de mes
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/09/06/el-juez-peinado-preve-abrir-juicio-a-begona-gomez-antes-de-jubilarse-a-finales-de-mes/
+  caso: caso-begona-gomez
+- iso: '2026-09-04'
+  titulo: La Unión de la Resistencia Venezolana en el Exilio se persona en el caso Plus Ultra
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/09/04/la-union-de-la-resistencia-venezolana-en-el-exilio-se-persona-en-el-caso-plus-ultra/
+  caso: caso-zapatero-plus-ultra
+- iso: '2026-09-04'
+  titulo: El juez rechaza la nulidad de la causa de Plus Ultra planteada por Zapatero
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/09/04/el-juez-rechaza-la-nulidad-de-la-causa-de-plus-ultra-planteada-por-zapatero/
+  caso: caso-zapatero-plus-ultra
+- iso: '2026-09-04'
+  titulo: 'Cristina Álvarez pide su absolución y descarga la responsabilidad en Begoña Gómez: "Actuó siguiendo sus instrucciones"'
+  medio: Libertad Digital
+  url: https://www.libertaddigital.com/espana/2026-09-03/cristina-alvarez-pide-su-absolucion-y-descarga-la-responsabilidad-en-begona-gomez-actuo-siguiendo-sus-instrucciones-7454887/
+  caso: caso-begona-gomez
+- iso: '2026-09-02'
+  titulo: 'Varapalo de Pedraz a la abogada de Koldo: no incluirá el desmentido de Aldama del soborno a Carmen Pano'
+  medio: Libertad Digital
+  url: https://www.libertaddigital.com/espana/2026-09-02/pedraz-niega-a-la-abogada-de-koldo-incluir-unas-declaraciones-de-aldama-para-encubrir-su-supuesto-soborno-a-carmen-pano-7453959/
+  caso: caso-leire
+- iso: '2026-09-01'
+  titulo: Anticorrupción pide al TS rechazar la petición de Ábalos y Koldo para anular la sentencia del 'caso mascarillas'
+  medio: Europa Press (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/09/01/anticorrupcion-pide-al-ts-rechazar-la-peticion-de-abalos-y-koldo-para-anular-la-sentencia-del-caso-mascarillas/
+  caso: caso-koldo
+- iso: '2026-09-01'
+  titulo: El PSOE pide al juez del caso Leire que solo la Fiscalía acceda al análisis de sus cuentas
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/09/01/el-psoe-pide-al-juez-del-caso-leire-que-solo-la-fiscalia-acceda-al-analisis-de-sus-cuentas/
+  caso: caso-leire
+- iso: '2026-08-24'
+  titulo: David Sánchez pide eliminar referencia a cómo se creó su plaza en la Diputación pacense
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/08/24/david-sanchez-pide-eliminar-referencia-a-como-se-creo-su-plaza-en-la-diputacion-pacense/
+  caso: caso-david-sanchez
+- iso: '2026-08-23'
+  titulo: Begoña Gómez buscará su absolución ante el jurado popular alegando el vacío legal de las 'primeras damas' en España
+  medio: El Debate
+  url: https://www.eldebate.com/espana/20260823/begona-gomez-buscara-absolucion-ante-jurado-popular-alegando-vacio-legal-primeras-damas-espana_445471.html
+  caso: caso-begona-gomez
+- iso: '2026-08-20'
+  titulo: Leire Díez se opone a que la Audiencia Nacional asuma toda la investigación en su contra
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/08/20/leire-diez-se-opone-a-que-la-audiencia-nacional-asuma-toda-la-investigacion-en-su-contra/
+  caso: caso-leire
+- iso: '2026-08-18'
+  titulo: La Audiencia Nacional realiza un nuevo clonado del móvil del exjefe de gabinete de Sánchez
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/08/18/la-audiencia-nacional-realiza-un-nuevo-clonado-del-movil-del-exjefe-de-gabinete-de-sanchez/
+  caso: caso-leire
+- iso: '2026-08-17'
+  titulo: El juez Pedraz asume toda la investigación del 'caso Leire Díez'
+  medio: EFE (vía The Objective)
+  url: https://theobjective.com/espana/tribunales/2026-08-17/juez-pedraz-investigacion-caso-leire/
+  caso: caso-leire
+- iso: '2026-08-13'
+  titulo: El primer juez del 'caso Leire' apunta a que Cerdán pagó a Díez con dinero del PSOE
+  medio: Europa Press (vía The Objective)
+  url: https://theobjective.com/espana/tribunales/2026-08-13/primer-juez-caso-leire-cerdan-pago-fontanera-dinero-psoe/
+  caso: caso-leire
+- iso: '2026-08-04'
+  titulo: Peinado remite a la Fiscalía Europea la causa contra Barrabés por irregularidades en un contrato
+  medio: Europa Press (vía The Objective)
+  url: https://theobjective.com/espana/tribunales/2026-08-04/peinado-fiscalia-europea-causa-barrabes/
+  caso: caso-begona-gomez
+- iso: '2026-08-04'
+  titulo: El juez Calama encarga a la UDEF un "exhaustivo" informe sobre la entrada de capital venezolano en Plus Ultra
+  medio: El Independiente
+  url: https://www.elindependiente.com/espana/2026/08/04/el-juez-calama-encarga-a-la-udef-un-exhaustivo-informe-sobre-la-entrada-de-capital-venezolano-en-plus-ultra/
+  caso: caso-zapatero-plus-ultra
+- iso: '2026-08-04'
+  titulo: La lucense Isabel Pardo de Vera niega el cobro de comisiones por el amaño de obras en el caso Koldo
+  medio: Europa Press (vía El Progreso)
+  url: https://www.elprogreso.es/articulo/espana/pardo-vera-niega-cobro-comisiones-amano-obras-ve-inverosimil-que-pudiera-favorecer-empresas/202608041450211989553.html
+  caso: caso-cerdan
+- iso: '2026-08-03'
+  titulo: La defensa de Zapatero recurre la extensión de la investigación económica acordada por el juez Calama
+  medio: El Español
+  url: https://www.elespanol.com/espana/tribunales/20260803/defensa-zapatero-recurre-extension-investigacion-economica-acordada-calama/1003744342405_0.html
+  caso: caso-zapatero-plus-ultra
+- iso: '2026-07-31'
+  titulo: El exjefe de gabinete de Sánchez pide al juez que declare nulo el clonado de su móvil
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/07/31/el-exjefe-de-gabinete-de-sanchez-pide-al-juez-que-declare-nulo-el-clonado-de-su-movil/
+  caso: caso-leire
+- iso: '2026-07-31'
+  titulo: Zarrías pide al juez que solo investigue la cuenta en la que hubo pagos a Leire Díez
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/07/31/zarrias-pide-al-juez-que-solo-investigue-la-cuenta-en-la-que-hubo-pagos-a-leire-diez/
+  caso: caso-leire
+- iso: '2026-07-31'
+  titulo: Pedraz abre una pieza para rastrear el dinero de las 'cloacas' en cuentas vinculadas al PSOE y al entorno de Leire Díez
+  medio: El Independiente
+  url: https://www.elindependiente.com/espana/2026/07/31/pedraz-abre-una-pieza-para-rastrear-el-dinero-de-las-cloacas-en-cuentas-vinculadas-al-psoe-y-al-entorno-de-leire-diez/
+  caso: caso-leire
+- iso: '2026-07-31'
+  titulo: El juez Calama rectifica y admite a trámite parte del incidente de nulidad de Zapatero por el caso Plus Ultra
+  medio: Infobae
+  url: https://www.infobae.com/espana/2026/07/31/el-juez-calama-rectifica-y-admite-a-tramite-parte-del-incidente-de-nulidad-de-zapatero-por-el-caso-plus-ultra/
+  caso: caso-zapatero-plus-ultra
+- iso: '2026-07-30'
+  titulo: Vox recurre la sentencia de David Sánchez para que sea condenado por tráfico de influencias
+  medio: The Objective
+  url: https://theobjective.com/espana/tribunales/2026-07-30/vox-david-sanchez-trafico-de-influencias/
+  caso: caso-david-sanchez
+- iso: '2026-07-30'
+  titulo: El juez Peinado da al nuevo abogado de Begoña Gómez hasta septiembre para presentar el escrito de defensa
+  medio: Libertad Digital
+  url: https://www.libertaddigital.com/espana/2026-07-30/el-juez-peinado-da-al-nuevo-abogado-de-begona-gomez-hasta-septiembre-para-presentar-el-escrito-de-defensa-7443615/
+  caso: caso-begona-gomez
+- iso: '2026-07-29'
+  titulo: La Fiscalía Europea irrumpe en la trama de obra pública del caso Koldo para saber si Bruselas financió sus proyectos
+  medio: Libertad Digital
+  url: https://www.libertaddigital.com/espana/2026-07-29/la-fiscalia-europea-irrumpe-en-la-trama-de-obra-publica-del-caso-koldo-para-saber-si-bruselas-financio-sus-proyectos-7442757/
+  caso: caso-cerdan
+- iso: '2026-07-29'
+  titulo: El juez Pedraz rechaza suspender provisionalmente de sus cargos a la directora y al DAO de la Guardia Civil
+  medio: El Debate
+  url: https://www.eldebate.com/espana/20260729/juez-pedraz-rechaza-suspender-provisionalmente-cargos-directora-dao-guardia-civil_444910.html
+  caso: caso-leire
+- iso: '2026-07-29'
+  titulo: El juez Pedraz imputa al exdirector de la Guardia Civil Leonardo Marcos en el ‘caso Leire Díez’ tras cambiar de criterio sobre su presunto papel en las presiones a la UCO
+  medio: Infobae
+  url: https://www.infobae.com/espana/2026/07/29/el-juez-pedraz-imputa-al-exdirector-de-la-guardia-civil-en-el-caso-leire-diez-y-le-cita-a-declarar-el-10-de-septiembre/
+  caso: caso-leire
+- iso: '2026-07-29'
+  titulo: El confidente de la Guardia Civil que organizó la reunión con el comandante Villalba escuchó a Leire hablar por teléfono con "Mercedes"
+  medio: El Independiente
+  url: https://www.elindependiente.com/espana/2026/07/29/el-confidente-de-la-guardia-civil-que-organizo-la-reunion-con-el-comandante-villalba-escucho-a-leire-hablar-por-telefono-con-mercedes/
+  caso: caso-leire
+- iso: '2026-07-28'
+  titulo: La Fiscalía adelanta a Peinado que hará un escrito "de conclusiones absolutorias" para Begoña Gómez
+  medio: Libertad Digital
+  url: https://www.libertaddigital.com/espana/2026-07-28/la-fiscalia-adelanta-a-peinado-que-hara-un-escrito-de-conclusiones-absolutorias-para-begona-gomez-7442562/
+  caso: caso-begona-gomez
+- iso: '2026-07-28'
+  titulo: Trabajadoras del PSOE declaran que actuaron por indicación de Cerdán y que Leire usó varias veces el parking de Ferraz
+  medio: Europa Press (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/07/28/trabajadoras-del-psoe-declaran-que-actuaron-por-indicacion-de-cerdan-y-que-leire-uso-varias-veces-el-parking-de-ferraz/
+  caso: caso-leire
+- iso: '2026-07-27'
+  titulo: 'La acusación popular reformula su escrito contra Begoña Gómez: pide 13 años de prisión y comparecencia de Pedro Sánchez'
+  medio: Libertad Digital
+  url: https://www.libertaddigital.com/espana/2026-07-27/begona-7441472/
+  caso: caso-begona-gomez
+- iso: '2026-07-27'
+  titulo: La UCO sitúa a Cerdán y Koldo en un coche de Servinabar para acudir al Congreso
+  medio: ABC (vía edatv.news)
+  url: https://edatv.news/politica/uco-situa-cerdan-koldo-coche-servinabar-acudir-congreso
+  caso: caso-cerdan
+- iso: '2026-07-27'
+  titulo: El juez prorroga seis meses más la causa "sumamente compleja" en que investiga a Montoro
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/07/27/el-juez-prorroga-seis-meses-mas-la-causa-sumamente-compleja-en-que-investiga-a-montoro/
+  caso: caso-montoro
+- iso: '2026-07-26'
+  titulo: El juez del caso Leire cerrará la ronda de interrogatorios con dos empleadas del PSOE
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/07/26/el-juez-del-caso-leire-cerrara-la-ronda-de-interrogatorios-con-dos-empleadas-del-psoe/
+  caso: caso-leire
+- iso: '2026-07-24'
+  titulo: El juez rechaza el recurso de Jésica Rodríguez y mantiene su imputación al apreciar indicios de malversación por los sueldos cobrados en empresas públicas sin trabajar
+  medio: Infobae
+  url: https://www.infobae.com/espana/2026/07/24/el-juez-rechaza-el-recurso-de-jesica-rodriguez-y-mantiene-su-imputacion-al-apreciar-indicios-de-malversacion-por-los-sueldos-cobrados-en-empresas-publicas-sin-trabajar/
+  caso: caso-cerdan
+- iso: '2026-07-24'
+  titulo: Dimiten el presidente y el CEO de Plus Ultra, investigados por el préstamo a la aerolínea
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/07/24/dimiten-el-presidente-y-el-ceo-de-plus-ultra-investigados-por-el-prestamo-a-la-aerolinea/
+  caso: caso-zapatero-plus-ultra
+- iso: '2026-07-24'
+  titulo: La acusación popular pide imputar al exdirector de la Guardia Civil y apartar a Mercedes González de la UCO
+  medio: Libertad Digital
+  url: https://www.libertaddigital.com/espana/2026-07-24/la-acusacion-popular-pide-imputar-al-exdirector-de-la-guardia-civil-y-apartar-a-mercedes-gonzalez-de-la-uco-7440573/
+  caso: caso-leire
+- iso: '2026-07-23'
+  titulo: El Supremo rechaza que la sentencia de Ábalos vulnere derechos de Isabel Pardo de Vera
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/07/23/el-supremo-rechaza-que-la-sentencia-de-abalos-vulnere-derechos-de-isabel-pardo-de-vera/
+  caso: caso-koldo
+- iso: '2026-07-23'
+  titulo: Iustitia Europa pide al Tribunal de Cuentas que exija a David Sánchez 340.000 euros de sus sueldos en Badajoz
+  medio: Libertad Digital
+  url: https://www.libertaddigital.com/espana/2026-07-23/iustitia-europa-pide-al-tribunal-de-cuentas-que-exija-a-david-sanchez-340-000-euros-de-sus-sueldos-en-badajoz-7439749/
+  caso: caso-david-sanchez
+- iso: '2026-07-22'
+  titulo: 'Narbona abre la puerta a que el PSOE se querelle contra Leire Díez: “Es una decisión que adoptaremos en su momento”'
+  medio: elDiario.es
+  url: https://www.eldiario.es/politica/narbona-abre-puerta-psoe-querelle-leire-diez-decision-adoptaremos-momento_1_13398216.html
+  caso: caso-leire
+- iso: '2026-07-20'
+  titulo: Vox recurrirá la sentencia que absuelve al hermano de Sánchez de tráfico de influencias
+  medio: The Objective
+  url: https://theobjective.com/espana/2026-07-20/vox-sentencia-absuelve-hermano-sanchez-trafico-influencias/
+  caso: caso-david-sanchez
+- iso: '2026-07-17'
+  titulo: Antxon Alonso cobró 181.000 euros por las obras de la cárcel de Zubieta, según la UCO
+  medio: The Objective
+  url: https://theobjective.com/espana/tribunales/2026-07-17/uco-antxon-alonso-cobro-obras-carcel-zubieta/
+  caso: caso-cerdan
+- iso: '2026-07-17'
+  titulo: La UCO halla pruebas de que Acciona pagó el ‘renting’ de un Toyota de Santos Cerdán a través de pagos en efectivo que hacía un directivo de la constructora a Koldo García
+  medio: Infobae
+  url: https://www.infobae.com/espana/2026/07/17/la-uco-halla-pruebas-de-que-acciona-pago-el-renting-de-un-toyota-de-santos-cerdan-a-traves-de-pagos-en-efectivo-que-hacia-un-directivo-de-la-constructora-a-koldo-garcia/
+  caso: caso-cerdan
+- iso: '2026-07-17'
+  titulo: El DAO dice que a Marlaska le parece «injusta» su imputación y critica la «vanidad» de la UCO
+  medio: The Objective
+  url: https://theobjective.com/espana/tribunales/2026-07-17/dao-marlaska-imputacion-uco/
+  caso: caso-leire
+- iso: '2026-07-17'
+  titulo: El juez del 'caso Leire Díez' interroga este viernes a la directora de la Guardia Civil como investigada
+  medio: Europa Press (vía Infobae)
+  url: https://www.infobae.com/america/agencias/2026/07/17/el-juez-del-caso-leire-diez-interroga-este-viernes-a-la-directora-de-la-guardia-civil-como-investigada/
+  caso: caso-leire
+- iso: '2026-07-16'
+  titulo: 'Begoña Gómez no se libra del jurado popular: la Audiencia Provincial mantiene el juicio por malversación y tráfico de influencias pero le devuelve el pasaporte'
+  medio: Infobae
+  url: https://www.infobae.com/espana/2026/07/16/la-audiencia-de-madrid-mantiene-el-juicio-contra-begona-gomez-por-trafico-de-influencias-y-malversacion-pero-le-devuelve-el-pasaporte/
+  caso: caso-begona-gomez
+- iso: '2026-07-15'
+  titulo: El juez rechaza retirar de la causa el informe de la UDEF que vinculaba los 200.000 euros recibidos por Zapatero a presuntas gestiones de influencia en Bolivia
+  medio: Infobae
+  url: https://www.infobae.com/espana/2026/07/15/el-juez-rechaza-retirar-de-la-causa-el-informe-de-la-udef-que-vinculaba-los-200000-euros-recibidos-por-zapatero-a-presuntas-gestiones-de-influencia-en-bolivia/
+  caso: caso-zapatero-plus-ultra
+- iso: '2026-07-15'
+  titulo: Begoña Gómez entrega en el juzgado los billetes de avión de su viaje al Reino Unido y reprocha al juez Peinado que le obligue a demostrar su inocencia
+  medio: Infobae
+  url: https://www.infobae.com/espana/2026/07/15/begona-gomez-entrega-en-el-juzgado-los-billetes-de-avion-de-su-viaje-al-reino-unido-y-planta-cara-a-peinado-por-exigirle-mas-pruebas/
+  caso: caso-begona-gomez
+- iso: '2026-07-15'
+  titulo: 'La presidenta del PSOE admite ante el juez que habló con Leire y que la remitió a Santos Cerdán: “Me dijo que era intrascendente”'
+  medio: Infobae
+  url: https://www.infobae.com/espana/2026/07/15/la-presidenta-del-psoe-cristina-narbona-admite-ante-el-juez-que-hablo-con-leire-y-que-la-remitio-a-santos-cerdan-me-dijo-que-era-intrascendente/
+  caso: caso-leire
+- iso: '2026-07-15'
+  titulo: El juez que investiga a Leire Díez en Plaza de Castilla prorroga la instrucción seis meses
+  medio: El Debate
+  url: https://www.eldebate.com/espana/20260715/juez-investiga-leire-diez-plaza-castilla-prorroga-instruccion-seis-meses_439890.html
+  caso: caso-leire
+- iso: '2026-07-15'
+  titulo: Los fiscales que se citaron con Leire admiten que García Ortiz les reunió después en su despacho y les dijo que lo olvidasen
+  medio: El Independiente
+  url: https://www.elindependiente.com/espana/2026/07/15/los-fiscales-que-se-citaron-con-leire-admiten-que-garcia-ortiz-les-reunio-despues-en-su-despacho-y-les-dijo-que-lo-olvidasen/
+  caso: caso-leire
+- iso: '2026-07-15'
+  titulo: La UCO señala que el PSOE pagó 43.225 euros a Leire Díez a través de empresas de Zarrías y el exabogado de Koldo
+  medio: Que.es
+  url: https://www.que.es/2026/07/15/caso-leire-diez-uco-pagos-psoe/
+  caso: caso-leire
+- iso: '2026-07-14'
+  titulo: La defensa de David Sánchez recurrirá la sentencia de la Audiencia de Badajoz
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/07/14/la-defensa-de-david-sanchez-recurrira-la-sentencia-de-la-audiencia-de-badajoz/
+  caso: caso-david-sanchez
+- iso: '2026-07-14'
+  titulo: David Sánchez, condenado a nueve años de inhabilitación por prevaricación
+  medio: The Objective
+  url: https://theobjective.com/espana/tribunales/2026-07-14/david-sanchez-condenado-nueve-anos-inhabilitacion-prevaricacion/
+  caso: caso-david-sanchez
+- iso: '2026-07-14'
+  titulo: 'Caso cloacas: Pedraz cita como investigados a la gerente del PSOE y al exabogado de Koldo'
+  medio: Libertad Digital
+  url: https://www.libertaddigital.com/espana/2026-07-14/caso-cloacas-pedraz-cita-como-investigados-a-la-gerente-del-psoe-y-al-ex-abogado-de-koldo-7435287/
+  caso: caso-leire
+- iso: '2026-07-13'
+  titulo: 'La exdirectora de la Agencia Tributaria reconoce que las alarmas fallaron en el caso de Julio Martínez: "Fue un error"'
+  medio: El Español
+  url: https://www.elespanol.com/espana/20260713/expresidenta-agencia-tributaria-reconoce-alarmas-fallaron-caso-julio-martinez-error/1003744319326_0.html
+  caso: caso-zapatero-plus-ultra
+- iso: '2026-07-13'
+  titulo: La Audiencia de Madrid decide sobre un punto clave del procedimiento contra Begoña Gómez
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/07/13/la-audiencia-de-madrid-decide-sobre-un-punto-clave-del-procedimiento-contra-begona-gomez/
+  caso: caso-begona-gomez
+- iso: '2026-07-13'
+  titulo: Declara el primer abogado de Ábalos por la oferta de Leire Díez de que el PSOE le pagara
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/07/13/declara-el-primer-abogado-de-abalos-por-la-oferta-de-leire-diez-de-que-el-psoe-le-pagara/
+  caso: caso-leire
+- iso: '2026-07-09'
+  titulo: 'La UCO implica al exjefe de gabinete de Sánchez, Juanma Serrano, en el enchufe de Leire en Correos: "Lo tuyo sale"'
+  medio: El Español
+  url: https://www.elespanol.com/espana/tribunales/20260709/uco-implica-exjefe-gabinete-sanchez-juanma-serrano-enchufe-leire-correos-sale/1003744315488_0.html
+  caso: caso-leire
+- iso: '2026-07-09'
+  titulo: Las pesquisas del caso Leire avanzan con la declaración de empresarios de hidrocarburos
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/07/09/las-pesquisas-del-caso-leire-avanzan-con-la-declaracion-de-empresarios-de-hidrocarburos/
+  caso: caso-leire
+- iso: '2026-07-08'
+  titulo: Aldama acude a declarar en secreto a la Audiencia Nacional por la financiación del PSOE
+  medio: Vozpópuli
+  url: https://www.vozpopuli.com/tribunales/aldama-acude-a-declarar-en-secreto-a-la-audiencia-nacional-por-la-financiacion-del-psoe.html
+  caso: caso-koldo
+- iso: '2026-07-08'
+  titulo: Leire confesó que tenía mucho trabajo "entre lo de Badajoz y lo de la esposa", afirma el exjefe de seguridad de Correos al juez
+  medio: El Español
+  url: https://www.elespanol.com/espana/tribunales/20260708/leire-confeso-trabajo-badajoz-esposa-afirma-exjefe-seguridad-correos-juez/1003744313536_0.html
+  caso: caso-leire
+- iso: '2026-07-08'
+  titulo: 'Aagesen admite que los cargos hoy imputados de la SEPI condicionaban los rescates: "Su criterio se cumplía"'
+  medio: Vozpópuli
+  url: https://www.vozpopuli.com/tribunales/aagesen-admite-que-los-cargos-hoy-imputados-de-la-sepi-condicionaban-los-rescates-su-criterio-se-cumplia.html
+  caso: caso-leire
+- iso: '2026-07-07'
+  titulo: El comandante Villalba ratifica que Leire Díez le ofreció ser la "mano derecha" de la directora de la Guardia Civil
+  medio: El Independiente
+  url: https://www.elindependiente.com/espana/2026/07/07/ruben-villalba-declaracion-audiencia-nacional/
+  caso: caso-leire
+- iso: '2026-07-06'
+  titulo: Las acusaciones piden a Peinado que Begoña Gómez testifique por un contrato a Barrabés
+  medio: The Objective
+  url: https://theobjective.com/espana/tribunales/2026-07-06/acusaciones-peinado-begona-gomez-contrato-barrabes/
+  caso: caso-begona-gomez
+- iso: '2026-07-06'
+  titulo: El Gobierno ve "incomprensible" que el juez permita viajar a Begoña Gómez a Londres pero no a la cumbre de la OTAN
+  medio: El Independiente
+  url: https://www.elindependiente.com/espana/2026/07/06/gobierno-incomprensible-begona-gomez-no-viajar-turquia-si-londres/
+  caso: caso-begona-gomez
+- iso: '2026-07-06'
+  titulo: Delcy Rodríguez lleva a los tribunales a Aldama por atribuirle el sobre de la trama del PSOE
+  medio: Euronews
+  url: https://es.euronews.com/my-europe/2026/07/06/delcy-rodriguez-lleva-a-los-tribunales-a-aldama-por-atribuirle-el-sobre-de-la-trama-del-ps
+  caso: caso-koldo
+- iso: '2026-07-06'
+  titulo: El juez Pedraz rechaza el incidente de nulidad de Leire Díez contra su detención y los registros
+  medio: The Objective
+  url: https://theobjective.com/espana/tribunales/2026-07-06/juez-pedraz-nulidad-leire-diez-detencion/
+  caso: caso-leire
+- iso: '2026-07-04'
+  titulo: El juez ordenó a la UCO que ocultase a la cúpula 'política' de la Guardia Civil su investigación de las cloacas
+  medio: Vozpópuli
+  url: https://www.vozpopuli.com/tribunales/el-juez-ordeno-a-la-uco-que-ocultase-a-la-cupula-politica-de-la-guardia-civil-su-investigacion-de-las-cloacas.html
+  caso: caso-leire
+- iso: '2026-07-03'
+  titulo: Pedraz exime al exdirector de la Guardia Civil que pidió limpiar el informe de David Sánchez
+  medio: The Objective
+  url: https://theobjective.com/espana/tribunales/2026-07-03/pedraz-guardia-civil-informe-david-sanchez/
+  caso: caso-leire
+- iso: '2026-07-03'
+  titulo: Calama ordena a la UDEF que evite en sus informes "información irrelevante"
+  medio: Libertad Digital
+  url: https://www.libertaddigital.com/espana/2026-07-03/calama-ordena-a-la-udef-evitar-en-sus-informes-informacion-irrelevante-7430879/
+  caso: caso-zapatero-plus-ultra
+- iso: '2026-07-02'
+  titulo: 'José Luis Ábalos: “Aldama ha conseguido la impunidad que pretendía”'
+  medio: El País (vía El Español)
+  url: https://elpais.com/espana/2026-07-02/jose-luis-abalos-aldama-ha-conseguido-la-impunidad-que-pretendia.html
+  caso: caso-koldo
+- iso: '2026-07-02'
+  titulo: La Abogacía del Estado se persona en nombre de Hacienda en el caso de las joyas de Zapatero
+  medio: The Objective
+  url: https://theobjective.com/espana/tribunales/2026-07-02/hacienda-investigacion-joyas-expresidente-zapatero/
+  caso: caso-zapatero-plus-ultra
+- iso: '2026-07-02'
+  titulo: El juez Pedraz pide al PSOE que identifique quién contrató a Jacobo Teijelo como asesor del partido por 125.000 euros
+  medio: El Independiente
+  url: https://www.elindependiente.com/espana/2026/07/02/el-juez-pedraz-pide-al-psoe-que-identifique-quien-contrato-a-jacobo-teijelo-como-asesor-juridico-del-partido/
+  caso: caso-leire
+- iso: '2026-07-02'
+  titulo: La Audiencia Nacional decidirá el 24 de julio si Pedraz se queda con la investigación de las cloacas del PSOE
+  medio: Libertad Digital
+  url: https://www.libertaddigital.com/espana/2026-07-02/la-audiencia-nacional-decidira-el-24-de-julio-si-pedraz-se-queda-con-la-investigacion-de-las-cloacas-del-psoe-7430105/
+  caso: caso-leire
+- iso: '2026-07-01'
+  titulo: El juez Peinado pregunta a las partes si debe permitir a Begoña Gómez viajar a Turquía y Londres desde el 7 de julio
+  medio: elDiario.es
+  url: https://www.eldiario.es/politica/juez-peinado-pregunta-partes-si-debe-permitir-begona-gomez-viajar-turquia-londres-7-julio_1_13348442.html
+  caso: caso-begona-gomez
+- iso: '2026-07-01'
+  titulo: Dimite de una empresa de Defensa una de las 25 personas imputadas en la trama Leire Díez
+  medio: The Objective
+  url: https://theobjective.com/espana/tribunales/2026-07-01/dimite-defensa-leire-diez/
+  caso: caso-leire
+- iso: '2026-07-01'
+  titulo: El PP solicita al juez Pedraz la imputación de la directora de la Guardia Civil en el caso Leire Díez
+  medio: Libertad Digital
+  url: https://www.libertaddigital.com/espana/2026-07-01/el-pp-solicita-al-juez-pedraz-la-imputacion-de-la-directora-de-la-guardia-civil-en-el-caso-leire-diez-7429692/
+  caso: caso-leire
+- iso: '2026-06-30'
+  titulo: Marlaska defiende a la directora de la Guardia Civil y admite que sabía que se reunió con Leire
+  medio: The Objective
+  url: https://theobjective.com/espana/2026-06-30/marlaska-directora-guardia-civil-reunion-leire/
+  caso: caso-leire
+- iso: '2026-06-29'
+  titulo: El juez Pedraz imputa a la presidenta de la SEPI y a otras 24 personas en el 'caso Leire Díez'
+  medio: elDiario.es
+  url: https://www.eldiario.es/politica/juez-caso-leire-imputa-presidenta-sepi-24-personas-supuestos-amanos-contratacion-publica_1_13342324.html
+  caso: caso-leire
+- iso: '2026-06-29'
+  titulo: Pano ratifica que la abogada de Koldo le intentó sobornar para que cambiase su declaración
+  medio: The Objective
+  url: https://theobjective.com/espana/tribunales/2026-06-29/pano-abogada-koldo-declaracion/
+  caso: caso-leire
+- iso: '2026-06-27'
+  titulo: Begoña Gómez reclama ahora una nueva declaración y la paralización de la causa del juez Peinado
+  medio: El Debate
+  url: https://www.eldebate.com/espana/20260627/begona-gomez-reclama-ahora-nueva-declaracion-paralizacion-causa-juez-peinado_433276.html
+  caso: caso-begona-gomez
+- iso: '2026-06-26'
+  titulo: El juez ofrece a Hacienda personarse en la investigación de las joyas de Zapatero
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/06/26/el-juez-ofrece-a-hacienda-personarse-en-la-investigacion-de-las-joyas-de-zapatero/
+  caso: caso-zapatero-plus-ultra
+- iso: '2026-06-26'
+  titulo: Los jefes de la UCO desmienten a la directora de la Guardia Civil y aseguran al juez que nunca les habló de Leire Díez
+  medio: elDiario.es
+  url: https://www.eldiario.es/politica/jefes-uco-desmienten-juez-directora-guardia-civil-aseguran-les-hablo-leire-diez_1_13335805.html
+  caso: caso-leire
+- iso: '2026-06-26'
+  titulo: El exjefe de la UCO y el jefe de la policía judicial se ratifican en que se les pidió "ponerse de perfil" en el caso del hermano de Sánchez
+  medio: El Independiente
+  url: https://www.elindependiente.com/espana/2026/06/26/exjefe-uco-jefe-policia-judicial-reafirman-campana-para-acabar-con-guardia-civil-ante-juez-pedraz/
+  caso: caso-leire
+- iso: '2026-06-25'
+  titulo: Zapatero pide la nulidad de la causa porque se ha vulnerado su derecho a «un proceso justo»
+  medio: The Objective
+  url: https://theobjective.com/espana/tribunales/2026-06-25/zapatero-nulidad-causa-derecho-proceso/
+  caso: caso-zapatero-plus-ultra
+- iso: '2026-06-25'
+  titulo: Teijelo, abogado de Cerdán, admite visitas a la Fiscalía con Leire y declara que le contrató el PSOE para análisis judicial
+  medio: El Español
+  url: https://www.elespanol.com/espana/tribunales/20260625/teijelo-abogado-cerdan-admite-visitas-fiscalia-leire-declara-contrato-psoe-analisis-judicial/1003744299500_0.html
+  caso: caso-leire
+- iso: '2026-06-24'
+  titulo: La UDEF desvela una comisión de 200.000 euros a Zapatero por una mediación con el presidente de Bolivia
+  medio: Vozpópuli
+  url: https://www.vozpopuli.com/tribunales/la-udef-desvela-una-comision-de-200000-euros-a-zapatero-por-una-mediacion-con-el-presidente-de-bolivia.html
+  caso: caso-zapatero-plus-ultra
+- iso: '2026-06-24'
+  titulo: Begoña Gómez debe acudir esta tarde al juzgado para entregar su pasaporte
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/06/24/begona-gomez-debe-acudir-esta-tarde-al-juzgado-para-entregar-su-pasaporte/
+  caso: caso-begona-gomez
+- iso: '2026-06-24'
+  titulo: Koldo presenta incidente de nulidad ante el Supremo y pide suspender la sentencia
+  medio: The Objective
+  url: https://theobjective.com/espana/tribunales/2026-06-24/koldo-garcia-incidente-nulidad-supremo-sentencia/
+  caso: caso-koldo
+- iso: '2026-06-23'
+  titulo: Dos exjefes de la UCO admiten presiones de la cúpula en causas contra el Gobierno
+  medio: The Objective
+  url: https://theobjective.com/espana/tribunales/2026-06-23/dos-exjefes-uco-presiones-cupula-causas-contra-gobierno/
+  caso: caso-leire
+- iso: '2026-06-23'
+  titulo: La UCO desvela que la trama Leire gestionó el rescate de Tubos Reunidos con ayuda del PNV
+  medio: The Objective
+  url: https://theobjective.com/espana/tribunales/2026-06-23/uco-leire-rescate-tubos-reunidos-pnv/
+  caso: caso-leire
+- iso: '2026-06-23'
+  titulo: Zapatero plantea la nulidad de algunas pruebas del 'caso Plus Ultra' si no se acredita que se obtuvieron por orden judicial
+  medio: El Español
+  url: https://www.elespanol.com/espana/tribunales/20260623/zapatero-plantea-nulidad-pruebas-caso-plus-ultra-no-acredita-obtuvieron-orden-judicial/1003744296769_0.html
+  caso: caso-zapatero-plus-ultra
+- iso: '2026-06-22'
+  titulo: El CGPJ estudiará si expedienta a Peinado tras afirmar que la escolta de Begoña Gómez podria ayudarla a fugarse
+  medio: Libertad Digital
+  url: https://www.libertaddigital.com/espana/2026-06-22/perello-utiliza-su-voto-de-calidad-para-remitir-el-auto-de-peinado-al-promotor-de-accion-disciplinaria-del-cgpj-7424644/
+  caso: caso-begona-gomez
+- iso: '2026-06-21'
+  titulo: El abogado de Begoña Gómez denuncia a Peinado ante el CGPJ por vulnerar su defensa
+  medio: The Objective
+  url: https://theobjective.com/espana/2026-06-21/abogado-begona-gomez-denuncia-peinado-cgpj/
+  caso: caso-begona-gomez
+- iso: '2026-06-21'
+  titulo: Pedraz comienza el martes con la veintena de interrogatorios señalados en el caso Leire
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/06/21/pedraz-comienza-el-martes-con-la-veintena-de-interrogatorios-senalados-en-el-caso-leire/
+  caso: caso-leire
+- iso: '2026-06-20'
+  titulo: 'Begoña Gómez irá a juicio y el juez Peinado le impone medidas cautelares: retirada de pasaporte, prohibido salir de España y ‘fichar’ cada 15 días'
+  medio: Infobae
+  url: https://www.infobae.com/espana/2026/06/20/el-juez-peinado-retira-el-pasaporte-a-begona-gomez-y-le-prohibe-salir-de-espana-como-medidas-cautelares-antes-de-su-juicio/
+  caso: caso-begona-gomez
+- iso: '2026-06-20'
+  titulo: Leire Díez sondea abogados para desmarcarse del PSOE
+  medio: The Objective
+  url: https://theobjective.com/espana/tribunales/2026-06-20/leire-diez-abogados-psoe/
+  caso: caso-leire
+- iso: '2026-06-19'
+  titulo: Peramato niega las purgas en la Fiscalía y dice que dará más información sobre Leire Díez a Pedraz si se la pide
+  medio: Libertad Digital
+  url: https://www.libertaddigital.com/espana/2026-06-19/peramato-niega-las-purgas-en-fiscalia-y-dice-que-dara-mas-informacion-sobre-leire-diez-a-pedraz-si-se-la-pide-7423761/
+  caso: caso-leire
+- iso: '2026-06-19'
+  titulo: La sentencia del ‘caso mascarillas’ se retrasa porque aún no hay unanimidad entre los magistrados sobre la pena a Aldama
+  medio: OKDIARIO
+  url: https://okdiario.com/espana/sentencia-del-caso-mascarillas-retrasa-discrepancias-magistrados-del-supremo-sobre-pena-aldama-18813266
+  caso: caso-koldo
+- iso: '2026-06-18'
+  titulo: El juez Calama pone el foco en Hacienda y Aduanas ante la negativa de Zapatero a declarar sobre las joyas
+  medio: El Debate
+  url: https://www.eldebate.com/espana/20260618/juez-calama-pone-foco-hacienda-aduanas-ante-negativa-zapatero-declarar-sobre-joyas_429911.html
+  caso: caso-zapatero-plus-ultra
+- iso: '2026-06-17'
+  titulo: El juez del caso Plus Ultra afirma que Zapatero "no ha logrado desvirtuar los indicios de criminalidad" con su declaración
+  medio: El Progreso
+  url: https://www.elprogreso.es/articulo/espana/zapatero-declara-juez-directo/202606170816301978673.html
+  caso: caso-zapatero-plus-ultra
+- iso: '2026-06-16'
+  titulo: El juez Calama rechaza la petición de Zapatero de aplazar su declaración sobre las joyas halladas en su caja fuerte
+  medio: El Español
+  url: https://www.elespanol.com/espana/tribunales/20260616/juez-calama-rechaza-peticion-zapatero-aplazar-declaracion-joyas-halladas-caja-fuerte/1003744287459_0.html
+  caso: caso-zapatero-plus-ultra
+- iso: '2026-06-16'
+  titulo: La directora de la Guardia Civil desmiente a la UCO y dice que "jamás, nunca" se ha reunido con Leire Díez en su sede
+  medio: El Independiente
+  url: https://www.elindependiente.com/espana/2026/06/16/la-directora-de-la-guardia-civil-desmiente-a-la-uco-y-dice-que-jamas-nunca-se-ha-reunido-con-leire-diez-en-su-sede/
+  caso: caso-leire
+- iso: '2026-06-16'
+  titulo: La directora de la Guardia Civil siguió hablando con Leire pese al aviso interno sobre la trama
+  medio: The Objective
+  url: https://theobjective.com/espana/tribunales/2026-06-16/directora-guardia-civil-leire-trama/
+  caso: caso-leire
+- iso: '2026-06-15'
+  titulo: Pedraz rechaza los recursos de Cerdán y Leire Díez con los que querían tumbar la causa de las cloacas del PSOE
+  medio: Libertad Digital
+  url: https://www.libertaddigital.com/espana/2026-06-15/pedraz-rechaza-los-recursos-de-cerdan-y-leire-diez-para-tumbar-la-causa-de-las-cloacas-del-psoe-7421300/
+  caso: caso-leire
+- iso: '2026-06-15'
+  titulo: Zapatero pide aplazar su declaración de nuevo para reunir documentación sobre las joyas
+  medio: The Objective
+  url: https://theobjective.com/espana/tribunales/2026-06-15/zapatero-declaracion-juez-documentacion-joyas/
+  caso: caso-zapatero-plus-ultra
+- iso: '2026-06-15'
+  titulo: El juez Peinado cita este lunes a Begoña Gómez a una audiencia preliminar a la que tiene "obligación de comparecer"
+  medio: Europa Press (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/06/14/el-juez-peinado-cita-este-lunes-a-begona-gomez-a-una-audiencia-preliminar-a-la-que-tiene-obligacion-de-comparecer/
+  caso: caso-begona-gomez
+- iso: '2026-06-12'
+  titulo: El juez del 'caso Plus Ultra' investiga a Zapatero por delito fiscal y contrabando por las joyas
+  medio: The Objective
+  url: https://theobjective.com/espana/tribunales/2026-06-12/juez-caso-plus-ultra-imputa-zapatero-delito-fiscal-contrabando-joyas/
+  caso: caso-zapatero-plus-ultra
+- iso: '2026-06-12'
+  titulo: El juez Pedraz cita como investigado al abogado de Santos Cerdán, Jacobo Teijelo, por su supuesto vínculo con el caso Leire
+  medio: Infobae
+  url: https://www.infobae.com/espana/2026/06/12/el-juez-pedraz-cita-como-investigado-al-abogado-de-santos-cerdan-jacobo-teijelo-por-su-supuesto-vinculo-con-el-caso-leire/
+  caso: caso-leire
+- iso: '2026-06-12'
+  titulo: 'La Fiscalía se opone a la petición de nulidad de Leire Díez: "Es una organización criminal permanente y estructurada"'
+  medio: Libertad Digital
+  url: https://www.libertaddigital.com/espana/2026-06-12/caso-cloacas-del-psoe-la-fiscalia-se-opone-a-la-peticion-de-nulidad-de-leire-diez-7419837/
+  caso: caso-leire
+- iso: '2026-06-12'
+  titulo: Vox se querella contra García Ortiz por tráfico de influencias y prevaricación en el 'caso Leire'
+  medio: The Objective
+  url: https://theobjective.com/espana/tribunales/2026-06-12/vox-querella-garcia-ortiz-caso-leire/
+  caso: caso-leire
+- iso: '2026-06-12'
+  titulo: El PP cita a Marlaska y Peramato al Senado para que expliquen las reuniones de Leire Díez
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/06/12/el-pp-cita-a-marlaska-y-peramato-al-senado-para-que-expliquen-las-reuniones-de-leire-diez/
+  caso: caso-leire
+- iso: '2026-06-11'
+  titulo: La UCO detecta 52 facturas falsas del PSOE en la causa de la financiación irregular
+  medio: The Objective
+  url: https://theobjective.com/espana/2026-06-11/uco-facturas-falsas-psoe-financiacion-irregular/
+  caso: caso-koldo
+- iso: '2026-06-11'
+  titulo: Cerdán pidió a Sánchez la cabeza de Marlaska y Mercedes González por «no controlar la UCO»
+  medio: The Objective
+  url: https://theobjective.com/espana/politica/2026-06-11/cerdan-sanchez-cabeza-marlaska-gonzalez-uco/
+  caso: caso-cerdan
+- iso: '2026-06-11'
+  titulo: Leire Díez lanza una ofensiva para tratar de invalidar la causa de la Audiencia Nacional
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/06/11/leire-diez-lanza-una-ofensiva-para-tratar-de-invalidar-la-causa-de-la-audiencia-nacional/
+  caso: caso-leire
+- iso: '2026-06-10'
+  titulo: La Fiscalía General tuvo dos reuniones con un abogado y Leire Díez donde presentaron denuncias contra el fiscal Grinda
+  medio: elDiario.es
+  url: https://www.eldiario.es/politica/fiscalia-general-tuvo-reuniones-abogado-leire-diez-presentaron-denuncias-fiscal-grinda_1_13285785.html
+  caso: caso-leire
+- iso: '2026-06-10'
+  titulo: El juez del 'caso Koldo' cita como investigado al guardia civil que señaló a Aldama
+  medio: The Objective
+  url: https://theobjective.com/espana/tribunales/2026-06-10/juez-koldo-guardia-civil-aldama/
+  caso: caso-koldo
+- iso: '2026-06-10'
+  titulo: La asociación mayoritaria de fiscales exige explicaciones «completas y verificables» sobre las reuniones de Leire Díez
+  medio: El Debate
+  url: https://www.eldebate.com/espana/20260610/asociacion-mayoritaria-fiscales-exige-explicaciones-completas-verificables-sobre-reuniones-leire-diez_427412.html
+  caso: caso-leire
+- iso: '2026-06-09'
+  titulo: 'El juicio a David Sánchez, visto para sentencia con el alegato final de la defensa: “La acusación es una leyenda”'
+  medio: elDiario.es
+  url: https://www.eldiario.es/extremadura/politica/juicio-david-sanchez-visto-sentencia-alegato-final-defensa-acusacion-leyenda_1_13286244.html
+  caso: caso-david-sanchez
+- iso: '2026-06-08'
+  titulo: El PP-A pide a Montero aclarar si conoció o participó en la "trama para proteger a Sánchez"
+  medio: Córdoba Buenas Noticias
+  url: https://www.cordobabn.com/articulo/andalucia/pp-exige-montero-que-aclare-tuvo-conocimiento-participo-origen-trama-proteger-sanchez/20260608160944259961.html
+  caso: caso-leire
+- iso: '2026-06-05'
+  titulo: El Supremo vuelve a rechazar poner en libertad a Koldo García, a la espera de la sentencia
+  medio: The Objective
+  url: https://theobjective.com/espana/tribunales/2026-06-05/supremo-rechazar-libertad-koldo/
+  caso: caso-koldo
+- iso: '2026-06-03'
+  titulo: La UCO concluye que Cerdán y Leire Díez dirigían una trama para «proteger» a Sánchez
+  medio: The Objective
+  url: https://theobjective.com/espana/tribunales/2026-06-03/uco-cerdan-leire-diez-sanchez/
+  caso: caso-leire
+- iso: '2026-06-03'
+  titulo: El juez Peinado retrasa al 15 de junio la audiencia previa de Begoña Gómez
+  medio: El Debate
+  url: https://www.eldebate.com/espana/20260603/juez-peinado-retrasa-15-junio-audiencia-previa-begona-gomez_424537.html
+  caso: caso-begona-gomez
+- iso: '2026-06-02'
+  titulo: Anticorrupción deja la puerta abierta a nuevos imputados en la investigación del 'caso Koldo' que salpica a Santos Cerdán
+  medio: El Independiente
+  url: https://www.elindependiente.com/espana/2026/06/02/anticorrupcion-deja-puerta-abierta-nuevos-imputados-caso-koldo-que-salpica-a-santos-cerdan/
+  caso: caso-koldo
+- iso: '2026-06-02'
+  titulo: La Fiscalía pide prorrogar una de las piezas del 'caso Koldo' al no descartar más imputaciones
+  medio: The Objective
+  url: https://theobjective.com/espana/tribunales/2026-06-02/fiscalia-piezas-caso-koldo-imputaciones/
+  caso: caso-koldo
+- iso: '2026-05-27'
+  titulo: 'David Sánchez, en el banquillo: guía para seguir el juicio contra el hermano del presidente'
+  medio: elDiario.es
+  url: https://www.eldiario.es/extremadura/politica/david-sanchez-banquillo-guia-seguir-juicio-hermano-presidente_1_13249954.html
+  caso: caso-david-sanchez
+- iso: '2026-05-04'
+  titulo: La Fiscalía mantiene su petición de 24 años de prisión para Ábalos, 19 y medio para Koldo y 7 para Aldama
+  medio: Infobae
+  url: https://www.infobae.com/espana/2026/05/04/la-fiscalia-mantendra-la-peticion-de-siete-anos-de-prision-para-victor-de-aldama-y-rechazara-rebajar-la-pena-pese-a-su-colaboracion-con-la-justicia/
+  caso: caso-koldo
+- iso: '2026-03-09'
+  titulo: El juez del caso Koldo unifica la causa de las mordidas de obra pública con 14 imputados
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/03/09/el-juez-del-caso-koldo-unifica-la-causa-de-las-mordidas-de-obra-publica-con-14-imputados/
+  caso: caso-cerdan
+- iso: '2025-06-12'
+  titulo: 'Las obras del informe de la UCO que ha tumbado a Cerdán: trece contratos por 637 millones y con fondos de la UE'
+  medio: elDiario.es
+  url: https://www.eldiario.es/economia/13-obras-recoge-informe-uco-tumbado-cerdan-suman-637-millones-e-incluyen-fondos-europeos_1_12380100.html
+  caso: caso-cerdan
