@@ -1,17 +1,19 @@
-"""Reads the headline each linked piece shows on its own site (spec 077).
+"""Reads what each linked piece shows on its own site (spec 077).
 
-For every item of the feed, fetch its URL and take the piece's own headline:
-`og:title` first, then the first `<h1>`, then `<title>`. Writes a TSV for review;
-it never rewrites the feed.
+For one URL: the visible headline (first `<h1>` with text), the `og:title`, the
+`<title>` and the publication date the page declares. `enlaces.py` and the
+migration both build on `leer()`. Nothing here rewrites the data.
 
-    python scripts/titulares.py pipeline/data/ultima_hora/feed.yaml out.tsv
+    python scripts/titulares.py datos/feed.yaml out.tsv
 """
 from __future__ import annotations
 
 import concurrent.futures
-import html
+import dataclasses
+import html.parser
 import re
 import subprocess
+import pathlib
 import sys
 import urllib.error
 import urllib.request
@@ -20,57 +22,122 @@ import yaml
 
 UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0 Safari/537.36"
 UA_CURL = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Safari/605.1.15"
-OG = re.compile(r'<meta[^>]+property=["\']og:title["\'][^>]*content=["\'](.*?)["\']', re.I | re.S)
-OG_REV = re.compile(r'<meta[^>]+content=["\'](.*?)["\'][^>]*property=["\']og:title["\']', re.I | re.S)
-H1 = re.compile(r"<h1[^>]*>(.*?)</h1>", re.I | re.S)
-TITLE = re.compile(r"<title[^>]*>(.*?)</title>", re.I | re.S)
-TAG = re.compile(r"<[^>]+>")
+PUBLISHED = ("article:published_time", "datePublished", "date", "DC.date.issued", "publish-date", "og:article:published_time")
+ISO_DATE = re.compile(r"(\d{4}-\d{2}-\d{2})")
+JSON_LD_DATE = re.compile(r'"datePublished"\s*:\s*"(\d{4}-\d{2}-\d{2})')
 
 
-def _clean(text: str) -> str:
-    return " ".join(html.unescape(TAG.sub("", text)).split())
+@dataclasses.dataclass
+class Pieza:
+    status: str = ""
+    final_url: str = ""
+    content_type: str = ""
+    h1: str = ""
+    og_title: str = ""
+    title: str = ""
+    published: str = ""
 
 
-def _fetch(url: str) -> tuple[str, str]:
-    """Returns (status, page). Some outlets refuse Python's TLS stack or its
-    client signature and answer `curl`, so a failed read is retried with it."""
+class _Page(html.parser.HTMLParser):
+    """Collects every `<h1>`, the `<title>` and the metadata we need."""
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.h1s: list[str] = []
+        self.title = ""
+        self.meta: dict[str, str] = {}
+        self._open: str | None = None
+        self._buffer: list[str] = []
+
+    def handle_starttag(self, tag, attrs):
+        if tag == "meta":
+            fields = {name: value or "" for name, value in attrs}
+            key = fields.get("property") or fields.get("name") or fields.get("itemprop")
+            if key and "content" in fields:
+                self.meta.setdefault(key, fields["content"])
+        elif tag in ("h1", "title") and self._open is None:
+            self._open, self._buffer = tag, []
+
+    def handle_endtag(self, tag):
+        if tag == self._open:
+            text = " ".join("".join(self._buffer).split())
+            if tag == "h1" and text:
+                self.h1s.append(text)
+            elif tag == "title" and not self.title:
+                self.title = text
+            self._open = None
+
+    def handle_data(self, data):
+        if self._open is not None:
+            self._buffer.append(data)
+
+
+def _fetch(url: str) -> tuple[str, str, str, str]:
+    """Returns (status, final url, content type, page). Some outlets refuse
+    Python's client and answer `curl`, so a failed read is retried with it."""
     request = urllib.request.Request(url, headers={"User-Agent": UA, "Accept-Language": "es-ES,es;q=0.9"})
     try:
         with urllib.request.urlopen(request, timeout=25) as response:
             charset = response.headers.get_content_charset() or "utf-8"
-            return str(response.status), response.read(1_500_000).decode(charset, errors="replace")
+            body = response.read(1_500_000)
+            return str(response.status), response.geturl(), response.headers.get_content_type(), body.decode(charset, errors="replace")
     except urllib.error.HTTPError as error:
         status = str(error.code)
     except Exception as error:  # timeouts, TLS, DNS: recorded, never fatal
         status = f"error:{type(error).__name__}"
     try:
         done = subprocess.run(
-            ["curl", "-s", "-L", "-m", "30", "-A", UA_CURL, "-H", "Accept-Language: es-ES", "-w", "\n%{http_code}", url],
+            ["curl", "-s", "-L", "-m", "30", "-A", UA_CURL, "-H", "Accept-Language: es-ES",
+             "-w", "\n%{http_code}\t%{url_effective}\t%{content_type}", url],
             capture_output=True, timeout=45, check=False,
         )
     except Exception:
-        return status, ""
-    body, _, code = done.stdout.decode("utf-8", errors="replace").rpartition("\n")
-    return (code, body) if code == "200" else (status, "")
+        return status, url, "", ""
+    body, _, trailer = done.stdout.decode("utf-8", errors="replace").rpartition("\n")
+    code, _, rest = trailer.partition("\t")
+    final_url, _, content_type = rest.partition("\t")
+    if code != "200":
+        return status, url, "", ""
+    return code, final_url, content_type.split(";")[0].strip(), body
 
 
-def headline(url: str) -> tuple[str, str, str, str]:
-    """Returns (status, og:title, h1, title) for one URL."""
-    status, page = _fetch(url)
-    og = OG.search(page) or OG_REV.search(page)
-    h1 = H1.search(page)
-    title = TITLE.search(page)
-    return status, _clean(og.group(1)) if og else "", _clean(h1.group(1)) if h1 else "", _clean(title.group(1)) if title else ""
+def leer(url: str) -> Pieza:
+    status, final_url, content_type, page = _fetch(url)
+    pieza = Pieza(status=status, final_url=final_url, content_type=content_type)
+    if not page or "html" not in content_type:
+        return pieza
+    parser = _Page()
+    try:
+        parser.feed(page)
+    except Exception:  # malformed markup: keep what was read so far
+        pass
+    pieza.h1 = parser.h1s[0] if parser.h1s else ""
+    pieza.og_title = " ".join(parser.meta.get("og:title", "").split())
+    pieza.title = parser.title
+    for key in PUBLISHED:
+        found = ISO_DATE.search(parser.meta.get(key, ""))
+        if found:
+            pieza.published = found.group(1)
+            break
+    else:
+        found = JSON_LD_DATE.search(page)
+        pieza.published = found.group(1) if found else ""
+    return pieza
+
+
+def leer_todas(urls: list[str]) -> list[Pieza]:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:
+        return list(pool.map(leer, urls))
 
 
 def main(feed_path: str, out_path: str) -> None:
-    items = yaml.safe_load(open(feed_path, encoding="utf-8"))["items"]
-    with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:
-        results = list(pool.map(lambda item: headline(item["url"]), items))
+    items = yaml.safe_load(pathlib.Path(feed_path).read_text(encoding="utf-8"))["items"]
+    piezas = leer_todas([item["url"] for item in items])
     with open(out_path, "w", encoding="utf-8") as out:
-        out.write("n\tiso\tstatus\toutlet\turl\tog_title\th1\ttitle\n")
-        for number, (item, result) in enumerate(zip(items, results)):
-            fields = [str(number), str(item["iso"]), result[0], item["outlet"], item["url"], *result[1:]]
+        out.write("n\tiso\tstatus\tpublished\tmedio\turl\th1\tog_title\ttitle\n")
+        for number, (item, pieza) in enumerate(zip(items, piezas)):
+            fields = [str(number), str(item["iso"]), pieza.status, pieza.published, item.get("medio") or item.get("outlet", ""),
+                      item["url"], pieza.h1, pieza.og_title, pieza.title]
             out.write("\t".join(field.replace("\t", " ") for field in fields) + "\n")
 
 

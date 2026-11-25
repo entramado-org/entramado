@@ -9,6 +9,7 @@ text (summaries, quotes, statuses, entity links) out of the site.
 from __future__ import annotations
 
 import datetime
+import re
 import sys
 from urllib.parse import urlparse
 
@@ -19,10 +20,20 @@ ITEM_REQUIRED = ITEM - {"caso"}
 CASO = {"slug", "nombre"}
 DOCUMENTO = {"organismo", "designacion", "fecha", "url", "caso"}
 DOCUMENTO_REQUIRED = DOCUMENTO - {"caso"}
+SLUG = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
+# An official document is only a link to its issuing body's own site.
+ORGANISMOS = {
+    "Senado": ("www.senado.es",),
+    "Congreso de los Diputados": ("www.congreso.es",),
+    "Poder Judicial": ("www.poderjudicial.es",),
+    "Boletín Oficial del Estado": ("www.boe.es",),
+    "Tribunal de Cuentas": ("www.tcu.es",),
+}
 
 
 def _load(path: str, key: str) -> list:
-    data = yaml.safe_load(open(path, encoding="utf-8"))
+    with open(path, encoding="utf-8") as handle:
+        data = yaml.safe_load(handle)
     if not isinstance(data, dict) or set(data) != {key} or not isinstance(data[key], list):
         raise SystemExit(f"{path}: se espera un único bloque «{key}:» con una lista")
     return data[key]
@@ -40,12 +51,23 @@ def _check(row, allowed: set, required: set, where: str, slugs: set, errors: lis
         if field in allowed and (not isinstance(value, str) or not value.strip() or value != value.strip()):
             errors.append(f"{where}: «{field}» debe ser texto no vacío y sin espacios en los extremos")
     url = row.get("url")
-    if isinstance(url, str) and (urlparse(url).scheme != "https" or not urlparse(url).netloc):
-        errors.append(f"{where}: la url debe ser https")
+    if isinstance(url, str) and (urlparse(url).scheme != "https" or not urlparse(url).hostname):
+        errors.append(f"{where}: la url debe ser https y absoluta")
+    slug = row.get("slug")
+    if isinstance(slug, str) and not SLUG.fullmatch(slug):
+        errors.append(f"{where}: el slug solo admite minúsculas, números y guiones")
+    if "organismo" in row and isinstance(url, str):
+        hosts = ORGANISMOS.get(row["organismo"])
+        if hosts is None:
+            errors.append(f"{where}: organismo desconocido «{row['organismo']}»")
+        elif urlparse(url).hostname not in hosts:
+            errors.append(f"{where}: la url no es de la web de «{row['organismo']}»")
     for field in ("iso", "fecha"):
         value = row.get(field)
         if isinstance(value, str):
             try:
+                if len(value) != 10:
+                    raise ValueError(value)
                 datetime.date.fromisoformat(value)
             except ValueError:
                 errors.append(f"{where}: «{field}» no es una fecha AAAA-MM-DD")
@@ -71,8 +93,12 @@ def validar(feed: str, casos: str, documentos: str | None = None) -> list[str]:
     if dates != sorted(dates, reverse=True):
         errors.append("items: no están ordenados del más reciente al más antiguo")
     if documentos:
-        for index, document in enumerate(_load(documentos, "documentos")):
+        documents = _load(documentos, "documentos")
+        for index, document in enumerate(documents):
             _check(document, DOCUMENTO, DOCUMENTO_REQUIRED, f"documentos[{index}]", slugs, errors)
+        doc_urls = [document.get("url") for document in documents if isinstance(document, dict)]
+        for url in sorted({url for url in doc_urls if doc_urls.count(url) > 1}):
+            errors.append(f"documentos: url repetida {url}")
     return errors
 
 

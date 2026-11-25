@@ -34,6 +34,30 @@ const ITEM = ["iso", "titulo", "medio", "url", "caso"];
 const CASO = ["slug", "nombre"];
 const DOCUMENTO = ["organismo", "designacion", "fecha", "url", "caso"];
 
+// Misma tabla que `scripts/validar_datos.py`: un documento oficial solo enlaza a la web de su organismo.
+const ORGANISMOS: Record<string, string[]> = {
+  Senado: ["www.senado.es"],
+  "Congreso de los Diputados": ["www.congreso.es"],
+  "Poder Judicial": ["www.poderjudicial.es"],
+  "Boletín Oficial del Estado": ["www.boe.es"],
+  "Tribunal de Cuentas": ["www.tcu.es"],
+};
+
+/** Fecha de calendario real (2026-13-01 o 2026-02-30 no lo son). */
+function esFecha(v: string): boolean {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(v)) return false;
+  const d = new Date(`${v}T00:00:00Z`);
+  return !Number.isNaN(d.getTime()) && d.toISOString().slice(0, 10) === v;
+}
+
+function repetidas(urls: string[], donde: string) {
+  const vistas = new Set<string>();
+  for (const u of urls) {
+    if (vistas.has(u)) throw new Error(`${donde}: url repetida ${u}`);
+    vistas.add(u);
+  }
+}
+
 function leer(fichero: string, clave: string): unknown[] {
   const data = parse(readFileSync(path.join(DIR, fichero), "utf-8"));
   if (!data || typeof data !== "object" || Object.keys(data).join() !== clave || !Array.isArray(data[clave])) {
@@ -50,9 +74,25 @@ function validar(fila: unknown, permitidos: string[], obligatorios: string[], do
   for (const [k, v] of Object.entries(f)) {
     if (typeof v !== "string" || !v.trim() || v !== v.trim()) throw new Error(`${donde}: «${k}» debe ser texto no vacío`);
   }
-  if (typeof f.url === "string" && !f.url.startsWith("https://")) throw new Error(`${donde}: la url debe ser https`);
+  if (typeof f.url === "string") {
+    let u: URL | null = null;
+    try {
+      u = new URL(f.url);
+    } catch {
+      u = null;
+    }
+    if (!u || u.protocol !== "https:" || !u.hostname) throw new Error(`${donde}: la url debe ser https y absoluta`);
+    if (typeof f.organismo === "string") {
+      const hosts = ORGANISMOS[f.organismo];
+      if (!hosts) throw new Error(`${donde}: organismo desconocido «${f.organismo}»`);
+      if (!hosts.includes(u.hostname)) throw new Error(`${donde}: la url no es de la web de «${f.organismo}»`);
+    }
+  }
+  if (typeof f.slug === "string" && !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(f.slug)) {
+    throw new Error(`${donde}: el slug solo admite minúsculas, números y guiones`);
+  }
   for (const k of ["iso", "fecha"]) {
-    if (typeof f[k] === "string" && !/^\d{4}-\d{2}-\d{2}$/.test(f[k])) throw new Error(`${donde}: «${k}» no es AAAA-MM-DD`);
+    if (typeof f[k] === "string" && !esFecha(f[k] as string)) throw new Error(`${donde}: «${k}» no es una fecha AAAA-MM-DD`);
   }
   if (slugs && "caso" in f && !slugs.has(f.caso as string)) throw new Error(`${donde}: el caso «${f.caso}» no existe`);
 }
@@ -68,11 +108,13 @@ const items: Item[] = leer("feed.yaml", "items").map((it, i) => {
   validar(it, ITEM, ["iso", "titulo", "medio", "url"], `items[${i}]`, slugs);
   return it as Item;
 });
+repetidas(items.map((i) => i.url), "items");
 
 const documentos: Documento[] = leer("documentos.yaml", "documentos").map((d, i) => {
   validar(d, DOCUMENTO, ["organismo", "designacion", "fecha", "url"], `documentos[${i}]`, slugs);
   return d as Documento;
 });
+repetidas(documentos.map((d) => d.url), "documentos");
 
 /** Del más reciente al más antiguo (el YAML ya viene así; el orden se garantiza aquí). */
 export const ITEMS: Item[] = [...items].sort((a, b) => (a.iso < b.iso ? 1 : a.iso > b.iso ? -1 : 0));
