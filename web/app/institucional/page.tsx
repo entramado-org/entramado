@@ -1,7 +1,5 @@
 import Link from "next/link";
 import {
-  ArrowLeft,
-  Network,
   Landmark,
   Scale,
   Gavel,
@@ -21,7 +19,6 @@ import {
   Megaphone,
   ScrollText,
   Handshake,
-  Stamp,
   EyeOff,
   Globe,
   MessagesSquare,
@@ -33,17 +30,16 @@ import {
 } from "lucide-react";
 import { BigStat, StatGrid, BarCompare, TrendStrip, TakeBox } from "@/components/institucional/visuals";
 import ProblemMap from "@/components/institucional/ProblemMap";
-import BoeEvidence from "@/components/institucional/BoeEvidence";
 
 export const metadata = {
   title: "Contexto institucional",
   alternates: { canonical: "/institucional" },
   description:
-    "Mapa interactivo de los problemas del régimen del 78 y del poder sin urnas de Bruselas: nombramientos judiciales, Fiscalía, aforamiento, sistema electoral, democracia directa, decretazo, amnistía, los ERE en el Constitucional, deuda, empleo público, hiperregulación, justicia lenta, partitocracia, transparencia, paro, pensiones, vivienda, impuestos, poder adquisitivo, soberanía en la UE, Pfizergate, Chat Control, identidad digital, euro digital y las cuentas de Bruselas. Crítica desde una óptica de mercado, con cada cifra citada a fuente oficial.",
+    "Mapa interactivo de los problemas del régimen del 78 y del poder sin urnas de Bruselas: nombramientos judiciales, Fiscalía, aforamiento, sistema electoral, democracia directa, decretazo, amnistía, deuda, empleo público, hiperregulación, justicia lenta, partitocracia, transparencia, paro, pensiones, vivienda, impuestos, poder adquisitivo, soberanía en la UE, Pfizergate, Chat Control, identidad digital, euro digital y las cuentas de Bruselas. Crítica desde una óptica de mercado, con cada cifra citada a fuente oficial.",
 };
 
 /* ────────────────────────────────────────────────────────────────────────────
- * Esta página NO trata los casos judiciales (eso es el grafo y los briefings).
+ * Esta página NO trata los casos judiciales (eso son la cronología y los documentos del sitio).
  * Arriba va el MAPA DE PROBLEMAS (isla client ProblemMap, datos en
  * lib/institucional.ts: tarjeta = cifra-gancho + explicación llana + anchor a
  * su sección). Debajo, cuatro partes de secciones largas:
@@ -62,10 +58,9 @@ export const metadata = {
  *      servicios públicos). El ENCUADRE es declaradamente crítico; el DATO, no:
  *      cada cifra se cita a fuente oficial (INE, AEAT, OCDE, AIReF, Banco de
  *      España, Comisión Europea, Min. de Vivienda, Seguridad Social/IGAE).
- *   En lo judicial (amnistía, ERE, Pfizergate, Qatargate) rige la presunción de
+ *   En lo judicial (amnistía, Pfizergate, Qatargate) rige la presunción de
  *      inocencia: se distingue lo probado de lo acusado, y las sentencias sobre
- *      transparencia no se presentan como culpabilidad penal. El TC de los ERE
- *      "estimó amparos", no "amnistió" — la precisión es parte de la crítica.
+ *      transparencia no se presentan como culpabilidad penal.
  *
  * Disciplina que sostiene la credibilidad:
  *   - Dato oficial → como hecho, con enlace.
@@ -152,19 +147,6 @@ function PartHeader({
 export default function InstitucionalPage() {
   return (
     <main className="mx-auto max-w-3xl px-6 py-12">
-      {/* nav */}
-      <div className="mb-8 flex items-center justify-between">
-        <Link href="/" className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-accent">
-          <ArrowLeft className="h-4 w-4" /> Inicio
-        </Link>
-        <Link
-          href="/explore"
-          className="inline-flex items-center gap-2 rounded-lg glass px-3 py-1.5 text-sm text-slate-200 hover:bg-white/5"
-        >
-          <Network className="h-4 w-4" /> Abrir el grafo
-        </Link>
-      </div>
-
       {/* header */}
       <header className="mb-10">
         <p className="mb-3 inline-flex items-center gap-2 rounded-full glass px-3 py-1 text-xs text-accent">
@@ -174,7 +156,7 @@ export default function InstitucionalPage() {
           El régimen del 78 y su coste
         </h1>
         <p className="mt-4 text-lg leading-relaxed text-slate-400">
-          Esta sección no juzga los casos —para eso está el grafo—, sino que mira el
+          Esta sección no juzga los casos, sino que mira el
           <span className="text-slate-300"> sistema que los enmarca</span>, en cuatro capas:{" "}
           <em>las reglas</em> (cómo se nombran los jueces, de quién depende la Fiscalía,
           cómo se vota y qué NO puedes votar), <em>la maquinaria</em> (deuda, plantilla,
@@ -262,7 +244,6 @@ export default function InstitucionalPage() {
           frente a la influencia política. Es una recomendación de esos organismos, no una
           conclusión de este sitio.
         </p>
-        <BoeEvidence sectionId="nombramientos" />
       </Section>
 
       <Section
@@ -288,7 +269,6 @@ export default function InstitucionalPage() {
           respecto del Ejecutivo. Es un debate público y doctrinal de largo recorrido; aquí
           se constata su existencia y su base normativa, sin tomar partido.
         </p>
-        <BoeEvidence sectionId="fiscalia" />
       </Section>
 
       <Section
@@ -376,25 +356,6 @@ export default function InstitucionalPage() {
           sus críticos, reduce el control ciudadano sobre la persecución de delitos. Ambas
           lecturas se recogen como posiciones del debate, no como conclusión propia.
         </p>
-        <div className="rounded-xl border border-accent/20 bg-accent/[0.04] p-4">
-          <p className="mb-1 font-mono text-[9px] uppercase tracking-[0.22em] text-accent/70">
-            por qué importa aquí
-          </p>
-          <p className="text-[14px] leading-relaxed text-slate-300">
-            En el llamado <strong>caso David Sánchez</strong> (Diputación de Badajoz), la{" "}
-            <strong>Fiscalía pidió la absolución</strong> de todos los acusados y es la{" "}
-            <strong>acusación popular</strong> quien sostiene la causa. Una reforma que
-            limitara esta figura tendría, por tanto, un efecto directo y comprobable sobre
-            ese procedimiento. Es una observación que se desprende del propio expediente, no
-            una opinión.
-          </p>
-          <Link
-            href="/explore?focus=Person:david-sanchez"
-            className="mt-3 inline-flex items-center gap-1.5 text-[13px] text-accent hover:underline"
-          >
-            <Network className="h-3.5 w-3.5" /> Ver el caso en el grafo
-          </Link>
-        </div>
       </Section>
 
       <Section
@@ -509,8 +470,7 @@ export default function InstitucionalPage() {
         <p>
           Los hechos, en orden: en noviembre de 2023 Pedro Sánchez fue investido con los{" "}
           <strong>7 votos de Junts</strong>, cuyo acuerdo público de investidura incluía una
-          ley de amnistía para los responsables del procés — empezando por el propio líder
-          del partido, prófugo de la justicia española. En junio de 2024 se aprobó la{" "}
+          ley de amnistía para los responsables del procés. En junio de 2024 se aprobó la{" "}
           <strong>Ley Orgánica 1/2024</strong>, que extingue la responsabilidad penal,
           administrativa y contable de los actos vinculados al procés entre 2011 y 2023.
         </p>
@@ -544,9 +504,7 @@ export default function InstitucionalPage() {
           a esa interpretación: el <strong>Tribunal Supremo</strong>, que mantenía que la
           malversación del procés no era amnistiable (beneficio patrimonial + afectación a
           los intereses financieros de la UE — esta segunda pata, tocada por el fallo), y el{" "}
-          <strong>Tribunal Constitucional</strong>, que tiene pendiente el amparo de
-          Puigdemont contra esa negativa. El regreso del prófugo que aportó los votos de la
-          investidura queda, en la práctica, allanado.
+          <strong>Tribunal Constitucional</strong>.
         </p>
         <TakeBox>
           <p>
@@ -569,53 +527,6 @@ export default function InstitucionalPage() {
             queda a la vista lo esencial: <strong>ninguna instancia juzgará jamás el fondo
             del intercambio</strong> — delitos borrados a cambio de una investidura. Todo
             fue legal; eso es exactamente lo que denunciamos del diseño.
-          </p>
-        </TakeBox>
-      </Section>
-
-      <Section
-        id="ere-constitucional"
-        icon={Stamp}
-        title="Los ERE: condenas firmes, borradas en el Constitucional"
-        sources={[
-          { ref: "Tribunal Constitucional — nota informativa 75/2024 sobre los amparos de Chaves y Griñán (16-jul-2024)", href: "https://www.tribunalconstitucional.es/NotasDePrensaDocumentos/NP_2024_075/NOTA%20INFORMATIVA%20N%C2%BA%2075-2024.pdf" },
-          { ref: "El Salto — el Tribunal Supremo confirma las condenas de Chaves y Griñán por los ERE (jul-2022)", href: "https://www.elsaltodiario.com/corrupcion/ts-confirma-sentencia-grinan-chaves-caso-ere" },
-          { ref: "eldiario.es — el Constitucional anula la condena de cárcel de Griñán y rebaja la de Chaves (16-jul-2024)", href: "https://www.eldiario.es/andalucia/constitucional-ordena-rebajar-condena-inhabilitacion-expresidente-chaves-ere-andalucia_1_11525694.html" },
-        ]}
-      >
-        <p>
-          El caso de los ERE es la mayor causa de corrupción juzgada en Andalucía: la
-          Audiencia de Sevilla declaró probado en 2019 un sistema de{" "}
-          <strong>ayudas sociolaborales arbitrarias por unos 680 millones de euros</strong>{" "}
-          (2000-2009), repartidas al margen de todo procedimiento, y condenó a la cúpula de
-          la Junta: <strong>6 años y 2 días de prisión para el expresidente José Antonio
-          Griñán</strong> (malversación y prevaricación) y <strong>9 años de inhabilitación
-          para Manuel Chaves</strong> (prevaricación). El <strong>Tribunal Supremo confirmó
-          esas condenas en 2022</strong>. Cosa juzgada, doble instancia, firmeza.
-        </p>
-        <p>
-          En julio de 2024 el <strong>Tribunal Constitucional estimó los recursos de
-          amparo</strong> — técnicamente no es una amnistía: apreció vulneración de los
-          derechos a la legalidad penal y a la presunción de inocencia en la interpretación
-          que hicieron la Audiencia y el Supremo, anuló la condena de prisión de Griñán por
-          malversación y ordenó rebajar la de Chaves. Lo hizo <strong>por 7 votos a 4, con
-          su mayoría progresista en pleno y votos particulares durísimos</strong> de los
-          cuatro magistrados conservadores (Enríquez, Arnaldo, Espejel y Tolosa), tras
-          rechazar por extemporáneas las recusaciones planteadas contra dos magistradas. El
-          resultado práctico: la vía del amparo dejó sin efecto penas firmes de los dos
-          tribunales que vieron la prueba.
-        </p>
-        <TakeBox>
-          <p>
-            La precisión importa —el TC «estimó amparos», no «amnistió»— y precisamente por
-            eso el problema es más profundo: <strong>no hizo falta ninguna ley para
-            desactivar las condenas de la mayor trama de corrupción autonómica; bastó con
-            la aritmética interna de un tribunal cuyos magistrados{" "}
-            <a href="#nombramientos" className="text-accent hover:underline">nombran los
-            partidos</a></strong>. Cuando la última palabra sobre la corrupción del partido
-            A la tiene una mayoría designada por el partido A, la cuestión ya no es si el
-            fallo es jurídicamente defendible — es que ningún ciudadano puede distinguirlo
-            de un favor. Esa duda, en un Estado de derecho, es un coste que se paga solo.
           </p>
         </TakeBox>
       </Section>
@@ -691,9 +602,6 @@ export default function InstitucionalPage() {
           { ref: "Inventario de Entes del Sector Público (Invente) — Ministerio de Hacienda / IGAE", href: "https://www.pap.hacienda.gob.es/invente2/pagMenuPrincipalV2.aspx" },
           { ref: "Vozpópuli — «El disparate de los entes públicos: hay más de 19.300», a partir del Inventario de Hacienda", href: "https://www.vozpopuli.com/economia/el-disparate-de-los-entes-publicos-hay-mas-de-19300-y-un-tercio-son-instrumentales.html" },
           { ref: "The Objective — recuento de asesores y personal eventual sobre el Boletín Estadístico de Función Pública y la RPT", href: "https://theobjective.com/espana/politica/2025-01-06/estadistica-oficial-oculta-asesores-cargos-confianza-gobierno/" },
-          { ref: "BOE — Real Decreto 771/2018, nombramiento del presidente del CIS", href: "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2018-9099" },
-          { ref: "BOE — designación del presidente de la Corporación RTVE (2-dic-2024)", href: "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2024-25104" },
-          { ref: "Correos — sala de prensa: nombramiento de Pedro Saura como presidente", href: "https://www.correos.com/en/sala-prensa/pedro-saura-nuevo-presidente-de-correos/" },
         ]}
       >
         <p>
@@ -722,15 +630,6 @@ export default function InstitucionalPage() {
           ]}
           source="Cada ente añade consejos, sedes y nóminas — y diluye la responsabilidad: cuanto más lejos del presupuesto central, menos foco."
         />
-        <p>
-          La cúpula de esa maquinaria se asigna con criterios que cualquiera puede
-          verificar en el BOE: la presidencia del <strong>CIS</strong> —el organismo que
-          mide la opinión pública con dinero público—, la de <strong>Correos</strong> y la
-          de <strong>RTVE</strong> se cubrieron con nombramientos cuya procedencia consta
-          en la propia disposición o en fuentes primarias. Son hechos de nombramiento, no
-          valoraciones — el detalle, decreto a decreto:
-        </p>
-        <BoeEvidence sectionId="empleo-publico" />
         <TakeBox>
           <p>
             El problema no es el funcionario que aprueba una oposición: es que{" "}
@@ -1344,18 +1243,18 @@ export default function InstitucionalPage() {
         icon={MessagesSquare}
         title="Pfizergate: 35.000 millones negociados por SMS"
         sources={[
-          { ref: "Tribunal General de la UE — asunto T-36/23, Stevi y The New York Times / Comisión (sentencia de 14-may-2025; página oficial del caso en CURIA)", href: "https://curia.europa.eu/juris/liste.jsf?num=T-36/23" },
+          { ref: "Tribunal General de la UE — asunto T-36/23, sentencia de 14-may-2025 (página oficial del caso en CURIA)", href: "https://curia.europa.eu/juris/liste.jsf?num=T-36/23" },
           { ref: "Defensora del Pueblo Europeo — decisión en el caso 1316/2021/MIG: mala administración de la Comisión por no buscar los SMS", href: "https://www.ombudsman.europa.eu/en/decision/en/158295" },
           { ref: "Público — la Comisión aprueba el contrato de hasta 1.800 millones de dosis con Pfizer (mayo 2021)", href: "https://www.publico.es/politica/comision-europea-aprueba-contrato-1-800-millones-dosis-vacuna-pfizer.html" },
-          { ref: "Infobae — Von der Leyen sobrevive a la moción de censura por el Pfizergate (10-jul-2025: 360 en contra, 175 a favor)", href: "https://www.infobae.com/espana/2025/07/10/von-der-leyen-sobrevive-a-la-mocion-de-censura-que-deja-sus-apoyos-mermados/" },
+          { ref: "Infobae — la presidenta de la Comisión supera la moción de censura por el Pfizergate (10-jul-2025: 360 en contra, 175 a favor)", href: "https://www.infobae.com/espana/2025/07/10/von-der-leyen-sobrevive-a-la-mocion-de-censura-que-deja-sus-apoyos-mermados/" },
         ]}
       >
         <p>
           En mayo de 2021 la Comisión cerró el mayor contrato de vacunas de la UE:{" "}
           <strong>hasta 1.800 millones de dosis de Pfizer/BioNTech</strong>, con un coste
           estimado por la prensa en torno a <strong>35.000 millones de euros</strong>. Parte
-          de esa negociación la condujo personalmente Von der Leyen{" "}
-          <strong>intercambiando SMS con el CEO de Pfizer</strong>, Albert Bourla — lo
+          de esa negociación la condujo personalmente la presidenta de la Comisión{" "}
+          <strong>intercambiando SMS con el CEO de Pfizer</strong> — lo
           reveló The New York Times, y la propia presidenta lo había descrito antes en otra
           entrevista.
         </p>
@@ -1367,11 +1266,11 @@ export default function InstitucionalPage() {
           <strong>Tribunal General de la UE anuló la denegación</strong> (asunto T-36/23):
           la Comisión «no dio una explicación plausible» de por qué no tenía los
           documentos. Tras la sentencia, la Comisión anunció una nueva decisión «más
-          detallada»; <strong>los SMS siguen sin publicarse</strong>. En julio de 2025 Von
-          der Leyen superó una moción de censura motivada por el caso (360 votos en contra,
-          175 a favor). Precisión debida: la sentencia versa sobre transparencia — no
-          existe condena penal contra Von der Leyen, y nada de lo anterior debe leerse como
-          tal.
+          detallada»; <strong>los SMS siguen sin publicarse</strong>. En julio de 2025 la
+          presidenta de la Comisión superó una moción de censura motivada por el caso (360
+          votos en contra, 175 a favor). Precisión debida: la sentencia versa sobre
+          transparencia — no hay condena penal alguna, y nada de lo anterior debe leerse
+          como tal.
         </p>
         <StatGrid>
           <BigStat value="1.800" unit="M" label="Dosis del contrato negociado en parte por SMS (mayo 2021)" sub="Comisión Europea / Público" tone="amber" />
@@ -1597,8 +1496,7 @@ export default function InstitucionalPage() {
         <p>
           Y cuando el dinero corre, aparece quien lo recoge: en diciembre de 2022 la
           policía belga incautó <strong>en torno a 1,5 millones de euros en efectivo</strong>{" "}
-          —en casa de un exeurodiputado, en la de una vicepresidenta del Parlamento Europeo
-          y en una maleta de hotel— en la trama de sobornos conocida como{" "}
+          —en domicilios particulares y en una maleta de hotel— en la trama de sobornos conocida como{" "}
           <strong>Qatargate</strong>. Presunción de inocencia estricta: hay imputaciones y
           hubo prisión provisional, pero <strong>a día de hoy no hay condena firme</strong>;
           el caso sigue abierto años después — lo que, para el ciudadano que mira, es parte
@@ -1680,14 +1578,14 @@ export default function InstitucionalPage() {
             <span className="text-slate-200">cada cifra está citada a su fuente oficial</span>{" "}
             (INE, AEAT, OCDE, AIReF, Banco de España, Comisión Europea, Tribunal de Cuentas
             Europeo, BCE, EUR-Lex…) y las estimaciones de think-tanks y los datos de prensa
-            van nombrados. En lo judicial (amnistía, ERE, Pfizergate, Qatargate) rige la{" "}
+            van nombrados. En lo judicial (amnistía, Pfizergate, Qatargate) rige la{" "}
             <span className="text-slate-200">presunción de inocencia</span>: distinguimos lo
             probado de lo acusado, y una sentencia sobre transparencia no es una condena
             penal. No inventamos datos: lo que no
-            tiene fuente sólida no se publica como cifra cerrada. Para los casos concretos, su
-            estado procesal y su prueba documental, usa el{" "}
-            <Link href="/explore" className="text-accent hover:underline">grafo</Link> y los{" "}
-            <Link href="/briefings" className="text-accent hover:underline">briefings</Link>.
+            tiene fuente sólida no se publica como cifra cerrada. Los casos concretos, con sus
+            titulares y sus documentos oficiales, están en la{" "}
+            <Link href="/ultima-hora" className="text-accent hover:underline">cronología</Link> y en los{" "}
+            <Link href="/documentos" className="text-accent hover:underline">documentos</Link>.
           </p>
         </div>
       </section>

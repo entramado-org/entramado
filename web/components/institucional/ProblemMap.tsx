@@ -3,14 +3,13 @@
 import { useEffect, useState } from "react";
 import { ArrowDown } from "lucide-react";
 import { CATEGORIAS, PROBLEMAS, type CategoriaId, type Problema } from "@/lib/institucional";
-import { hasBoeEvidence } from "@/lib/boeNombramientos";
 
 /* ────────────────────────────────────────────────────────────────────────────
  * Mapa de problemas — isla client del dashboard de /institucional.
  * Grid de tarjetas-resumen (una por problema) con filtro por categoría y un
  * modo "¿Cómo me afecta?" que cambia la explicación llana por la cotidiana.
  * Cada tarjeta es un <a href="#seccion"> → la navegación funciona sin JS y el
- * estado inicial ("todas", modo normal) deja las 27 tarjetas en el HTML SSG.
+ * estado inicial ("todas", modo normal) deja todas las tarjetas en el HTML SSG.
  * ──────────────────────────────────────────────────────────────────────────── */
 
 const MODO_KEY = "sm:institucional.modo.v1";
@@ -46,14 +45,6 @@ function ProblemCard({ p, cotidiano }: { p: Problema; cotidiano: boolean }) {
           {p.stat.unit && <span className="text-xs font-medium text-slate-400">{p.stat.unit}</span>}
         </div>
         <span className="flex shrink-0 items-center gap-1">
-          {hasBoeEvidence(p.id) && (
-            <span
-              className="rounded-full border border-accent/30 bg-accent/10 px-2 py-0.5 font-mono text-[8px] uppercase tracking-[0.14em] text-accent"
-              title="Sección con evidencia de nombramientos del BOE"
-            >
-              BOE
-            </span>
-          )}
           <span
             className={`rounded-full border px-2 py-0.5 font-mono text-[8px] uppercase tracking-[0.14em] ${CAT_BADGE[p.categoria]}`}
           >

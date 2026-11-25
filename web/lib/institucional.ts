@@ -156,18 +156,6 @@ export const PROBLEMAS: Problema[] = [
     fuente: { ref: "LO 1/2024 (BOE) · Comisión de Venecia, CDL-AD(2024)003", href: "https://www.boe.es/buscar/act.php?id=BOE-A-2024-11776" },
     parte: 1,
   },
-  {
-    id: "ere-constitucional",
-    categoria: "poder-justicia",
-    titulo: "Los ERE, borrados en el Constitucional",
-    stat: { value: "679", unit: "M€", label: "en ayudas arbitrarias; el TC anuló o rebajó las condenas firmes por 7 votos a 4", tone: "rose" },
-    llano:
-      "La mayor causa de corrupción de Andalucía acabó en condenas firmes del Supremo… hasta que el Constitucional —cuya mayoría nombran los partidos— estimó los amparos y las anuló o rebajó, con votos particulares durísimos.",
-    cotidiano:
-      "El tribunal que tiene la última palabra sobre la corrupción política lo nombran los mismos partidos a los que juzga.",
-    fuente: { ref: "Tribunal Constitucional — nota informativa 75/2024", href: "https://www.tribunalconstitucional.es/NotasDePrensaDocumentos/NP_2024_075/NOTA%20INFORMATIVA%20N%C2%BA%2075-2024.pdf" },
-    parte: 1,
-  },
 
   /* ── Parte 2 · La maquinaria del Estado ── */
   {
@@ -324,7 +312,7 @@ export const PROBLEMAS: Problema[] = [
     titulo: "Pfizergate: el contrato por SMS",
     stat: { value: "~35.000", unit: "M€", label: "en vacunas negociadas por SMS que la Comisión se niega a enseñar", tone: "rose" },
     llano:
-      "Von der Leyen negoció por SMS con el CEO de Pfizer el mayor contrato de vacunas de la UE (hasta 1.800 millones de dosis). La Comisión se negó a enseñar los mensajes; la Justicia europea anuló esa negativa en 2025 — y siguen sin publicarse.",
+      "La presidenta de la Comisión negoció por SMS con el CEO de Pfizer el mayor contrato de vacunas de la UE (hasta 1.800 millones de dosis). La Comisión se negó a enseñar los mensajes; la Justicia europea anuló esa negativa en 2025 — y siguen sin publicarse.",
     cotidiano:
       "Se compraron con tu dinero 1.800 millones de dosis y no puedes leer cómo se cerró el trato.",
     fuente: { ref: "Tribunal General de la UE — sentencia T-36/23 (14-may-2025)", href: "https://curia.europa.eu/juris/liste.jsf?num=T-36/23" },
