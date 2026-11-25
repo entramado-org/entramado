@@ -33,6 +33,18 @@ INVALIDOS = {
     "documento en dominio ajeno": lambda d: d["documentos"][0].update(url="https://otro.example/a.pdf"),
     "organismo desconocido": lambda d: d["documentos"][0].update(organismo="Otro"),
     "titular vacío": lambda d: d["items"][0].update(titulo=" "),
+    "fecha de semana ISO": lambda d: d["items"][0].update(iso="2026-W47-5"),
+    "url sin host con ruta": lambda d: d["items"][0].update(url="https:///pieza"),
+    "url sin barras": lambda d: d["items"][0].update(url="https:medio.example/pieza"),
+    "url con una sola barra": lambda d: d["items"][0].update(url="https:/medio.example/pieza"),
+    "url con credenciales": lambda d: d["items"][0].update(url="https://a@medio.example/pieza"),
+    "url con barra invertida": lambda d: d["items"][0].update(url="https://medio.example\\@otro.example/pieza"),
+}
+
+# Raw YAML that the two parsers used to read differently (YAML 1.1 vs 1.2).
+YAML_CRUDO = {
+    "fecha sin comillas": "items:\n- iso: 2026-11-20\n  titulo: Un titular\n  medio: Medio\n  url: https://medio.example/pieza\n",
+    "titular booleano": "items:\n- iso: '2026-11-20'\n  titulo: No\n  medio: Medio\n  url: https://medio.example/pieza\n",
 }
 
 
@@ -70,6 +82,14 @@ class EsquemaCerrado(unittest.TestCase):
                 self.assertFalse(_python(pathlib.Path(tmp)), "python lo acepta")
                 self.assertFalse(_web(pathlib.Path(tmp)), "el build lo acepta")
 
+    def test_el_yaml_que_cada_parser_leia_distinto_lo_rechazan_los_dos(self):
+        for name, raw in YAML_CRUDO.items():
+            with self.subTest(name), tempfile.TemporaryDirectory() as tmp:
+                _write(pathlib.Path(tmp))
+                (pathlib.Path(tmp) / "feed.yaml").write_text(raw, encoding="utf-8")
+                self.assertFalse(_python(pathlib.Path(tmp)), "python lo acepta")
+                self.assertFalse(_web(pathlib.Path(tmp)), "el build lo acepta")
+
     def test_los_datos_del_repositorio_son_validos(self):
         self.assertTrue(_python(ROOT / "datos"))
 
@@ -85,21 +105,38 @@ class Titulares(unittest.TestCase):
 
 class Enlaces(unittest.TestCase):
     def test_un_h1_corregido_con_metadatos_antiguos_se_marca(self):
-        pieza = Pieza(status="200", h1="Un titular (corregido)", og_title="Un titular", title="Un titular | Medio", published="2026-11-20")
+        pieza = Pieza(status="200", final_url=ITEM["url"], h1="Un titular (corregido)", og_title="Un titular", title="Un titular | Medio", published="2026-11-20")
         self.assertIn("TITULAR CAMBIADO", enlaces.revisar_item(ITEM, pieza))
 
     def test_un_titular_ampliado_se_marca(self):
-        pieza = Pieza(status="200", h1="Un titular, según desmiente el juzgado", published="2026-11-20")
+        pieza = Pieza(status="200", final_url=ITEM["url"], h1="Un titular, según desmiente el juzgado", published="2026-11-20")
         self.assertIn("TITULAR CAMBIADO", enlaces.revisar_item(ITEM, pieza))
+
+    def test_una_redireccion_a_otro_sitio_se_marca(self):
+        pieza = Pieza(status="200", final_url="https://otro.example/portada", h1="Un titular", published="2026-11-20")
+        self.assertIn("ENLACE REDIRIGIDO", enlaces.revisar_item(ITEM, pieza))
+
+    def test_un_h1_corregido_no_se_tapa_con_og_title_en_ningun_medio(self):
+        item = dict(ITEM, url="https://www.eldebate.com/espana/pieza.html")
+        pieza = Pieza(status="200", final_url=item["url"], h1="Un titular rectificado", og_title="Un titular", published="2026-11-20")
+        self.assertIn("TITULAR CAMBIADO", enlaces.revisar_item(item, pieza))
+
+    def test_una_fecha_que_no_se_puede_leer_se_marca(self):
+        self.assertIn("FECHA NO LEGIBLE", enlaces.revisar_item(ITEM, Pieza(status="200", final_url=ITEM["url"], h1="Un titular")))
+
+    def test_la_fecha_visible_en_time_se_lee(self):
+        page = _Page()
+        page.feed('<h1>Un titular</h1><time class="d" datetime="2026-10-23T14:10:22+02:00">23 oct</time>')
+        self.assertEqual(page.meta["time"][:10], "2026-10-23")
 
     def test_un_enlace_caido_se_marca(self):
         self.assertIn("ENLACE 404", enlaces.revisar_item(ITEM, Pieza(status="404")))
 
     def test_una_fecha_distinta_se_marca(self):
-        self.assertIn("FECHA DISTINTA", enlaces.revisar_item(ITEM, Pieza(status="200", h1="Un titular", published="2026-11-19")))
+        self.assertIn("FECHA DISTINTA", enlaces.revisar_item(ITEM, Pieza(status="200", final_url=ITEM["url"], h1="Un titular", published="2026-11-19")))
 
     def test_una_pieza_igual_no_se_marca(self):
-        self.assertIsNone(enlaces.revisar_item(ITEM, Pieza(status="200", h1="Un titular", published="2026-11-20")))
+        self.assertIsNone(enlaces.revisar_item(ITEM, Pieza(status="200", final_url=ITEM["url"], h1="Un titular", published="2026-11-20")))
 
 
 if __name__ == "__main__":

@@ -3,13 +3,10 @@
 # pieza muestra en su web, literal) · medio (quien firma ese titular; «Europa Press (vía
 # Infobae)» = pieza de agencia leída en quien la republicó, cuando la agencia no la publica) ·
 # url (https). Cualquier otro campo es un error de `scripts/validar_datos.py`.
+# Solo piezas de medios de comunicación (una nota de un organismo no es un ítem).
 # Entra un titular solo si las personas que nombra son parte del procedimiento o cargo
 # público, y si ni el titular ni la url aplican un mote a una persona. Del más reciente al más antiguo.
 items:
-- iso: '2026-11-20'
-  titulo: El guardia civil investigado en el 'caso Koldo' incorpora a Macarena Olona a su defensa
-  medio: The Objective
-  url: https://theobjective.com/espana/tribunales/2026-11-20/guardia-civil-caso-koldo-macarena-olona-defensa/
 - iso: '2026-11-19'
   titulo: El juez llama a declarar como imputado al comandante Rubén Villalba el 23 de noviembre en el caso Koldo
   medio: Europa Press (vía Demócrata)
@@ -97,15 +94,11 @@ items:
 - iso: '2026-11-05'
   titulo: Ábalos recurre al Constitucional para anular su condena y suspender su cumplimiento de prisión
   medio: EFE (vía menorca.info)
-  url: https://menorca.info/actualidad/nacional/2026/11/05/2743489/abalos-recurre-constitucional-para-anular-condena-suspender-cumplimiento-prision.html
+  url: https://www.menorca.info/actualidad/nacional/2026/11/05/2743489/abalos-recurre-constitucional-para-anular-condena-suspender-cumplimiento-prision.html
 - iso: '2026-11-05'
   titulo: La Guardia Civil deja en libertad a los seis detenidos por el caso Koldo a la espera de que el juez los cite a declarar
   medio: elDiario.es
   url: https://www.eldiario.es/politica/uco-despliega-operacion-secreto-caso-koldo-investiga-audiencia-nacional_1_13639620.html
-- iso: '2026-11-04'
-  titulo: El Tribunal Supremo abre la ejecutoria de la sentencia del ‘caso mascarillas’ y requiere a los condenados el pago de 647.000 euros en multas, decomisos e indemnizaciones
-  medio: CGPJ (nota de prensa)
-  url: https://www.poderjudicial.es/cgpj/es/Poder-Judicial/Noticias-Judiciales/El-Tribunal-Supremo-abre-la-ejecutoria-de-la-sentencia-del--caso-mascarillas--y-requiere-a-los-condenados-el-pago-de-647-000-euros-en-multas--decomisos-e-indemnizaciones
 - iso: '2026-11-04'
   titulo: El juicio contra Aldama por acusar a Bolaños de intentar sobornarle será el 17 de febrero
   medio: EFE (vía Infobae)
@@ -122,10 +115,6 @@ items:
   titulo: El exviceministro venezolano Nervis Villalobos se niega a declarar ante el juez del caso Leire Díez
   medio: Europa Press (vía Demócrata)
   url: https://www.democrata.es/tribunales/el-exviceministro-venezolano-nervis-villalobos-se-niega-a-declarar-ante-el-juez-del-caso-leire-diez/
-- iso: '2026-10-29'
-  titulo: La UCO avisó a la juez Biedma de que los anexos de la causa de David Sánchez contenían los correos de Begoña y Sánchez
-  medio: Libertad Digital
-  url: https://www.libertaddigital.com/espana/2026-10-29/la-uco-asegura-a-pedraz-que-informo-a-biedma-de-que-su-informe-contenia-el-correo-de-begona-gomez-7484228/
 - iso: '2026-10-29'
   titulo: Okdiario pagó la defensa de Koldo García en el juicio del Supremo
   medio: elDiario.es
@@ -182,10 +171,6 @@ items:
   titulo: El juez del caso Koldo pide la documentación intervenida en mayo a Cerdán y al PSOE
   medio: EFE (vía Infobae)
   url: https://www.infobae.com/espana/agencias/2026/10/15/el-juez-del-caso-koldo-pide-la-documentacion-intervenida-en-mayo-a-cerdan-y-al-psoe/
-- iso: '2026-10-15'
-  titulo: El DAO de la G.Civil dice que Marlaska le llamó tras filtrarse el correo de Begoña Gómez
-  medio: EFE (vía Infobae)
-  url: https://www.infobae.com/espana/agencias/2026/10/15/el-dao-de-la-gcivil-dice-que-marlaska-le-llamo-tras-filtrarse-el-correo-de-begona-gomez/
 - iso: '2026-10-14'
   titulo: El Supremo rechaza el incidente de nulidad de Ábalos y abre la puerta a acudir al TC
   medio: EFE (vía Infobae)
@@ -250,10 +235,6 @@ items:
   titulo: Testigos relatan a la UCO que el exjefe de prensa del PSOE decidió pagar al medio que tenía en nómina a Leire Díez
   medio: El Español
   url: https://www.elespanol.com/espana/tribunales/20260924/testigos-relatan-uco-exjefe-prensa-psoe-decidio-pagar-medio-nomina-leire/1003744395731_0.html
-- iso: '2026-09-24'
-  titulo: La UCO documenta el interés de Sofía Puente por la nacionalización de un exviceministro chavista en la que trató de influir Leire Díez
-  medio: El Debate
-  url: https://www.eldebate.com/espana/20260924/uco-documenta-interes-sofia-puente-nacionalizacion-ex-ministro-chavista-trato-influir-leire-diez_461702.html
 - iso: '2026-09-23'
   titulo: 'El chat secreto de la cloaca del PSOE: "Estamos hablando de atacar a gente metida en las más altas instituciones"'
   medio: Libertad Digital
@@ -434,10 +415,6 @@ items:
   titulo: El juez Pedraz imputa al exdirector de la Guardia Civil Leonardo Marcos en el ‘caso Leire Díez’ tras cambiar de criterio sobre su presunto papel en las presiones a la UCO
   medio: Infobae
   url: https://www.infobae.com/espana/2026/07/29/el-juez-pedraz-imputa-al-exdirector-de-la-guardia-civil-en-el-caso-leire-diez-y-le-cita-a-declarar-el-10-de-septiembre/
-- iso: '2026-07-29'
-  titulo: El confidente de la Guardia Civil que organizó la reunión con el comandante Villalba escuchó a Leire hablar por teléfono con "Mercedes"
-  medio: El Independiente
-  url: https://www.elindependiente.com/espana/2026/07/29/el-confidente-de-la-guardia-civil-que-organizo-la-reunion-con-el-comandante-villalba-escucho-a-leire-hablar-por-telefono-con-mercedes/
 - iso: '2026-07-28'
   titulo: La Fiscalía adelanta a Peinado que hará un escrito "de conclusiones absolutorias" para Begoña Gómez
   medio: Libertad Digital
@@ -532,7 +509,7 @@ items:
   url: https://www.elindependiente.com/espana/2026/07/15/los-fiscales-que-se-citaron-con-leire-admiten-que-garcia-ortiz-les-reunio-despues-en-su-despacho-y-les-dijo-que-lo-olvidasen/
 - iso: '2026-07-15'
   titulo: La UCO señala que el PSOE pagó 43.225 euros a Leire Díez a través de empresas de Zarrías y el exabogado de Koldo
-  medio: Que.es
+  medio: Qué!
   url: https://www.que.es/2026/07/15/caso-leire-diez-uco-pagos-psoe/
 - iso: '2026-07-14'
   titulo: La defensa de David Sánchez recurrirá la sentencia de la Audiencia de Badajoz
@@ -578,14 +555,6 @@ items:
   titulo: 'Aagesen admite que los cargos hoy imputados de la SEPI condicionaban los rescates: "Su criterio se cumplía"'
   medio: Vozpópuli
   url: https://www.vozpopuli.com/tribunales/aagesen-admite-que-los-cargos-hoy-imputados-de-la-sepi-condicionaban-los-rescates-su-criterio-se-cumplia.html
-- iso: '2026-07-07'
-  titulo: El comandante Villalba ratifica que Leire Díez le ofreció ser la "mano derecha" de la directora de la Guardia Civil
-  medio: El Independiente
-  url: https://www.elindependiente.com/espana/2026/07/07/ruben-villalba-declaracion-audiencia-nacional/
-- iso: '2026-07-06'
-  titulo: Las acusaciones piden a Peinado que Begoña Gómez testifique por un contrato a Barrabés
-  medio: The Objective
-  url: https://theobjective.com/espana/tribunales/2026-07-06/acusaciones-peinado-begona-gomez-contrato-barrabes/
 - iso: '2026-07-06'
   titulo: El Gobierno ve "incomprensible" que el juez permita viajar a Begoña Gómez a Londres pero no a la cumbre de la OTAN
   medio: El Independiente

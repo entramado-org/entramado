@@ -9,11 +9,14 @@ text (summaries, quotes, statuses, entity links) out of the site.
 from __future__ import annotations
 
 import datetime
+import re
 import sys
-from urllib.parse import urlparse
 
 import yaml
 
+# Same expression as `web/lib/datos.ts`: https, lowercase host without credentials or port, and a path.
+URL_HTTPS = re.compile(r"https://([a-z0-9](?:[a-z0-9.-]*[a-z0-9])?)/[^\s\\]*")
+FECHA = re.compile(r"\d{4}-\d{2}-\d{2}")
 ITEM = {"iso", "titulo", "medio", "url"}
 DOCUMENTO = {"organismo", "designacion", "fecha", "url"}
 # An official document is only a link to its issuing body's own site.
@@ -46,19 +49,20 @@ def _check(row, allowed: set, where: str, errors: list) -> None:
         if field in allowed and (not isinstance(value, str) or not value.strip() or value != value.strip()):
             errors.append(f"{where}: «{field}» debe ser texto no vacío y sin espacios en los extremos")
     url = row.get("url")
-    if isinstance(url, str) and (urlparse(url).scheme != "https" or not urlparse(url).hostname):
+    match = URL_HTTPS.fullmatch(url) if isinstance(url, str) else None
+    if isinstance(url, str) and not match:
         errors.append(f"{where}: la url debe ser https y absoluta")
-    if "organismo" in row and isinstance(url, str):
+    if "organismo" in row and match:
         hosts = ORGANISMOS.get(row["organismo"])
         if hosts is None:
             errors.append(f"{where}: organismo desconocido «{row['organismo']}»")
-        elif urlparse(url).hostname not in hosts:
+        elif match.group(1) not in hosts:
             errors.append(f"{where}: la url no es de la web de «{row['organismo']}»")
     for field in ("iso", "fecha"):
         value = row.get(field)
         if isinstance(value, str):
             try:
-                if len(value) != 10:
+                if not FECHA.fullmatch(value):
                     raise ValueError(value)
                 datetime.date.fromisoformat(value)
             except ValueError:

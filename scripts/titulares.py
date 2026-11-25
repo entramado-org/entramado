@@ -22,7 +22,7 @@ import yaml
 
 UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0 Safari/537.36"
 UA_CURL = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Safari/605.1.15"
-PUBLISHED = ("article:published_time", "datePublished", "date", "DC.date.issued", "publish-date", "og:article:published_time")
+PUBLISHED = ("article:published_time", "datePublished", "date", "DC.date.issued", "publish-date", "og:article:published_time", "time")
 ISO_DATE = re.compile(r"(\d{4}-\d{2}-\d{2})")
 JSON_LD_DATE = re.compile(r'"datePublished"\s*:\s*"(\d{4}-\d{2}-\d{2})')
 
@@ -55,6 +55,8 @@ class _Page(html.parser.HTMLParser):
             key = fields.get("property") or fields.get("name") or fields.get("itemprop")
             if key and "content" in fields:
                 self.meta.setdefault(key, fields["content"])
+        elif tag == "time" and "time" not in self.meta:
+            self.meta["time"] = dict(attrs).get("datetime") or ""
         elif tag in ("h1", "title") and self._open is None:
             self._open, self._buffer = tag, []
 
@@ -136,7 +138,7 @@ def main(feed_path: str, out_path: str) -> None:
     with open(out_path, "w", encoding="utf-8") as out:
         out.write("n\tiso\tstatus\tpublished\tmedio\turl\th1\tog_title\ttitle\n")
         for number, (item, pieza) in enumerate(zip(items, piezas)):
-            fields = [str(number), str(item["iso"]), pieza.status, pieza.published, item.get("medio") or item.get("outlet", ""),
+            fields = [str(number), str(item["iso"]), pieza.status, pieza.published, item["medio"],
                       item["url"], pieza.h1, pieza.og_title, pieza.title]
             out.write("\t".join(field.replace("\t", " ") for field in fields) + "\n")
 

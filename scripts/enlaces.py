@@ -23,24 +23,15 @@ import yaml
 from titulares import UA, Pieza, leer_todas
 from validar_datos import ORGANISMOS
 
-# Outlets whose first <h1> is not the piece's headline. Each entry says where the
-# visible headline is instead; any other outlet is compared against its <h1> only.
-SIN_H1 = {
-    "www.poderjudicial.es": lambda pieza: pieza.title.split(" | ")[0],  # the <h1> is the cookie banner
-    "www.eldebate.com": lambda pieza: pieza.og_title,  # headline rendered outside an <h1>
-}
-
-
-def titular_visible(url: str, pieza: Pieza) -> str:
-    return SIN_H1.get(urlparse(url).hostname or "", lambda p: p.h1)(pieza)
-
-
 def revisar_item(item: dict, pieza: Pieza) -> str | None:
     if pieza.status != "200":
         return f"ENLACE {pieza.status}\t{item['url']}"
-    visible = titular_visible(item["url"], pieza)
-    if visible != item["titulo"]:
-        return f"TITULAR CAMBIADO\t{item['url']}\n\tpublicado: {item['titulo']}\n\ten la web: {visible or '(sin titular legible)'}"
+    if urlparse(pieza.final_url).hostname != urlparse(item["url"]).hostname:
+        return f"ENLACE REDIRIGIDO a {pieza.final_url}\t{item['url']}"
+    if pieza.h1 != item["titulo"]:
+        return f"TITULAR CAMBIADO\t{item['url']}\n\tpublicado: {item['titulo']}\n\ten la web: {pieza.h1 or '(sin titular legible)'}"
+    if not pieza.published:
+        return f"FECHA NO LEGIBLE\t{item['url']}"
     if pieza.published and pieza.published != item["iso"]:
         return f"FECHA DISTINTA\t{item['url']}\n\tpublicada: {item['iso']}\n\ten la web: {pieza.published}"
     return None
@@ -62,7 +53,7 @@ def revisar_documento(document: dict) -> str | None:
         return f"DOCUMENTO {status}\t{document['url']}"
     if host not in ORGANISMOS.get(document["organismo"], ()):
         return f"DOCUMENTO REDIRIGIDO a {host}\t{document['url']}"
-    if document["url"].lower().endswith(".pdf") and not head.startswith(b"%PDF"):
+    if not head.startswith(b"%PDF"):
         return f"DOCUMENTO YA NO ES PDF\t{document['url']}"
     return None
 

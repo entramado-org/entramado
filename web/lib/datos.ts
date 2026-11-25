@@ -35,6 +35,9 @@ const ORGANISMOS: Record<string, string[]> = {
   "Tribunal de Cuentas": ["www.tcu.es"],
 };
 
+// Misma expresión que `validar_datos.py`: https, host en minúsculas sin credenciales ni puerto, y ruta.
+const URL_HTTPS = /^https:\/\/([a-z0-9](?:[a-z0-9.-]*[a-z0-9])?)\/[^\s\\]*$/;
+
 /** Fecha de calendario real (2026-13-01 o 2026-02-30 no lo son). */
 function esFecha(v: string): boolean {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(v)) return false;
@@ -51,7 +54,8 @@ function repetidas(urls: string[], donde: string) {
 }
 
 function leer(fichero: string, clave: string): unknown[] {
-  const data = parse(readFileSync(path.join(DIR, fichero), "utf-8"));
+  // YAML 1.1, como PyYAML: una fecha sin comillas o un «No» no son texto y se rechazan en los dos lados.
+  const data = parse(readFileSync(path.join(DIR, fichero), "utf-8"), { version: "1.1" });
   if (!data || typeof data !== "object" || Object.keys(data).join() !== clave || !Array.isArray(data[clave])) {
     throw new Error(`${fichero}: se espera un único bloque «${clave}:» con una lista`);
   }
@@ -67,13 +71,9 @@ function validar(fila: unknown, permitidos: string[], donde: string) {
     if (typeof v !== "string" || !v.trim() || v !== v.trim()) throw new Error(`${donde}: «${k}» debe ser texto no vacío`);
   }
   if (typeof f.url === "string") {
-    let u: URL | null = null;
-    try {
-      u = new URL(f.url);
-    } catch {
-      u = null;
-    }
-    if (!u || u.protocol !== "https:" || !u.hostname) throw new Error(`${donde}: la url debe ser https y absoluta`);
+    const host = URL_HTTPS.exec(f.url)?.[1];
+    if (!host) throw new Error(`${donde}: la url debe ser https y absoluta`);
+    const u = { hostname: host };
     if (typeof f.organismo === "string") {
       const hosts = ORGANISMOS[f.organismo];
       if (!hosts) throw new Error(`${donde}: organismo desconocido «${f.organismo}»`);
