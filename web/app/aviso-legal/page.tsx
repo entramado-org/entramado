@@ -120,7 +120,7 @@ export default function AvisoLegalPage() {
             {CONTACTO}
           </a>
           , indicando el ítem concreto y aportando la referencia que lo acredite. Plazos a los que se
-          compromete el titular: <span className="text-slate-200">acuse de recibo en un día hábil</span>;
+          compromete el titular: <span className="text-slate-200">acuse de recibo en tres días hábiles</span>;
           las rectificaciones y retiradas que afectan a personas se resuelven, o se explica por qué no
           proceden, <span className="text-slate-200">en tres días hábiles como objetivo</span>; cualquier
           otra petición, en un mes como máximo. Un ítem retirado deja de aparecer en el sitio. También tienes derecho a presentar una reclamación ante la Agencia Española de Protección
