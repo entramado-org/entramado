@@ -38,6 +38,8 @@ def designacion_de(organismo: str, fichero: str) -> str | None:
     return None
 
 
+# A press item links to a page, never to an attached file (a ruling, an image, a spreadsheet).
+FICHERO = re.compile(r"\.(pdf|docx?|xlsx?|pptx?|odt|ods|zip|rar|jpe?g|png|gif|webp|mp[34]|csv|txt|xml|json)$", re.I)
 FECHA = re.compile(r"\d{4}-\d{2}-\d{2}")
 ITEM = {"iso", "titulo", "medio", "url"}
 DOCUMENTO = {"organismo", "designacion", "fecha", "url"}
@@ -100,6 +102,8 @@ def _check(row, allowed: set, where: str, errors: list) -> None:
         errors.append(f"{where}: la url debe ser https y absoluta")
     elif match and not posixpath.normpath(urllib.parse.unquote(urllib.parse.urlsplit(url).path) or "/").strip("/"):
         errors.append(f"{where}: la url es una portada, no una pieza")
+    if "titulo" in row and match and FICHERO.search(posixpath.normpath(urllib.parse.unquote(urllib.parse.urlsplit(url).path))):
+        errors.append(f"{where}: la url es un fichero adjunto, no una pieza de un medio")
     if "organismo" in row and match:
         hosts = ORGANISMOS.get(row["organismo"])
         if hosts is None:
