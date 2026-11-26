@@ -18,7 +18,7 @@ import validar_datos  # noqa: E402
 from titulares import Pieza, _Page  # noqa: E402
 
 ITEM = {"iso": "2026-11-20", "titulo": "Un titular", "medio": "Medio", "url": "https://medio.example/pieza"}
-DOC = {"organismo": "Senado", "designacion": "Diario de Sesiones del Senado. Comisiones, núm. 758", "fecha": "2026-01-02", "url": "https://www.senado.es/ds/DS_C_15_758.PDF"}
+DOC = {"organismo": "Senado", "designacion": "Diario de Sesiones del Senado. Comisiones, núm. 758 (XV Legislatura)", "fecha": "2026-01-02", "url": "https://www.senado.es/ds/DS_C_15_758.PDF"}
 
 # Each case must be rejected by BOTH validators (Python and the web build).
 INVALIDOS = {
@@ -34,6 +34,8 @@ INVALIDOS = {
     "documento que enlaza a la portada del organismo": lambda d: d["documentos"][0].update(url="https://www.senado.es/web/index.html"),
     "documento que enlaza a otro número": lambda d: d["documentos"][0].update(url="https://www.senado.es/ds/DS_C_15_756.PDF"),
     "documento sin número en su designación": lambda d: d["documentos"][0].update(designacion="Diario de Sesiones"),
+    "diario de otra serie con el mismo número": lambda d: d["documentos"][0].update(organismo="Congreso de los Diputados", designacion="Diario de Sesiones del Congreso de los Diputados. Comisiones de Investigación, núm. 8 (XV Legislatura)", url="https://www.congreso.es/public_oficiales/L15/CONG/DS/CO/DSCD-15-CO-8.PDF"),
+    "diario de otra legislatura": lambda d: d["documentos"][0].update(url="https://www.senado.es/ds/DS_C_14_758.PDF"),
     "organismo desconocido": lambda d: d["documentos"][0].update(organismo="Otro"),
     "titular vacío": lambda d: d["items"][0].update(titulo=" "),
     "fecha futura": lambda d: d["items"][0].update(iso="2999-01-01"),
@@ -64,7 +66,7 @@ YAML_CRUDO = {
 
 
 # Rules only the Python gate enforces; it runs in `prebuild`, before every build of the site.
-SOLO_PYTHON = {"documento que enlaza a la portada del organismo", "documento que enlaza a otro número", "documento sin número en su designación", "url de barras que resuelve a la portada", "titular que enlaza a un documento oficial", "titular de dos líneas", "url de portada", "url que resuelve a la portada", "url que resuelve a la portada, codificada", "año cero", "misma pieza con la ruta codificada"}
+SOLO_PYTHON = {"diario de otra serie con el mismo número", "diario de otra legislatura", "documento que enlaza a la portada del organismo", "documento que enlaza a otro número", "documento sin número en su designación", "url de barras que resuelve a la portada", "titular que enlaza a un documento oficial", "titular de dos líneas", "url de portada", "url que resuelve a la portada", "url que resuelve a la portada, codificada", "año cero", "misma pieza con la ruta codificada"}
 
 
 def _write(folder: pathlib.Path, mutate=None) -> None:

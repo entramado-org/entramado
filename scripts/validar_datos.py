@@ -19,7 +19,25 @@ import yaml
 
 # Same expression as `web/lib/datos.ts`: https, lowercase host without credentials or port, and a path.
 URL_HTTPS = re.compile(r"https://([a-z0-9][a-z0-9-]*(?:\.[a-z0-9-]+)+)/[^\s\\]*")
-NUMERO = re.compile(r"núm\. (\d+)")
+ROMANOS = {"14": "XIV", "15": "XV", "16": "XVI"}
+# The designation is derived from the file name of the official PDF: chamber, series, legislature and
+# number. A document of a series not listed here does not enter until its pattern is added.
+SERIES = {
+    "Senado": [(re.compile(r"DS_C_(\d+)_(\d+)\.PDF"), "Diario de Sesiones del Senado. Comisiones, núm. {n} ({leg} Legislatura)")],
+    "Congreso de los Diputados": [
+        (re.compile(r"DSCD-(\d+)-CI-(\d+)\.PDF"), "Diario de Sesiones del Congreso de los Diputados. Comisiones de Investigación, núm. {n} ({leg} Legislatura)"),
+    ],
+}
+
+
+def designacion_de(organismo: str, fichero: str) -> str | None:
+    for patron, plantilla in SERIES.get(organismo, ()):
+        hallado = patron.fullmatch(fichero)
+        if hallado and hallado.group(1) in ROMANOS:
+            return plantilla.format(n=hallado.group(2), leg=ROMANOS[hallado.group(1)])
+    return None
+
+
 FECHA = re.compile(r"\d{4}-\d{2}-\d{2}")
 ITEM = {"iso", "titulo", "medio", "url"}
 DOCUMENTO = {"organismo", "designacion", "fecha", "url"}
@@ -91,13 +109,11 @@ def _check(row, allowed: set, where: str, errors: list) -> None:
         else:
             # The link must be the announced document itself: a PDF whose file name carries its number.
             fichero = posixpath.basename(urllib.parse.urlsplit(url).path)
-            numero = NUMERO.search(row.get("designacion") or "")
-            if not fichero.lower().endswith(".pdf"):
-                errors.append(f"{where}: la url no es un PDF")
-            elif not numero:
-                errors.append(f"{where}: la designación no lleva «núm. N»")
-            elif numero.group(1) not in re.findall(r"\d+", fichero)[-1:]:
-                errors.append(f"{where}: el fichero «{fichero}» no es el núm. {numero.group(1)}")
+            esperada = designacion_de(row["organismo"], fichero)
+            if esperada is None:
+                errors.append(f"{where}: «{fichero}» no es una serie conocida de «{row['organismo']}»")
+            elif row.get("designacion") != esperada:
+                errors.append(f"{where}: la designación de «{fichero}» es «{esperada}»")
     for field in ("iso", "fecha"):
         value = row.get(field)
         if isinstance(value, str):
