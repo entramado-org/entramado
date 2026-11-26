@@ -33,6 +33,9 @@ INVALIDOS = {
     "documento en dominio ajeno": lambda d: d["documentos"][0].update(url="https://otro.example/a.pdf"),
     "organismo desconocido": lambda d: d["documentos"][0].update(organismo="Otro"),
     "titular vacío": lambda d: d["items"][0].update(titulo=" "),
+    "fecha futura": lambda d: d["items"][0].update(iso="2999-01-01"),
+    "host sin punto": lambda d: d["items"][0].update(url="https://localhost/pieza"),
+    "misma pieza con parámetros": lambda d: d["items"].append(dict(d["items"][0], url=d["items"][0]["url"] + "/?utm=1")),
     "fecha de semana ISO": lambda d: d["items"][0].update(iso="2026-W47-5"),
     "url sin host con ruta": lambda d: d["items"][0].update(url="https:///pieza"),
     "url sin barras": lambda d: d["items"][0].update(url="https:medio.example/pieza"),
@@ -44,6 +47,7 @@ INVALIDOS = {
 # Raw YAML that the two parsers used to read differently (YAML 1.1 vs 1.2).
 YAML_CRUDO = {
     "fecha sin comillas": "items:\n- iso: 2026-11-20\n  titulo: Un titular\n  medio: Medio\n  url: https://medio.example/pieza\n",
+    "clave repetida": "items:\n- iso: '2026-11-20'\n  titulo: Uno\n  titulo: Otro\n  medio: Medio\n  url: https://medio.example/pieza\n",
     "titular booleano": "items:\n- iso: '2026-11-20'\n  titulo: No\n  medio: Medio\n  url: https://medio.example/pieza\n",
 }
 
@@ -57,7 +61,10 @@ def _write(folder: pathlib.Path, mutate=None) -> None:
 
 
 def _python(folder: pathlib.Path) -> bool:
-    return not validar_datos.validar(str(folder / "feed.yaml"), str(folder / "documentos.yaml"))
+    try:
+        return not validar_datos.validar(str(folder / "feed.yaml"), str(folder / "documentos.yaml"))
+    except SystemExit:
+        return False
 
 
 def _web(folder: pathlib.Path) -> bool:
@@ -128,6 +135,10 @@ class Enlaces(unittest.TestCase):
         page = _Page()
         page.feed('<h1>Un titular</h1><time class="d" datetime="2026-10-23T14:10:22+02:00">23 oct</time>')
         self.assertEqual(page.meta["time"][:10], "2026-10-23")
+
+    def test_una_redireccion_dentro_del_mismo_sitio_se_marca(self):
+        pieza = Pieza(status="200", final_url="https://medio.example/pieza-con-otro-slug", h1="Un titular", published="2026-11-20")
+        self.assertIn("ENLACE REDIRIGIDO", enlaces.revisar_item(ITEM, pieza))
 
     def test_un_enlace_caido_se_marca(self):
         self.assertIn("ENLACE 404", enlaces.revisar_item(ITEM, Pieza(status="404")))

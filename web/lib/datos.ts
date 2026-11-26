@@ -36,20 +36,21 @@ const ORGANISMOS: Record<string, string[]> = {
 };
 
 // Misma expresión que `validar_datos.py`: https, host en minúsculas sin credenciales ni puerto, y ruta.
-const URL_HTTPS = /^https:\/\/([a-z0-9](?:[a-z0-9.-]*[a-z0-9])?)\/[^\s\\]*$/;
+const URL_HTTPS = /^https:\/\/([a-z0-9][a-z0-9-]*(?:\.[a-z0-9-]+)+)\/[^\s\\]*$/;
 
 /** Fecha de calendario real (2026-13-01 o 2026-02-30 no lo son). */
 function esFecha(v: string): boolean {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(v)) return false;
   const d = new Date(`${v}T00:00:00Z`);
-  return !Number.isNaN(d.getTime()) && d.toISOString().slice(0, 10) === v;
+  return !Number.isNaN(d.getTime()) && d.toISOString().slice(0, 10) === v && v <= new Date().toISOString().slice(0, 10);
 }
 
 function repetidas(urls: string[], donde: string) {
   const vistas = new Set<string>();
   for (const u of urls) {
-    if (vistas.has(u)) throw new Error(`${donde}: url repetida ${u}`);
-    vistas.add(u);
+    const clave = u.split(/[?#]/)[0].replace(/\/+$/, ""); // la misma pieza con otra grafía
+    if (vistas.has(clave)) throw new Error(`${donde}: url repetida ${u}`);
+    vistas.add(clave);
   }
 }
 

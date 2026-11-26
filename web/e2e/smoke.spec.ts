@@ -190,7 +190,7 @@ test("contacto fija el criterio de entrada y el aviso legal admite las sentencia
   await page.goto("/contribuir");
   await expect(page.locator("main")).toContainText("formalmente investigadas, acusadas o condenadas");
   await expect(page.locator("main")).toContainText("cargos y funcionarios públicos por su actuación oficial");
-  await expect(page.locator("main")).toContainText("no testigos, abogados nombrados como tales, familiares ni motes");
+  await expect(page.locator("main")).toContainText("que no sean ellos mismos investigados, acusados o condenados, ni titulares con motes");
   await expect(page.locator("main")).not.toContainText("que es del caso");
   await page.goto("/aviso-legal");
   await expect(page.locator("main")).toContainText("sentencias ya dictadas");

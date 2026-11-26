@@ -79,8 +79,8 @@ export default function Contribuir() {
           o un documento oficial: envía el enlace. Un ítem nuevo entra en el sitio solo después de comprobar que
           la pieza existe y que el titular es el que muestra su medio. Solo entran piezas de medios, y solo si las
           personas que nombra el titular son personas formalmente investigadas, acusadas o condenadas, o cargos y
-          funcionarios públicos por su actuación oficial; no testigos, abogados nombrados como tales, familiares
-          ni motes.
+          funcionarios públicos por su actuación oficial. No entran titulares que nombren a testigos, abogados o
+          familiares que no sean ellos mismos investigados, acusados o condenados, ni titulares con motes.
         </p>
       </section>
 

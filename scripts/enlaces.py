@@ -21,12 +21,12 @@ from urllib.parse import urlparse
 import yaml
 
 from titulares import UA, Pieza, leer_todas
-from validar_datos import ORGANISMOS
+from validar_datos import ORGANISMOS, clave_url
 
 def revisar_item(item: dict, pieza: Pieza) -> str | None:
     if pieza.status != "200":
         return f"ENLACE {pieza.status}\t{item['url']}"
-    if urlparse(pieza.final_url).hostname != urlparse(item["url"]).hostname:
+    if clave_url(pieza.final_url) != clave_url(item["url"]):
         return f"ENLACE REDIRIGIDO a {pieza.final_url}\t{item['url']}"
     if pieza.h1 != item["titulo"]:
         return f"TITULAR CAMBIADO\t{item['url']}\n\tpublicado: {item['titulo']}\n\ten la web: {pieza.h1 or '(sin titular legible)'}"
