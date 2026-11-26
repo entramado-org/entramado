@@ -41,13 +41,18 @@ INVALIDOS = {
     "fecha futura": lambda d: d["items"][0].update(iso="2999-01-01"),
     "host sin punto": lambda d: d["items"][0].update(url="https://localhost/pieza"),
     "misma pieza con parámetros": lambda d: d["items"].append(dict(d["items"][0], url=d["items"][0]["url"] + "/?utm=1")),
-    "misma pieza con la ruta codificada": lambda d: (d["items"][0].update(url="https://medio.example/España/pieza"), d["items"].append(dict(d["items"][0], url="https://medio.example/Espa%C3%B1a/pieza"))),
+    "misma pieza con y sin www": lambda d: d["items"].append(dict(d["items"][0], url="https://www.medio.example/pieza/")),
     "titular de dos líneas": lambda d: d["items"][0].update(titulo="Un titular\ny texto propio"),
     "titular que enlaza a un PDF adjunto": lambda d: d["items"][0].update(url="https://medio.example/uploads/sentencia.PDF"),
     "titular que enlaza a una imagen AVIF": lambda d: d["items"][0].update(url="https://medio.example/imagenes/portada.avif"),
     "titular que enlaza a un manifiesto": lambda d: d["items"][0].update(url="https://medio.example/site.webmanifest"),
     "titular que enlaza a una imagen con sufijo": lambda d: d["items"][0].update(url="https://medio.example/media/CI5eZyGWoAAjUbi.jpg:large"),
     "titular que enlaza a un fichero comprimido doble": lambda d: d["items"][0].update(url="https://medio.example/datos.tar.gz"),
+    "barra codificada que resuelve a la portada": lambda d: d["items"][0].update(url="https://medio.example/archivo%2Fpieza/.."),
+    "barra codificada tras una imagen": lambda d: d["items"][0].update(url="https://medio.example/foto.jpg%2Fgrande"),
+    "pieza elegida por un parámetro": lambda d: d["items"][0].update(url="https://medio.example/articulo?id=17"),
+    "pieza con fragmento": lambda d: d["items"][0].update(url="https://medio.example/pieza#comentarios"),
+    "tramo de dos puntos": lambda d: d["items"][0].update(url="https://medio.example/a/../pieza"),
     "titular que enlaza a un SVG": lambda d: d["items"][0].update(url="https://medio.example/icon.svg"),
     "titular que enlaza a una imagen": lambda d: d["items"][0].update(url="https://medio.example/img/foto.jpg?w=800"),
     "url de portada": lambda d: d["items"][0].update(url="https://medio.example/"),
@@ -73,7 +78,7 @@ YAML_CRUDO = {
 
 
 # Rules only the Python gate enforces; it runs in `prebuild`, before every build of the site.
-SOLO_PYTHON = {"titular que enlaza a una imagen con sufijo", "titular que enlaza a un fichero comprimido doble", "titular que enlaza a un manifiesto", "titular que enlaza a una imagen AVIF", "titular que enlaza a un SVG", "titular que enlaza a un PDF adjunto", "titular que enlaza a una imagen", "diario de otra serie con el mismo número", "diario de otra legislatura", "documento que enlaza a la portada del organismo", "documento que enlaza a otro número", "documento sin número en su designación", "url de barras que resuelve a la portada", "titular que enlaza a un documento oficial", "titular de dos líneas", "url de portada", "url que resuelve a la portada", "url que resuelve a la portada, codificada", "año cero", "misma pieza con la ruta codificada"}
+SOLO_PYTHON = {"barra codificada que resuelve a la portada", "barra codificada tras una imagen", "pieza elegida por un parámetro", "pieza con fragmento", "tramo de dos puntos", "titular que enlaza a una imagen con sufijo", "titular que enlaza a un fichero comprimido doble", "titular que enlaza a un manifiesto", "titular que enlaza a una imagen AVIF", "titular que enlaza a un SVG", "titular que enlaza a un PDF adjunto", "titular que enlaza a una imagen", "diario de otra serie con el mismo número", "diario de otra legislatura", "documento que enlaza a la portada del organismo", "documento que enlaza a otro número", "documento sin número en su designación", "url de barras que resuelve a la portada", "titular que enlaza a un documento oficial", "titular de dos líneas", "url de portada", "url que resuelve a la portada", "url que resuelve a la portada, codificada", "año cero", "misma pieza con y sin www"}
 
 
 def _write(folder: pathlib.Path, mutate=None) -> None:

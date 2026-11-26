@@ -41,6 +41,9 @@ def designacion_de(organismo: str, fichero: str) -> str | None:
 # A press item links to a page, never to an attached file (a ruling, an image, a spreadsheet):
 # the last path segment has no dot at all, or its only dot is that of a page extension.
 FICHERO = re.compile(r"\.(?!(?:html?|shtml|php|aspx?)$)[^/]*$", re.I)
+# The address of a press piece, as every outlet in the feed writes it: plain path segments, nothing
+# percent-encoded, no "." or ".." segment, no query, no fragment. What the browser opens is what is written.
+PIEZA = re.compile(r"https://[a-z0-9.-]+(?:/[A-Za-z0-9_~-]+(?:\.[A-Za-z0-9_~-]+)*)+/?")
 FECHA = re.compile(r"\d{4}-\d{2}-\d{2}")
 ITEM = {"iso", "titulo", "medio", "url"}
 DOCUMENTO = {"organismo", "designacion", "fecha", "url"}
@@ -103,7 +106,9 @@ def _check(row, allowed: set, where: str, errors: list) -> None:
         errors.append(f"{where}: la url debe ser https y absoluta")
     elif match and not posixpath.normpath(urllib.parse.unquote(urllib.parse.urlsplit(url).path) or "/").strip("/"):
         errors.append(f"{where}: la url es una portada, no una pieza")
-    if "titulo" in row and match and FICHERO.search(posixpath.normpath(urllib.parse.unquote(urllib.parse.urlsplit(url).path))):
+    if "titulo" in row and match and not PIEZA.fullmatch(url):
+        errors.append(f"{where}: la url de una pieza solo lleva tramos de letras, números, guiones y puntos, sin codificar, sin consulta y sin fragmento")
+    elif "titulo" in row and match and FICHERO.search(posixpath.normpath(urllib.parse.unquote(urllib.parse.urlsplit(url).path))):
         errors.append(f"{where}: la url es un fichero adjunto, no una pieza de un medio")
     if "organismo" in row and match:
         hosts = ORGANISMOS.get(row["organismo"])
