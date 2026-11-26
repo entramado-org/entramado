@@ -138,7 +138,8 @@ class EsquemaCerrado(unittest.TestCase):
     def test_un_caracter_que_un_parser_trata_como_salto_y_otro_no_se_rechaza(self):
         # PyYAML corta la línea en U+0085 y el paquete `yaml` de la web no: tras él, uno ve un comentario y el otro texto.
         for nombre, raro in (("NEL", "\u0085"), ("LS", "\u2028"), ("PS", "\u2029"), ("CR", "\r"), ("ZWSP", "\u200b"),
-                             ("BOM", "\ufeff"), ("NUL", "\x00"), ("TAB", "\t")):
+                             ("BOM", "\ufeff"), ("NUL", "\x00"), ("TAB", "\t"), ("CGJ", "\u034f"), ("SHY", "\u00ad"),
+                             ("NBSP", "\u00a0"), ("VS16", "\ufe0f"), ("ACENTO SUELTO", "\u0301"), ("HANGUL FILLER", "\u3164")):
             for fichero in ("feed.yaml", "documentos.yaml"):
                 with self.subTest(nombre, fichero=fichero), tempfile.TemporaryDirectory() as tmp:
                     _write(pathlib.Path(tmp))
@@ -146,6 +147,19 @@ class EsquemaCerrado(unittest.TestCase):
                     ruta.write_text(ruta.read_text(encoding="utf-8").rstrip("\n") + raro + "# anotación\n",
                                     encoding="utf-8", newline="")
                     self.assertFalse(_python(pathlib.Path(tmp)), "python lo acepta")
+
+    def test_una_marca_invisible_dentro_de_un_titular_se_rechaza_literal_y_escapada(self):
+        # U+034F no se ve: el lector leería un número seguido y el escáner, dos trozos.
+        for nombre, titulo in (("literal", "Llamen al 655\u034f443322"), ("escapada", '"Llamen al 655\\u034F443322"'),
+                               ("salto escapado", '"Primera\\nSegunda"')):
+            with self.subTest(nombre), tempfile.TemporaryDirectory() as tmp:
+                _write(pathlib.Path(tmp))
+                ruta = pathlib.Path(tmp) / "feed.yaml"
+                lineas = ruta.read_text(encoding="utf-8").splitlines()
+                i = next(k for k, linea in enumerate(lineas) if "titulo:" in linea)
+                lineas[i] = lineas[i].split("titulo:")[0] + "titulo: " + titulo
+                ruta.write_text("\n".join(lineas) + "\n", encoding="utf-8")
+                self.assertFalse(_python(pathlib.Path(tmp)), "python lo acepta")
 
     def test_los_datos_del_repositorio_son_validos(self):
         self.assertTrue(_python(ROOT / "datos"))

@@ -113,7 +113,7 @@ test("cada fila es fecha · medio · titular enlazado a la pieza, sin más", asy
 test("la portada: qué es, últimos ítems y enlaces a cronología, documentos y contacto", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator("main")).toContainText("No redacta ni afirma nada por su cuenta");
-  await expect(page.getByTestId("item")).toHaveCount(10);
+  await expect(page.getByTestId("item")).toHaveCount(Math.min(10, ITEMS.length));
   for (const href of ["/ultima-hora", "/documentos", "/contribuir"]) {
     await expect(page.locator(`main a[href="${href}"]`).first()).toBeVisible();
   }

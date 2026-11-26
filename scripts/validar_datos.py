@@ -80,14 +80,21 @@ def clave_url(url: str) -> str:
     return f"{host}{path}".rstrip("/").lower()
 
 
-def _raros(texto: str) -> list[str]:
-    """Caracteres que un lector de YAML puede tratar como salto de línea, o que no se ven, y otro no.
+_TIPOGRAFIA = frozenset("‐‑–—‘’‚“”„…‹›′″€")
 
-    El validador (PyYAML) y la web (paquete `yaml`) leen el mismo fichero: solo se admiten caracteres visibles,
-    el espacio y el salto de línea `\\n`. Fuera quedan los de control (U+0085 incluido), los separadores de línea y
-    de párrafo, los de formato invisibles y los no asignados."""
-    return sorted({f"U+{ord(c):04X}" for c in texto
-                   if c != "\n" and (unicodedata.category(c)[0] == "C" or unicodedata.category(c) in ("Zl", "Zp"))})
+
+def _admitido(c: str) -> bool:
+    """Lista cerrada de caracteres de un fichero de datos: los visibles del alfabeto latino y su puntuación.
+
+    Todo lo demás queda fuera sin enumerarlo: controles (U+0085 incluido), separadores de línea, espacios raros,
+    marcas combinables e invisibles (U+034F, U+200B, U+00AD…) y otros alfabetos. Así el validador (PyYAML), la web
+    (paquete `yaml`), el escáner de identificadores y el lector ven el mismo texto."""
+    n = ord(c)
+    return c == " " or 0x21 <= n <= 0x7E or (0xA1 <= n <= 0xFF and n != 0xAD) or 0x100 <= n <= 0x24F or c in _TIPOGRAFIA
+
+
+def _raros(texto: str, salto: bool = True) -> list[str]:
+    return sorted({f"U+{ord(c):04X}" for c in texto if not (_admitido(c) or (salto and c == "\n"))})
 
 
 def _load(path: str, key: str) -> list:
@@ -116,8 +123,10 @@ def _check(row, allowed: set, where: str, errors: list) -> None:
     for field, value in row.items():
         if field in allowed and (not isinstance(value, str) or not value.strip() or value != value.strip()):
             errors.append(f"{where}: «{field}» debe ser texto no vacío y sin espacios en los extremos")
-        elif field in allowed and any(unicodedata.category(char) in ("Cc", "Cf", "Zl", "Zp") for char in value):
-            errors.append(f"{where}: «{field}» lleva saltos de línea o caracteres de control")
+        elif field in allowed and (raros := _raros(value, salto=False)):
+            errors.append(f"{where}: «{field}» lleva saltos de línea o caracteres no admitidos ({', '.join(raros)})")
+        elif field in allowed and unicodedata.normalize("NFC", value) != value:
+            errors.append(f"{where}: «{field}» no está en forma NFC")
     url = row.get("url")
     match = URL_HTTPS.fullmatch(url) if isinstance(url, str) else None
     if isinstance(url, str) and not match:
