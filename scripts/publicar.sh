@@ -18,6 +18,11 @@ unset E2E_BASE_URL
 "$PYTHON" scripts/validar_datos.py datos/feed.yaml datos/documentos.yaml
 # Ningún identificador personal en el árbol, titulares incluidos (solo biblioteca estándar).
 "$PYTHON" pipeline/scripts/pii_tree_scan.py
+# …ni en el texto que la web muestra una vez cargado el YAML (un titular partido en dos líneas se une al mostrarlo).
+texto=$(mktemp -d)
+trap 'rm -rf "$texto"' EXIT
+"$PYTHON" scripts/texto_publicado.py datos/feed.yaml datos/documentos.yaml > "$texto/texto_publicado.txt"
+"$PYTHON" pipeline/scripts/pii_tree_scan.py "$texto/texto_publicado.txt"
 (cd scripts && "$PYTHON" -W error -m unittest discover tests)
 (
   cd web
