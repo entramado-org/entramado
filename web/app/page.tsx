@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, FileText, Landmark, Mail, Newspaper, ShieldAlert } from "lucide-react";
+import { ArrowRight, FileText, Mail, Newspaper, ShieldAlert } from "lucide-react";
 import ItemList from "@/components/ItemList";
 import { ITEMS } from "@/lib/datos";
 
@@ -23,8 +23,7 @@ export default function Landing() {
         <p className="mt-5 max-w-2xl text-lg leading-relaxed text-slate-400">
           El Entramado republica los titulares que los medios han publicado sobre causas judiciales de
           relevancia política en España y enlaza los documentos oficiales en la web del organismo que los emitió.{" "}
-          <span className="text-slate-300">No redacta ni afirma nada por su cuenta, salvo en la sección
-          institucional, que es análisis y opinión propios.</span> Cada titular es el de la pieza enlazada,
+          <span className="text-slate-300">No redacta ni afirma nada por su cuenta.</span> Cada titular es el de la pieza enlazada,
           con su medio y su fecha. Rige la presunción de inocencia.
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
@@ -39,12 +38,6 @@ export default function Landing() {
             className="inline-flex items-center gap-2 rounded-xl glass px-5 py-3 text-slate-200 hover:bg-white/5"
           >
             <FileText className="h-4 w-4" /> Documentos oficiales
-          </Link>
-          <Link
-            href="/institucional"
-            className="inline-flex items-center gap-2 rounded-xl glass px-5 py-3 text-slate-200 hover:bg-white/5"
-          >
-            <Landmark className="h-4 w-4" /> Contexto institucional
           </Link>
           <Link
             href="/contribuir"

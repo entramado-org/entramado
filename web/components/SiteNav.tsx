@@ -4,7 +4,6 @@ import { SITE_NAME } from "@/lib/site";
 const ENLACES = [
   { href: "/ultima-hora", label: "Última hora" },
   { href: "/documentos", label: "Documentos" },
-  { href: "/institucional", label: "Institucional" },
   { href: "/contribuir", label: "Contacto" },
 ];
 
