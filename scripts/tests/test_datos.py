@@ -53,6 +53,9 @@ INVALIDOS = {
     "pieza elegida por un parámetro": lambda d: d["items"][0].update(url="https://medio.example/articulo?id=17"),
     "pieza con fragmento": lambda d: d["items"][0].update(url="https://medio.example/pieza#comentarios"),
     "tramo de dos puntos": lambda d: d["items"][0].update(url="https://medio.example/a/../pieza"),
+    "medio no dado de alta": lambda d: d["items"][0].update(url="https://otro.example/pieza"),
+    "host con una etiqueta de 64 caracteres": lambda d: (d["items"][0].update(url="https://" + "a" * 64 + ".es/pieza"), d.update(medios=["a" * 64 + ".es"])),
+    "lista de medios vacía": lambda d: d.update(medios=[]),
     "titular que enlaza a un SVG": lambda d: d["items"][0].update(url="https://medio.example/icon.svg"),
     "titular que enlaza a una imagen": lambda d: d["items"][0].update(url="https://medio.example/img/foto.jpg?w=800"),
     "url de portada": lambda d: d["items"][0].update(url="https://medio.example/"),
@@ -78,14 +81,15 @@ YAML_CRUDO = {
 
 
 # Rules only the Python gate enforces; it runs in `prebuild`, before every build of the site.
-SOLO_PYTHON = {"barra codificada que resuelve a la portada", "barra codificada tras una imagen", "pieza elegida por un parámetro", "pieza con fragmento", "tramo de dos puntos", "titular que enlaza a una imagen con sufijo", "titular que enlaza a un fichero comprimido doble", "titular que enlaza a un manifiesto", "titular que enlaza a una imagen AVIF", "titular que enlaza a un SVG", "titular que enlaza a un PDF adjunto", "titular que enlaza a una imagen", "diario de otra serie con el mismo número", "diario de otra legislatura", "documento que enlaza a la portada del organismo", "documento que enlaza a otro número", "documento sin número en su designación", "url de barras que resuelve a la portada", "titular que enlaza a un documento oficial", "titular de dos líneas", "url de portada", "url que resuelve a la portada", "url que resuelve a la portada, codificada", "año cero", "misma pieza con y sin www"}
+SOLO_PYTHON = {"medio no dado de alta", "host con una etiqueta de 64 caracteres", "lista de medios vacía", "barra codificada que resuelve a la portada", "barra codificada tras una imagen", "pieza elegida por un parámetro", "pieza con fragmento", "tramo de dos puntos", "titular que enlaza a una imagen con sufijo", "titular que enlaza a un fichero comprimido doble", "titular que enlaza a un manifiesto", "titular que enlaza a una imagen AVIF", "titular que enlaza a un SVG", "titular que enlaza a un PDF adjunto", "titular que enlaza a una imagen", "diario de otra serie con el mismo número", "diario de otra legislatura", "documento que enlaza a la portada del organismo", "documento que enlaza a otro número", "documento sin número en su designación", "url de barras que resuelve a la portada", "titular que enlaza a un documento oficial", "titular de dos líneas", "url de portada", "url que resuelve a la portada", "url que resuelve a la portada, codificada", "año cero", "misma pieza con y sin www"}
 
 
 def _write(folder: pathlib.Path, mutate=None) -> None:
     data = {"items": [dict(ITEM)], "documentos": [dict(DOC)]}
     if mutate:
         mutate(data)
-    for name, key in (("feed", "items"), ("documentos", "documentos")):
+    data.setdefault("medios", ["medio.example", "www.medio.example"])
+    for name, key in (("feed", "items"), ("documentos", "documentos"), ("medios", "medios")):
         (folder / f"{name}.yaml").write_text(yaml.safe_dump({key: data[key]}, allow_unicode=True), encoding="utf-8")
 
 

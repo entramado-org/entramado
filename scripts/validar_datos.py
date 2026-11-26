@@ -5,10 +5,13 @@ fields below, and any other field is an error: that is the gate that keeps our o
 text (summaries, quotes, statuses, entity links) out of the site.
 
     python scripts/validar_datos.py feed.yaml [documentos.yaml]
+
+`medios.yaml`, next to the feed, lists the outlet sites an item may link to.
 """
 from __future__ import annotations
 
 import datetime
+import pathlib
 import posixpath
 import re
 import sys
@@ -44,6 +47,7 @@ FICHERO = re.compile(r"\.(?!(?:html?|shtml|php|aspx?)$)[^/]*$", re.I)
 # The address of a press piece, as every outlet in the feed writes it: plain path segments, nothing
 # percent-encoded, no "." or ".." segment, no query, no fragment. What the browser opens is what is written.
 PIEZA = re.compile(r"https://[a-z0-9.-]+(?:/[A-Za-z0-9_~-]+(?:\.[A-Za-z0-9_~-]+)*)+/?")
+HOST = re.compile(r"(?=.{4,253}$)[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)+")
 FECHA = re.compile(r"\d{4}-\d{2}-\d{2}")
 ITEM = {"iso", "titulo", "medio", "url"}
 DOCUMENTO = {"organismo", "designacion", "fecha", "url"}
@@ -142,6 +146,13 @@ def validar(feed: str, documentos: str | None = None) -> list[str]:
     items = _load(feed, "items")
     if not items:
         errors.append("items: la lista está vacía")
+    medios = _load(str(pathlib.Path(feed).with_name("medios.yaml")), "medios")
+    if not medios or any(not isinstance(host, str) or not HOST.fullmatch(host) for host in medios) or len(set(medios)) != len(medios):
+        errors.append("medios: se espera una lista de hosts distintos, en minúsculas")
+    for index, item in enumerate(items):
+        host = urllib.parse.urlsplit(item["url"]).hostname if isinstance(item, dict) and isinstance(item.get("url"), str) else None
+        if host is not None and host not in medios:
+            errors.append(f"items[{index}]: «{host}» no es un medio dado de alta en medios.yaml")
     for index, item in enumerate(items):
         _check(item, ITEM, f"items[{index}]", errors)
     urls = [clave_url(item["url"]) for item in items if isinstance(item, dict) and isinstance(item.get("url"), str)]
