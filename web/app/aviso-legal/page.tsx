@@ -70,9 +70,9 @@ export default function AvisoLegalPage() {
 
       <Section title="3. Presunción de inocencia">
         <p>
-          Algunas de las personas mencionadas en los titulares están investigadas, imputadas, procesadas o
-          acusadas en procedimientos <span className="text-slate-300">en curso</span>, y otros titulares informan
-          de sentencias ya dictadas, que pueden no ser firmes. Que alguien aparezca en
+          Los titulares enlazados informan, según cada medio y en su fecha, de investigaciones, imputaciones y
+          acusaciones, y también de sentencias ya dictadas, que pueden no ser firmes. La situación de una
+          persona puede haber cambiado desde que se publicó la pieza. Que alguien aparezca en
           un titular <span className="text-slate-200">no significa que sea culpable</span>: rige plenamente la
           presunción de inocencia hasta que exista sentencia firme. Una imputación o una acusación no son una
           condena, y el titular de un medio no es una declaración de este sitio.

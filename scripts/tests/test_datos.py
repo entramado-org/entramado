@@ -40,6 +40,8 @@ INVALIDOS = {
     "titular de dos líneas": lambda d: d["items"][0].update(titulo="Un titular\ny texto propio"),
     "url de portada": lambda d: d["items"][0].update(url="https://medio.example/"),
     "url que resuelve a la portada": lambda d: d["items"][0].update(url="https://medio.example/hemeroteca/.."),
+    "url de barras que resuelve a la portada": lambda d: d["items"][0].update(url="https://medio.example//.."),
+    "titular que enlaza a un documento oficial": lambda d: d["items"][0].update(url=d["documentos"][0]["url"]),
     "url que resuelve a la portada, codificada": lambda d: d["items"][0].update(url="https://medio.example/hemeroteca/%2E%2E"),
     "año cero": lambda d: d["items"][0].update(iso="0000-01-01"),
     "fecha de semana ISO": lambda d: d["items"][0].update(iso="2026-W47-5"),
@@ -59,7 +61,7 @@ YAML_CRUDO = {
 
 
 # Rules only the Python gate enforces; it runs in `prebuild`, before every build of the site.
-SOLO_PYTHON = {"titular de dos líneas", "url de portada", "url que resuelve a la portada", "url que resuelve a la portada, codificada", "año cero", "misma pieza con la ruta codificada"}
+SOLO_PYTHON = {"url de barras que resuelve a la portada", "titular que enlaza a un documento oficial", "titular de dos líneas", "url de portada", "url que resuelve a la portada", "url que resuelve a la portada, codificada", "año cero", "misma pieza con la ruta codificada"}
 
 
 def _write(folder: pathlib.Path, mutate=None) -> None:

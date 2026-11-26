@@ -79,7 +79,7 @@ def _check(row, allowed: set, where: str, errors: list) -> None:
     match = URL_HTTPS.fullmatch(url) if isinstance(url, str) else None
     if isinstance(url, str) and not match:
         errors.append(f"{where}: la url debe ser https y absoluta")
-    elif match and posixpath.normpath(urllib.parse.unquote(urllib.parse.urlsplit(url).path) or "/") == "/":
+    elif match and not posixpath.normpath(urllib.parse.unquote(urllib.parse.urlsplit(url).path) or "/").strip("/"):
         errors.append(f"{where}: la url es una portada, no una pieza")
     if "organismo" in row and match:
         hosts = ORGANISMOS.get(row["organismo"])
@@ -120,6 +120,8 @@ def validar(feed: str, documentos: str | None = None) -> list[str]:
         doc_urls = [clave_url(document["url"]) for document in documents if isinstance(document, dict) and isinstance(document.get("url"), str)]
         for url in sorted({url for url in doc_urls if doc_urls.count(url) > 1}):
             errors.append(f"documentos: url repetida {url}")
+        for url in sorted(set(urls) & set(doc_urls)):
+            errors.append(f"items: {url} es un documento oficial, no una pieza de un medio")
     return errors
 
 
