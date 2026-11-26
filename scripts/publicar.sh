@@ -29,6 +29,8 @@ trap 'rm -rf "$texto"' EXIT
   rm -rf .next out
   npm run build
   npx tsc --noEmit
+  # Lo que se sube es una lista cerrada de ficheros: nada suelto en web/public ni en web/out.
+  "$PYTHON" ../scripts/salida_cerrada.py public out
   npx playwright test
 )
 if [ "${1:-}" = "--sin-desplegar" ]; then
