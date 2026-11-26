@@ -7,6 +7,7 @@ falla si `web/public` o `web/out` contienen algo fuera de lo esperado.
 
     python3 scripts/salida_cerrada.py web/public web/out
 """
+import hashlib
 import os
 import re
 import sys
@@ -23,20 +24,46 @@ CON_NOMBRE = {"_headers", "icon.svg", "opengraph-image.png", "robots.txt", "site
 NEXT = re.compile(r"_next/[A-Za-z0-9_./~$-]+\.(?:js|css|png|svg|woff2)")
 
 
-def ficheros(base):
-    for carpeta, _, nombres in os.walk(base):
-        for nombre in nombres:
-            yield os.path.relpath(os.path.join(carpeta, nombre), base).replace(os.sep, "/")
+# Los dos recursos gráficos, por su contenido: ningún escáner lee una imagen, así que cambiarla es un cambio
+# deliberado que también cambia esta huella (SHA-256).
+GRAFICOS = {
+    "87339eee09ff15984cabf5415a0006c4385550c9e580caf77930e558cfe42bf6",  # opengraph-image.png
+    "19d4769ad46ca3dd94454529b1043e49f6dde0c49424786c4c12fc9879dfa042",  # icon.svg
+}
+
+
+def huella(ruta):
+    with open(ruta, "rb") as f:
+        return hashlib.sha256(f.read()).hexdigest()
+
+
+def entradas(base):
+    """(ruta relativa, es_enlace) de todo lo que cuelga de `base`, sin seguir enlaces simbólicos."""
+    for carpeta, carpetas, nombres in os.walk(base, followlinks=False):
+        for nombre in carpetas + nombres:
+            ruta = os.path.join(carpeta, nombre)
+            if os.path.islink(ruta) or not os.path.isdir(ruta):
+                yield os.path.relpath(ruta, base).replace(os.sep, "/"), os.path.islink(ruta)
 
 
 def problemas(public, out):
     base = os.path.dirname(os.path.abspath(public))
-    malos = [f"web/static: {f}" for f in sorted(ficheros(os.path.join(base, "static")))]
-    malos += [f"web/public: {f}" for f in sorted(ficheros(public)) if f not in PUBLIC]
-    for f in sorted(ficheros(out)):
-        if f in CON_NOMBRE or RAIZ.fullmatch(f) or NEXT.fullmatch(f):
-            continue
-        malos.append(f"web/out: {f}")
+    static = os.path.join(base, "static")
+    malos = []
+    if os.path.lexists(static):
+        malos.append("web/static: no debe existir")
+    # web/public: exactamente un fichero regular, `_headers`. Ni carpetas ni enlaces.
+    for nombre in sorted(os.listdir(public)):
+        ruta = os.path.join(public, nombre)
+        if nombre not in PUBLIC or os.path.islink(ruta) or not os.path.isfile(ruta):
+            malos.append(f"web/public: {nombre}")
+    for f, enlace in sorted(entradas(out)):
+        if enlace:
+            malos.append(f"web/out: {f} (enlace simbólico)")
+        elif not (f in CON_NOMBRE or RAIZ.fullmatch(f) or NEXT.fullmatch(f)):
+            malos.append(f"web/out: {f}")
+        elif f.endswith((".png", ".svg")) and huella(os.path.join(out, f)) not in GRAFICOS:
+            malos.append(f"web/out: {f} (imagen distinta de la aprobada)")
     return malos
 
 

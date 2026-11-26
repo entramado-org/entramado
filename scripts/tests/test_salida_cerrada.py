@@ -1,8 +1,10 @@
 """Un fichero no previsto en web/public o en web/out impide publicar (spec 077)."""
+import hashlib
 import os
 import sys
 import tempfile
 import unittest
+from unittest import mock
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.dirname(AQUI))
@@ -22,7 +24,17 @@ class SalidaCerradaTest(unittest.TestCase):
             for ruta in rutas:
                 destino = os.path.join(d.name, base, ruta)
                 os.makedirs(os.path.dirname(destino), exist_ok=True)
-                open(destino, "w").close()
+                with open(destino, "w") as f:
+                    f.write(ruta)
+        self.d = d.name
+        parche = mock.patch.object(salida_cerrada, "GRAFICOS", {hashlib.sha256(n.encode()).hexdigest()
+                                                                 for n in ("icon.svg", "opengraph-image.png")})
+        parche.start()
+        self.addCleanup(parche.stop)
+        return self._problemas()
+
+    def _problemas(self):
+        d = type("D", (), {"name": self.d})
         return salida_cerrada.problemas(os.path.join(d.name, "public"), os.path.join(d.name, "out"))
 
     def test_la_salida_prevista_pasa(self):
@@ -41,13 +53,33 @@ class SalidaCerradaTest(unittest.TestCase):
 
 
     def test_la_carpeta_static_del_proyecto_se_rechaza(self):
-        d = tempfile.TemporaryDirectory()
-        self.addCleanup(d.cleanup)
-        for carpeta in ("public", "out", "static"):
-            os.makedirs(os.path.join(d.name, carpeta))
-        open(os.path.join(d.name, "static", "__next._full.txt"), "w").close()
-        self.assertEqual(salida_cerrada.problemas(os.path.join(d.name, "public"), os.path.join(d.name, "out")),
-                         ["web/static: __next._full.txt"])
+        self.arbol(["_headers"], BUENOS)
+        os.makedirs(os.path.join(self.d, "static"))
+        self.assertIn("web/static: no debe existir", self._problemas())
+
+    def test_una_imagen_con_el_mismo_nombre_y_otros_bytes_se_rechaza(self):
+        self.arbol(["_headers"], BUENOS)
+        with open(os.path.join(self.d, "out", "opengraph-image.png"), "w") as f:
+            f.write("otra imagen")
+        self.assertEqual(self._problemas(), ["web/out: opengraph-image.png (imagen distinta de la aprobada)"])
+
+    def test_una_imagen_generada_en_next_con_otros_bytes_se_rechaza(self):
+        self.assertEqual(self.arbol(["_headers"], BUENOS + ["_next/static/media/captura.png"]),
+                         ["web/out: _next/static/media/captura.png (imagen distinta de la aprobada)"])
+
+    def test_un_enlace_a_un_directorio_en_public_se_rechaza(self):
+        self.arbol(["_headers"], BUENOS)
+        fuera = os.path.join(self.d, "fuera", "ultima-hora")
+        os.makedirs(fuera)
+        open(os.path.join(fuera, "__next.copia.txt"), "w").close()
+        os.symlink(fuera, os.path.join(self.d, "public", "ultima-hora"))
+        self.assertEqual(self._problemas(), ["web/public: ultima-hora"])
+
+    def test_una_carpeta_o_un_enlace_en_public_o_en_out_se_rechazan(self):
+        self.arbol(["_headers"], BUENOS)
+        os.makedirs(os.path.join(self.d, "public", "ultima-hora"))
+        os.symlink(os.path.join(self.d, "out", "index.html"), os.path.join(self.d, "out", "contribuir.html"))
+        self.assertEqual(self._problemas(), ["web/public: ultima-hora", "web/out: contribuir.html (enlace simbólico)"])
 
 
 if __name__ == "__main__":
