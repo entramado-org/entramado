@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { expect, test, type Page } from "@playwright/test";
 import { parse } from "yaml";
@@ -11,7 +11,7 @@ const ITEMS = leer("feed.yaml", "items") as { iso: string; titulo: string; medio
 const MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
 const DOCUMENTOS = leer("documentos.yaml", "documentos") as { url: string }[];
 
-const PAGINAS = ["/", "/ultima-hora", "/documentos", "/contribuir", "/aviso-legal", "/institucional"];
+const PAGINAS = ["/", "/ultima-hora", "/documentos", "/contribuir", "/aviso-legal"];
 const RETIRADAS = [
   "/explore",
   "/entidad/x",
@@ -23,6 +23,7 @@ const RETIRADAS = [
   "/conectar",
   "/caso",
   "/caso/caso-leire",
+  "/institucional",
   "/api/ultima-hora",
   "/mcp",
 ];
@@ -109,11 +110,11 @@ test("cada fila es fecha · medio · titular enlazado a la pieza, sin más", asy
   });
 });
 
-test("la portada: qué es, últimos ítems y enlaces a cronología, documentos, institucional y contacto", async ({ page }) => {
+test("la portada: qué es, últimos ítems y enlaces a cronología, documentos y contacto", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator("main")).toContainText("No redacta ni afirma nada por su cuenta");
   await expect(page.getByTestId("item")).toHaveCount(10);
-  for (const href of ["/ultima-hora", "/documentos", "/institucional", "/contribuir"]) {
+  for (const href of ["/ultima-hora", "/documentos", "/contribuir"]) {
     await expect(page.locator(`main a[href="${href}"]`).first()).toBeVisible();
   }
 });
@@ -134,29 +135,24 @@ test("ninguna página enlaza a /caso/ ni habla de página de caso", async ({ pag
   }
 });
 
-test("«no redacta ni afirma» nunca aparece sin la excepción de la sección institucional", async ({ page }) => {
-  const FRASE = /no redacta ni afirma/gi;
-  let apariciones = 0;
+test("«institucional» no aparece en ninguna página servida, metas, JSON-LD y sitemap incluidos", async ({ page, request }) => {
   for (const ruta of PAGINAS) {
     await page.goto(ruta);
-    const textos = await page.evaluate(() => {
-      const meta = (sel: string) => document.querySelector(sel)?.getAttribute("content") ?? "";
-      return [
-        document.body.innerText,
-        meta('meta[name="description"]'),
-        meta('meta[property="og:description"]'),
-        ...[...document.querySelectorAll('script[type="application/ld+json"]')].map((n) => n.textContent ?? ""),
-      ];
-    });
-    for (const texto of textos) {
-      for (const m of texto.matchAll(FRASE)) {
-        apariciones++;
-        const cola = texto.slice(m.index!, m.index! + 200).replace(/\s+/g, " ");
-        expect(cola, `${ruta}: «${cola}»`).toMatch(/salvo en la sección institucional, que es análisis y opinión propios/i);
-      }
-    }
+    expect(await page.content(), ruta).not.toMatch(/institucional/i);
   }
-  expect(apariciones).toBeGreaterThan(0); // la comprobación no es vacía
+  for (const ruta of ["/sitemap.xml", "/robots.txt", "/404.html"]) {
+    expect(await (await request.get(ruta)).text(), ruta).not.toMatch(/institucional/i);
+  }
+});
+
+test("el sitio servido son exactamente las rutas HTML esperadas (más el 404)", async () => {
+  test.skip(!!process.env.E2E_BASE_URL, "solo con out/ en disco");
+  const out = path.join(__dirname, "..", "out");
+  const html = (readdirSync(out, { recursive: true }) as string[])
+    .filter((f) => f.endsWith(".html") && !f.startsWith("_next"))
+    .sort();
+  // _not-found.html es el mismo 404 que genera Next.
+  expect(html).toEqual(["404.html", "_not-found.html", "aviso-legal.html", "contribuir.html", "documentos.html", "index.html", "ultima-hora.html"]);
 });
 
 test("/documentos lista cada documento con enlace al organismo", async ({ page }) => {
@@ -219,61 +215,4 @@ test("el alcance se describe sin «los casos que rodean al Gobierno» y el JSON-
     expect(head, ruta).not.toMatch(/rodean al Gobierno/i);
     expect(head, ruta).not.toMatch(/"publisher"|"Organization"/);
   }
-});
-
-/* /institucional: lista cerrada de personas físicas y de vocabulario. Las únicas personas que pueden
- * aparecer son las de PERSONAS_PERMITIDAS; cualquier otra secuencia de palabras con mayúscula inicial
- * («Nombre Apellido») debe estar hecha solo de palabras de VOCABULARIO (instituciones, normas, obras y
- * medios que cita la página). Si se añade texto con una palabra nueva, el test falla y obliga a
- * revisar si es una persona antes de ampliar el vocabulario. */
-const PERSONAS_PERMITIDAS = [
-  "Patrick Breyer", // exeurodiputado, citado como fuente de una filtración sobre Chat Control
-  "Conde-Ruiz, García, Puch y Ruiz", // autores del estudio de Fedea que cita la sección de mercado laboral
-];
-const VOCABULARIO = new Set(
-  `AIReF Activa Administración Ageing Agencia Agenda Al Anual Art Asuntos BCE Back Banco Better Boletines Boletín
-Bruselas Buen CCAA CE CGPJ CSAR CTBG Cada Central Chat Comercio Comisión Confederación Conflictos Congreso Consejo
-Constitucional Constitución Continua Control Crecimiento Criminal Cuentas Cuerpos Cultura Cámara Dato De Decreto
-Derecho Digital EU El Electoral Empleados Employment En Encuesta Enjuiciamiento Entes España Española Estado Estados
-Estadística Estadístico Estatal Estatuto Eurocámara Europa Europe Europea European Europeo Europeos Eurostat Fiscal
-Fiscalía Fuerzas Función Fundación GRECO Gasto General Gobierno Grupo Hacienda Hay Hiperregulación IGAE INE IPC IRPF
-Identity Inclusión Indicadores Infobae Informe Intereses Interior Inventario Investigate Judicial Justicia LOPJ LOREG
-La Ley Libre Los M Maldita Media Migraciones Ministerio Ministros Más OCDE Objective Observatorio Oficial Oficina
-Orgánica Orgánico Outlook PIB Parados Parlamento Parliament Penal Pleno Población Poder Practices Precios Presidente
-Páginas Pública Público RDL RPT Real Reales Recaudación Reglas Regulation Report Resoluciones Rights Roll Régimen Salto
-Sección Sector Security Seguridad Según Social Suelo Suiza Supremo Sí Síntesis Taxing The Transferencias Transparencia
-Tratado Tribunal Tributaria Tu UE Un Unión Urbana Vivienda Vozpópuli Wages Wallet Web Will Índice`.split(/\s+/),
-);
-const PALABRA = "[A-ZÁÉÍÓÚÑ][\\wáéíóúñü]*(?:-[A-ZÁÉÍÓÚÑ][\\wáéíóúñü]*)?";
-const SECUENCIA = new RegExp(`${PALABRA}(?:(?:\\s+(?:de la|del|de|von der|von|van der|van|der|y|e))?\\s+${PALABRA})+`, "g");
-
-/** Palabras con mayúscula, dentro de secuencias de dos o más, que no están en el vocabulario. */
-function palabrasDesconocidas(texto: string): string[] {
-  let limpio = texto;
-  for (const p of PERSONAS_PERMITIDAS) limpio = limpio.split(p).join(" ");
-  const fuera = new Set<string>();
-  for (const m of limpio.matchAll(SECUENCIA)) {
-    for (const palabra of m[0].split(/[\s-]+/)) {
-      if (/^[A-ZÁÉÍÓÚÑ]/.test(palabra) && !VOCABULARIO.has(palabra)) fuera.add(palabra);
-    }
-  }
-  return [...fuera].sort();
-}
-
-test("/institucional solo nombra a las personas permitidas y no trata causas ni sus detalles", async ({ page }) => {
-  await page.goto("/institucional");
-  const texto = await page.locator("main").evaluate((m) => {
-    const w = document.createTreeWalker(m, NodeFilter.SHOW_TEXT);
-    const t: string[] = [];
-    for (let n = w.nextNode(); n; n = w.nextNode()) t.push(n.textContent ?? "");
-    return t.join(" ");
-  });
-  expect(texto).not.toMatch(/pfizer|qatar|\bsms\b|soborn|imputa|prisión provisional|amnist|junts|procés|carnet|chistera|hermano del presidente/i);
-  expect(palabrasDesconocidas(texto)).toEqual([]);
-});
-
-test("el detector de nombres de /institucional caza un nombre y deja pasar a las personas permitidas", () => {
-  expect(palabrasDesconocidas("según Pedro Sánchez y Patrick Breyer (Conde-Ruiz, García, Puch y Ruiz, 2023)")).toEqual(["Pedro", "Sánchez"]);
-  expect(palabrasDesconocidas("Ursula von der Leyen presidió el Consejo de Ministros")).toEqual(["Leyen", "Ursula"]);
-  expect(palabrasDesconocidas("el Banco de España y la Comisión Europea")).toEqual([]);
 });
