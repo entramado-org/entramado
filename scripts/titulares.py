@@ -26,6 +26,8 @@ UA_CURL = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 
 PUBLISHED = ("article:published_time", "og:article:published_time", "datePublished", "DC.date.issued", "publish-date", "date")
 ISO_DATE = re.compile(r"(\d{4}-\d{2}-\d{2})")
 VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "source", "track", "wbr"}
+OCULTO = re.compile(r"display\s*:\s*none|visibility\s*:\s*hidden", re.I)
+ACTUALIZADA = re.compile(r"modif|updat|actualiz")
 JSON_LD_DATE = re.compile(r'"datePublished"\s*:\s*"(\d{4}-\d{2}-\d{2})')
 
 
@@ -63,18 +65,23 @@ class _Page(html.parser.HTMLParser):
             if tag == self._hidden[0]:
                 self._hidden.append(tag)
             return
-        if tag not in VOID and (tag == "template" or "hidden" in names or dict(attrs).get("aria-hidden") == "true"):
+        fields = {name: value or "" for name, value in attrs}
+        oculto = "hidden" in names or fields.get("aria-hidden") == "true" or OCULTO.search(fields.get("style", ""))
+        if tag not in VOID and (tag == "template" or oculto):
             self._hidden.append(tag)
             return
         if tag == "article":
             self._articles += 1
         if tag == "meta":
-            fields = {name: value or "" for name, value in attrs}
             key = fields.get("property") or fields.get("name") or fields.get("itemprop")
             if key and "content" in fields:
                 self.meta.setdefault(key, fields["content"])
-        elif tag == "time" and "time" not in self.meta and "modif" not in (dict(attrs).get("itemprop") or "").lower():
-            self.meta["time"] = dict(attrs).get("datetime") or ""
+        elif tag == "time":
+            marca = f"{fields.get('itemprop', '')} {fields.get('class', '')}".lower()
+            if "datepublished" in marca:
+                self.meta.setdefault("datePublished", fields.get("datetime", ""))
+            elif "time" not in self.meta and not ACTUALIZADA.search(marca):
+                self.meta["time"] = fields.get("datetime", "")
         elif tag in ("h1", "title") and self._open is None:
             self._open, self._buffer = tag, []
 

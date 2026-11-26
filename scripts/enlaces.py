@@ -1,5 +1,10 @@
 """Periodic link check of the published data (spec 077).
 
+It is an aid for the person who runs the vigía cycle, not a gate: it reads the
+page as served (no JavaScript, no stylesheets), so text an outlet hides with a
+CSS class, or changes only for browsers, is outside its reach. What it reports
+is reviewed by hand; what it does not report is not thereby verified.
+
 Lists every item whose link no longer answers or whose visible headline on the
 outlet's site is no longer exactly the one we publish, and every official
 document whose link no longer serves a PDF from its issuing body. It reports; it
@@ -22,8 +27,8 @@ import yaml
 from titulares import UA, Pieza, leer_todas
 
 def _sin_fragmento(url: str) -> str:
-    """Query kept: it can select another piece. Only the fragment and a trailing slash are noise."""
-    return url.split("#")[0].rstrip("/")
+    """Only the fragment is noise: path and query can each select another piece."""
+    return url.split("#")[0]
 
 
 def revisar_item(item: dict, pieza: Pieza) -> str | None:
@@ -42,6 +47,16 @@ def revisar_item(item: dict, pieza: Pieza) -> str | None:
     return None
 
 
+def _cola(url: str) -> bytes:
+    """Last bytes of the resource: a complete PDF ends with its %%EOF marker."""
+    request = urllib.request.Request(url, headers={"User-Agent": UA, "Range": "bytes=-2048"})
+    try:
+        with urllib.request.urlopen(request, timeout=25) as response:
+            return response.read()[-2048:]
+    except Exception:
+        return b""
+
+
 def revisar_documento(document: dict) -> str | None:
     """The link must still serve a PDF from the issuing body's own host."""
     request = urllib.request.Request(document["url"], headers={"User-Agent": UA, "Range": "bytes=0-1023"})
@@ -58,7 +73,7 @@ def revisar_documento(document: dict) -> str | None:
         return f"DOCUMENTO {status}\t{document['url']}"
     if final != document["url"]:
         return f"DOCUMENTO REDIRIGIDO a {final}\t{document['url']}"
-    if not head.startswith(b"%PDF"):
+    if not head.startswith(b"%PDF") or b"%%EOF" not in _cola(document["url"]):
         return f"DOCUMENTO YA NO ES PDF\t{document['url']}"
     return None
 

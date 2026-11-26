@@ -76,10 +76,10 @@ export default function Contribuir() {
         <p className="text-sm leading-relaxed text-slate-400">
           También puedes avisar de un enlace roto o de un titular que ha cambiado, o proponer una pieza de prensa
           o un documento oficial: envía el enlace. Un ítem nuevo entra en el sitio solo después de comprobar que
-          la pieza existe y que el titular es el que muestra su medio. Solo entran piezas de medios. La selección es
-          restrictiva: se dejan fuera los titulares con motes y los que nombran a personas ajenas al procedimiento,
-          como testigos o familiares. Que un titular figure aquí no dice nada, por parte de este sitio, sobre la
-          situación procesal de nadie: lo que dice es lo que publicó su medio.
+          la pieza existe y que el titular es el que muestra su medio. Solo entran piezas de medios, y no todas: la
+          selección es restrictiva y deja fuera, entre otros, los titulares con motes. Que un titular figure aquí no
+          dice nada, por parte de este sitio, sobre la situación procesal de nadie: lo que dice es lo que publicó
+          su medio.
         </p>
       </section>
 

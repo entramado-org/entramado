@@ -79,7 +79,7 @@ def _check(row, allowed: set, where: str, errors: list) -> None:
     match = URL_HTTPS.fullmatch(url) if isinstance(url, str) else None
     if isinstance(url, str) and not match:
         errors.append(f"{where}: la url debe ser https y absoluta")
-    elif match and urllib.parse.urlsplit(url).path in ("", "/"):
+    elif match and posixpath.normpath(urllib.parse.unquote(urllib.parse.urlsplit(url).path) or "/") == "/":
         errors.append(f"{where}: la url es una portada, no una pieza")
     if "organismo" in row and match:
         hosts = ORGANISMOS.get(row["organismo"])

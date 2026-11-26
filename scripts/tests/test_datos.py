@@ -39,6 +39,8 @@ INVALIDOS = {
     "misma pieza con la ruta codificada": lambda d: (d["items"][0].update(url="https://medio.example/España/pieza"), d["items"].append(dict(d["items"][0], url="https://medio.example/Espa%C3%B1a/pieza"))),
     "titular de dos líneas": lambda d: d["items"][0].update(titulo="Un titular\ny texto propio"),
     "url de portada": lambda d: d["items"][0].update(url="https://medio.example/"),
+    "url que resuelve a la portada": lambda d: d["items"][0].update(url="https://medio.example/hemeroteca/.."),
+    "url que resuelve a la portada, codificada": lambda d: d["items"][0].update(url="https://medio.example/hemeroteca/%2E%2E"),
     "año cero": lambda d: d["items"][0].update(iso="0000-01-01"),
     "fecha de semana ISO": lambda d: d["items"][0].update(iso="2026-W47-5"),
     "url sin host con ruta": lambda d: d["items"][0].update(url="https:///pieza"),
@@ -57,7 +59,7 @@ YAML_CRUDO = {
 
 
 # Rules only the Python gate enforces; it runs in `prebuild`, before every build of the site.
-SOLO_PYTHON = {"titular de dos líneas", "url de portada", "año cero", "misma pieza con la ruta codificada"}
+SOLO_PYTHON = {"titular de dos líneas", "url de portada", "url que resuelve a la portada", "url que resuelve a la portada, codificada", "año cero", "misma pieza con la ruta codificada"}
 
 
 def _write(folder: pathlib.Path, mutate=None) -> None:
@@ -157,6 +159,22 @@ class Enlaces(unittest.TestCase):
                 page = _Page()
                 page.feed(oculto + "<article><h1>Titular</h1></article>")
                 self.assertEqual(page.article_h1s, ["Titular"])
+
+    def test_un_nombre_que_el_medio_oculta_dentro_del_h1_no_se_lee(self):
+        page = _Page()
+        page.feed('<h1>Se investiga a A<span style="display:none"> y a B</span></h1>')
+        self.assertEqual(page.h1s, ["Se investiga a A"])
+
+    def test_la_fecha_de_publicacion_gana_a_la_de_actualizacion(self):
+        page = _Page()
+        page.feed('<time class="updated" datetime="2026-11-20">20</time><time itemprop="datePublished" datetime="2026-11-18">18</time>')
+        self.assertEqual(page.meta.get("datePublished"), "2026-11-18")
+        self.assertNotIn("time", page.meta)
+
+    def test_una_redireccion_que_cambia_el_valor_de_la_consulta_se_marca(self):
+        item = dict(ITEM, url="https://medio.example/pieza?path=/noticia")
+        pieza = Pieza(status="200", final_url="https://medio.example/pieza?path=/noticia/", h1="Un titular", published="2026-11-20")
+        self.assertIn("ENLACE REDIRIGIDO", enlaces.revisar_item(item, pieza))
 
     def test_el_h1_del_articulo_gana_al_del_logo(self):
         page = _Page()
