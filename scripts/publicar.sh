@@ -3,6 +3,7 @@
 # Nunca despliega un `web/out` que no acabe de construirse a partir de los datos actuales.
 #
 #   CLOUDFLARE_API_TOKEN=… CLOUDFLARE_ACCOUNT_ID=… scripts/publicar.sh [--sin-desplegar]
+# Antes: `cd web && npm ci`.
 #
 # PYTHON apunta a un Python con PyYAML (por defecto, python3).
 # SOLO_PUNTA_DE=<owner/repo> (en el CI): justo antes de desplegar se relee la punta de main de ese repositorio y
@@ -15,6 +16,12 @@ export PYTHON="${PYTHON:-python3}"
 export DATOS_DIR="$PWD/datos"
 unset E2E_BASE_URL
 
+# Los datos son ficheros regulares de este checkout: ningún enlace puede dar a cada lector un contenido distinto.
+for dato in datos datos/feed.yaml datos/documentos.yaml datos/medios.yaml; do
+  [ ! -L "$dato" ] || { echo "publicar: $dato es un enlace simbólico" >&2; exit 1; }
+done
+[ -d datos ] && [ -f datos/feed.yaml ] && [ -f datos/documentos.yaml ] && [ -f datos/medios.yaml ] \
+  || { echo "publicar: faltan los ficheros de datos" >&2; exit 1; }
 "$PYTHON" scripts/validar_datos.py datos/feed.yaml datos/documentos.yaml
 # Ningún identificador personal en el árbol, titulares incluidos (solo biblioteca estándar).
 "$PYTHON" pipeline/scripts/pii_tree_scan.py
@@ -50,5 +57,14 @@ if [ -n "${SOLO_PUNTA_DE:-}" ]; then
     exit 0
   fi
 fi
-# Configuración y carpeta fijadas: se sube exactamente el `web/out` comprobado arriba.
-npx --yes wrangler@4.129.0 deploy --config ./wrangler.jsonc --assets ./web/out
+# Se despliega desde una carpeta vacía, con una copia del `web/out` comprobado arriba y de la configuración: nada
+# de la raíz del checkout (un `.env`, un `.npmrc`, otro `wrangler.*`) llega a Wrangler. El ejecutable es el del
+# lockfile de `web/` (versión e integridad fijadas), instalado antes y sin credenciales.
+raiz=$PWD
+limpio=$(mktemp -d)
+trap 'rm -rf "$texto" "$limpio"' EXIT
+mkdir "$limpio/web"
+cp -R web/out "$limpio/web/out"
+cp wrangler.jsonc "$limpio/wrangler.jsonc"
+cd "$limpio"
+"$raiz/web/node_modules/.bin/wrangler" deploy --config ./wrangler.jsonc --assets ./web/out
