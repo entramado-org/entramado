@@ -190,12 +190,15 @@ test("el sitemap solo lista páginas que existen y robots no bloquea nada", asyn
 
 test("contacto fija el criterio de entrada y el aviso legal admite las sentencias ya dictadas", async ({ page }) => {
   await page.goto("/contribuir");
-  await expect(page.locator("main")).toContainText("formalmente investigadas, acusadas o condenadas");
-  await expect(page.locator("main")).toContainText("cargos y funcionarios públicos por su actuación oficial");
+  // El sitio no describe a quién nombra ni afirma el estado procesal de nadie.
+  await expect(page.locator("main")).not.toContainText(/investigad[ao]s, acusad[ao]s o condenad[ao]s/);
+  await expect(page.locator("main")).toContainText("la selección es restrictiva");
   await expect(page.locator("main")).toContainText("no dice nada, por parte de este sitio, sobre la situación procesal de nadie");
   await expect(page.locator("main")).not.toContainText("que es del caso");
   await page.goto("/aviso-legal");
   await expect(page.locator("main")).toContainText("sentencias ya dictadas");
+  await expect(page.locator("main")).toContainText("según cada medio y en su fecha");
+  await expect(page.locator("main")).not.toContainText(/están investigadas|en procedimientos en curso/);
   await expect(page.locator("main")).toContainText("cuyo titular se muestra");
 });
 
