@@ -60,13 +60,11 @@ export default function AvisoLegalPage() {
           causas judiciales de relevancia política en España y enlaza los{" "}
           <span className="text-slate-300">documentos oficiales</span> en la web del organismo que los emitió.
           No es un medio de comunicación, ni un registro oficial, ni una resolución judicial.{" "}
-          <span className="text-slate-300">No redacta ni afirma nada por su cuenta, salvo en la sección
-          institucional, que es análisis y opinión propios.</span> Cada ítem muestra el titular que tiene la
+          <span className="text-slate-300">No redacta ni afirma nada por su cuenta.</span> Cada ítem muestra el titular que tiene la
           pieza enlazada, su medio y su fecha, y un enlace a ella.
         </p>
         <p>
-          El sitio no aloja copia del contenido de ninguna pieza ni de ningún documento: solo el titular y el enlace. Lo que dice la sección
-          institucional es análisis y opinión propios, y como tal debe leerse.
+          El sitio no aloja copia del contenido de ninguna pieza ni de ningún documento: solo el titular y el enlace.
         </p>
       </Section>
 
@@ -165,8 +163,7 @@ export default function AvisoLegalPage() {
           <ShieldAlert className="h-5 w-5 shrink-0 text-amber-400" />
           <p className="text-sm leading-relaxed text-slate-400">
             <span className="font-medium text-slate-200">En una línea.</span> Esto republica titulares de medios
-            y enlaza documentos oficiales sobre procedimientos judiciales, abiertos o ya sentenciados (la sección
-            institucional es opinión propia); rige la presunción de inocencia, y si algo sobre
+            y enlaza documentos oficiales sobre procedimientos judiciales, abiertos o ya sentenciados; rige la presunción de inocencia, y si algo sobre
             ti es inexacto o ha quedado desactualizado, escribe a{" "}
             <a href={`mailto:${CONTACTO}`} className="text-accent hover:underline">
               {CONTACTO}

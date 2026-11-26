@@ -31,8 +31,7 @@ export default function Contribuir() {
       </h1>
       <p className="mt-4 text-lg leading-relaxed text-slate-400">
         Este sitio republica titulares de medios y enlaza documentos oficiales; no redacta ni afirma nada por su
-        cuenta, salvo en la sección institucional, que es análisis y opinión propios. Si un enlace es inexacto,
-        está desactualizado o no debería figurar, se corrige o se retira escribiendo a{" "}
+        cuenta. Si un enlace es inexacto, está desactualizado o no debería figurar, se corrige o se retira escribiendo a{" "}
         <a href={`mailto:${CONTACTO}`} className="text-accent hover:underline">
           {CONTACTO}
         </a>

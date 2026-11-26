@@ -9,7 +9,7 @@ const TITLE = "El Entramado — Titulares y documentos oficiales de causas judic
 const DESCRIPTION =
   "Los titulares que la prensa ha publicado sobre causas judiciales de relevancia política en España y los " +
   "documentos oficiales relacionados, siempre enlazados a su fuente. El sitio republica: no redacta " +
-  "ni afirma nada por su cuenta, salvo en la sección institucional, que es análisis y opinión propios.";
+  "ni afirma nada por su cuenta.";
 
 export const metadata: Metadata = {
   // Absolute base for every relative canonical/OG url below; entramado.org is the canonical host.
