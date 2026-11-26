@@ -129,13 +129,15 @@ jobs:
         run: scripts/publicar.sh --sin-desplegar
 
   # Spec 077: publica el sitio en Cloudflare. Solo en un push a main del repositorio canónico (nunca en un PR ni en
-  # la copia del vigía) y solo si el trabajo anterior pasó. `publicar.sh` vuelve a validar, construir y probar antes
-  # de desplegar: nunca sube un `web/out` que no acabe de construir.
+  # la copia del vigía) y solo si el trabajo anterior pasó. Los secretos viven en el entorno `produccion`, restringido
+  # a main: el flujo de un pull request no puede pedirlos. `publicar.sh` vuelve a validar, escanear, construir y
+  # probar antes de desplegar: nunca sube un `web/out` que no acabe de construir.
   desplegar:
     needs: web-build
     if: github.event_name == 'push' && github.ref == 'refs/heads/main' && github.repository == 'entramado-org/entramado'
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    environment: produccion
     concurrency:
       group: desplegar-sitio
       cancel-in-progress: false
@@ -143,19 +145,33 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
+      # Una ejecución antigua (lenta o relanzada) no pisa a una más nueva: solo publica la punta actual de main.
+      # Si no se puede leer la punta, el paso falla y no se publica.
+      - name: Punta de main
+        id: punta
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          punta=$(gh api "repos/$GITHUB_REPOSITORY/commits/main" --jq .sha)
+          [ -n "$punta" ]
+          if [ "$punta" = "$GITHUB_SHA" ]; then echo "publicar=si" >> "$GITHUB_OUTPUT"; else echo "main va por $punta: no se publica $GITHUB_SHA"; fi
       - uses: actions/setup-node@v4
+        if: steps.punta.outputs.publicar == 'si'
         with:
           node-version: 22
           cache: npm
           cache-dependency-path: web/package-lock.json
       - uses: actions/setup-python@v5
+        if: steps.punta.outputs.publicar == 'si'
         with:
           python-version: '3.12'
       - name: Dependencias
+        if: steps.punta.outputs.publicar == 'si'
         run: |
           python -m pip install --quiet pyyaml==6.0.3
           cd web && npm ci
       - name: Publicar
+        if: steps.punta.outputs.publicar == 'si'
         env:
           PYTHON: python
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
