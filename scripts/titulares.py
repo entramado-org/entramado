@@ -57,9 +57,14 @@ class _Page(html.parser.HTMLParser):
 
     def handle_starttag(self, tag, attrs):
         names = {name for name, _ in attrs}
-        if self._hidden or tag == "template" or "hidden" in names or dict(attrs).get("aria-hidden") == "true":
-            if tag not in VOID:
+        if self._hidden:
+            # Only the element that opened the hidden region closes it: optional end tags
+            # (<li>, <p>…) inside it must not leave the region open for the rest of the page.
+            if tag == self._hidden[0]:
                 self._hidden.append(tag)
+            return
+        if tag not in VOID and (tag == "template" or "hidden" in names or dict(attrs).get("aria-hidden") == "true"):
+            self._hidden.append(tag)
             return
         if tag == "article":
             self._articles += 1
@@ -75,7 +80,7 @@ class _Page(html.parser.HTMLParser):
 
     def handle_endtag(self, tag):
         if self._hidden:
-            if tag == self._hidden[-1]:
+            if tag == self._hidden[0]:
                 self._hidden.pop()
             return
         if tag == "article" and self._articles:

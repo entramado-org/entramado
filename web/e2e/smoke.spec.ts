@@ -135,14 +135,20 @@ test("ninguna página enlaza a /caso/ ni habla de página de caso", async ({ pag
   }
 });
 
-test("«institucional» no aparece en ninguna página servida, metas, JSON-LD y sitemap incluidos", async ({ page, request }) => {
+test("ninguna página enlaza ni anuncia una sección institucional", async ({ page, request }) => {
+  // Solo el texto propio del sitio: un titular de un medio puede llevar la palabra legítimamente.
   for (const ruta of PAGINAS) {
     await page.goto(ruta);
-    expect(await page.content(), ruta).not.toMatch(/institucional/i);
+    expect(await page.locator('a[href*="institucional"]').count(), ruta).toBe(0);
+    for (const sel of ["header", "nav", "footer"]) {
+      for (const texto of await page.locator(sel).allInnerTexts()) expect(texto, `${ruta} ${sel}`).not.toMatch(/institucional/i);
+    }
+    const metas = await page.locator('meta[name="description"], meta[property^="og:"], script[type="application/ld+json"]').evaluateAll((els) =>
+      els.map((e) => e.getAttribute("content") ?? e.textContent ?? "").join(" "),
+    );
+    expect(metas, ruta).not.toMatch(/institucional/i);
   }
-  for (const ruta of ["/sitemap.xml", "/robots.txt", "/404.html"]) {
-    expect(await (await request.get(ruta)).text(), ruta).not.toMatch(/institucional/i);
-  }
+  expect(await (await request.get("/sitemap.xml")).text()).not.toMatch(/institucional/i);
 });
 
 test("el sitio servido son exactamente las rutas HTML esperadas (más el 404)", async () => {
@@ -186,7 +192,7 @@ test("contacto fija el criterio de entrada y el aviso legal admite las sentencia
   await page.goto("/contribuir");
   await expect(page.locator("main")).toContainText("formalmente investigadas, acusadas o condenadas");
   await expect(page.locator("main")).toContainText("cargos y funcionarios públicos por su actuación oficial");
-  await expect(page.locator("main")).toContainText("que no sean ellos mismos investigados, acusados o condenados, ni titulares con motes");
+  await expect(page.locator("main")).toContainText("no dice nada, por parte de este sitio, sobre la situación procesal de nadie");
   await expect(page.locator("main")).not.toContainText("que es del caso");
   await page.goto("/aviso-legal");
   await expect(page.locator("main")).toContainText("sentencias ya dictadas");

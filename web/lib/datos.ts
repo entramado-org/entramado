@@ -49,9 +49,9 @@ function repetidas(urls: string[], donde: string) {
   const vistas = new Set<string>();
   for (const u of urls) {
     // La misma pieza con otra grafía: host + ruta decodificada y normalizada, sin consulta ni fragmento
-    // (igual que `clave_url` en `validar_datos.py`).
+    // (red de respaldo: la puerta que manda es `validar_datos.py`, que corre en `prebuild` antes de todo build).
     const p = new URL(u);
-    const clave = (p.hostname + decodeURIComponent(p.pathname)).replace(/\/+$/, "");
+    const clave = (p.hostname.replace(/^www\./, "") + p.pathname).replace(/\/+$/, "").toLowerCase();
     if (vistas.has(clave)) throw new Error(`${donde}: url repetida ${u}`);
     vistas.add(clave);
   }

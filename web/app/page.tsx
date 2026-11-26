@@ -18,7 +18,7 @@ export default function Landing() {
           <Newspaper className="h-3.5 w-3.5" /> Agregador de prensa y documentos oficiales
         </p>
         <h1 className="max-w-3xl text-5xl font-bold leading-[1.05] tracking-tight text-slate-50 sm:text-6xl">
-          El <span className="text-accent text-glow">entramado</span>, en titulares enlazados.
+          Titulares <span className="text-accent text-glow">enlazados</span> a su medio.
         </h1>
         <p className="mt-5 max-w-2xl text-lg leading-relaxed text-slate-400">
           El Entramado republica los titulares que los medios han publicado sobre causas judiciales de

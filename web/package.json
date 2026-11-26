@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "${PYTHON:-python3} ../scripts/validar_datos.py ../datos/feed.yaml ../datos/documentos.yaml",
     "build": "next build",
     "start": "node scripts/serve-out.mjs",
     "test:e2e": "playwright test"

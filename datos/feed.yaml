@@ -119,10 +119,6 @@ items:
   titulo: Okdiario pagó la defensa de Koldo García en el juicio del Supremo
   medio: elDiario.es
   url: https://www.eldiario.es/politica/editora-okdiario-pago-defensa-koldo-garcia-juicio-supremo_1_13623197.html
-- iso: '2026-10-28'
-  titulo: Sáenz de Tejada niega haber recibido ningún encargo de Leire Díez y declara que se refería a "eliminar judicialmente" a la jueza Biedma
-  medio: Europa Press (vía El Independiente)
-  url: https://www.elindependiente.com/espana/2026/10/28/saenz-tejada-declara-referia-eliminar-judicialmente-biedma/
 - iso: '2026-10-27'
   titulo: El juez del 'caso Leire Díez' permite que el coronel Antonio Balas siga al frente de la investigación en la UCO
   medio: Europa Press (vía Infobae)
@@ -143,10 +139,6 @@ items:
   titulo: El juez del caso Plus Ultra pide prorrogar la instrucción para practicar más diligencias
   medio: EFE (vía Infobae)
   url: https://www.infobae.com/espana/agencias/2026/10/26/el-juez-del-caso-plus-ultra-pide-prorrogar-la-instruccion-para-practicar-mas-diligencias/
-- iso: '2026-10-23'
-  titulo: Leire Díez se querella contra el PP por el vídeo de IA en el que la acusa de “contratar matones” para eliminar a la jueza Biedma
-  medio: elDiario.es
-  url: https://www.eldiario.es/politica/leire-diez-querella-pp-video-ia-acusa-contratar-matones-eliminar-jueza-biedma_1_13608569.html
 - iso: '2026-10-23'
   titulo: El juez del caso Plus Ultra pide a Patrimonio el acta de obsequios que recibió Zapatero en el Gobierno
   medio: Europa Press (vía El Debate)
@@ -195,14 +187,6 @@ items:
   titulo: Pedraz reclama al PSOE todos sus contratos con abogados y consultoras de 2021 a 2025 y cita a Nervis Villalobos
   medio: Estrella Digital
   url: https://www.estrelladigital.es/espana/tribunales/pedraz-reclama-psoe-todos-contratos-abogados-consultoras-2021-2025-cita-nervis-villalobos/20261006150011451867.html
-- iso: '2026-10-01'
-  titulo: Leire Díez recurre la personación de la jueza Biedma al no considerarla perjudicada
-  medio: EFE (vía Infobae)
-  url: https://www.infobae.com/espana/agencias/2026/10/01/leire-diez-recurre-la-personacion-de-la-jueza-biedma-al-no-considerarla-perjudicada/
-- iso: '2026-09-30'
-  titulo: Biedma entrega al juez 90 vídeos contra ella y asegura tener testigos de las presiones para apartarla del caso David Sánchez
-  medio: COPE
-  url: https://www.cope.es/emisoras/extremadura/noticias/biedma-entrega-juez-90-videos-asegura-testigos-presiones-apartarla-caso-david-sanchez-20260930_3447138.html
 - iso: '2026-09-29'
   titulo: 'La Fiscalía rechaza dejar de investigar las gestiones de Zapatero en Bolivia: "No puede ser que encorsete la instrucción"'
   medio: El Independiente
@@ -211,10 +195,6 @@ items:
   titulo: El juez Calama rechaza la petición de Zapatero de apartar a la joyería Yanes de la tasación de sus joyas por una supuesta “falta de imparcialidad”
   medio: Infobae
   url: https://www.infobae.com/espana/2026/09/29/el-juez-calama-rechaza-la-peticion-de-zapatero-de-apartar-a-la-joyeria-yanes-de-la-tasacion-de-sus-joyas-por-una-supuesta-falta-de-imparcialidad/
-- iso: '2026-09-28'
-  titulo: Pedraz admite a la jueza Beatriz Biedma como acusación en el caso Leire Díez y la cita el 8 de octubre
-  medio: Estrella Digital
-  url: https://www.estrelladigital.es/espana/tribunales/pedraz-admite-jueza-beatriz-biedma-como-acusacion-particular-cita-declarar-8-octubre/20260928172506451545.html
 - iso: '2026-09-28'
   titulo: El despacho de Montoro pide al Supremo que traslade su causa de Tarragona a Madrid
   medio: EFE (vía Infobae)

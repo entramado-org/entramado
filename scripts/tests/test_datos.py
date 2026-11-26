@@ -37,6 +37,9 @@ INVALIDOS = {
     "host sin punto": lambda d: d["items"][0].update(url="https://localhost/pieza"),
     "misma pieza con parámetros": lambda d: d["items"].append(dict(d["items"][0], url=d["items"][0]["url"] + "/?utm=1")),
     "misma pieza con la ruta codificada": lambda d: (d["items"][0].update(url="https://medio.example/España/pieza"), d["items"].append(dict(d["items"][0], url="https://medio.example/Espa%C3%B1a/pieza"))),
+    "titular de dos líneas": lambda d: d["items"][0].update(titulo="Un titular\ny texto propio"),
+    "url de portada": lambda d: d["items"][0].update(url="https://medio.example/"),
+    "año cero": lambda d: d["items"][0].update(iso="0000-01-01"),
     "fecha de semana ISO": lambda d: d["items"][0].update(iso="2026-W47-5"),
     "url sin host con ruta": lambda d: d["items"][0].update(url="https:///pieza"),
     "url sin barras": lambda d: d["items"][0].update(url="https:medio.example/pieza"),
@@ -51,6 +54,10 @@ YAML_CRUDO = {
     "clave repetida": "items:\n- iso: '2026-11-20'\n  titulo: Uno\n  titulo: Otro\n  medio: Medio\n  url: https://medio.example/pieza\n",
     "titular booleano": "items:\n- iso: '2026-11-20'\n  titulo: No\n  medio: Medio\n  url: https://medio.example/pieza\n",
 }
+
+
+# Rules only the Python gate enforces; it runs in `prebuild`, before every build of the site.
+SOLO_PYTHON = {"titular de dos líneas", "url de portada", "año cero", "misma pieza con la ruta codificada"}
 
 
 def _write(folder: pathlib.Path, mutate=None) -> None:
@@ -88,7 +95,12 @@ class EsquemaCerrado(unittest.TestCase):
             with self.subTest(name), tempfile.TemporaryDirectory() as tmp:
                 _write(pathlib.Path(tmp), mutate)
                 self.assertFalse(_python(pathlib.Path(tmp)), "python lo acepta")
-                self.assertFalse(_web(pathlib.Path(tmp)), "el build lo acepta")
+                if name not in SOLO_PYTHON:
+                    self.assertFalse(_web(pathlib.Path(tmp)), "el build lo acepta")
+
+    def test_el_build_valida_con_python_antes_de_construir(self):
+        scripts = __import__("json").loads((ROOT / "web" / "package.json").read_text(encoding="utf-8"))["scripts"]
+        self.assertIn("validar_datos.py ../datos/feed.yaml ../datos/documentos.yaml", scripts["prebuild"])
 
     def test_el_yaml_que_cada_parser_leia_distinto_lo_rechazan_los_dos(self):
         for name, raw in YAML_CRUDO.items():
@@ -138,6 +150,13 @@ class Enlaces(unittest.TestCase):
                 page = _Page()
                 page.feed(oculto + "<article><h1>Rectificado</h1></article>")
                 self.assertEqual(page.article_h1s or page.h1s, ["Rectificado"])
+
+    def test_una_region_oculta_con_cierres_opcionales_no_tapa_el_resto(self):
+        for oculto in ("<ul hidden><li>a<li>b</ul>", '<div aria-hidden="true"><p>x<div>y</div></div>'):
+            with self.subTest(oculto):
+                page = _Page()
+                page.feed(oculto + "<article><h1>Titular</h1></article>")
+                self.assertEqual(page.article_h1s, ["Titular"])
 
     def test_el_h1_del_articulo_gana_al_del_logo(self):
         page = _Page()

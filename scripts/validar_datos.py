@@ -12,6 +12,7 @@ import datetime
 import posixpath
 import re
 import sys
+import unicodedata
 import urllib.parse
 
 import yaml
@@ -46,7 +47,8 @@ def clave_url(url: str) -> str:
     """The same piece under another spelling: host plus decoded, normalised path; no query or fragment."""
     parts = urllib.parse.urlsplit(url)
     path = posixpath.normpath(urllib.parse.unquote(parts.path)) if parts.path else "/"
-    return f"{parts.hostname}{path}".rstrip("/")
+    host = (parts.hostname or "").removeprefix("www.")
+    return f"{host}{path}".rstrip("/").lower()
 
 
 def _load(path: str, key: str) -> list:
@@ -71,10 +73,14 @@ def _check(row, allowed: set, where: str, errors: list) -> None:
     for field, value in row.items():
         if field in allowed and (not isinstance(value, str) or not value.strip() or value != value.strip()):
             errors.append(f"{where}: «{field}» debe ser texto no vacío y sin espacios en los extremos")
+        elif field in allowed and any(unicodedata.category(char) in ("Cc", "Cf", "Zl", "Zp") for char in value):
+            errors.append(f"{where}: «{field}» lleva saltos de línea o caracteres de control")
     url = row.get("url")
     match = URL_HTTPS.fullmatch(url) if isinstance(url, str) else None
     if isinstance(url, str) and not match:
         errors.append(f"{where}: la url debe ser https y absoluta")
+    elif match and urllib.parse.urlsplit(url).path in ("", "/"):
+        errors.append(f"{where}: la url es una portada, no una pieza")
     if "organismo" in row and match:
         hosts = ORGANISMOS.get(row["organismo"])
         if hosts is None:
@@ -87,7 +93,8 @@ def _check(row, allowed: set, where: str, errors: list) -> None:
             try:
                 if not FECHA.fullmatch(value):
                     raise ValueError(value)
-                if datetime.date.fromisoformat(value) > datetime.date.today():
+                parsed = datetime.date.fromisoformat(value)
+                if not datetime.date(2000, 1, 1) <= parsed <= datetime.datetime.now(datetime.timezone.utc).date():
                     raise ValueError(value)
             except ValueError:
                 errors.append(f"{where}: «{field}» no es una fecha AAAA-MM-DD")
@@ -96,6 +103,8 @@ def _check(row, allowed: set, where: str, errors: list) -> None:
 def validar(feed: str, documentos: str | None = None) -> list[str]:
     errors: list[str] = []
     items = _load(feed, "items")
+    if not items:
+        errors.append("items: la lista está vacía")
     for index, item in enumerate(items):
         _check(item, ITEM, f"items[{index}]", errors)
     urls = [clave_url(item["url"]) for item in items if isinstance(item, dict) and isinstance(item.get("url"), str)]
