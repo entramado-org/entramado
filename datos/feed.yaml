@@ -295,6 +295,10 @@ items:
   titulo: 'Suiza desmonta una de las pistas financieras de la causa de Zapatero: no encuentra cuentas vinculadas a la sociedad investigada tras rastrear dos bancos'
   medio: Infobae
   url: https://www.infobae.com/espana/2026/09/10/suiza-desmonta-una-de-las-pistas-financieras-de-la-causa-de-zapatero-no-encuentra-cuentas-vinculadas-a-la-sociedad-investigada-tras-rastrear-dos-bancos/
+- iso: '2026-09-10'
+  titulo: Exdirector de la Guardia Civil niega ante el juez del caso Leire haber presionado a la UCO
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/09/10/exdirector-de-la-guardia-civil-niega-ante-el-juez-del-caso-leire-haber-presionado-a-la-uco/
 - iso: '2026-09-09'
   titulo: La gerente del PSOE declara que seguía órdenes de Cerdán al autorizar pagos del caso Leire
   medio: EFE (vía Infobae)
@@ -403,6 +407,14 @@ items:
   titulo: La Fiscalía Europea irrumpe en la trama de obra pública del caso Koldo para saber si Bruselas financió sus proyectos
   medio: Libertad Digital
   url: https://www.libertaddigital.com/espana/2026-07-29/la-fiscalia-europea-irrumpe-en-la-trama-de-obra-publica-del-caso-koldo-para-saber-si-bruselas-financio-sus-proyectos-7442757/
+- iso: '2026-07-29'
+  titulo: El juez Pedraz rechaza suspender provisionalmente de sus cargos a la directora y al DAO de la Guardia Civil
+  medio: El Debate
+  url: https://www.eldebate.com/espana/20260729/juez-pedraz-rechaza-suspender-provisionalmente-cargos-directora-dao-guardia-civil_444910.html
+- iso: '2026-07-29'
+  titulo: El juez Pedraz imputa al exdirector de la Guardia Civil Leonardo Marcos en el ‘caso Leire Díez’ tras cambiar de criterio sobre su presunto papel en las presiones a la UCO
+  medio: Infobae
+  url: https://www.infobae.com/espana/2026/07/29/el-juez-pedraz-imputa-al-exdirector-de-la-guardia-civil-en-el-caso-leire-diez-y-le-cita-a-declarar-el-10-de-septiembre/
 - iso: '2026-07-28'
   titulo: La Fiscalía adelanta a Peinado que hará un escrito "de conclusiones absolutorias" para Begoña Gómez
   medio: Libertad Digital
@@ -431,6 +443,10 @@ items:
   titulo: Dimiten el presidente y el CEO de Plus Ultra, investigados por el préstamo a la aerolínea
   medio: EFE
   url: https://efe.com/economia/2026-07-24/dimiten-presidente-ceo-plus-ultra/
+- iso: '2026-07-24'
+  titulo: La acusación popular pide imputar al exdirector de la Guardia Civil y apartar a Mercedes González de la UCO
+  medio: Libertad Digital
+  url: https://www.libertaddigital.com/espana/2026-07-24/la-acusacion-popular-pide-imputar-al-exdirector-de-la-guardia-civil-y-apartar-a-mercedes-gonzalez-de-la-uco-7440573/
 - iso: '2026-07-23'
   titulo: El Supremo rechaza que la sentencia de Ábalos vulnere derechos de Isabel Pardo de Vera
   medio: EFE (vía Infobae)
@@ -459,6 +475,10 @@ items:
   titulo: El DAO dice que a Marlaska le parece «injusta» su imputación y critica la «vanidad» de la UCO
   medio: The Objective
   url: https://theobjective.com/espana/tribunales/2026-07-17/dao-marlaska-imputacion-uco/
+- iso: '2026-07-17'
+  titulo: El juez del 'caso Leire Díez' interroga este viernes a la directora de la Guardia Civil como investigada
+  medio: Europa Press (vía Infobae)
+  url: https://www.infobae.com/america/agencias/2026/07/17/el-juez-del-caso-leire-diez-interroga-este-viernes-a-la-directora-de-la-guardia-civil-como-investigada/
 - iso: '2026-07-16'
   titulo: 'Begoña Gómez no se libra del jurado popular: la Audiencia Provincial mantiene el juicio por malversación y tráfico de influencias pero le devuelve el pasaporte'
   medio: Infobae
@@ -579,6 +599,14 @@ items:
   titulo: Dimite de una empresa de Defensa una de las 25 personas imputadas en la trama Leire Díez
   medio: The Objective
   url: https://theobjective.com/espana/tribunales/2026-07-01/dimite-defensa-leire-diez/
+- iso: '2026-07-01'
+  titulo: El PP solicita al juez Pedraz la imputación de la directora de la Guardia Civil en el caso Leire Díez
+  medio: Libertad Digital
+  url: https://www.libertaddigital.com/espana/2026-07-01/el-pp-solicita-al-juez-pedraz-la-imputacion-de-la-directora-de-la-guardia-civil-en-el-caso-leire-diez-7429692/
+- iso: '2026-06-30'
+  titulo: Marlaska defiende a la directora de la Guardia Civil y admite que sabía que se reunió con Leire
+  medio: The Objective
+  url: https://theobjective.com/espana/2026-06-30/marlaska-directora-guardia-civil-reunion-leire/
 - iso: '2026-06-29'
   titulo: El juez Pedraz imputa a la presidenta de la SEPI y a otras 24 personas en el 'caso Leire Díez'
   medio: elDiario.es
@@ -595,6 +623,10 @@ items:
   titulo: El exjefe de la UCO y el jefe de la policía judicial se ratifican en que se les pidió "ponerse de perfil" en el caso del hermano de Sánchez
   medio: El Independiente
   url: https://www.elindependiente.com/espana/2026/06/26/exjefe-uco-jefe-policia-judicial-reafirman-campana-para-acabar-con-guardia-civil-ante-juez-pedraz/
+- iso: '2026-06-26'
+  titulo: Los jefes de la UCO desmienten a la directora de la Guardia Civil y aseguran al juez que nunca les habló de Leire Díez
+  medio: elDiario.es
+  url: https://www.eldiario.es/politica/jefes-uco-desmienten-juez-directora-guardia-civil-aseguran-les-hablo-leire-diez_1_13335805.html
 - iso: '2026-06-25'
   titulo: Zapatero pide la nulidad de la causa porque se ha vulnerado su derecho a «un proceso justo»
   medio: The Objective
@@ -663,6 +695,14 @@ items:
   titulo: El juez Calama rechaza la petición de Zapatero de aplazar su declaración sobre las joyas halladas en su caja fuerte
   medio: El Español
   url: https://www.elespanol.com/espana/tribunales/20260616/juez-calama-rechaza-peticion-zapatero-aplazar-declaracion-joyas-halladas-caja-fuerte/1003744287459_0.html
+- iso: '2026-06-16'
+  titulo: La directora de la Guardia Civil desmiente a la UCO y dice que "jamás, nunca" se ha reunido con Leire Díez en su sede
+  medio: El Independiente
+  url: https://www.elindependiente.com/espana/2026/06/16/la-directora-de-la-guardia-civil-desmiente-a-la-uco-y-dice-que-jamas-nunca-se-ha-reunido-con-leire-diez-en-su-sede/
+- iso: '2026-06-16'
+  titulo: La directora de la Guardia Civil siguió hablando con Leire pese al aviso interno sobre la trama
+  medio: The Objective
+  url: https://theobjective.com/espana/tribunales/2026-06-16/directora-guardia-civil-leire-trama/
 - iso: '2026-06-15'
   titulo: Pedraz rechaza los recursos de Cerdán y Leire Díez con los que querían tumbar la causa de las cloacas del PSOE
   medio: Libertad Digital
