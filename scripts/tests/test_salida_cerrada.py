@@ -33,10 +33,21 @@ class SalidaCerradaTest(unittest.TestCase):
 
     def test_ficheros_no_previstos_en_out_se_rechazan(self):
         for malo in ("auto.pdf", "docs/auto.pdf", "foto.png", "datos.json", "_next/static/auto.pdf",
-                     "_next/../auto.html.pdf", "pagina.html.pdf", "sub/pagina.html", "feed.yaml"):
+                     "_next/../auto.html.pdf", "pagina.html.pdf", "sub/pagina.html", "feed.yaml",
+                     "static/__next._full.txt", "otra.html", "otra/__next._full.txt", "__next.txt"):
             with self.subTest(malo=malo):
                 self.assertEqual(self.arbol(["_headers"], BUENOS + [malo.replace("_next/../", "")]),
                                  ["web/out: " + malo.replace("_next/../", "")])
+
+
+    def test_la_carpeta_static_del_proyecto_se_rechaza(self):
+        d = tempfile.TemporaryDirectory()
+        self.addCleanup(d.cleanup)
+        for carpeta in ("public", "out", "static"):
+            os.makedirs(os.path.join(d.name, carpeta))
+        open(os.path.join(d.name, "static", "__next._full.txt"), "w").close()
+        self.assertEqual(salida_cerrada.problemas(os.path.join(d.name, "public"), os.path.join(d.name, "out")),
+                         ["web/static: __next._full.txt"])
 
 
 if __name__ == "__main__":

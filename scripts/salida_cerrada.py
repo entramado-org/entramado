@@ -12,8 +12,12 @@ import re
 import sys
 
 PUBLIC = {"_headers"}
-# Fuera de `_next/`: las páginas, sus cargas de navegación (.txt) y cuatro ficheros con nombre propio.
-RAIZ = re.compile(r"(?:[a-z0-9_-]+|__next\.[A-Za-z0-9_.$-]+)\.(?:html|txt)|[a-z0-9_-]+/__next\.[A-Za-z0-9_.$-]+\.txt")
+# Fuera de `_next/`: las páginas de este sitio, sus cargas de navegación (.txt) y cinco ficheros con nombre propio.
+# Las páginas van por su nombre: una carpeta cualquiera (p. ej. `static/`, que Next también copia) no entra.
+PAGINAS = ("index", "404", "_not-found", "aviso-legal", "contribuir", "documentos", "ultima-hora")
+_P = "(?:" + "|".join(re.escape(p) for p in PAGINAS) + ")"
+_CARGA = r"__next\.[A-Za-z0-9_$-]+(?:\.[A-Za-z0-9_$-]+)*\.txt"
+RAIZ = re.compile(rf"{_P}\.(?:html|txt)|{_CARGA}|{_P}/{_CARGA}")
 CON_NOMBRE = {"_headers", "icon.svg", "opengraph-image.png", "robots.txt", "sitemap.xml"}
 # Dentro de `_next/`: solo lo que genera el build (código, estilos y sus recursos estáticos).
 NEXT = re.compile(r"_next/[A-Za-z0-9_./~$-]+\.(?:js|css|png|svg|woff2)")
@@ -26,7 +30,9 @@ def ficheros(base):
 
 
 def problemas(public, out):
-    malos = [f"web/public: {f}" for f in sorted(ficheros(public)) if f not in PUBLIC]
+    base = os.path.dirname(os.path.abspath(public))
+    malos = [f"web/static: {f}" for f in sorted(ficheros(os.path.join(base, "static")))]
+    malos += [f"web/public: {f}" for f in sorted(ficheros(public)) if f not in PUBLIC]
     for f in sorted(ficheros(out)):
         if f in CON_NOMBRE or RAIZ.fullmatch(f) or NEXT.fullmatch(f):
             continue
