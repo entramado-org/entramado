@@ -39,8 +39,8 @@ def designacion_de(organismo: str, fichero: str) -> str | None:
 
 
 # A press item links to a page, never to an attached file (a ruling, an image, a spreadsheet):
-# the last path segment has no extension or one of a page. Any other extension is rejected.
-FICHERO = re.compile(r"\.(?!(?:html?|shtml|php|aspx?)$)[A-Za-z0-9]+$", re.I)
+# the last path segment has no dot at all, or its only dot is that of a page extension.
+FICHERO = re.compile(r"\.(?!(?:html?|shtml|php|aspx?)$)[^/]*$", re.I)
 FECHA = re.compile(r"\d{4}-\d{2}-\d{2}")
 ITEM = {"iso", "titulo", "medio", "url"}
 DOCUMENTO = {"organismo", "designacion", "fecha", "url"}
