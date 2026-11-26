@@ -25,6 +25,9 @@ trap 'rm -rf "$texto"' EXIT
 "$PYTHON" pipeline/scripts/pii_tree_scan.py "$texto/texto_publicado.txt"
 (cd scripts && "$PYTHON" -W error -m unittest discover tests)
 (
+  # Se construye y se prueba sin credenciales y con la URL del sitio fija: nada del entorno llega al HTML.
+  unset CLOUDFLARE_API_TOKEN CLOUDFLARE_ACCOUNT_ID GH_TOKEN GITHUB_TOKEN
+  export SITE_URL=https://entramado.org
   cd web
   rm -rf .next out
   npm run build
@@ -47,4 +50,5 @@ if [ -n "${SOLO_PUNTA_DE:-}" ]; then
     exit 0
   fi
 fi
-npx --yes wrangler@4.129.0 deploy
+# Configuración y carpeta fijadas: se sube exactamente el `web/out` comprobado arriba.
+npx --yes wrangler@4.129.0 deploy --config ./wrangler.jsonc --assets ./web/out

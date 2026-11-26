@@ -27,6 +27,13 @@ class SalidaCerradaTest(unittest.TestCase):
                 with open(destino, "w") as f:
                     f.write(ruta)
         self.d = d.name
+        os.makedirs(os.path.join(d.name, "app"))
+        with open(os.path.join(d.name, "app", "opengraph-image.alt.txt"), "w") as f:
+            f.write("alt")
+        for nombre, valor in (("CABECERAS", "_headers"), ("TEXTO_ALT", "alt")):
+            otro = mock.patch.object(salida_cerrada, nombre, hashlib.sha256(valor.encode()).hexdigest())
+            otro.start()
+            self.addCleanup(otro.stop)
         parche = mock.patch.object(salida_cerrada, "GRAFICOS", {hashlib.sha256(n.encode()).hexdigest()
                                                                  for n in ("icon.svg", "opengraph-image.png")})
         parche.start()
@@ -80,6 +87,25 @@ class SalidaCerradaTest(unittest.TestCase):
         os.makedirs(os.path.join(self.d, "public", "ultima-hora"))
         os.symlink(os.path.join(self.d, "out", "index.html"), os.path.join(self.d, "out", "contribuir.html"))
         self.assertEqual(self._problemas(), ["web/public: ultima-hora", "web/out: contribuir.html (enlace simbólico)"])
+
+
+    def test_cabeceras_texto_alternativo_y_entorno(self):
+        self.arbol(["_headers"], BUENOS)
+        with open(os.path.join(self.d, "out", "_headers"), "a") as f:
+            f.write("\n/*\n  Refresh: 0; url=https://example.invalid\n")
+        with open(os.path.join(self.d, "app", "opengraph-image.alt.txt"), "w") as f:
+            f.write("otra frase")
+        open(os.path.join(self.d, ".env.production"), "w").close()
+        self.assertEqual(self._problemas(), ["web/.env.production: no debe existir",
+                                             "web/app/opengraph-image.alt.txt (texto distinto del aprobado)",
+                                             "web/out: _headers (cabeceras distintas de las aprobadas)"])
+
+    def test_las_huellas_fijadas_son_las_del_arbol(self):
+        web = os.path.join(os.path.dirname(os.path.dirname(AQUI)), "web")
+        self.assertEqual(salida_cerrada.huella(os.path.join(web, "public", "_headers")), salida_cerrada.CABECERAS)
+        self.assertEqual(salida_cerrada.huella(os.path.join(web, "app", "opengraph-image.alt.txt")), salida_cerrada.TEXTO_ALT)
+        for nombre in ("opengraph-image.png", "icon.svg"):
+            self.assertIn(salida_cerrada.huella(os.path.join(web, "app", nombre)), salida_cerrada.GRAFICOS)
 
 
 if __name__ == "__main__":

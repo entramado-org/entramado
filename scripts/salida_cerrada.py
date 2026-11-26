@@ -32,6 +32,14 @@ GRAFICOS = {
 }
 
 
+# Dos ficheros de texto que cambian lo que recibe el lector sin pasar por los datos: las cabeceras que aplica
+# Cloudflare y el texto alternativo de la imagen para redes. También por su huella.
+CABECERAS = "97f16c9e2ebff4537e3d18c97a8eace80e798b42aaee74085d116631bab2412d"
+TEXTO_ALT = "007ed0a478bfd4c416d2fb6b294749525a617d8e8162f74cb4d4635105d2d28d"
+# Ficheros de entorno de Next: cambiarían el build sin tocar código.
+ENTORNO = (".env", ".env.local", ".env.production", ".env.production.local")
+
+
 def huella(ruta):
     with open(ruta, "rb") as f:
         return hashlib.sha256(f.read()).hexdigest()
@@ -52,6 +60,12 @@ def problemas(public, out):
     malos = []
     if os.path.lexists(static):
         malos.append("web/static: no debe existir")
+    for nombre in ENTORNO:
+        if os.path.lexists(os.path.join(base, nombre)):
+            malos.append(f"web/{nombre}: no debe existir")
+    alt = os.path.join(base, "app", "opengraph-image.alt.txt")
+    if not os.path.isfile(alt) or os.path.islink(alt) or huella(alt) != TEXTO_ALT:
+        malos.append("web/app/opengraph-image.alt.txt (texto distinto del aprobado)")
     # web/public: exactamente un fichero regular, `_headers`. Ni carpetas ni enlaces.
     for nombre in sorted(os.listdir(public)):
         ruta = os.path.join(public, nombre)
@@ -64,6 +78,8 @@ def problemas(public, out):
             malos.append(f"web/out: {f}")
         elif f.endswith((".png", ".svg")) and huella(os.path.join(out, f)) not in GRAFICOS:
             malos.append(f"web/out: {f} (imagen distinta de la aprobada)")
+        elif f == "_headers" and huella(os.path.join(out, f)) != CABECERAS:
+            malos.append("web/out: _headers (cabeceras distintas de las aprobadas)")
     return malos
 
 
