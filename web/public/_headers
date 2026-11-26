@@ -1,0 +1,12 @@
+# Cabeceras del sitio estático (Cloudflare). Antes las ponía Caddy.
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+
+/404
+  X-Robots-Tag: noindex
+/_not-found
+  X-Robots-Tag: noindex

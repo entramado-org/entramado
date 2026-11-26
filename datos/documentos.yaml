@@ -1,0 +1,50 @@
+# Documentos oficiales (spec 077): solo enlaces a la web del organismo emisor.
+documentos:
+- organismo: Senado
+  designacion: Diario de Sesiones del Senado. Comisiones, núm. 758 (XV Legislatura)
+  fecha: '2026-07-22'
+  url: https://www.senado.es/legis15/publicaciones/pdf/senado/ds/DS_C_15_758.PDF
+- organismo: Senado
+  designacion: Diario de Sesiones del Senado. Comisiones, núm. 756 (XV Legislatura)
+  fecha: '2026-07-17'
+  url: https://www.senado.es/legis15/publicaciones/pdf/senado/ds/DS_C_15_756.PDF
+- organismo: Senado
+  designacion: Diario de Sesiones del Senado. Comisiones, núm. 755 (XV Legislatura)
+  fecha: '2026-07-13'
+  url: https://www.senado.es/legis15/publicaciones/pdf/senado/ds/DS_C_15_755.PDF
+- organismo: Senado
+  designacion: Diario de Sesiones del Senado. Comisiones, núm. 754 (XV Legislatura)
+  fecha: '2026-07-08'
+  url: https://www.senado.es/legis15/publicaciones/pdf/senado/ds/DS_C_15_754.PDF
+- organismo: Senado
+  designacion: Diario de Sesiones del Senado. Comisiones, núm. 745 (XV Legislatura)
+  fecha: '2026-06-30'
+  url: https://www.senado.es/legis15/publicaciones/pdf/senado/ds/DS_C_15_745.PDF
+- organismo: Senado
+  designacion: Diario de Sesiones del Senado. Comisiones, núm. 744 (XV Legislatura)
+  fecha: '2026-06-29'
+  url: https://www.senado.es/legis15/publicaciones/pdf/senado/ds/DS_C_15_744.PDF
+- organismo: Senado
+  designacion: Diario de Sesiones del Senado. Comisiones, núm. 727 (XV Legislatura)
+  fecha: '2026-06-16'
+  url: https://www.senado.es/legis15/publicaciones/pdf/senado/ds/DS_C_15_727.PDF
+- organismo: Senado
+  designacion: Diario de Sesiones del Senado. Comisiones, núm. 717 (XV Legislatura)
+  fecha: '2026-05-28'
+  url: https://www.senado.es/legis15/publicaciones/pdf/senado/ds/DS_C_15_717.PDF
+- organismo: Senado
+  designacion: Diario de Sesiones del Senado. Comisiones, núm. 659 (XV Legislatura)
+  fecha: '2026-04-15'
+  url: https://www.senado.es/legis15/publicaciones/pdf/senado/ds/DS_C_15_659.PDF
+- organismo: Senado
+  designacion: Diario de Sesiones del Senado. Comisiones, núm. 233 (XV Legislatura)
+  fecha: '2024-11-14'
+  url: https://www.senado.es/legis15/publicaciones/pdf/senado/ds/DS_C_15_233.PDF
+- organismo: Congreso de los Diputados
+  designacion: Diario de Sesiones del Congreso de los Diputados. Comisiones de Investigación, núm. 8 (XV Legislatura)
+  fecha: '2024-05-27'
+  url: https://www.congreso.es/public_oficiales/L15/CONG/DS/CI/DSCD-15-CI-8.PDF
+- organismo: Senado
+  designacion: Diario de Sesiones del Senado. Comisiones, núm. 103 (XV Legislatura)
+  fecha: '2024-05-06'
+  url: https://www.senado.es/legis15/publicaciones/pdf/senado/ds/DS_C_15_103.PDF

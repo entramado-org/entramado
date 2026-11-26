@@ -1,0 +1,31 @@
+# Sitios de medios de los que la cronología puede enlazar piezas (spec 077).
+# Un ítem cuyo host no esté aquí no pasa `scripts/validar_datos.py`: dar de alta un medio
+# es un acto deliberado, revisado como cualquier otro cambio.
+medios:
+- efe.com
+- elpais.com
+- es.euronews.com
+- okdiario.com
+- theobjective.com
+- www.cope.es
+- www.cordobabn.com
+- www.democrata.es
+- www.elcorreogallego.es
+- www.eldebate.com
+- www.eldiario.es
+- www.elespanol.com
+- www.elindependiente.com
+- www.elmundo.es
+- www.elprogreso.es
+- www.estrelladigital.es
+- www.europapress.es
+- www.infobae.com
+- www.infolibre.es
+- www.libertaddigital.com
+- www.menorca.info
+- www.moncloa.com
+- www.noticiasdenavarra.com
+- www.que.es
+- www.telemadrid.es
+- www.ultimahora.es
+- www.vozpopuli.com

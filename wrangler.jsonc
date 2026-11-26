@@ -1,0 +1,18 @@
+{
+  // Sitio estático de El Entramado (spec 077): solo ficheros, sin código de Worker.
+  // Se construye con `cd web && npm run build` (→ web/out) y se publica con `wrangler deploy`.
+  "name": "entramado-sitio",
+  "compatibility_date": "2026-09-03",
+  "assets": {
+    "directory": "./web/out",
+    // /caso/x sirve caso/x.html; una ruta que no existe sirve 404.html con estado 404.
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  "workers_dev": false,
+  "preview_urls": false,
+  "observability": { "enabled": true }
+  // Sin `routes`: desplegar no cambia quién sirve entramado.org. La ruta `entramado.org/*` de la zona se
+  // apunta a este sitio, o de vuelta al Worker anterior, con scripts/corte.sh.
+  // account_id NO va aquí: exportar CLOUDFLARE_ACCOUNT_ID.
+}

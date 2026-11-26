@@ -1,12 +1,13 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/site";
 
-/* Served at /robots.txt (spec 035). /api and /mcp are machine endpoints —
- * crawling them wastes budget and could hammer Neo4j. Everything else is
- * public content. */
+export const dynamic = "force-static";
+
+/* Served at /robots.txt (spec 035). Sin `disallow`: las rutas retiradas (spec 077) deben poder
+ * rastrearse para que el buscador vea el 404 y las desindexe. */
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: [{ userAgent: "*", allow: "/", disallow: ["/api/", "/mcp"] }],
+    rules: [{ userAgent: "*", allow: "/" }],
     sitemap: `${SITE_URL}/sitemap.xml`,
   };
 }
