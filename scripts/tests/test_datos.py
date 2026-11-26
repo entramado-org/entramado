@@ -151,7 +151,8 @@ class EsquemaCerrado(unittest.TestCase):
     def test_una_marca_invisible_dentro_de_un_titular_se_rechaza_literal_y_escapada(self):
         # U+034F no se ve: el lector leería un número seguido y el escáner, dos trozos.
         for nombre, titulo in (("literal", "Llamen al 655\u034f443322"), ("escapada", '"Llamen al 655\\u034F443322"'),
-                               ("salto escapado", '"Primera\\nSegunda"')):
+                               ("salto escapado", '"Primera\\nSegunda"'),
+                               ("dos espacios", "El pleno  aprueba la propuesta")):
             with self.subTest(nombre), tempfile.TemporaryDirectory() as tmp:
                 _write(pathlib.Path(tmp))
                 ruta = pathlib.Path(tmp) / "feed.yaml"

@@ -125,6 +125,8 @@ def _check(row, allowed: set, where: str, errors: list) -> None:
             errors.append(f"{where}: «{field}» debe ser texto no vacío y sin espacios en los extremos")
         elif field in allowed and (raros := _raros(value, salto=False)):
             errors.append(f"{where}: «{field}» lleva saltos de línea o caracteres no admitidos ({', '.join(raros)})")
+        elif field in allowed and "  " in value:
+            errors.append(f"{where}: «{field}» lleva dos espacios seguidos (el navegador mostraría uno)")
         elif field in allowed and unicodedata.normalize("NFC", value) != value:
             errors.append(f"{where}: «{field}» no está en forma NFC")
     url = row.get("url")
