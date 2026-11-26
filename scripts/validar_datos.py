@@ -80,10 +80,24 @@ def clave_url(url: str) -> str:
     return f"{host}{path}".rstrip("/").lower()
 
 
+def _raros(texto: str) -> list[str]:
+    """Caracteres que un lector de YAML puede tratar como salto de línea, o que no se ven, y otro no.
+
+    El validador (PyYAML) y la web (paquete `yaml`) leen el mismo fichero: solo se admiten caracteres visibles,
+    el espacio y el salto de línea `\\n`. Fuera quedan los de control (U+0085 incluido), los separadores de línea y
+    de párrafo, los de formato invisibles y los no asignados."""
+    return sorted({f"U+{ord(c):04X}" for c in texto
+                   if c != "\n" and (unicodedata.category(c)[0] == "C" or unicodedata.category(c) in ("Zl", "Zp"))})
+
+
 def _load(path: str, key: str) -> list:
-    with open(path, encoding="utf-8") as handle:
+    with open(path, encoding="utf-8", newline="") as handle:
+        texto = handle.read()
+    if raros := _raros(texto):
+        raise SystemExit(f"{path}: caracteres no admitidos: {', '.join(raros)}")
+    if True:
         try:
-            data = yaml.load(handle, Loader=_SinClavesRepetidas)  # noqa: S506 - a SafeLoader subclass
+            data = yaml.load(texto, Loader=_SinClavesRepetidas)  # noqa: S506 - a SafeLoader subclass
         except yaml.YAMLError as error:
             raise SystemExit(f"{path}: {error}")
     if not isinstance(data, dict) or set(data) != {key} or not isinstance(data[key], list):

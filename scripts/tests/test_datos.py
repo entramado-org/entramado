@@ -135,6 +135,18 @@ class EsquemaCerrado(unittest.TestCase):
                 self.assertFalse(_python(pathlib.Path(tmp)), "python lo acepta")
                 self.assertFalse(_web(pathlib.Path(tmp)), "el build lo acepta")
 
+    def test_un_caracter_que_un_parser_trata_como_salto_y_otro_no_se_rechaza(self):
+        # PyYAML corta la línea en U+0085 y el paquete `yaml` de la web no: tras él, uno ve un comentario y el otro texto.
+        for nombre, raro in (("NEL", "\u0085"), ("LS", "\u2028"), ("PS", "\u2029"), ("CR", "\r"), ("ZWSP", "\u200b"),
+                             ("BOM", "\ufeff"), ("NUL", "\x00"), ("TAB", "\t")):
+            for fichero in ("feed.yaml", "documentos.yaml"):
+                with self.subTest(nombre, fichero=fichero), tempfile.TemporaryDirectory() as tmp:
+                    _write(pathlib.Path(tmp))
+                    ruta = pathlib.Path(tmp) / fichero
+                    ruta.write_text(ruta.read_text(encoding="utf-8").rstrip("\n") + raro + "# anotación\n",
+                                    encoding="utf-8", newline="")
+                    self.assertFalse(_python(pathlib.Path(tmp)), "python lo acepta")
+
     def test_los_datos_del_repositorio_son_validos(self):
         self.assertTrue(_python(ROOT / "datos"))
 
