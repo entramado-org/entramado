@@ -19,6 +19,7 @@ import yaml
 
 # Same expression as `web/lib/datos.ts`: https, lowercase host without credentials or port, and a path.
 URL_HTTPS = re.compile(r"https://([a-z0-9][a-z0-9-]*(?:\.[a-z0-9-]+)+)/[^\s\\]*")
+NUMERO = re.compile(r"núm\. (\d+)")
 FECHA = re.compile(r"\d{4}-\d{2}-\d{2}")
 ITEM = {"iso", "titulo", "medio", "url"}
 DOCUMENTO = {"organismo", "designacion", "fecha", "url"}
@@ -87,6 +88,16 @@ def _check(row, allowed: set, where: str, errors: list) -> None:
             errors.append(f"{where}: organismo desconocido «{row['organismo']}»")
         elif match.group(1) not in hosts:
             errors.append(f"{where}: la url no es de la web de «{row['organismo']}»")
+        else:
+            # The link must be the announced document itself: a PDF whose file name carries its number.
+            fichero = posixpath.basename(urllib.parse.urlsplit(url).path)
+            numero = NUMERO.search(row.get("designacion") or "")
+            if not fichero.lower().endswith(".pdf"):
+                errors.append(f"{where}: la url no es un PDF")
+            elif not numero:
+                errors.append(f"{where}: la designación no lleva «núm. N»")
+            elif numero.group(1) not in re.findall(r"\d+", fichero)[-1:]:
+                errors.append(f"{where}: el fichero «{fichero}» no es el núm. {numero.group(1)}")
     for field in ("iso", "fecha"):
         value = row.get(field)
         if isinstance(value, str):
