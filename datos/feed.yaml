@@ -61,8 +61,8 @@ items:
   url: https://www.eldiario.es/politica/leire-diez-afirma-abogados-afines-pp-le-ofrecieron-millones-mentir-sanchez_1_13656894.html
 - iso: '2026-11-11'
   titulo: El juez prorroga la investigación a Zapatero y no descarta nuevas imputaciones
-  medio: EFE (vía Infobae)
-  url: https://www.infobae.com/espana/agencias/2026/11/11/el-juez-prorroga-la-investigacion-a-zapatero-y-no-descarta-nuevas-imputaciones/
+  medio: EFE
+  url: https://efe.com/espana/2026-11-11/juez-prorroga-investigacion-zapatero/
 - iso: '2026-11-11'
   titulo: Koldo recurre al TC para anular su condena y solicita quedar en libertad hasta que se responda a su recurso
   medio: Europa Press (vía Infobae)
@@ -194,7 +194,7 @@ items:
 - iso: '2026-10-06'
   titulo: Pedraz reclama al PSOE todos sus contratos con abogados y consultoras de 2021 a 2025 y cita a Nervis Villalobos
   medio: Estrella Digital
-  url: https://www.estrelladigital.es/articulo/tribunales/pedraz-reclama-psoe-todos-contratos-abogados-consultoras-2021-2025-cita-nervis-villalobos/20261006150011451867.html
+  url: https://www.estrelladigital.es/espana/tribunales/pedraz-reclama-psoe-todos-contratos-abogados-consultoras-2021-2025-cita-nervis-villalobos/20261006150011451867.html
 - iso: '2026-10-01'
   titulo: Leire Díez recurre la personación de la jueza Biedma al no considerarla perjudicada
   medio: EFE (vía Infobae)
@@ -214,7 +214,7 @@ items:
 - iso: '2026-09-28'
   titulo: Pedraz admite a la jueza Beatriz Biedma como acusación en el caso Leire Díez y la cita el 8 de octubre
   medio: Estrella Digital
-  url: https://www.estrelladigital.es/articulo/tribunales/pedraz-admite-jueza-beatriz-biedma-como-acusacion-particular-cita-declarar-8-octubre/20260928172506451545.html
+  url: https://www.estrelladigital.es/espana/tribunales/pedraz-admite-jueza-beatriz-biedma-como-acusacion-particular-cita-declarar-8-octubre/20260928172506451545.html
 - iso: '2026-09-28'
   titulo: El despacho de Montoro pide al Supremo que traslade su causa de Tarragona a Madrid
   medio: EFE (vía Infobae)
@@ -292,10 +292,6 @@ items:
   medio: COPE
   url: https://www.cope.es/emisoras/extremadura/noticias/gallardo-trata-impedir-inhabilitacion-presidencia-diputacion-20260910_3434389.html
 - iso: '2026-09-10'
-  titulo: Exdirector de la Guardia Civil niega ante el juez del caso Leire haber presionado a la UCO
-  medio: EFE (vía Infobae)
-  url: https://www.infobae.com/espana/agencias/2026/09/10/exdirector-de-la-guardia-civil-niega-ante-el-juez-del-caso-leire-haber-presionado-a-la-uco/
-- iso: '2026-09-10'
   titulo: 'Suiza desmonta una de las pistas financieras de la causa de Zapatero: no encuentra cuentas vinculadas a la sociedad investigada tras rastrear dos bancos'
   medio: Infobae
   url: https://www.infobae.com/espana/2026/09/10/suiza-desmonta-una-de-las-pistas-financieras-de-la-causa-de-zapatero-no-encuentra-cuentas-vinculadas-a-la-sociedad-investigada-tras-rastrear-dos-bancos/
@@ -329,8 +325,8 @@ items:
   url: https://www.infobae.com/espana/agencias/2026/09/04/la-union-de-la-resistencia-venezolana-en-el-exilio-se-persona-en-el-caso-plus-ultra/
 - iso: '2026-09-04'
   titulo: El juez rechaza la nulidad de la causa de Plus Ultra planteada por Zapatero
-  medio: EFE (vía Infobae)
-  url: https://www.infobae.com/espana/agencias/2026/09/04/el-juez-rechaza-la-nulidad-de-la-causa-de-plus-ultra-planteada-por-zapatero/
+  medio: EFE
+  url: https://efe.com/espana/2026-09-04/el-juez-rechaza-la-nulidad-de-la-causa-de-plus-ultra-planteada-por-zapatero/
 - iso: '2026-09-03'
   titulo: 'Cristina Álvarez pide su absolución y descarga la responsabilidad en Begoña Gómez: "Actuó siguiendo sus instrucciones"'
   medio: Libertad Digital
@@ -374,7 +370,7 @@ items:
 - iso: '2026-08-04'
   titulo: La lucense Isabel Pardo de Vera niega el cobro de comisiones por el amaño de obras en el caso Koldo
   medio: Europa Press (vía El Progreso)
-  url: https://www.elprogreso.es/articulo/espana/pardo-vera-niega-cobro-comisiones-amano-obras-ve-inverosimil-que-pudiera-favorecer-empresas/202608041450211989553.html
+  url: https://www.elprogreso.es/espana/pardo-vera-niega-cobro-comisiones-amano-obras-ve-inverosimil-que-pudiera-favorecer-empresas/202608041450211989553.html
 - iso: '2026-08-03'
   titulo: La defensa de Zapatero recurre la extensión de la investigación económica acordada por el juez Calama
   medio: El Español
@@ -407,14 +403,6 @@ items:
   titulo: La Fiscalía Europea irrumpe en la trama de obra pública del caso Koldo para saber si Bruselas financió sus proyectos
   medio: Libertad Digital
   url: https://www.libertaddigital.com/espana/2026-07-29/la-fiscalia-europea-irrumpe-en-la-trama-de-obra-publica-del-caso-koldo-para-saber-si-bruselas-financio-sus-proyectos-7442757/
-- iso: '2026-07-29'
-  titulo: El juez Pedraz rechaza suspender provisionalmente de sus cargos a la directora y al DAO de la Guardia Civil
-  medio: El Debate
-  url: https://www.eldebate.com/espana/20260729/juez-pedraz-rechaza-suspender-provisionalmente-cargos-directora-dao-guardia-civil_444910.html
-- iso: '2026-07-29'
-  titulo: El juez Pedraz imputa al exdirector de la Guardia Civil Leonardo Marcos en el ‘caso Leire Díez’ tras cambiar de criterio sobre su presunto papel en las presiones a la UCO
-  medio: Infobae
-  url: https://www.infobae.com/espana/2026/07/29/el-juez-pedraz-imputa-al-exdirector-de-la-guardia-civil-en-el-caso-leire-diez-y-le-cita-a-declarar-el-10-de-septiembre/
 - iso: '2026-07-28'
   titulo: La Fiscalía adelanta a Peinado que hará un escrito "de conclusiones absolutorias" para Begoña Gómez
   medio: Libertad Digital
@@ -427,10 +415,6 @@ items:
   titulo: 'La acusación popular reformula su escrito contra Begoña Gómez: pide 13 años de prisión y comparecencia de Pedro Sánchez'
   medio: Libertad Digital
   url: https://www.libertaddigital.com/espana/2026-07-27/begona-7441472/
-- iso: '2026-07-27'
-  titulo: La UCO sitúa a Cerdán y Koldo en un coche de Servinabar para acudir al Congreso
-  medio: edatv.news
-  url: https://edatv.news/politica/uco-situa-cerdan-koldo-coche-servinabar-acudir-congreso
 - iso: '2026-07-27'
   titulo: El juez prorroga seis meses más la causa "sumamente compleja" en que investiga a Montoro
   medio: EFE (vía Infobae)
@@ -445,12 +429,8 @@ items:
   url: https://www.infobae.com/espana/2026/07/24/el-juez-rechaza-el-recurso-de-jesica-rodriguez-y-mantiene-su-imputacion-al-apreciar-indicios-de-malversacion-por-los-sueldos-cobrados-en-empresas-publicas-sin-trabajar/
 - iso: '2026-07-24'
   titulo: Dimiten el presidente y el CEO de Plus Ultra, investigados por el préstamo a la aerolínea
-  medio: EFE (vía Infobae)
-  url: https://www.infobae.com/espana/agencias/2026/07/24/dimiten-el-presidente-y-el-ceo-de-plus-ultra-investigados-por-el-prestamo-a-la-aerolinea/
-- iso: '2026-07-24'
-  titulo: La acusación popular pide imputar al exdirector de la Guardia Civil y apartar a Mercedes González de la UCO
-  medio: Libertad Digital
-  url: https://www.libertaddigital.com/espana/2026-07-24/la-acusacion-popular-pide-imputar-al-exdirector-de-la-guardia-civil-y-apartar-a-mercedes-gonzalez-de-la-uco-7440573/
+  medio: EFE
+  url: https://efe.com/economia/2026-07-24/dimiten-presidente-ceo-plus-ultra/
 - iso: '2026-07-23'
   titulo: El Supremo rechaza que la sentencia de Ábalos vulnere derechos de Isabel Pardo de Vera
   medio: EFE (vía Infobae)
@@ -479,10 +459,6 @@ items:
   titulo: El DAO dice que a Marlaska le parece «injusta» su imputación y critica la «vanidad» de la UCO
   medio: The Objective
   url: https://theobjective.com/espana/tribunales/2026-07-17/dao-marlaska-imputacion-uco/
-- iso: '2026-07-17'
-  titulo: El juez del 'caso Leire Díez' interroga este viernes a la directora de la Guardia Civil como investigada
-  medio: Europa Press (vía Infobae)
-  url: https://www.infobae.com/america/agencias/2026/07/17/el-juez-del-caso-leire-diez-interroga-este-viernes-a-la-directora-de-la-guardia-civil-como-investigada/
 - iso: '2026-07-16'
   titulo: 'Begoña Gómez no se libra del jurado popular: la Audiencia Provincial mantiene el juicio por malversación y tráfico de influencias pero le devuelve el pasaporte'
   medio: Infobae
@@ -562,7 +538,7 @@ items:
 - iso: '2026-07-06'
   titulo: Delcy Rodríguez lleva a los tribunales a Aldama por atribuirle el sobre de la trama del PSOE
   medio: Euronews
-  url: https://es.euronews.com/my-europe/2026/07/06/delcy-rodriguez-lleva-a-los-tribunales-a-aldama-por-atribuirle-el-sobre-de-la-trama-del-ps
+  url: https://es.euronews.com/2026/07/06/delcy-rodriguez-lleva-a-los-tribunales-a-aldama-por-atribuirle-el-sobre-de-la-trama-del-ps
 - iso: '2026-07-06'
   titulo: El juez Pedraz rechaza el incidente de nulidad de Leire Díez contra su detención y los registros
   medio: The Objective
@@ -603,14 +579,6 @@ items:
   titulo: Dimite de una empresa de Defensa una de las 25 personas imputadas en la trama Leire Díez
   medio: The Objective
   url: https://theobjective.com/espana/tribunales/2026-07-01/dimite-defensa-leire-diez/
-- iso: '2026-07-01'
-  titulo: El PP solicita al juez Pedraz la imputación de la directora de la Guardia Civil en el caso Leire Díez
-  medio: Libertad Digital
-  url: https://www.libertaddigital.com/espana/2026-07-01/el-pp-solicita-al-juez-pedraz-la-imputacion-de-la-directora-de-la-guardia-civil-en-el-caso-leire-diez-7429692/
-- iso: '2026-06-30'
-  titulo: Marlaska defiende a la directora de la Guardia Civil y admite que sabía que se reunió con Leire
-  medio: The Objective
-  url: https://theobjective.com/espana/2026-06-30/marlaska-directora-guardia-civil-reunion-leire/
 - iso: '2026-06-29'
   titulo: El juez Pedraz imputa a la presidenta de la SEPI y a otras 24 personas en el 'caso Leire Díez'
   medio: elDiario.es
@@ -623,10 +591,6 @@ items:
   titulo: El juez ofrece a Hacienda personarse en la investigación de las joyas de Zapatero
   medio: EFE (vía Infobae)
   url: https://www.infobae.com/espana/agencias/2026/06/26/el-juez-ofrece-a-hacienda-personarse-en-la-investigacion-de-las-joyas-de-zapatero/
-- iso: '2026-06-26'
-  titulo: Los jefes de la UCO desmienten a la directora de la Guardia Civil y aseguran al juez que nunca les habló de Leire Díez
-  medio: elDiario.es
-  url: https://www.eldiario.es/politica/jefes-uco-desmienten-juez-directora-guardia-civil-aseguran-les-hablo-leire-diez_1_13335805.html
 - iso: '2026-06-26'
   titulo: El exjefe de la UCO y el jefe de la policía judicial se ratifican en que se les pidió "ponerse de perfil" en el caso del hermano de Sánchez
   medio: El Independiente
@@ -695,22 +659,10 @@ items:
   titulo: El juez Calama pone el foco en Hacienda y Aduanas ante la negativa de Zapatero a declarar sobre las joyas
   medio: El Debate
   url: https://www.eldebate.com/espana/20260618/juez-calama-pone-foco-hacienda-aduanas-ante-negativa-zapatero-declarar-sobre-joyas_429911.html
-- iso: '2026-06-17'
-  titulo: El juez del caso Plus Ultra afirma que Zapatero "no ha logrado desvirtuar los indicios de criminalidad" con su declaración
-  medio: El Progreso
-  url: https://www.elprogreso.es/articulo/espana/zapatero-declara-juez-directo/202606170816301978673.html
 - iso: '2026-06-16'
   titulo: El juez Calama rechaza la petición de Zapatero de aplazar su declaración sobre las joyas halladas en su caja fuerte
   medio: El Español
   url: https://www.elespanol.com/espana/tribunales/20260616/juez-calama-rechaza-peticion-zapatero-aplazar-declaracion-joyas-halladas-caja-fuerte/1003744287459_0.html
-- iso: '2026-06-16'
-  titulo: La directora de la Guardia Civil desmiente a la UCO y dice que "jamás, nunca" se ha reunido con Leire Díez en su sede
-  medio: El Independiente
-  url: https://www.elindependiente.com/espana/2026/06/16/la-directora-de-la-guardia-civil-desmiente-a-la-uco-y-dice-que-jamas-nunca-se-ha-reunido-con-leire-diez-en-su-sede/
-- iso: '2026-06-16'
-  titulo: La directora de la Guardia Civil siguió hablando con Leire pese al aviso interno sobre la trama
-  medio: The Objective
-  url: https://theobjective.com/espana/tribunales/2026-06-16/directora-guardia-civil-leire-trama/
 - iso: '2026-06-15'
   titulo: Pedraz rechaza los recursos de Cerdán y Leire Díez con los que querían tumbar la causa de las cloacas del PSOE
   medio: Libertad Digital
@@ -774,7 +726,7 @@ items:
 - iso: '2026-06-08'
   titulo: El PP-A pide a Montero aclarar si conoció o participó en la "trama para proteger a Sánchez"
   medio: Córdoba Buenas Noticias
-  url: https://www.cordobabn.com/articulo/andalucia/pp-exige-montero-que-aclare-tuvo-conocimiento-participo-origen-trama-proteger-sanchez/20260608160944259961.html
+  url: https://www.cordobabn.com/andalucia/pp-exige-montero-que-aclare-tuvo-conocimiento-participo-origen-trama-proteger-sanchez/20260608160944259961.html
 - iso: '2026-06-05'
   titulo: El Supremo vuelve a rechazar poner en libertad a Koldo García, a la espera de la sentencia
   medio: The Objective

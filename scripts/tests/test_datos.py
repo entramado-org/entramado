@@ -36,6 +36,7 @@ INVALIDOS = {
     "fecha futura": lambda d: d["items"][0].update(iso="2999-01-01"),
     "host sin punto": lambda d: d["items"][0].update(url="https://localhost/pieza"),
     "misma pieza con parámetros": lambda d: d["items"].append(dict(d["items"][0], url=d["items"][0]["url"] + "/?utm=1")),
+    "misma pieza con la ruta codificada": lambda d: (d["items"][0].update(url="https://medio.example/España/pieza"), d["items"].append(dict(d["items"][0], url="https://medio.example/Espa%C3%B1a/pieza"))),
     "fecha de semana ISO": lambda d: d["items"][0].update(iso="2026-W47-5"),
     "url sin host con ruta": lambda d: d["items"][0].update(url="https:///pieza"),
     "url sin barras": lambda d: d["items"][0].update(url="https:medio.example/pieza"),
@@ -130,6 +131,32 @@ class Enlaces(unittest.TestCase):
 
     def test_una_fecha_que_no_se_puede_leer_se_marca(self):
         self.assertIn("FECHA NO LEGIBLE", enlaces.revisar_item(ITEM, Pieza(status="200", final_url=ITEM["url"], h1="Un titular")))
+
+    def test_un_h1_oculto_no_tapa_el_titular_visible(self):
+        for oculto in ('<h1 hidden>Anterior</h1>', '<template><h1>Anterior</h1></template>', '<div aria-hidden="true"><h1>Anterior</h1></div>'):
+            with self.subTest(oculto):
+                page = _Page()
+                page.feed(oculto + "<article><h1>Rectificado</h1></article>")
+                self.assertEqual(page.article_h1s or page.h1s, ["Rectificado"])
+
+    def test_el_h1_del_articulo_gana_al_del_logo(self):
+        page = _Page()
+        page.feed("<h1>Medio</h1><article><h1>Un titular</h1></article>")
+        self.assertEqual(page.article_h1s, ["Un titular"])
+
+    def test_dos_titulares_visibles_distintos_se_marcan(self):
+        pieza = Pieza(status="200", final_url=ITEM["url"], h1="Un titular", otros_h1=["Rectificado"], published="2026-11-20")
+        self.assertIn("VARIOS TITULARES", enlaces.revisar_item(ITEM, pieza))
+
+    def test_la_fecha_de_modificacion_no_es_la_de_publicacion(self):
+        page = _Page()
+        page.feed('<time itemprop="dateModified" datetime="2026-11-21T09:00:00+01:00">21</time><h1>Un titular</h1>')
+        self.assertNotIn("time", page.meta)
+
+    def test_una_redireccion_que_cambia_la_consulta_se_marca(self):
+        item = dict(ITEM, url="https://medio.example/articulo?id=17")
+        pieza = Pieza(status="200", final_url="https://medio.example/articulo?id=32", h1="Un titular", published="2026-11-20")
+        self.assertIn("ENLACE REDIRIGIDO", enlaces.revisar_item(item, pieza))
 
     def test_la_fecha_visible_en_time_se_lee(self):
         page = _Page()

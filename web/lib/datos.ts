@@ -48,7 +48,10 @@ function esFecha(v: string): boolean {
 function repetidas(urls: string[], donde: string) {
   const vistas = new Set<string>();
   for (const u of urls) {
-    const clave = u.split(/[?#]/)[0].replace(/\/+$/, ""); // la misma pieza con otra grafía
+    // La misma pieza con otra grafía: host + ruta decodificada y normalizada, sin consulta ni fragmento
+    // (igual que `clave_url` en `validar_datos.py`).
+    const p = new URL(u);
+    const clave = (p.hostname + decodeURIComponent(p.pathname)).replace(/\/+$/, "");
     if (vistas.has(clave)) throw new Error(`${donde}: url repetida ${u}`);
     vistas.add(clave);
   }

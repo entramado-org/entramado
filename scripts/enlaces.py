@@ -16,18 +16,23 @@ import pathlib
 import sys
 import urllib.error
 import urllib.request
-from urllib.parse import urlparse
 
 import yaml
 
 from titulares import UA, Pieza, leer_todas
-from validar_datos import ORGANISMOS, clave_url
+
+def _sin_fragmento(url: str) -> str:
+    """Query kept: it can select another piece. Only the fragment and a trailing slash are noise."""
+    return url.split("#")[0].rstrip("/")
+
 
 def revisar_item(item: dict, pieza: Pieza) -> str | None:
     if pieza.status != "200":
         return f"ENLACE {pieza.status}\t{item['url']}"
-    if clave_url(pieza.final_url) != clave_url(item["url"]):
+    if _sin_fragmento(pieza.final_url) != _sin_fragmento(item["url"]):
         return f"ENLACE REDIRIGIDO a {pieza.final_url}\t{item['url']}"
+    if pieza.otros_h1:
+        return f"VARIOS TITULARES\t{item['url']}\n\tpublicado: {item['titulo']}\n\ten la web: {pieza.h1} / {' / '.join(pieza.otros_h1)}"
     if pieza.h1 != item["titulo"]:
         return f"TITULAR CAMBIADO\t{item['url']}\n\tpublicado: {item['titulo']}\n\ten la web: {pieza.h1 or '(sin titular legible)'}"
     if not pieza.published:
@@ -42,7 +47,7 @@ def revisar_documento(document: dict) -> str | None:
     request = urllib.request.Request(document["url"], headers={"User-Agent": UA, "Range": "bytes=0-1023"})
     try:
         with urllib.request.urlopen(request, timeout=25) as response:
-            host = urlparse(response.geturl()).hostname
+            final = response.geturl()
             head = response.read(1024)
             status = response.status
     except urllib.error.HTTPError as error:
@@ -51,8 +56,8 @@ def revisar_documento(document: dict) -> str | None:
         return f"DOCUMENTO error:{type(error).__name__}\t{document['url']}"
     if status not in (200, 206):
         return f"DOCUMENTO {status}\t{document['url']}"
-    if host not in ORGANISMOS.get(document["organismo"], ()):
-        return f"DOCUMENTO REDIRIGIDO a {host}\t{document['url']}"
+    if final != document["url"]:
+        return f"DOCUMENTO REDIRIGIDO a {final}\t{document['url']}"
     if not head.startswith(b"%PDF"):
         return f"DOCUMENTO YA NO ES PDF\t{document['url']}"
     return None

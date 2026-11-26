@@ -22,8 +22,10 @@ import yaml
 
 UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0 Safari/537.36"
 UA_CURL = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Safari/605.1.15"
-PUBLISHED = ("article:published_time", "datePublished", "date", "DC.date.issued", "publish-date", "og:article:published_time", "time")
+# Declared publication date, most specific first; a bare <time> is the last resort and never a dateModified.
+PUBLISHED = ("article:published_time", "og:article:published_time", "datePublished", "DC.date.issued", "publish-date", "date")
 ISO_DATE = re.compile(r"(\d{4}-\d{2}-\d{2})")
+VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "source", "track", "wbr"}
 JSON_LD_DATE = re.compile(r'"datePublished"\s*:\s*"(\d{4}-\d{2}-\d{2})')
 
 
@@ -36,6 +38,7 @@ class Pieza:
     og_title: str = ""
     title: str = ""
     published: str = ""
+    otros_h1: list = dataclasses.field(default_factory=list)
 
 
 class _Page(html.parser.HTMLParser):
@@ -46,31 +49,49 @@ class _Page(html.parser.HTMLParser):
         self.h1s: list[str] = []
         self.title = ""
         self.meta: dict[str, str] = {}
+        self.article_h1s: list[str] = []
         self._open: str | None = None
         self._buffer: list[str] = []
+        self._hidden: list[str] = []  # open elements the reader does not see (hidden, <template>)
+        self._articles = 0
 
     def handle_starttag(self, tag, attrs):
+        names = {name for name, _ in attrs}
+        if self._hidden or tag == "template" or "hidden" in names or dict(attrs).get("aria-hidden") == "true":
+            if tag not in VOID:
+                self._hidden.append(tag)
+            return
+        if tag == "article":
+            self._articles += 1
         if tag == "meta":
             fields = {name: value or "" for name, value in attrs}
             key = fields.get("property") or fields.get("name") or fields.get("itemprop")
             if key and "content" in fields:
                 self.meta.setdefault(key, fields["content"])
-        elif tag == "time" and "time" not in self.meta:
+        elif tag == "time" and "time" not in self.meta and "modif" not in (dict(attrs).get("itemprop") or "").lower():
             self.meta["time"] = dict(attrs).get("datetime") or ""
         elif tag in ("h1", "title") and self._open is None:
             self._open, self._buffer = tag, []
 
     def handle_endtag(self, tag):
+        if self._hidden:
+            if tag == self._hidden[-1]:
+                self._hidden.pop()
+            return
+        if tag == "article" and self._articles:
+            self._articles -= 1
         if tag == self._open:
             text = " ".join("".join(self._buffer).split())
             if tag == "h1" and text:
                 self.h1s.append(text)
+                if self._articles:
+                    self.article_h1s.append(text)
             elif tag == "title" and not self.title:
                 self.title = text
             self._open = None
 
     def handle_data(self, data):
-        if self._open is not None:
+        if self._open is not None and not self._hidden:
             self._buffer.append(data)
 
 
@@ -113,7 +134,10 @@ def leer(url: str) -> Pieza:
         parser.feed(page)
     except Exception:  # malformed markup: keep what was read so far
         pass
-    pieza.h1 = parser.h1s[0] if parser.h1s else ""
+    # The piece's headline is the <h1> of its <article>; outside one, the first visible <h1>.
+    candidatos = parser.article_h1s or parser.h1s
+    pieza.h1 = candidatos[0] if candidatos else ""
+    pieza.otros_h1 = sorted(set(candidatos[1:]) - {pieza.h1})
     pieza.og_title = " ".join(parser.meta.get("og:title", "").split())
     pieza.title = parser.title
     for key in PUBLISHED:
@@ -122,7 +146,7 @@ def leer(url: str) -> Pieza:
             pieza.published = found.group(1)
             break
     else:
-        found = JSON_LD_DATE.search(page)
+        found = JSON_LD_DATE.search(page) or ISO_DATE.search(parser.meta.get("time", ""))
         pieza.published = found.group(1) if found else ""
     return pieza
 

@@ -9,8 +9,10 @@ text (summaries, quotes, statuses, entity links) out of the site.
 from __future__ import annotations
 
 import datetime
+import posixpath
 import re
 import sys
+import urllib.parse
 
 import yaml
 
@@ -41,8 +43,10 @@ class _SinClavesRepetidas(yaml.SafeLoader):
 
 
 def clave_url(url: str) -> str:
-    """The same piece under another spelling: no query, no fragment, no trailing slash."""
-    return re.split(r"[?#]", url)[0].rstrip("/")
+    """The same piece under another spelling: host plus decoded, normalised path; no query or fragment."""
+    parts = urllib.parse.urlsplit(url)
+    path = posixpath.normpath(urllib.parse.unquote(parts.path)) if parts.path else "/"
+    return f"{parts.hostname}{path}".rstrip("/")
 
 
 def _load(path: str, key: str) -> list:
