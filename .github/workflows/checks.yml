@@ -138,42 +138,29 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     environment: produccion
-    concurrency:
-      group: desplegar-sitio
-      cancel-in-progress: false
+    # Sin grupo de concurrencia: una cola de un solo hueco dejaría que una ejecución antigua expulsara a la de la
+    # punta. `publicar.sh` relee la punta de main justo antes de desplegar y una ejecución superada no publica.
     steps:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
-      # Una ejecución antigua (lenta o relanzada) no pisa a una más nueva: solo publica la punta actual de main.
-      # Si no se puede leer la punta, el paso falla y no se publica.
-      - name: Punta de main
-        id: punta
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          punta=$(gh api "repos/$GITHUB_REPOSITORY/commits/main" --jq .sha)
-          [ -n "$punta" ]
-          if [ "$punta" = "$GITHUB_SHA" ]; then echo "publicar=si" >> "$GITHUB_OUTPUT"; else echo "main va por $punta: no se publica $GITHUB_SHA"; fi
       - uses: actions/setup-node@v4
-        if: steps.punta.outputs.publicar == 'si'
         with:
           node-version: 22
           cache: npm
           cache-dependency-path: web/package-lock.json
       - uses: actions/setup-python@v5
-        if: steps.punta.outputs.publicar == 'si'
         with:
           python-version: '3.12'
       - name: Dependencias
-        if: steps.punta.outputs.publicar == 'si'
         run: |
           python -m pip install --quiet pyyaml==6.0.3
           cd web && npm ci
       - name: Publicar
-        if: steps.punta.outputs.publicar == 'si'
         env:
           PYTHON: python
+          GH_TOKEN: ${{ github.token }}
+          SOLO_PUNTA_DE: ${{ github.repository }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: scripts/publicar.sh

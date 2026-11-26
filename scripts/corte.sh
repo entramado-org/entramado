@@ -37,11 +37,14 @@ id=$(echo "$rutas" | jq -r --arg p "$PATRON" '.result[0] | select(.pattern == $p
 actual=$(echo "$rutas" | jq -r '.result[0].script // "-"')
 echo "$PATRON → $actual"
 [ -n "$destino" ] || exit 0
-[ "$actual" != "$destino" ] || { echo "ya apunta a $destino; nada que hacer"; exit 0; }
-cf GET "/accounts/$CLOUDFLARE_ACCOUNT_ID/workers/scripts/$destino/settings" > /dev/null \
+cf GET "/accounts/$CLOUDFLARE_ACCOUNT_ID/workers/scripts/$destino/settings" | jq -e '.success == true' > /dev/null \
   || muere "el Worker $destino no existe en la cuenta: no se cambia nada"
-cf PUT "/zones/$zona/workers/routes/$id" "$(jq -nc --arg p "$PATRON" --arg s "$destino" '{pattern: $p, script: $s}')" > /dev/null \
-  || muere "el cambio de ruta falló; comprobar con: scripts/corte.sh ver"
+if [ "$actual" = "$destino" ]; then
+  echo "ya apunta a $destino; no se cambia, se confirma"
+else
+  cf PUT "/zones/$zona/workers/routes/$id" "$(jq -nc --arg p "$PATRON" --arg s "$destino" '{pattern: $p, script: $s}')" > /dev/null \
+    || muere "el cambio de ruta falló; comprobar con: scripts/corte.sh ver"
+fi
 final=$(cf GET "/zones/$zona/workers/routes/$id") || muere "SIN CONFIRMAR: no se pudo leer la ruta tras el cambio"
 echo "$final" | jq -e --arg p "$PATRON" --arg s "$destino" '.success and .result.pattern == $p and .result.script == $s' > /dev/null \
   || muere "SIN CONFIRMAR: la ruta no quedó en $destino: $(echo "$final" | jq -c '.result | {pattern, script}')"
