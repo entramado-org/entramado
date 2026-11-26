@@ -102,9 +102,11 @@ jobs:
           uv run --project api python pipeline/scripts/registro_check.py --tree
           uv run --project api --with rapidfuzz==3.14.5 python -m unittest pipeline.tests.test_registro_check -v
 
-  # Tipos y build de producción de la web; la suite e2e no corre aquí porque necesita la API y el grafo.
+  # Spec 077: el sitio es estático. Valida los datos, pasa los tests de los guiones, construye y prueba el sitio
+  # construido en un navegador (Chrome del runner). No despliega.
   web-build:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
         with:
@@ -114,9 +116,48 @@ jobs:
           node-version: 22
           cache: npm
           cache-dependency-path: web/package-lock.json
-      - name: Dependencias de la web
-        working-directory: web
-        run: npm ci
-      - name: Build de la web
-        working-directory: web
-        run: NEXT_PUBLIC_API_BASE=/api npm run build
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Dependencias
+        run: |
+          python -m pip install --quiet pyyaml==6.0.3
+          cd web && npm ci
+      - name: Validar, construir y probar
+        env:
+          PYTHON: python
+        run: scripts/publicar.sh --sin-desplegar
+
+  # Spec 077: publica el sitio en Cloudflare. Solo en un push a main del repositorio canónico (nunca en un PR ni en
+  # la copia del vigía) y solo si el trabajo anterior pasó. `publicar.sh` vuelve a validar, construir y probar antes
+  # de desplegar: nunca sube un `web/out` que no acabe de construir.
+  desplegar:
+    needs: web-build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && github.repository == 'entramado-org/entramado'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    concurrency:
+      group: desplegar-sitio
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Dependencias
+        run: |
+          python -m pip install --quiet pyyaml==6.0.3
+          cd web && npm ci
+      - name: Publicar
+        env:
+          PYTHON: python
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: scripts/publicar.sh

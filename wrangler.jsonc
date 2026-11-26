@@ -12,7 +12,7 @@
   "workers_dev": false,
   "preview_urls": false,
   "observability": { "enabled": true }
-  // El dominio (`routes` con custom_domain entramado.org) se añade en el corte (F2), no antes:
-  // publicarlo aquí cambiaría producción.
+  // Sin `routes`: desplegar no cambia quién sirve entramado.org. La ruta `entramado.org/*` de la zona se
+  // apunta a este sitio, o de vuelta al Worker anterior, con scripts/corte.sh.
   // account_id NO va aquí: exportar CLOUDFLARE_ACCOUNT_ID.
 }
