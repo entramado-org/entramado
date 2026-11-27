@@ -7,6 +7,14 @@
 # Entra un titular solo si las personas que nombra son parte del procedimiento o cargo
 # público, y si ni el titular ni la url aplican un mote a una persona. Del más reciente al más antiguo.
 items:
+- iso: '2026-11-26'
+  titulo: El Supremo dicta que Ábalos debería permanecer en prisión hasta mayo de 2042
+  medio: Libertad Digital
+  url: https://www.libertaddigital.com/espana/2026-11-26/el-supremo-dicta-que-abalos-deberia-permanecer-en-prision-hasta-mayo-de-2042-7497831/
+- iso: '2026-11-25'
+  titulo: La Audiencia de Madrid obliga a interrogar a Leire Díez y al expresidente de Correos por una denuncia de Vox que la jueza archivó
+  medio: elDiario.es
+  url: https://www.eldiario.es/politica/audiencia-madrid-obliga-interrogar-leire-diez-expresidente-correos-denuncia-vox-jueza-archivo_1_13691705.html
 - iso: '2026-11-24'
   titulo: El juez del 'caso Leire Díez' pide al PSOE que amplíe la documentación presentada sobre la contratación de abogados
   medio: Europa Press (vía Infobae)
