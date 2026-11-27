@@ -7,6 +7,22 @@
 # Entra un titular solo si las personas que nombra son parte del procedimiento o cargo
 # público, y si ni el titular ni la url aplican un mote a una persona. Del más reciente al más antiguo.
 items:
+- iso: '2026-11-24'
+  titulo: El juez del 'caso Leire Díez' pide al PSOE que amplíe la documentación presentada sobre la contratación de abogados
+  medio: Europa Press (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/11/24/el-juez-del-caso-leire-diez-pide-al-psoe-que-amplie-la-documentacion-presentada-sobre-la-contratacion-de-abogados/
+- iso: '2026-11-23'
+  titulo: El comandante Villalba declara que Aldama pagó gastos de la Feria de Sevilla y cacerías a miembros de la Guardia Civil
+  medio: Europa Press (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/11/23/el-comandante-villalba-declara-que-aldama-pago-gastos-de-la-feria-de-sevilla-y-cacerias-a-miembros-de-la-guardia-civil/
+- iso: '2026-11-23'
+  titulo: El comandante investigado en el 'caso Koldo' desvela al juez un viaje a Georgia de Aldama con la exdirectora de la Guardia Civil
+  medio: El Español
+  url: https://www.elespanol.com/espana/tribunales/20261123/comandante-investigado-caso-koldo-relata-juez-viaje-georgia-aldama-exdirectora-guardia-civil/1003744468857_0.html
+- iso: '2026-11-23'
+  titulo: Un imputado en el 'caso Koldo' dice que Aldama llevó a la exdirectora de la Benemérita a Georgia
+  medio: The Objective
+  url: https://theobjective.com/espana/tribunales/2026-11-23/koldo-aldama-benemerita-georgia/
 - iso: '2026-11-19'
   titulo: El juez llama a declarar como imputado al comandante Rubén Villalba el 23 de noviembre en el caso Koldo
   medio: Europa Press (vía Demócrata)
