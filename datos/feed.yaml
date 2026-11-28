@@ -8,6 +8,14 @@
 # público, y si ni el titular ni la url aplican un mote a una persona. Del más reciente al más antiguo.
 items:
 - iso: '2026-11-26'
+  titulo: El juez recuerda a Koldo García que sigue imputado por contratos que no juzgó el Supremo
+  medio: EFE (vía Infobae)
+  url: https://www.infobae.com/espana/agencias/2026/11/26/el-juez-recuerda-a-koldo-garcia-que-sigue-imputado-por-contratos-que-no-juzgo-el-supremo/
+- iso: '2026-11-26'
+  titulo: El Estado reclama 43.950,54 euros a José Luis Ábalos y Koldo García por vía judicial
+  medio: Moncloa.com
+  url: https://www.moncloa.com/2026/11/26/estado-reclama-abalos-koldo-3474491/
+- iso: '2026-11-26'
   titulo: El Supremo dicta que Ábalos debería permanecer en prisión hasta mayo de 2042
   medio: Libertad Digital
   url: https://www.libertaddigital.com/espana/2026-11-26/el-supremo-dicta-que-abalos-deberia-permanecer-en-prision-hasta-mayo-de-2042-7497831/
@@ -19,6 +27,10 @@ items:
   titulo: El juez del 'caso Leire Díez' pide al PSOE que amplíe la documentación presentada sobre la contratación de abogados
   medio: Europa Press (vía Infobae)
   url: https://www.infobae.com/espana/agencias/2026/11/24/el-juez-del-caso-leire-diez-pide-al-psoe-que-amplie-la-documentacion-presentada-sobre-la-contratacion-de-abogados/
+- iso: '2026-11-23'
+  titulo: Plus Ultra anuncia el cierre de operaciones y ordena a su plantilla que no acuda a trabajar
+  medio: The Objective
+  url: https://theobjective.com/economia/2026-11-23/plus-ultra-cierre-operaciones/
 - iso: '2026-11-23'
   titulo: El comandante Villalba declara que Aldama pagó gastos de la Feria de Sevilla y cacerías a miembros de la Guardia Civil
   medio: Europa Press (vía Infobae)
